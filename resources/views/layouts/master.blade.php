@@ -6,28 +6,40 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>ชูเกียรติรถบ้าน</title>
   <link rel="icon" href="{{ asset('dist/img/homecar-orange.jpg') }}" type="image/ico" />
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
-  <!-- <link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}"> -->
-  <link rel="stylesheet" href="{{ asset('fonts/ionicons.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
-  <!-- <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css')}}"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
 
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-  <style>
-    .a1 {color: #E6E6FA;}
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+
+  <!-- <style>
+    .a1 {color: #0832F9;}
     .a2 {color: #4A0B52;}
     .a3 {color: #262A5E;}
     .a4 {color: #B1692E;}
     .a5 {color: #207B15;}
-    .a6 {color: #E6E6FA;}
+    .a6 {color: #E7071E;}
+
+
+    .form-control{
+      border-radius: 10px;
+      border: 1px solid;
+      padding: 7px;
+      width: 250px;
+      height: 45px;
+      color: #666666;
+    }
 
     /* The container */
     .con {
@@ -49,7 +61,6 @@
       cursor: pointer;
       height: 0;
       width: 0;
-
     }
 
     /* Create a custom checkbox */
@@ -96,193 +107,29 @@
       -ms-transform: rotate(45deg);
       transform: rotate(45deg);
     }
-  </style>
-  <style>
-    .con2 {
-      position: relative;
-      padding-left: 35px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      font-size: 25px;
-      -webkit-user-select: 10px;
-      -moz-user-select: 10px;
-      -ms-user-select: 10px;
-      user-select: 10px;
-    }
+  </style> -->
 
-    .con2 input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-    }
+  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+  <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+  <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
+  <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+  <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+  <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+  <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+  <script src="{{ asset('dist/js/adminlte.js') }}"></script>
 
-    .checkmark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 20px;
-      width: 20px;
-      background-color: #999;
-    }
+  <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+  <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 
-    .con2:hover input ~ .checkmark {
-      background-color: #ccc;
-    }
-
-    .con2 input:checked ~ .checkmark {
-      background-color: red;
-    }
-
-    .checkmark:after {
-      content: "";
-      position: absolute;
-      display: none;
-    }
-
-    .con2 input:checked ~ .checkmark:after {
-      display: block;
-    }
-
-    .con2 .checkmark:after {
-      left: 9px;
-      top: 5px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-    }
-  </style>
-  <style>
-    .con3 {
-      position: relative;
-      padding-left: 35px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      font-size: 25px;
-      -webkit-user-select: 10px;
-      -moz-user-select: 10px;
-      -ms-user-select: 10px;
-      user-select: 10px;
-      border-radius: 25px;
-    }
-
-    .con3 input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-      border-radius: 25px;
-    }
-
-    .checkmark3 {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 20px;
-      width: 20px;
-      background-color: #999;
-      border-radius: 25px;
-    }
-
-    .con3:hover input ~ .checkmark3 {
-      background-color: #ccc;
-    }
-
-    .con3 input:checked ~ .checkmark3 {
-      background-color: blue;
-    }
-
-    .checkmark3:after {
-      content: "";
-      position: absolute;
-      display: none;
-      border-radius: 25px;
-    }
-
-    .con3 input:checked ~ .checkmark3:after {
-      display: block;
-    }
-
-    .con3 .checkmark3:after {
-      left: 9px;
-      top: 5px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-    }
-  </style>
-  <style>
-    .dropdown-submenu {
-        position: relative;
-    }
-
-    .dropdown-submenu>.dropdown-menu {
-        top: 0;
-        left: 100%;
-        margin-top: -6px;
-        margin-left: -1px;
-        -webkit-border-radius: 0 6px 6px 6px;
-        -moz-border-radius: 0 6px 6px;
-        border-radius: 0 6px 6px 6px;
-    }
-
-    .dropdown-submenu:hover>.dropdown-menu {
-        display: block;
-    }
-
-    .dropdown-submenu>a:after {
-        display: block;
-        content: " ";
-        float: right;
-        width: 0;
-        height: 0;
-        border-color: transparent;
-        border-style: solid;
-        border-width: 5px 0 5px 5px;
-        border-left-color: #ccc;
-        margin-top: 5px;
-        margin-right: -10px;
-    }
-
-    .dropdown-submenu:hover>a:after {
-        border-left-color: #fff;
-    }
-
-    .dropdown-submenu.pull-left {
-        float: none;
-    }
-
-    .dropdown-submenu.pull-left>.dropdown-menu {
-        left: -100%;
-        margin-left: 10px;
-        -webkit-border-radius: 6px 0 6px 6px;
-        -moz-border-radius: 6px 0 6px 6px;
-        border-radius: 6px 0 6px 6px;
-    }
-  </style>
-
-  <!-- <script src="{{ asset('js/function.js') }}"></script> -->
-  <script src="{{ asset('plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
-  <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-  <script src="{{ asset('plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
-  <script src="{{ asset('plugins/fastclick/fastclick.js') }}"></script>
-  <script src="{{ asset('dist/js/app.min.js') }}"></script>
-  <script src="{{ asset('dist/js/demo.js') }}"></script>
-  <script src="{{ asset('plugins/input-mask/jquery.inputmask.js') }}"></script>
-
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
 </head>
 
-<body class="hold-transition skin-yellow" style="height: auto; min-height: 100%;">
+<body class="hold-transition sidebar-mini layout-fixed">
 
   <!-- Site wrapper -->
   <div class="wrapper">

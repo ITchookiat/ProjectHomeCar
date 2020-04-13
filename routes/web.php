@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/datacar/Savestore/{Str1}/{Str2}/{type}', 'DatacarController@Savestore')->name('datacar.Savestore');
 
     route::resource('reportBetween','ReportController');
-    Route::get('/datacar/viewreport/{type}', 'ReportController@index')->name('datacarreport');
+    Route::get('/reportcar/viewreport/{type}', 'ReportController@index')->name('reportcar');
     Route::get('/ExportStockcar', 'ReportController@ReportStockcar');
     Route::get('/Report/Home/{type}', 'ReportController@index')->name('report');
     

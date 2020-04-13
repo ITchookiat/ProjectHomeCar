@@ -21,7 +21,7 @@ class DatacarController extends Controller
         $fdate = '';
         $tdate = '';
         $carType = '';
-  
+
         if ($request->has('Fromdate')) {
           $fdate = $request->get('Fromdate');
         }
@@ -273,12 +273,12 @@ class DatacarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,Request $request)
+    public function edit(Request $request ,$id)
     {
       $datacar = DB::table('data_cars')
       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
       ->where('data_cars.id',$id)->first();
-      // dd($datacar);
+
       $arrayCarType = [
         1 => 'รถยนต์นำเข้าใหม่',
         2 => 'รถยนต์ระหว่างทำสี',
@@ -338,22 +338,17 @@ class DatacarController extends Controller
         1 => 'ยืม',
         2 => 'คืนแล้ว',
       ];
-      // }
+
       $setcarType = $request->car_type;
-      // dd($setcarType);
       if ($request->car_type == 6) {
-        // dd('sdsad');
         return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus'));
       }else {
-        // code...
         return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus'));
       }
     }
 
     public function viewsee(Request $request, $id)
     {
-      //$datacar = data_car::find($id);
-      // dd($id);
       $datacar = DB::table('data_cars')
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                     ->where('data_cars.id',$id)->first();

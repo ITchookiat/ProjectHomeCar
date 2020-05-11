@@ -425,31 +425,31 @@
                 </div>
               </div>
             </div>
-               
         </div>
       </div>
-
-<!-- DateNumberUserHidden -->
-      <script>
-          function myFunctionDateUser() {
-            var x = document.getElementById("DateNumberUser").value;
-            document.form1.mySelect1.value = x;
-          }
-      </script>
-<!-- DateExpireHidden       -->
-      <script>
-          function myFunctionDateExpire() {
-            var x = document.getElementById("DateExpire").value;
-            document.form1.mySelect2.value = x;
-          }
-      </script>
-
-<!-- เวลาแจ้งเตือน -->
-      <script>
-        $(".alert").fadeTo(3000, 500).slideUp(500, function(){
-        $(".alert").alert('close');
-        });;
-      </script>
     </section>
+  
+  <!-- DateNumberUserHidden -->
+  <script>
+    function myFunctionDateUser() {
+      var x = document.getElementById("DateNumberUser").value;
+      document.form1.mySelect1.value = x;
+    }
+  </script>
+
+  <!-- DateExpireHidden       -->
+  <script>
+      function myFunctionDateExpire() {
+        var x = document.getElementById("DateExpire").value;
+        document.form1.mySelect2.value = x;
+      }
+  </script>
+
+  <!-- เวลาแจ้งเตือน -->
+  <script>
+    $(".alert").fadeTo(3000, 500).slideUp(500, function(){
+    $(".alert").alert('close');
+    });;
+  </script>
 
 @endsection

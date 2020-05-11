@@ -54,7 +54,7 @@
           </li>
           @endif
 
-          <li class="nav-item has-treeview {{ Request::is('datacar/view*') ? 'menu-open' : '' }}">
+          <li class="nav-item has-treeview {{ Request::is('datacar/view*') ? 'menu-open' : '' }} {{ Request::is('datacar/create/*') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-luggage-cart"></i>
               <p>
@@ -64,43 +64,43 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('datacar',1) }}" class="nav-link {{ Request::is('datacar/view/1') ? 'active' : '' }}">
+                <a href="{{ route('datacar',1) }}" class="nav-link {{ Request::is('datacar/view/1') ? 'active' : '' }} {{ Request::is('datacar/create/*') ? 'active' : '' }}">
                   <i class="far fa-window-restore text-red nav-icon"></i>
                   <p>รถยนต์ทั้งหมด</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('datacar',7) }}" class="nav-link {{ Request::is('datacar/view/7') ? 'active' : '' }}">
+                <a href="{{ route('datacar',7) }}" class="nav-link {{ Request::is('datacar/view/7') ? 'active' : '' }} {{ Request::is('datacar/edit/*/1') ? 'active' : '' }}">
                   <i class="far fa-window-restore text-red nav-icon"></i>
                   <p>รถยนต์นำเข้าใหม่</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('datacar',2) }}" class="nav-link {{ Request::is('datacar/view/2') ? 'active' : '' }}">
+                <a href="{{ route('datacar',2) }}" class="nav-link {{ Request::is('datacar/view/2') ? 'active' : '' }} {{ Request::is('datacar/edit/*/2') ? 'active' : '' }}">
                   <i class="far fa-window-restore text-red nav-icon"></i>
                   <p>รถยนต์ระหว่างทำสี</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('datacar',3) }}" class="nav-link {{ Request::is('datacar/view/3') ? 'active' : '' }}">
+                <a href="{{ route('datacar',3) }}" class="nav-link {{ Request::is('datacar/view/3') ? 'active' : '' }} {{ Request::is('datacar/edit/*/3') ? 'active' : '' }}">
                   <i class="far fa-window-restore text-red nav-icon"></i>
                   <p>รถยนต์รอซ่อม</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('datacar',4) }}" class="nav-link {{ Request::is('datacar/view/4') ? 'active' : '' }}">
+                <a href="{{ route('datacar',4) }}" class="nav-link {{ Request::is('datacar/view/4') ? 'active' : '' }} {{ Request::is('datacar/edit/*/4') ? 'active' : '' }}">
                   <i class="far fa-window-restore text-red nav-icon"></i>
                   <p>รถยนต์ระหว่างซ่อม</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('datacar',5) }}" class="nav-link {{ Request::is('datacar/view/5') ? 'active' : '' }}">
+                <a href="{{ route('datacar',5) }}" class="nav-link {{ Request::is('datacar/view/5') ? 'active' : '' }} {{ Request::is('datacar/edit/*/5') ? 'active' : '' }}">
                   <i class="far fa-window-restore text-red nav-icon"></i>
                   <p>รถยนต์ที่พร้อมขาย</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('datacar',6) }}" class="nav-link {{ Request::is('datacar/view/6') ? 'active' : '' }}">
+                <a href="{{ route('datacar',6) }}" class="nav-link {{ Request::is('datacar/view/6') ? 'active' : '' }} {{ Request::is('datacar/edit/*/6') ? 'active' : '' }}">
                   <i class="far fa-window-restore text-red nav-icon"></i>
                   <p>รถยนต์ที่ขายแล้ว</p>
                 </a>

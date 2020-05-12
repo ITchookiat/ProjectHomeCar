@@ -15,8 +15,8 @@
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -108,6 +108,58 @@
       transform: rotate(45deg);
     }
   </style> -->
+
+  <style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    body::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE and Edge */
+    body {
+      -ms-overflow-style: none;
+    }
+  </style>
+
+  <style>
+    #button {
+      display: inline-block;
+      background-color: #FF9800;
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      border-radius: 4px;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      transition: background-color .3s, 
+        opacity .5s, visibility .5s;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 1000;
+    }
+    #button::after {
+      content: "\f077";
+      font-family: FontAwesome;
+      font-weight: normal;
+      font-style: normal;
+      font-size: 2em;
+      line-height: 50px;
+      color: #fff;
+    }
+    #button:hover {
+      cursor: pointer;
+      background-color: #333;
+    }
+    #button:active {
+      background-color: #555;
+    }
+    #button.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Styles for the content section */
+  </style>
 
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>

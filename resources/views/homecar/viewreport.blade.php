@@ -330,45 +330,11 @@
               </table>
             </div>
           </div>
+
+          <a id="button"></a>
         </div>
       </div>
     </section>
-    
-    <script>
-      $(function () {
-        $("#example1").DataTable({
-          "responsive": true,
-          "autoWidth": false,
-        });
-      });
-    </script>
-
-    <script type="text/javascript">
-      $(document).ready(function(){
-        $('.delete_form').on('submit',function(){
-          if (confirm("คุณต้องการลบข้อมูลหรือไม่")) {
-            return true;
-          }
-          else {
-            return false;
-          }
-          });
-        });
-    </script>
-
-    <script>
-        $(".alert").fadeTo(3000, 500).slideUp(500, function(){
-        $(".alert").alert('close');
-        });;
-    </script>
-
-    <script>
-      function blinker() {
-        $('.prem').fadeOut(1000);
-        $('.prem').fadeIn(1000);
-      }
-      setInterval(blinker, 1000);
-    </script>
 
     <div class="modal fade" id="modal-default">
       <div class="modal-dialog modal-lg">
@@ -389,5 +355,59 @@
       </div>
     </div>
   <!-- /.modal -->
+
+  {{-- button-to-top --}}
+  <script>
+    var btn = $('#button');
+
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > 300) {
+        btn.addClass('show');
+      } else {
+        btn.removeClass('show');
+      }
+    });
+
+    btn.on('click', function(e) {
+      e.preventDefault();
+      $('html, body').animate({scrollTop:0}, '300');
+    });
+  </script>
+  
+  <script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+      });
+    });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.delete_form').on('submit',function(){
+        if (confirm("คุณต้องการลบข้อมูลหรือไม่")) {
+          return true;
+        }
+        else {
+          return false;
+        }
+        });
+      });
+  </script>
+
+  <script>
+      $(".alert").fadeTo(3000, 500).slideUp(500, function(){
+      $(".alert").alert('close');
+      });;
+  </script>
+
+  <script>
+    function blinker() {
+      $('.prem').fadeOut(1000);
+      $('.prem').fadeIn(1000);
+    }
+    setInterval(blinker, 1000);
+  </script>
 
 @endsection

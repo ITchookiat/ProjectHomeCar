@@ -425,9 +425,29 @@
                 </div>
               </div>
             </div>
+
+            <a id="button"></a>
         </div>
       </div>
     </section>
+
+  {{-- button-to-top --}}
+  <script>
+    var btn = $('#button');
+
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > 300) {
+        btn.addClass('show');
+      } else {
+        btn.removeClass('show');
+      }
+    });
+
+    btn.on('click', function(e) {
+      e.preventDefault();
+      $('html, body').animate({scrollTop:0}, '300');
+    });
+  </script>
   
   <!-- DateNumberUserHidden -->
   <script>
@@ -437,7 +457,7 @@
     }
   </script>
 
-  <!-- DateExpireHidden       -->
+  <!-- DateExpireHidden -->
   <script>
       function myFunctionDateExpire() {
         var x = document.getElementById("DateExpire").value;

@@ -25,16 +25,16 @@
   $date = $Y.'-'.$m.'-'.$d;
 @endphp
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="content-header">
-        @if(session()->has('success'))
-          <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-            <strong>สำเร็จ!</strong> {{ session()->get('success') }}
-          </div>
-        @endif
+  <!-- Main content -->
+  <section class="content">
+    <div class="content-header">
+      @if(session()->has('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <strong>สำเร็จ!</strong> {{ session()->get('success') }}
+        </div>
+      @endif
 
         <!-- Main content -->
         <section class="content">
@@ -287,65 +287,26 @@
                     </div>
                 <!-- /.card-body -->
               </div>
+
+              <a id="button"></a>
             </div>
           </div>
-        </section>
-        <!-- /.content -->
+        </div>
+      </section>
+    </div>
+  </section>
 
-      <script>
-        $(".alert").fadeTo(3000, 500).slideUp(500, function(){
-        $(".alert").alert('close');
-        });
-      </script>
-
-      <script>
-        $(function () {
-          $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-          });
-          $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-          });
-        });
-      </script>
-
-      {{-- Popup --}}
-      <script>
-        $(function () {
-          $("#modal-default").on("show.bs.modal", function (e) {
-            var link = $(e.relatedTarget).data("link");
-            $("#modal-default .modal-body").load(link, function(){
-            });
-          });
-
-          $("#modal-buyinfo").on("show.bs.modal", function (e) {
-            var link = $(e.relatedTarget).data("link");
-            $("#modal-buyinfo .modal-body").load(link, function(){
-            });
-          });
-        });
-      </script>
-
-    </section>
-
-    <div class="modal fade" id="modal-default">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content bg-default">
-          <div class="modal-body">
-            <p>One fine body…</p>
-          </div>
-          <div class="modal-footer justify-content-between">
-          </div>
+  <div class="modal fade" id="modal-default">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content bg-default">
+        <div class="modal-body">
+          <p>One fine body…</p>
+        </div>
+        <div class="modal-footer justify-content-between">
         </div>
       </div>
     </div>
+  </div>
 
     <div class="modal fade" id="modal-buyinfo">
       <div class="modal-dialog modal-xl">
@@ -358,5 +319,65 @@
         </div>
       </div>
     </div>
+  </div>
+
+  {{-- button-to-top --}}
+  <script>
+    var btn = $('#button');
+
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > 300) {
+        btn.addClass('show');
+      } else {
+        btn.removeClass('show');
+      }
+    });
+
+    btn.on('click', function(e) {
+      e.preventDefault();
+      $('html, body').animate({scrollTop:0}, '300');
+    });
+  </script>
+
+  <script>
+    $(".alert").fadeTo(3000, 500).slideUp(500, function(){
+    $(".alert").alert('close');
+    });
+  </script>
+
+  <script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+      });
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+  </script>
+
+  {{-- Popup --}}
+  <script>
+    $(function () {
+      $("#modal-default").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-default .modal-body").load(link, function(){
+        });
+      });
+
+      $("#modal-buyinfo").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-buyinfo .modal-body").load(link, function(){
+        });
+      });
+    });
+  </script>
 
 @endsection

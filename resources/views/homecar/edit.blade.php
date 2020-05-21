@@ -425,31 +425,51 @@
                 </div>
               </div>
             </div>
-               
+
+            <a id="button"></a>
         </div>
       </div>
-
-<!-- DateNumberUserHidden -->
-      <script>
-          function myFunctionDateUser() {
-            var x = document.getElementById("DateNumberUser").value;
-            document.form1.mySelect1.value = x;
-          }
-      </script>
-<!-- DateExpireHidden       -->
-      <script>
-          function myFunctionDateExpire() {
-            var x = document.getElementById("DateExpire").value;
-            document.form1.mySelect2.value = x;
-          }
-      </script>
-
-<!-- เวลาแจ้งเตือน -->
-      <script>
-        $(".alert").fadeTo(3000, 500).slideUp(500, function(){
-        $(".alert").alert('close');
-        });;
-      </script>
     </section>
+
+  {{-- button-to-top --}}
+  <script>
+    var btn = $('#button');
+
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > 300) {
+        btn.addClass('show');
+      } else {
+        btn.removeClass('show');
+      }
+    });
+
+    btn.on('click', function(e) {
+      e.preventDefault();
+      $('html, body').animate({scrollTop:0}, '300');
+    });
+  </script>
+  
+  <!-- DateNumberUserHidden -->
+  <script>
+    function myFunctionDateUser() {
+      var x = document.getElementById("DateNumberUser").value;
+      document.form1.mySelect1.value = x;
+    }
+  </script>
+
+  <!-- DateExpireHidden -->
+  <script>
+      function myFunctionDateExpire() {
+        var x = document.getElementById("DateExpire").value;
+        document.form1.mySelect2.value = x;
+      }
+  </script>
+
+  <!-- เวลาแจ้งเตือน -->
+  <script>
+    $(".alert").fadeTo(3000, 500).slideUp(500, function(){
+    $(".alert").alert('close');
+    });;
+  </script>
 
 @endsection

@@ -97,7 +97,7 @@
                           </div>
                         </div>
                       </div> <!-- endrow -->
-
+      
                       <div class="row">
                         <div class="col-md-5">
                           <div class="float-right form-inline">
@@ -116,7 +116,7 @@
                             </select>
                           </div>
                         </div>
-
+      
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>เลขไมล์ :</label>
@@ -124,7 +124,7 @@
                           </div>
                         </div>
                       </div> <!-- endrow -->
-
+      
                       <div class="row">
                         <div class="col-md-5">
                           <div class="float-right form-inline">
@@ -202,20 +202,19 @@
                                     var num1 = document.getElementById('currency').value;
                                     var num11 = num1.replace(",","");
                                     var num2 = document.getElementById('currency1').value;
-                                    var num22 = num1.replace(",","");
-
+                                    var num22 = num1.replace(",","");  
                                     document.form1.currency.value = addCommas(num1);
                                     document.form1.currency1.value = addCommas(num2);
                                     }
-
+  
                               </script>
-
+  
                               <label><font color="red">*</font> ราคาซื้อ :</label>
                               <input type="text" id="currency" name="PriceCar" class="form-control" placeholder="ป้อนราคาซื้อ" style="width: 250px;" onchange="sum()"/>
                             </div>
                           </div>
                         @endif
-
+      
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>ต้นทุนทางบัญชี :</label>
@@ -223,7 +222,7 @@
                           </div>
                         </div>
                       </div> <!-- endrow -->
-
+      
                       <P></p>
                       <hr>
                       <h3 align="center"><b>เช็คเอกสารรถยนต์</b></h3>
@@ -278,7 +277,6 @@
                                 <span class="checkmark3"></span>
                                 </label>
                               </th>
-
                             </tr>
                           </tbody>
                         </table>

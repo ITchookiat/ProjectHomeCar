@@ -22,7 +22,7 @@
             <div class="card-header">
               <h1 class="" style="text-align:center;"><b>เพิ่มข้อมูลรถยนต์</b></h1>
             </div>
-  
+
               <div class="card-body">
                 @if (count($errors) > 0)
                   <div class="alert alert-danger">
@@ -33,12 +33,12 @@
                     </ul>
                   </div>
                 @endif
-  
+
                 <div class="row">
                   <div class="col-md-12"> <br />
                     <form name="form1" action="{{ route('datacar.store') }}" method="post" id="formimage" enctype="multipart/form-data">
                       @csrf
-      
+
                       <div class="row">
                         <div class="col-md-5">
                           <div class="float-right form-inline">
@@ -47,7 +47,7 @@
                           </div>
                         </div>
                       </div> <!-- endrow -->
-      
+
                       <div class="row">
                         <div class="col-md-5">
                           <div class="float-right form-inline">
@@ -67,7 +67,7 @@
                             </select>
                           </div>
                         </div>
-      
+
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label><font color="red">*</font>เลขทะเบียน :</label>
@@ -75,7 +75,7 @@
                           </div>
                         </div>
                       </div> <!-- endrow -->
-      
+
                       <div class="row">
                         <div class="col-md-5">
                           <div class="float-right form-inline">
@@ -89,7 +89,7 @@
                             </select>
                           </div>
                         </div>
-    
+
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label> Sale :</label>
@@ -132,7 +132,7 @@
                             <input type="text" name="VersionCar" class="form-control" style="width: 250px;" placeholder="ป้อนรุ่นรถ" />
                           </div>
                         </div>
-      
+
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>เกียร์รถ :</label>
@@ -147,7 +147,7 @@
                           </div>
                         </div>
                       </div> <!-- endrow -->
-      
+
                       <div class="row">
                         <div class="col-md-5">
                           <div class="float-right form-inline">
@@ -156,7 +156,7 @@
                             <label>ซีซี</label>
                           </div>
                         </div>
-      
+
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>สีรถ :</label>
@@ -164,7 +164,7 @@
                           </div>
                         </div>
                       </div> <!-- endrow -->
-      
+
                       <div class="row">
                         <div class="col-md-5">
                           <div class="float-right form-inline">
@@ -172,7 +172,7 @@
                             <input type="text" name="JobCar" class="form-control" style="width: 250px;" placeholder="ป้อน JobNumber" />
                           </div>
                         </div>
-      
+
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>ราคาแนะนำ :</label>
@@ -180,7 +180,7 @@
                           </div>
                         </div>
                       </div> <!-- endrow -->
-      
+
                       <div class="row">
                         @if(auth::user()->type == 1)
                           <div class="col-md-5">
@@ -197,13 +197,12 @@
                                   }
                                   return x1 + x2;
                                   }
-  
+
                                   function sum() {
                                     var num1 = document.getElementById('currency').value;
                                     var num11 = num1.replace(",","");
                                     var num2 = document.getElementById('currency1').value;
-                                    var num22 = num1.replace(",","");
-  
+                                    var num22 = num1.replace(",","");  
                                     document.form1.currency.value = addCommas(num1);
                                     document.form1.currency1.value = addCommas(num2);
                                     }
@@ -227,7 +226,7 @@
                       <P></p>
                       <hr>
                       <h3 align="center"><b>เช็คเอกสารรถยนต์</b></h3>
-      
+
                       <div class="table-responsive">
                         <table class="table table-bordered" id="table" style="width: 65%;" align="center">
                           <thead class="thead-dark">
@@ -278,12 +277,11 @@
                                 <span class="checkmark3"></span>
                                 </label>
                               </th>
-        
                             </tr>
                           </tbody>
                         </table>
                       </div>
-      
+
                       <br>
                       <div class="row">
                         <div class="col-md-5">
@@ -292,23 +290,23 @@
                             <textarea name="CheckNote" class="form-control" placeholder="ป้อนหมายเหตุ" rows="4" style="width: 250px;"></textarea>
                           </div>
                         </div>
-    
+
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>วันที่หมดอายุ ปชช :</label>
                             <input type="date" id="DateNumberUser" class="form-control" name="DateNumberUser" style="width: 250px;" min="{{ $date2 }}" placeholder="ป้อนวันที่หมดอายุ ปชช">
                           </div>
-    
+
                           <div class="float-right form-inline">
                             <label>วันที่หมดอายุภาษี :</label>
                             <input type="date" id="DateExpire" class="form-control" name="DateExpire" style="width: 250px;" min="{{ $date2 }}" placeholder="ป้อนวันที่หมดอายุภาษี">
                           </div>
-    
+
                           <input type="hidden" id="mySelect1" class="form-control" name="DateNumberUserHidden" >
                           <input type="hidden" id="mySelect2" class="form-control" name="DateExpireHidden" >
                         </div>
                       </div>
-      
+
                       <input type="hidden" name="_token" value="{{csrf_token()}}" />
                       <hr>
                       <div class="form-group">
@@ -323,7 +321,7 @@
                         </a>
                       </div>
                     </form>
-      
+
                   </div>
                 </div>
               </div>
@@ -338,7 +336,7 @@
       document.form1.mySelect1.value = x;
     }
   </script>
-  
+
   <!-- DateExpireHidden       -->
   <script>
     function myFunctionDateExpire() {

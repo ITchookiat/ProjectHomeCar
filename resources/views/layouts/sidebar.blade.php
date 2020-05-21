@@ -111,6 +111,12 @@
                   <p>รถยนต์ยืมใช้</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('datacar',12) }}" class="nav-link {{ Request::is('datacar/view/12') ? 'active' : '' }}">
+                  <i class="far fa-window-restore text-red nav-icon"></i>
+                  <p>รถยึดจากเร่งรัด</p>
+                </a>
+              </li>
             </ul>
           </li>
 
@@ -132,7 +138,7 @@
               <li class="nav-item">
                 <a href="{{ route('reportcar',4) }}" class="nav-link {{ Request::is('reportcar/viewreport/4') ? 'active' : '' }}">
                   <i class="fas fa-paste text-red nav-icon"></i>
-                  <p>รายงาน วันหมดอายุบัต</p>
+                  <p>รายงาน วันหมดอายุบัตร</p>
                 </a>
               </li>
               <li class="nav-item">

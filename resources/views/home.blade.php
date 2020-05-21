@@ -88,7 +88,7 @@
                                 <div class="small-box bg-red">
                                 <div class="inner">
                                     <h3>{{$data6}}</h3>
-                                    <p>รถยนต์พร้อมขาย</p>
+                                    <p>รถยนต์ที่ขายแล้ว</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-cart-arrow-down"></i>

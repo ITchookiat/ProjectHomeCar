@@ -120,7 +120,7 @@
       @endphp
     @endif
 
-  
+
   <section class="content">
     <div class="modal-header" >
       <h4 class="modal-title">ป้ายทะเบียน <b><font color="red">{{$datacar->Number_Regist}}</font></b></h4>
@@ -905,7 +905,7 @@
                   </div>
                 </div>
               </div> <!-- endrow -->
-              
+
               <div class="row">
                 <div class="col-5">
                   <div class="float-right form-inline">
@@ -914,6 +914,7 @@
                   </div>
                 </div>
               </div> <!-- endrow -->
+
             @endif
 
             <input type="hidden" name="_method" value="PATCH"/>

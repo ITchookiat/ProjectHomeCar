@@ -158,7 +158,7 @@
                       </div>
                     @else
                       <div class="table-responsive">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="table1" class="table table-bordered table-striped">
                           <thead>
                             <tr>
                               @if($type != 6)
@@ -187,11 +187,12 @@
                                   $create_date = date_create($row->create_date);
                                   $date_status = date_create($row->Date_Status);
                                   $Date_Soldout_plus = date_create($row->Date_Soldout_plus);
+
+                                  // dd(date_format($create_date, 'd-m-Y'));
                                 @endphp
 
                                 @if($type != 6)
                                   <td class="text-center">
-
                                     {{ date_format($create_date, 'd-m-Y')}}
                                   </td>
 
@@ -347,18 +348,13 @@
 
   <script>
     $(function () {
-      $("#example1").DataTable({
-        "responsive": true,
-        "autoWidth": false,
-      });
-      $('#example2').DataTable({
+      $('#table1').DataTable({
         "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": false,
         "info": true,
         "autoWidth": false,
-        "responsive": true,
       });
     });
   </script>

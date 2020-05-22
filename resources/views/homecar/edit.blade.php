@@ -108,7 +108,7 @@
                       <div class="col-5">
                         <div class="float-right form-inline">
                           <label>เลขไมล์ :</label>
-                          <input type="text" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" value="{{$datacar->Number_Miles}}" />
+                          <input type="text" id="MilesCar" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" value="{{$datacar->Number_Miles}}" oninput="mile();" maxlength="10"/>
                         </div>
                       </div>
                     </div> <!-- endrow -->
@@ -193,7 +193,7 @@
                         </div>
                       </div>
                     </div> <!-- endrow -->
-                      
+
                     <hr>
                     <div class="row">
                       <div class="col-5">
@@ -217,6 +217,12 @@
                               x1 = x1.replace(rgx, '$1' + ',' + '$2');
                               }
                               return x1 + x2;
+                            }
+
+                            function mile(){
+                              var num11 = document.getElementById('MilesCar').value;
+                              var num1 = num11.replace(",","");
+                              document.form1.MilesCar.value = addCommas(num1);
                             }
 
                             function sum() {
@@ -320,10 +326,15 @@
                     </div> <!-- endrow -->
 
                     <div class="row">
-                      <div class="col-10">
+                      <div class="col-5">
                         <div class="float-right form-inline">
                           <label style="vertical-align: top;">เหตุผลการยืม :</label>
-                          <textarea type="text" name="NoteBorrow" class="form-control" rows="3" style="width: 750px;"  placeholder="ป้อนหมายเหตุ">{{ $datacar->Note_Borrow }}</textarea>
+                          <textarea type="text" name="NoteBorrow" class="form-control" rows="3" style="width: 250px;"  placeholder="ป้อนหมายเหตุ">{{ $datacar->Note_Borrow }}</textarea>
+                        </div>
+                      </div>
+
+                      <div class="col-5">
+                        <div class="float-right form-inline">
                         </div>
                       </div>
                     </div> <!-- endrow -->
@@ -448,7 +459,7 @@
       $('html, body').animate({scrollTop:0}, '300');
     });
   </script>
-  
+
   <!-- DateNumberUserHidden -->
   <script>
     function myFunctionDateUser() {

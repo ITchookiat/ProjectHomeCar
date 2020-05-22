@@ -43,7 +43,7 @@
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label><font color="red">*</font> วันที่ซื้อ : &nbsp;</label>
-                            <input type="date" class="form-control" name="DateCar" style="width: 250px;" value="{{ $date }}" min="{{ $date2 }}">
+                            <input type="date" class="form-control" name="DateCar" style="width: 250px;" value="{{ $date }}" min="{{ $date2 }}" required>
                           </div>
                         </div>
                       </div> <!-- endrow -->
@@ -52,7 +52,7 @@
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label><font color="red">*</font> ยี่ห้อรถ :</label>
-                            <select name="BrandCar" class="form-control" style="width: 250px;">
+                            <select name="BrandCar" class="form-control" style="width: 250px;" required>
                               <option value="" selected>--- เลือกยี่ห้อรถ ---</option>
                               <option value="TOYOTA">TOYOTA</option>
                               <option value="MAZDA">MAZDA</option>
@@ -71,7 +71,7 @@
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label><font color="red">*</font>เลขทะเบียน :</label>
-                            <input type="text" name="Number_Regist" class="form-control" style="width: 250px;" placeholder="ป้อนเลขทะเบียน"/>
+                            <input type="text" name="Number_Regist" class="form-control" style="width: 250px;" placeholder="ป้อนเลขทะเบียน" required/>
                           </div>
                         </div>
                       </div> <!-- endrow -->
@@ -80,7 +80,7 @@
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label><font color="red">*</font>ที่มาของรถ :</label>
-                            <select name="OriginCar" class="form-control" style="width: 250px;">
+                            <select name="OriginCar" class="form-control" style="width: 250px;" required>
                               <option value="" selected>--- เลือกที่มาของรถ ---</option>
                               <option value="1">CKL</option>
                               <option value="2">รถประมูล</option>
@@ -97,7 +97,7 @@
                           </div>
                         </div>
                       </div> <!-- endrow -->
-      
+
                       <div class="row">
                         <div class="col-md-5">
                           <div class="float-right form-inline">
@@ -116,15 +116,15 @@
                             </select>
                           </div>
                         </div>
-      
+
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>เลขไมล์ :</label>
-                            <input type="text" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" />
+                            <input type="text" id="MilesCar" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" oninput="mile();" maxlength="10"/>
                           </div>
                         </div>
                       </div> <!-- endrow -->
-      
+
                       <div class="row">
                         <div class="col-md-5">
                           <div class="float-right form-inline">
@@ -198,23 +198,29 @@
                                   return x1 + x2;
                                   }
 
+                                  function mile(){
+                                    var num11 = document.getElementById('MilesCar').value;
+                                    var num1 = num11.replace(",","");
+                                    document.form1.MilesCar.value = addCommas(num1);
+                                  }
+
                                   function sum() {
                                     var num1 = document.getElementById('currency').value;
                                     var num11 = num1.replace(",","");
                                     var num2 = document.getElementById('currency1').value;
-                                    var num22 = num1.replace(",","");  
+                                    var num22 = num1.replace(",","");
                                     document.form1.currency.value = addCommas(num1);
                                     document.form1.currency1.value = addCommas(num2);
                                     }
-  
+
                               </script>
-  
+
                               <label><font color="red">*</font> ราคาซื้อ :</label>
                               <input type="text" id="currency" name="PriceCar" class="form-control" placeholder="ป้อนราคาซื้อ" style="width: 250px;" onchange="sum()"/>
                             </div>
                           </div>
                         @endif
-      
+
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>ต้นทุนทางบัญชี :</label>
@@ -222,7 +228,7 @@
                           </div>
                         </div>
                       </div> <!-- endrow -->
-      
+
                       <P></p>
                       <hr>
                       <h3 align="center"><b>เช็คเอกสารรถยนต์</b></h3>

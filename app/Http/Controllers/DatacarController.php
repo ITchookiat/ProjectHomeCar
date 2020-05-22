@@ -174,13 +174,13 @@ class DatacarController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request,[
-        'DateCar' => 'required',
-        'PriceCar' => 'required',
-        'BrandCar' => 'required',
-        'Number_Regist' => 'required|unique:data_cars',
-        'OriginCar' => 'required'
-      ]);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
+      // $this->validate($request,[
+      //   'DateCar' => 'required',
+      //   'PriceCar' => 'required',
+      //   'BrandCar' => 'required',
+      //   'Number_Regist' => 'required|unique:data_cars',
+      //   'OriginCar' => 'required'
+      // ]);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
 
       $SetPriceStr = str_replace (",","",$request->get('PriceCar'));
       $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
@@ -490,11 +490,11 @@ class DatacarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-        'DateCar' => 'required',
-        'PriceCar' => 'required',
-        'BrandCar' => 'required',
-        'RegistCar' => 'required']);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
+        // $this->validate($request,[
+        // 'DateCar' => 'required',
+        // 'PriceCar' => 'required',
+        // 'BrandCar' => 'required',
+        // 'RegistCar' => 'required']);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
       $user = data_car::find($id);
       // dd($id);
       $user->create_date = $request->get('DateCar');
@@ -559,6 +559,11 @@ class DatacarController extends Controller
         }elseif ($request->get('Cartype') == 6) {
           $user->Date_Soldout = $date;
           $user->Date_Status = $date;
+          $hold = Holdcar::where('Number_Regist',$request->get('RegistCar'))->first();
+          if($hold != null){
+            $hold->Soldout_hold = 'Y';
+            $hold->update();
+          }
         }
       }
         $user->Car_type = $request->get('Cartype');

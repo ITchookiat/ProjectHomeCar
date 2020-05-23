@@ -148,9 +148,116 @@ class DatacarController extends Controller
           $type = $request->type;
           return view('homecar.view', compact('data','dataDB','title','type'));
         }
+        elseif ($request->type == 13) {
+          
+          $data = DB::table('data_cars')
+                ->select('data_cars.Brand_Car')
+                ->where('data_cars.car_type','=',6)
+                ->groupBy('data_cars.Brand_Car')
+                ->get();
+
+          // dd($data);
+          $type = $request->type;
+          return view('homecar.viewDetail',compact('type','data'));
+        }
 
         $type = $request->type;
         return view('homecar.view', compact('data','title','type','fdate','tdate','carType'));
+    }
+
+    public function SearchData(Request $request, $type){
+
+      if ($type == 1) {
+        $NameBrandcar = $request->get('select');
+  
+        $data = DB::table('data_cars')
+              ->select('data_cars.Version_Car')
+              ->where('data_cars.car_type','=',6)
+              ->where('data_cars.Brand_Car','=', $NameBrandcar)
+              ->groupBy('data_cars.Version_Car')
+              ->get();
+  
+              $output = '<option value="">เลือกรุ่นรถ</option>';
+              foreach($data as $row){
+                $output.='<option value="'.$row->Version_Car.'">'.$row->Version_Car.'</option>';
+              }
+  
+        echo $output;
+      }
+      elseif ($type == 2) {
+        $NameVersionCar = $request->get('select1');
+  
+        $data = DB::table('data_cars')
+              ->select('data_cars.Year_Product')
+              ->where('data_cars.car_type','=',6)
+              ->where('data_cars.Version_Car','=', $NameVersionCar)
+              ->groupBy('data_cars.Year_Product')
+              ->get();
+
+              $output = '<option value="">เลือกปีรถ</option>';
+              foreach($data as $row){
+                $output.='<option value="'.$row->Year_Product.'">'.$row->Year_Product.'</option>';
+              }
+  
+        echo $output;
+      }
+      elseif ($type == 3) {
+        $GetVersion = $request->get('select1');
+        $YearCar = $request->get('select2');
+
+        $data = DB::table('data_cars')
+              ->select('data_cars.*')
+              ->where('data_cars.car_type','=',6)
+              ->where('data_cars.Version_Car','=', $GetVersion)
+              ->where('data_cars.Year_Product','=', $YearCar)
+              ->get();
+
+              $SumPrice = 0;
+              $output='<table class="table table-striped table-valign-middle">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th class="text-center">ลำดับ</th>
+                              <th class="text-center">วันที่ซื้อ</th>
+                              <th class="text-center">ราคาซื้อ</th>
+                              <th class="text-center">ราคาต้นทุน</th>
+                              <th class="text-center">วันที่ขาย</th>
+                              <th class="text-center">ราคาขาย</th>
+                              <th class="text-center">ที่มา</th>
+                            </tr>
+                          </thead>';
+              foreach($data as $key => $row){
+                $SetKey = $key + 1;
+                $create_date = date_create($row->create_date);
+                $create_Soldout = date_create($row->Date_Soldout_plus);
+                $SumPrice = $row->Fisrt_Price + $row->Repair_Price + $row->Offer_Price + $row->Color_Price + $row->Add_Price;
+
+                if ($row->Origin_Car == 1) {
+                  $Type = 'CKL';
+                }elseif ($row->Origin_Car == 2) {
+                  $Type = 'รถประมูล';
+                }
+                elseif ($row->Origin_Car == 3) {
+                  $Type = 'รถยึด';
+                }
+                elseif ($row->Origin_Car == 4) {
+                  $Type = 'ฝากขาย';
+                }
+
+                $output.='<tr>
+                            <td class="text-center">'.$SetKey.'</td>
+                            <td class="text-center">'.date_format($create_date, 'd-m-Y').'</td>
+                            <td class="text-center">'.number_format($row->Fisrt_Price, 2).'</td>
+                            <td class="text-center">'.number_format($SumPrice, 2).'</td>
+                            <td class="text-center">'.date_format($create_Soldout, 'd-m-Y').'</td>
+                            <td class="text-center">'.number_format($row->Net_Priceplus, 2).'</td>
+                            <td class="text-center">'.$Type.'</td>
+                          </tr>';
+              }
+              $output.='</table>';
+  
+        echo $output;
+      }
+
     }
 
     /**

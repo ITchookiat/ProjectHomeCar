@@ -64,6 +64,9 @@
                               </ul>
                             </div>
                           @elseif($type == 6)
+                            <a class="btn bg-danger btn-app" data-toggle="modal" data-target="#modal-1" data-link="{{ route('datacar', 13) }}">
+                              <span class="fas fa-print"></span> เทียบราคา
+                            </a>
                             <a target="_blank"  class="btn bg-primary btn-app" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}}&carType={{$carType}}">
                               <span class="fas fa-print"></span> ปริ้นรายการ
                             </a>
@@ -297,6 +300,32 @@
     </div>
   </section>
 
+    <!-- Pop up รายละเอียดค่าใช้จ่าย -->
+    <div class="modal fade" id="modal-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>One fine body…</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Pop up รายละเอียดค่าใช้จ่าย -->
+  <div class="modal fade" id="modal-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>One fine body…</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="modal-default">
     <div class="modal-dialog modal-xl">
       <div class="modal-content bg-default">
@@ -309,18 +338,28 @@
     </div>
   </div>
 
-    <div class="modal fade" id="modal-buyinfo">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content bg-default">
-          <div class="modal-body">
-            <p>One fine body…</p>
-          </div>
-          <!-- <div class="modal-footer justify-content-between">
-          </div> -->
+  <div class="modal fade" id="modal-buyinfo">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content bg-default">
+        <div class="modal-body">
+          <p>One fine body…</p>
         </div>
+        <!-- <div class="modal-footer justify-content-between">
+        </div> -->
       </div>
     </div>
   </div>
+
+  {{-- Popup --}}
+  <script>
+    $(function () {
+      $("#modal-1").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-1 .modal-body").load(link, function(){
+        });
+      });
+    });
+  </script>
 
   {{-- button-to-top --}}
   <script>

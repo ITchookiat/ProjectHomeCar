@@ -65,7 +65,7 @@
                             </div>
                           @elseif($type == 6)
                             <a class="btn bg-danger btn-app" data-toggle="modal" data-target="#modal-1" data-link="{{ route('datacar', 13) }}">
-                              <span class="fas fa-print"></span> เทียบราคา
+                              <i class="fas fa-car"></i> เทียบราคา
                             </a>
                             <a target="_blank"  class="btn bg-primary btn-app" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}}&carType={{$carType}}">
                               <span class="fas fa-print"></span> ปริ้นรายการ

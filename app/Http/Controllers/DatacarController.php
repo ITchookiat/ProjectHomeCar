@@ -603,7 +603,7 @@ class DatacarController extends Controller
         // 'BrandCar' => 'required',
         // 'RegistCar' => 'required']);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
       $user = data_car::find($id);
-      // dd($id);
+      // dd($request->get('PriceCar'));
       $user->create_date = $request->get('DateCar');
       $user->Date_Status = $request->get('DateCar');
       $SetPriceStr = str_replace (",","",$request->get('PriceCar'));

@@ -120,7 +120,7 @@
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>เลขไมล์ :</label>
-                            <input type="text" id="MilesCar" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" oninput="mile();" maxlength="10"/>
+                            <input type="text" id="MilesCar" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" oninput="mile();" maxlength="9"/>
                           </div>
                         </div>
                       </div> <!-- endrow -->
@@ -176,47 +176,48 @@
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>ราคาแนะนำ :</label>
-                            <input type="text" name="OfferPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาแนะนำ" />
+                            <input type="text" id="OfferPrice" name="OfferPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาแนะนำ" oninput="mile();" maxlength="9"/>
                           </div>
                         </div>
                       </div> <!-- endrow -->
 
                       <div class="row">
+                      <script>
+                        function addCommas(nStr){
+                          nStr += '';
+                          x = nStr.split('.');
+                          x1 = x[0];
+                          x2 = x.length > 1 ? '.' + x[1] : '';
+                          var rgx = /(\d+)(\d{3})/;
+                          while (rgx.test(x1)) {
+                          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                          }
+                          return x1 + x2;
+                        }
+
+                        function mile(){
+                          var num11 = document.getElementById('MilesCar').value;
+                          var num1 = num11.replace(",","");
+                          document.form1.MilesCar.value = addCommas(num1);
+
+                          var num22 = document.getElementById('AccountingCost').value;
+                          var num2 = num22.replace(",","");
+                          document.form1.AccountingCost.value = addCommas(num2);
+
+                          var num44 = document.getElementById('OfferPrice').value;
+                          var num4 = num44.replace(",","");
+                          document.form1.OfferPrice.value = addCommas(num4);
+
+                          var num33 = document.getElementById('PriceCar').value;
+                          var num3 = num33.replace(",","");
+                          document.form1.PriceCar.value = addCommas(num3);
+                        }
+                      </script>
                         @if(auth::user()->type == 1)
                           <div class="col-md-5">
                             <div class="float-right form-inline">
-                              <script>
-                                  function addCommas(nStr){
-                                  nStr += '';
-                                  x = nStr.split('.');
-                                  x1 = x[0];
-                                  x2 = x.length > 1 ? '.' + x[1] : '';
-                                  var rgx = /(\d+)(\d{3})/;
-                                  while (rgx.test(x1)) {
-                                  x1 = x1.replace(rgx, '$1' + ',' + '$2');
-                                  }
-                                  return x1 + x2;
-                                  }
-
-                                  function mile(){
-                                    var num11 = document.getElementById('MilesCar').value;
-                                    var num1 = num11.replace(",","");
-                                    document.form1.MilesCar.value = addCommas(num1);
-                                  }
-
-                                  function sum() {
-                                    var num1 = document.getElementById('currency').value;
-                                    var num11 = num1.replace(",","");
-                                    var num2 = document.getElementById('currency1').value;
-                                    var num22 = num1.replace(",","");
-                                    document.form1.currency.value = addCommas(num1);
-                                    document.form1.currency1.value = addCommas(num2);
-                                    }
-
-                              </script>
-
                               <label><font color="red">*</font> ราคาซื้อ :</label>
-                              <input type="text" id="currency" name="PriceCar" class="form-control" placeholder="ป้อนราคาซื้อ" style="width: 250px;" onchange="sum()"/>
+                              <input type="text" id="PriceCar" name="PriceCar" class="form-control" placeholder="ป้อนราคาซื้อ" style="width: 250px;" oninput="mile();" maxlength="9"/>
                             </div>
                           </div>
                         @endif
@@ -224,7 +225,7 @@
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>ต้นทุนทางบัญชี :</label>
-                            <input type="text" id="currency1" name="AccountingCost" class="form-control" style="width: 250px;" onchange="sum()" placeholder="ต้นทุนทางบัญชี" />
+                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนทางบัญชี" oninput="mile();" maxlength="9"/>
                           </div>
                         </div>
                       </div> <!-- endrow -->

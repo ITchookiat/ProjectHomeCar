@@ -615,7 +615,12 @@ class DatacarController extends Controller
       $user->Brand_Car = $request->get('BrandCar');
       $user->Version_Car = $request->get('VersionCar');
       $user->Model_Car = $request->get('ModelCar');
-      $user->Number_Miles = $request->get('MilesCar');
+      if($request->get('MilesCar') != Null){
+        $SetMilesCar = str_replace (",","",$request->get('MilesCar'));
+      }else{
+        $SetMilesCar = Null;
+      }
+      $user->Number_Miles = $SetMilesCar;
       $user->Color_Car = $request->get('ColorCar');
       $user->Gearcar = $request->get('Gearcar');
       $user->Year_Product = $request->get('YearCar');

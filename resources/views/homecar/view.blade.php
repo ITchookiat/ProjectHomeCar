@@ -110,7 +110,7 @@
 
                     @if($type == 12)
                       <div class="table-responsive">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="table1" class="table table-bordered table-striped">
                           <thead>
                             <tr>
                               <th class="text-center">ลำดับ</th>

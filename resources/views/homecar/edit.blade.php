@@ -172,7 +172,7 @@
                     <div class="row">
                       <div class="col-5">
                         <div class="float-right form-inline">
-                          @if(auth::user()->type == 1)
+                          @if(auth::user()->type == 1 or auth::user()->type == 3)
                             <label><font color="red">*</font>ราคาซื้อ :</label>
                             <input type="text" id="PriceCar" name="PriceCar" class="form-control" style="width: 250px;" placeholder="ป้อนราคาซื้อ" value="{{number_format($datacar->Fisrt_Price,2)}}" oninput="sum();" maxlength="9"/>
                           @endif

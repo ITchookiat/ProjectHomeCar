@@ -176,9 +176,6 @@
                             <label><font color="red">*</font>ราคาซื้อ :</label>
                             <input type="text" id="PriceCar" name="PriceCar" class="form-control" style="width: 250px;" placeholder="ป้อนราคาซื้อ" value="{{number_format($datacar->Fisrt_Price,2)}}" oninput="sum();" maxlength="9"/>
                           @endif
-                          @if(auth::user()->type != 1)
-                                <input type="hidden" id="PriceCar" name="PriceCar" value="{{number_format($datacar->Fisrt_Price,2)}}" oninput="sum();" />
-                          @endif
                         </div>
                       </div>
                       <div class="col-5">
@@ -242,6 +239,7 @@
                                 var num77 = num7.replace(",","");
                                 var result = parseFloat(num11)+parseFloat(num22)+parseFloat(num33)+parseFloat(num44)+parseFloat(num55);
                                 
+                                document.form1.PriceCar.value = addCommas(num11);
                                 document.form1.OfferPrice.value = addCommas(num22);
                                 document.form1.RepairCar.value = addCommas(num33);
                                 document.form1.ColorPrice.value = addCommas(num44);

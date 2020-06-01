@@ -289,7 +289,11 @@ class DatacarController extends Controller
       //   'OriginCar' => 'required'
       // ]);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
 
-      $SetPriceStr = str_replace (",","",$request->get('PriceCar'));
+      if($request->get('AccountingCost') != Null){
+        $SetPriceStr = str_replace (",","",$request->get('PriceCar'));
+      }else{
+        $SetPriceStr = Null;
+      }
       $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
 
       if ($SetOfferStr == "") {

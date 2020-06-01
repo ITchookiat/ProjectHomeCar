@@ -213,7 +213,7 @@
                           document.form1.PriceCar.value = addCommas(num3);
                         }
                       </script>
-                        @if(auth::user()->type == 1)
+                        @if(auth::user()->type == 1 or auth::user()->type == 3)
                           <div class="col-md-5">
                             <div class="float-right form-inline">
                               <label><font color="red">*</font> ราคาซื้อ :</label>

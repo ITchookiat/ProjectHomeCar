@@ -610,12 +610,12 @@ class DatacarController extends Controller
       // dd($request->get('PriceCar'));
       $user->create_date = $request->get('DateCar');
       $user->Date_Status = $request->get('DateCar');
-      $user->Fisrt_Price = $SetPriceStr;
       if($request->get('PriceCar') != Null){
         $SetPriceStr = str_replace (",","",$request->get('PriceCar'));
       }else{
         $SetPriceStr = Null;
       }
+      $user->Fisrt_Price = $SetPriceStr;
       $SetRepairStr = str_replace (",","",$request->get('RepairCar'));
       $user->Repair_Price = $SetRepairStr;
       $SetNetStr = str_replace (",","",$request->get('NetCar'));

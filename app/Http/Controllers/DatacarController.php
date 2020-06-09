@@ -257,6 +257,113 @@ class DatacarController extends Controller
   
         echo $output;
       }
+      elseif($type == 4){
+        $NameBrandcar = $request->get('select');
+        $data = DB::table('data_cars')
+              ->select('data_cars.*')
+              ->where('data_cars.car_type','=',6)
+              ->where('data_cars.Brand_Car','=', $NameBrandcar)
+              ->get();
+
+              $SumPrice = 0;
+              $output='<table class="table table-striped table-valign-middle">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th class="text-center">ลำดับ</th>
+                              <th class="text-center">วันที่ซื้อ</th>
+                              <th class="text-center">ราคาซื้อ</th>
+                              <th class="text-center">ราคาต้นทุน</th>
+                              <th class="text-center">วันที่ขาย</th>
+                              <th class="text-center">ราคาขาย</th>
+                              <th class="text-center">ที่มา</th>
+                            </tr>
+                          </thead>';
+              foreach($data as $key => $row){
+                $SetKey = $key + 1;
+                $create_date = date_create($row->create_date);
+                $create_Soldout = date_create($row->Date_Soldout_plus);
+                $SumPrice = $row->Fisrt_Price + $row->Repair_Price + $row->Offer_Price + $row->Color_Price + $row->Add_Price;
+
+                if ($row->Origin_Car == 1) {
+                  $Type = 'CKL';
+                }elseif ($row->Origin_Car == 2) {
+                  $Type = 'รถประมูล';
+                }
+                elseif ($row->Origin_Car == 3) {
+                  $Type = 'รถยึด';
+                }
+                elseif ($row->Origin_Car == 4) {
+                  $Type = 'ฝากขาย';
+                }
+
+                $output.='<tr>
+                            <td class="text-center">'.$SetKey.'</td>
+                            <td class="text-center">'.date_format($create_date, 'd-m-Y').'</td>
+                            <td class="text-center">'.number_format($row->Fisrt_Price, 2).'</td>
+                            <td class="text-center">'.number_format($SumPrice, 2).'</td>
+                            <td class="text-center">'.date_format($create_Soldout, 'd-m-Y').'</td>
+                            <td class="text-center">'.number_format($row->Net_Priceplus, 2).'</td>
+                            <td class="text-center">'.$Type.'</td>
+                          </tr>';
+              }
+              $output.='</table>';
+              echo $output;
+      }
+      elseif($type == 5){
+        $NameBrandcar = $request->get('brand');
+        $NameVersionCar = $request->get('version');
+
+        $data = DB::table('data_cars')
+              ->select('data_cars.*')
+              ->where('data_cars.car_type','=',6)
+              ->where('data_cars.Brand_Car','=', $NameBrandcar)
+              ->where('data_cars.Version_Car','=', $NameVersionCar)
+              ->get();
+
+              $SumPrice = 0;
+              $output='<table class="table table-striped table-valign-middle">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th class="text-center">ลำดับ</th>
+                              <th class="text-center">วันที่ซื้อ</th>
+                              <th class="text-center">ราคาซื้อ</th>
+                              <th class="text-center">ราคาต้นทุน</th>
+                              <th class="text-center">วันที่ขาย</th>
+                              <th class="text-center">ราคาขาย</th>
+                              <th class="text-center">ที่มา</th>
+                            </tr>
+                          </thead>';
+              foreach($data as $key => $row){
+                $SetKey = $key + 1;
+                $create_date = date_create($row->create_date);
+                $create_Soldout = date_create($row->Date_Soldout_plus);
+                $SumPrice = $row->Fisrt_Price + $row->Repair_Price + $row->Offer_Price + $row->Color_Price + $row->Add_Price;
+
+                if ($row->Origin_Car == 1) {
+                  $Type = 'CKL';
+                }elseif ($row->Origin_Car == 2) {
+                  $Type = 'รถประมูล';
+                }
+                elseif ($row->Origin_Car == 3) {
+                  $Type = 'รถยึด';
+                }
+                elseif ($row->Origin_Car == 4) {
+                  $Type = 'ฝากขาย';
+                }
+
+                $output.='<tr>
+                            <td class="text-center">'.$SetKey.'</td>
+                            <td class="text-center">'.date_format($create_date, 'd-m-Y').'</td>
+                            <td class="text-center">'.number_format($row->Fisrt_Price, 2).'</td>
+                            <td class="text-center">'.number_format($SumPrice, 2).'</td>
+                            <td class="text-center">'.date_format($create_Soldout, 'd-m-Y').'</td>
+                            <td class="text-center">'.number_format($row->Net_Priceplus, 2).'</td>
+                            <td class="text-center">'.$Type.'</td>
+                          </tr>';
+              }
+              $output.='</table>';
+              echo $output;
+      }
 
     }
 

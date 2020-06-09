@@ -110,5 +110,43 @@
     }
   });
 
+  $('.BrandCar').change(function() {
+    if ($(this).val() != '') {
+      
+      var select = $(this).val();
+      // console.log(select);
+      var _token = $('input[name="_token"]').val();
+
+      $.ajax({
+        url:"{{ route('datacar.SearchData', 4) }}",
+        method:"POST",
+        data:{select:select,_token:_token},
+
+        success:function(result){ //เสร็จแล้วทำอะไรต่อ
+          $('#ShowData').html(result);
+        }
+      })
+    }
+  });
+
+  $('.VersionCar').change(function() {
+    if ($(this).val() != '') {
+
+      var brand = $('#BrandCar').val();
+      var version = $(this).val();
+      var _token = $('input[name="_token"]').val();
+
+      $.ajax({
+        url:"{{ route('datacar.SearchData', 5) }}",
+        method:"POST",
+        data:{brand:brand,version:version,_token:_token},
+
+        success:function(result){ //เสร็จแล้วทำอะไรต่อ
+          $('#ShowData').html(result);
+        }
+      })
+    }
+  });
+
 </script>
 

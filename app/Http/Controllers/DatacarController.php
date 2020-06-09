@@ -210,6 +210,7 @@ class DatacarController extends Controller
               ->where('data_cars.car_type','=',6)
               ->where('data_cars.Version_Car','=', $GetVersion)
               ->where('data_cars.Year_Product','=', $YearCar)
+              ->orderBy('data_cars.create_date', 'DESC')
               ->get();
 
               $SumPrice = 0;
@@ -263,6 +264,7 @@ class DatacarController extends Controller
               ->select('data_cars.*')
               ->where('data_cars.car_type','=',6)
               ->where('data_cars.Brand_Car','=', $NameBrandcar)
+              ->orderBy('data_cars.create_date', 'DESC')
               ->get();
 
               $SumPrice = 0;
@@ -318,6 +320,7 @@ class DatacarController extends Controller
               ->where('data_cars.car_type','=',6)
               ->where('data_cars.Brand_Car','=', $NameBrandcar)
               ->where('data_cars.Version_Car','=', $NameVersionCar)
+              ->orderBy('data_cars.create_date', 'DESC')
               ->get();
 
               $SumPrice = 0;

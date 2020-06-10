@@ -43,7 +43,7 @@ class DatacarController extends Controller
                         ->when(!empty($carType), function($q) use($carType){
                           return $q->where('data_cars.car_type',$carType);
                         })
-                        ->orderBy('data_cars.create_date', 'ASC')
+                        ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
 
             }else {
@@ -53,7 +53,7 @@ class DatacarController extends Controller
                           return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                         })
                         ->where('data_cars.car_type','<>',6)
-                        ->orderBy('data_cars.create_date', 'ASC')
+                        ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
             }
           $title = 'รถยนต์ทั้งหมด';
@@ -62,7 +62,7 @@ class DatacarController extends Controller
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->where('data_cars.car_type','=',2)
-                      ->orderBy('data_cars.create_date', 'ASC')
+                      ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์ระหว่างทำสี';
         }
@@ -70,7 +70,7 @@ class DatacarController extends Controller
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->where('data_cars.car_type','=',3)
-                      ->orderBy('data_cars.create_date', 'ASC')
+                      ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์รอซ่อม';
         }
@@ -78,7 +78,7 @@ class DatacarController extends Controller
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->where('data_cars.car_type','=',4)
-                      ->orderBy('data_cars.create_date', 'ASC')
+                      ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์ระหว่างซ่อม';
         }
@@ -86,7 +86,7 @@ class DatacarController extends Controller
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->where('data_cars.car_type','=',5)
-                      ->orderBy('data_cars.create_date', 'ASC')
+                      ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์ที่พร้อมขาย';
         }
@@ -97,7 +97,7 @@ class DatacarController extends Controller
                                return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
                                })
                         ->where('data_cars.car_type','=',6)
-                        ->orderBy('data_cars.Date_Soldout_plus', 'ASC')
+                        ->orderBy('data_cars.Date_Soldout_plus', 'DESC')
                         ->get();
           $title = 'รถยนต์ที่ขายแล้ว';
         }
@@ -108,7 +108,7 @@ class DatacarController extends Controller
                                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                                })
                         ->where('data_cars.car_type','=',1)
-                        ->orderBy('data_cars.create_date', 'ASC')
+                        ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
           $title = 'รถยนต์นำเข้าใหม่';
         }
@@ -119,7 +119,7 @@ class DatacarController extends Controller
                                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                                })
                         ->where('data_cars.BorrowStatus','=','1')
-                        ->orderBy('data_cars.create_date', 'ASC')
+                        ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
           $title = 'รถยืมใช้';
         }
@@ -399,7 +399,7 @@ class DatacarController extends Controller
       //   'OriginCar' => 'required'
       // ]);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
 
-      if($request->get('AccountingCost') != Null){
+      if($request->get('PriceCar') != Null){
         $SetPriceStr = str_replace (",","",$request->get('PriceCar'));
       }else{
         $SetPriceStr = Null;

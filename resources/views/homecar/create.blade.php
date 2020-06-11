@@ -105,8 +105,8 @@
                             <select name="ModelCar" class="form-control" style="width: 250px;">
                               <option value="" selected>--- เลือกลักษณะรถ ---</option>
                               <option value="เก๋ง">เก๋ง</option>
-                              <option value="Cab">cab</option>
-                              <option value="Hi 4DR">Hi 4Dr</option>
+                              <option value="cab">cab</option>
+                              <option value="Hi 4Dr">Hi 4Dr</option>
                               <option value="Hi Cab">Hi Cab</option>
                               <option value="Hi 4WD">Hi 4WD</option>
                               <option value="STD">STD</option>

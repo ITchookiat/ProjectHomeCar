@@ -602,6 +602,7 @@ class DatacarController extends Controller
         'Hi 4Dr' => 'Hi 4Dr',
         'Hi Cab' => 'Hi Cab',
         'Hi 4WD' => 'Hi 4WD',
+        'Hi 4Dr 4WD' => 'Hi 4Dr 4WD',
         'STD' => 'STD',
         '4DR' => '4DR',
         'Van' => 'Van',

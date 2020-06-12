@@ -109,6 +109,7 @@
                               <option value="Hi 4Dr">Hi 4Dr</option>
                               <option value="Hi Cab">Hi Cab</option>
                               <option value="Hi 4WD">Hi 4WD</option>
+                              <option value="Hi 4Dr 4WD">Hi 4Dr 4WD</option>
                               <option value="STD">STD</option>
                               <option value="4DR">4DR</option>
                               <option value="Van">Van</option>

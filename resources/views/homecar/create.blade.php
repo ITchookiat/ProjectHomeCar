@@ -226,7 +226,7 @@
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>ต้นทุนยอดจัด :</label>
-                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนยอดจัด" oninput="mile();" maxlength="9"/>
+                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนยอดจัด" oninput="mile();" maxlength="10"/>
                           </div>
                         </div>
                       </div> <!-- endrow -->

@@ -180,11 +180,11 @@
                       </div>
                       <div class="col-5">
                         <div class="float-right form-inline">
-                          <label>ต้นทุนทางบัญชี :</label>
+                          <label>ต้นทุนยอดจัด :</label>
                           @if($datacar->Accounting_Cost == null)
-                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนทางบัญชี" value="" oninput="sum();" maxlength="9"/>
+                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนยอดจัด" value="" oninput="sum();" maxlength="9"/>
                           @else
-                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนทางบัญชี" value="{{$datacar->Accounting_Cost}}" oninput="sum();" maxlength="9"/>
+                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนยอดจัด" value="{{$datacar->Accounting_Cost}}" oninput="sum();" maxlength="9"/>
                           @endif
                         </div>
                       </div>

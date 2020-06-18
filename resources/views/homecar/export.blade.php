@@ -140,7 +140,7 @@
                 <th class="text-center" width="30px"><b>ลำดับ</b></th>
                 <th class="text-center" width="60px"><b>วันที่ซื้อ</b></th>
                 <th class="text-center" width="50px"><b>ระยะเวลา</b></th>
-                <th class="text-center" width="65px"><b>ทะเบียน</b></th>
+                <th class="text-center" width="70px"><b>ทะเบียน</b></th>
                 <th class="text-center" width="75px"><b>ยี่ห้อ</b></th>
                 <th class="text-center" width="70px"><b>รุ่น</b></th>
                 <th class="text-center" width="50px"><b>ลักษณะ</b></th>
@@ -192,7 +192,7 @@
                 {{$ClDateDiff->format("%a วัน")}}
                 @endif
                 </td>
-                <td width="65px">{{$value->Number_Regist}}</td>
+                <td width="70px">{{$value->Number_Regist}}</td>
                 <td width="75px">{{$value->Brand_Car}}</td>
                 <td width="70px">{{$value->Version_Car}}</td>
                 <td width="50px">{{$value->Model_Car}}</td>
@@ -200,7 +200,58 @@
                 <td width="60px">{{$value->Color_Car}}</td>
                 <td width="40px">{{$value->Year_Product}}</td>
                 <td width="40px">{{$value->Size_Car}}</td>
-                <td width="65px">{{number_format($value->Fisrt_Price+$value->Repair_Price+$value->Offer_Price+$value->Color_Price+$value->Add_Price, 2)}}</td>
+                
+                  @if($value->Fisrt_Price == null)
+                    @php 
+                    $FirstPrice = 0;
+                    @endphp
+                  @else
+                    @php 
+                    $FirstPrice = $value->Fisrt_Price;
+                    @endphp
+                  @endif
+
+                  @if($value->Repair_Price == null)
+                    @php 
+                    $RepairPrice = 0;
+                    @endphp
+                  @else
+                    @php 
+                    $RepairPrice = $value->Repair_Price;
+                    @endphp
+                  @endif
+
+                  @if($value->Offer_Price == null)
+                    @php 
+                    $OfferPrice = 0;
+                    @endphp
+                  @else
+                    @php 
+                    $OfferPrice = $value->Offer_Price;
+                    @endphp
+                  @endif
+
+                  @if($value->Color_Price == null)
+                    @php 
+                    $ColorPrice = 0;
+                    @endphp
+                  @else
+                    @php 
+                    $ColorPrice = $value->Color_Price;
+                    @endphp
+                  @endif
+
+                  @if($value->Add_Price == null)
+                    @php 
+                    $AddPrice = 0;
+                    @endphp
+                  @else
+                    @php 
+                    $AddPrice = $value->Add_Price;
+                    @endphp
+                  @endif
+                
+                <td width="65px">{{number_format($FirstPrice+$RepairPrice+$OfferPrice+$ColorPrice+$AddPrice, 2)}}</td>
                 <td width="60px">
                 @if($value->Origin_Car == 1)
                 CKL

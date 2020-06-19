@@ -160,6 +160,10 @@ class DatacarController extends Controller
           $type = $request->type;
           return view('homecar.viewDetail',compact('type','data'));
         }
+        elseif ($request->type == 99) {
+          $type = $request->type;
+          return view('homecar.chart',compact('type'));
+        }
 
         $type = $request->type;
         return view('homecar.view', compact('data','title','type','fdate','tdate','carType'));
@@ -754,20 +758,31 @@ class DatacarController extends Controller
       $user->Accounting_Cost = $SetAccountingCost;
       $user->Name_Sale = $request->get('SaleCar');
       $user->Origin_Car = $request->get('OriginCar');
-      $SetAddPriceStr = str_replace (",","",$request->get('AddPrice'));
+      if($request->get('AddPrice') != Null){
+        $SetAddPriceStr = str_replace (",","",$request->get('AddPrice'));
+      }else{
+        $SetAddPriceStr = Null;
+      }
       $user->Add_Price = $SetAddPriceStr;
-      //$user->Add_Price = $request->get('AddPrice');
-      $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
+      if($request->get('OfferPrice') != Null){
+        $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
+      }else{
+        $SetOfferStr = Null;
+      }
       $user->Offer_Price = $SetOfferStr;
-      $SetColorStr = str_replace (",","",$request->get('ColorPrice'));
+      if($request->get('ColorPrice') != Null){
+        $SetColorStr = str_replace (",","",$request->get('ColorPrice'));
+      }else{
+        $SetColorStr = Null;
+      }
+      $user->Color_Price = $SetColorStr;
 
       $user->Date_Borrowcar = $request->get('DateBorrowcar');
       $user->Date_Returncar = $request->get('DateReturncar');
       $user->Name_Borrow = $request->get('NameBorrow');
       $user->Note_Borrow = $request->get('NoteBorrow');
-      $user->BorrowStatus = $request->get('BorrowStatus');
-
-      $user->Color_Price = $SetColorStr;
+      $user->BorrowStatus = $request->get('BorrowStatus')
+      
       if ($request->get('Cartype') != Null && $request->get('Cartype') != $user->Car_type ) {
            //$request->get('Cartype') มีค่า และไม่เท่ากับค่าเดิม
            date_default_timezone_set('Asia/Bangkok');

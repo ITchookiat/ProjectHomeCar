@@ -764,6 +764,7 @@ class DatacarController extends Controller
         $SetAddPriceStr = Null;
       }
       $user->Add_Price = $SetAddPriceStr;
+      //$user->Add_Price = $request->get('AddPrice');
       if($request->get('OfferPrice') != Null){
         $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
       }else{
@@ -775,14 +776,14 @@ class DatacarController extends Controller
       }else{
         $SetColorStr = Null;
       }
-      $user->Color_Price = $SetColorStr;
 
       $user->Date_Borrowcar = $request->get('DateBorrowcar');
       $user->Date_Returncar = $request->get('DateReturncar');
       $user->Name_Borrow = $request->get('NameBorrow');
       $user->Note_Borrow = $request->get('NoteBorrow');
-      $user->BorrowStatus = $request->get('BorrowStatus')
-      
+      $user->BorrowStatus = $request->get('BorrowStatus');
+
+      $user->Color_Price = $SetColorStr;
       if ($request->get('Cartype') != Null && $request->get('Cartype') != $user->Car_type ) {
            //$request->get('Cartype') มีค่า และไม่เท่ากับค่าเดิม
            date_default_timezone_set('Asia/Bangkok');

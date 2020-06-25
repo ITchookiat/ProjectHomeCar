@@ -42,17 +42,12 @@
                     @method('put')
 
                     <div class="row">
-                      @if(auth::user()->type == 1)
                         <div class="col-5">
                           <div class="float-right form-inline">
                             <label><font color="red">* </font> วันที่ซื้อ :</label>
                             <input type="date" class="form-control" name="DateCar" style="width: 250px;" value="{{$datacar->create_date}}" />
                           </div>
                         </div>
-                      @else 
-                           <input type="hidden" class="form-control" name="DateCar" style="width: 250px;" value="{{$datacar->create_date}}" /> 
-                      @endif
-
                     </div> <!-- endrow -->
 
                     <div class="row">

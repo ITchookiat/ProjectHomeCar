@@ -117,12 +117,6 @@
                   <p>รถยึดจากเร่งรัด</p>
                 </a>
               </li>
-              <!-- <li class="nav-item">
-                <a href="{{ route('datacar',99) }}" class="nav-link {{ Request::is('datacar/view/99') ? 'active' : '' }}">
-                  <i class="far fa-window-restore text-red nav-icon"></i>
-                  <p>กราฟ</p>
-                </a>
-              </li> -->
             </ul>
           </li>
 

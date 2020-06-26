@@ -142,15 +142,15 @@
                 <th class="text-center" width="50px"><b>ระยะเวลา</b></th>
                 <th class="text-center" width="70px"><b>ทะเบียน</b></th>
                 <th class="text-center" width="75px"><b>ยี่ห้อ</b></th>
-                <th class="text-center" width="70px"><b>รุ่น</b></th>
+                <th class="text-center" width="87px"><b>รุ่น</b></th>
                 <th class="text-center" width="50px"><b>ลักษณะ</b></th>
                 <th class="text-center" width="30px"><b>เกียร์</b></th>
                 <th class="text-center" width="60px"><b>สี</b></th>
-                <th class="text-center" width="40px"><b>ปี</b></th>
-                <th class="text-center"width="40px"><b>CC</b></th>
+                <th class="text-center" width="35px"><b>ปี</b></th>
+                <th class="text-center"width="35px"><b>CC</b></th>
                 <th class="text-center"width="65px"><b>ราคาต้นทุน</b></th>
                 <th class="text-center" width="60px"><b>ประเภท</b></th>
-                <th class="text-center"width="90px"><b>สถานะ</b></th>
+                <th class="text-center"width="83px"><b>สถานะ</b></th>
                 </tr>
             </thead>
 
@@ -194,12 +194,12 @@
                 </td>
                 <td width="70px">{{$value->Number_Regist}}</td>
                 <td width="75px">{{$value->Brand_Car}}</td>
-                <td width="70px">{{$value->Version_Car}}</td>
+                <td width="87px">{{$value->Version_Car}}</td>
                 <td width="50px">{{$value->Model_Car}}</td>
                 <td width="30px">{{$value->Gearcar}}</td>
                 <td width="60px">{{$value->Color_Car}}</td>
-                <td width="40px">{{$value->Year_Product}}</td>
-                <td width="40px">{{$value->Size_Car}}</td>
+                <td width="35px">{{$value->Year_Product}}</td>
+                <td width="35px">{{$value->Size_Car}}</td>
                 
                   @if($value->Fisrt_Price == null)
                     @php 
@@ -263,7 +263,7 @@
                 ฝากขาย
                 @endif
                 </td>
-                <td width="90px">
+                <td width="83px">
                 @if($value->Car_type == 1)
                 นำเข้าใหม่ @if($value->BorrowStatus == 1) (ยืม) @endif
                 @elseif ($value->Car_type  == 2)

@@ -142,8 +142,8 @@
                 <th class="text-center" width="50px"><b>ระยะเวลา</b></th>
                 <th class="text-center" width="70px"><b>ทะเบียน</b></th>
                 <th class="text-center" width="75px"><b>ยี่ห้อ</b></th>
-                <th class="text-center" width="87px"><b>รุ่น</b></th>
-                <th class="text-center" width="50px"><b>ลักษณะ</b></th>
+                <th class="text-center" width="77px"><b>รุ่น</b></th>
+                <th class="text-center" width="60px"><b>ลักษณะ</b></th>
                 <th class="text-center" width="30px"><b>เกียร์</b></th>
                 <th class="text-center" width="60px"><b>สี</b></th>
                 <th class="text-center" width="35px"><b>ปี</b></th>
@@ -194,8 +194,8 @@
                 </td>
                 <td width="70px">{{$value->Number_Regist}}</td>
                 <td width="75px">{{$value->Brand_Car}}</td>
-                <td width="87px">{{$value->Version_Car}}</td>
-                <td width="50px">{{$value->Model_Car}}</td>
+                <td width="77px">{{$value->Version_Car}}</td>
+                <td width="60px">{{$value->Model_Car}}</td>
                 <td width="30px">{{$value->Gearcar}}</td>
                 <td width="60px">{{$value->Color_Car}}</td>
                 <td width="35px">{{$value->Year_Product}}</td>

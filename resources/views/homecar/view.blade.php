@@ -58,16 +58,16 @@
                                 <span class="fas fa-print"></span> ปริ้นรายการ
                               </button>
                               <ul class="dropdown-menu" role="menu">
-                                <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}}&carType={{$carType}}">สำหรับพนักงาน</a></li>
+                                <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}">สำหรับพนักงาน</a></li>
                                 <li class="divider"></li>
-                                <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}}&carType={{$carType}}&admin={{1}}">สำหรับผู้บริหาร</a></li>
+                                <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}&admin={{1}}">สำหรับผู้บริหาร</a></li>
                               </ul>
                             </div>
                           @elseif($type == 6)
                             <a class="btn bg-danger btn-app" data-toggle="modal" data-target="#modal-1" data-link="{{ route('datacar', 13) }}">
                               <i class="fas fa-car"></i> เทียบราคา
                             </a>
-                            <a target="_blank"  class="btn bg-primary btn-app" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}}&carType={{$carType}}">
+                            <a target="_blank"  class="btn bg-primary btn-app" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}">
                               <span class="fas fa-print"></span> ปริ้นรายการ
                             </a>
                           @endif

@@ -931,6 +931,7 @@ class DatacarController extends Controller
       }
 
       if ($request->id == 1) {
+        // dd($fdate,$tdate,$carType);
         if ($carType != Null) {
           $dataReport = DB::table('data_cars')
           ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
@@ -963,7 +964,7 @@ class DatacarController extends Controller
         }
 
         $ReportType = $request->id;
-        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType', 'AdminType']));
+        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType', 'AdminType','fdate','tdate']));
         $html = $view->render();
         $pdf = new PDF();
         $pdf::SetTitle('รายการรถยนต์ทั้งหมด');
@@ -983,7 +984,7 @@ class DatacarController extends Controller
                      ->get();
 
         $ReportType = $request->id;
-        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType']));
+        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType','fdate','tdate']));
         $html = $view->render();
         $pdf = new PDF();
         $pdf::SetTitle('รายการรถยนต์ที่ขายแล้ว');

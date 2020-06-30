@@ -9,30 +9,45 @@
     @php
     function DateThai($strDate)
       {
-      $strYear = date("Y",strtotime($strDate))+543;
+      //$strYear = date("Y",strtotime($strDate))+543;
+      $strYear = date("Y",strtotime($strDate));
       $strMonth= date("n",strtotime($strDate));
       $strDay= date("d",strtotime($strDate));
 
-      $strMonthCut = Array("" , "ม.ค","ก.พ","มี.ค","เม.ย","พ.ค","มิ.ย","ก.ค","ส.ค","ก.ย","ต.ค","พ.ย","ธ.ค");
+      //$strMonthCut = Array("" , "ม.ค","ก.พ","มี.ค","เม.ย","พ.ค","มิ.ย","ก.ค","ส.ค","ก.ย","ต.ค","พ.ย","ธ.ค");
+      $strMonthCut = Array("" , "01","02","03","04","05","06","07","08","09","10","11","12");
       $strMonthThai=$strMonthCut[$strMonth];
 
-      return "$strDay $strMonthThai $strYear";
-      //return "$strDay-$strMonthThai-$strYear";
+      //return "$strDay $strMonthThai $strYear";
+      return "$strDay-$strMonthThai-$strYear";
       }
 
       $DateNew = date('d-m-Y');
 
     @endphp
 
-
     วันที่ {{ DateThai($DateNew)}}
     <hr>
     @if( $ReportType == 1)
-      <b align="center"><h2>รายการรถยนต์ทั้งหมด</h2></b>
+      <h2 class="card-title p-3" align="center" style="font-weight: bold;line-height:10px;">รายการรถยนต์ทั้งหมด</h2>
+      @if($fdate != null)
+        @php
+          $Fdate = date_create($fdate);
+          $Tdate = date_create($tdate);
+        @endphp
+        <h5 class="card-title p-3" align="center">ระหว่างวันที่ {{date_format($Fdate, 'd-m-Y')}} ถึงวันที่ {{date_format($Tdate, 'd-m-Y')}}</h5>
+      @endif
     @elseif($ReportType == 5)
       <b align="center"><h2>รายการรถยนต์พร้อมขาย</h2></b>
     @else
-      <b align="center"><h2>รายการรถยนต์ขายแล้ว</h2></b>
+      <h2 class="card-title p-3" align="center" style="font-weight: bold;line-height:10px;">รายการรถยนต์ขายแล้ว</h2>
+      @if($fdate != null)
+        @php
+          $Fdate = date_create($fdate);
+          $Tdate = date_create($tdate);
+        @endphp
+        <h5 class="card-title p-3" align="center">ระหว่างวันที่ {{date_format($Fdate, 'd-m-Y')}} ถึงวันที่ {{date_format($Tdate, 'd-m-Y')}}</h5>
+      @endif
     @endif
 
     @if( $ReportType == 1 && $AdminType != 1)

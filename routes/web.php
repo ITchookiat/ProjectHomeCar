@@ -18,7 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function(){
-
     Route::get('/ExportPDF', 'DatacarController@ReportPDF');
     Route::get('/ExportPDFIndex', 'DatacarController@ReportPDFIndex');
     Route::get('/datacar/viewsee/{id}/{car_type}', 'DatacarController@viewsee')->name('datacar.viewsee');
@@ -36,6 +35,12 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/reportcar/viewreport/{type}', 'ReportController@index')->name('reportcar');
     Route::get('/ExportStockcar', 'ReportController@ReportStockcar');
     Route::get('/Report/Home/{type}', 'ReportController@index')->name('report');
+
+    Route::get('/ResearchCus/view/{type}', 'ResearchCusController@index')->name('ResearchCus');
+    Route::post('/ResearchCus/store/{type}', 'ResearchCusController@store')->name('ResearchCus.store');
+    Route::get('/ResearchCus/edit/{id}/{type}', 'ResearchCusController@edit')->name('ResearchCus.edit');
+    Route::patch('/ResearchCus/update/{id}/{type}', 'ResearchCusController@update')->name('ResearchCus.update');
+    Route::post('/ResearchCus/SearchData/{type}', 'ResearchCusController@SearchData')->name('ResearchCus.SearchData');
     
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
     Route::get('/{name}', 'HomeController@index')->name('index');

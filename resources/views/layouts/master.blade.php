@@ -22,6 +22,8 @@
 
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+
 
   <!-- <style>
     .a1 {color: #0832F9;}
@@ -170,18 +172,20 @@
   <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
   <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
   <script src="{{ asset('dist/js/adminlte.js') }}"></script>
+  <script src="{{ asset('plugins/input-mask/jquery.inputmask.js') }}"></script>
 
   <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 
   <script>
     $.widget.bridge('uibutton', $.ui.button)
   </script>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body  class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse" style="height: auto;">
 
   <!-- Site wrapper -->
   <div class="wrapper">

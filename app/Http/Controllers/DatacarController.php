@@ -714,7 +714,6 @@ class DatacarController extends Controller
         // 'BrandCar' => 'required',
         // 'RegistCar' => 'required']);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
       $user = data_car::find($id);
-      // dd($request->get('PriceCar'));
       $user->create_date = $request->get('DateCar');
       $user->Date_Status = $request->get('DateCar');
       if($request->get('PriceCar') != Null){
@@ -806,7 +805,9 @@ class DatacarController extends Controller
         }
       }
         $user->Car_type = $request->get('Cartype');
+        $user->BookStatus_Car = $request->get('BookStatus');
         $user->update();
+
         $type = $user->Car_type;  //Get ค่าใหม่
         $checkeditDoc = checkDocument::where('Datacar_id',$id)->first();
         // dd($checkeditDoc);
@@ -955,13 +956,18 @@ class DatacarController extends Controller
           $AdminType = '0';
         }
 
+        // dd($dataReport);
+
         $ReportType = $request->id;
         $view = \View::make('homecar.export' ,compact(['dataReport','ReportType', 'AdminType','fdate','tdate']));
         $html = $view->render();
         $pdf = new PDF();
         $pdf::SetTitle('รายการรถยนต์ทั้งหมด');
         $pdf::AddPage('L', 'A4');
-        $pdf::SetFont('freeserif');
+        // $pdf::SetFont('freeserif');
+        $pdf::SetFont('thsarabunpsk', '', 14, '', true);
+        $pdf::SetMargins(10, 5, 5, 5);
+        $pdf::SetAutoPageBreak(TRUE, 20);
         $pdf::WriteHTML($html,true,false,true,false,'');
         $pdf::Output($SetConn.'.pdf');
       }

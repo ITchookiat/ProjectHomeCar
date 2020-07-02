@@ -401,7 +401,7 @@ class DatacarController extends Controller
         $SetPriceStr = Null;
       }
 
-      if $request->get('OfferPrice') != Null) {
+      if ($request->get('OfferPrice') != Null) {
          $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
       }else{
          $SetOfferStr = Null;

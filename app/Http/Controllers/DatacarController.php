@@ -43,7 +43,7 @@ class DatacarController extends Controller
                         ->when(!empty($carType), function($q) use($carType){
                           return $q->where('data_cars.car_type',$carType);
                         })
-                        ->orderBy('data_cars.create_date', 'ASC')
+                        ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
 
             }else {
@@ -53,7 +53,7 @@ class DatacarController extends Controller
                           return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                         })
                         ->where('data_cars.car_type','<>',6)
-                        ->orderBy('data_cars.create_date', 'ASC')
+                        ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
             }
           $title = 'รถยนต์ทั้งหมด';
@@ -62,7 +62,7 @@ class DatacarController extends Controller
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->where('data_cars.car_type','=',2)
-                      ->orderBy('data_cars.create_date', 'ASC')
+                      ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์ระหว่างทำสี';
         }
@@ -70,7 +70,7 @@ class DatacarController extends Controller
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->where('data_cars.car_type','=',3)
-                      ->orderBy('data_cars.create_date', 'ASC')
+                      ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์รอซ่อม';
         }
@@ -78,7 +78,7 @@ class DatacarController extends Controller
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->where('data_cars.car_type','=',4)
-                      ->orderBy('data_cars.create_date', 'ASC')
+                      ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์ระหว่างซ่อม';
         }
@@ -86,7 +86,7 @@ class DatacarController extends Controller
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->where('data_cars.car_type','=',5)
-                      ->orderBy('data_cars.create_date', 'ASC')
+                      ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์ที่พร้อมขาย';
         }
@@ -97,7 +97,7 @@ class DatacarController extends Controller
                                return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
                                })
                         ->where('data_cars.car_type','=',6)
-                        ->orderBy('data_cars.Date_Soldout_plus', 'ASC')
+                        ->orderBy('data_cars.Date_Soldout_plus', 'DESC')
                         ->get();
           $title = 'รถยนต์ที่ขายแล้ว';
         }
@@ -108,7 +108,7 @@ class DatacarController extends Controller
                                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                                })
                         ->where('data_cars.car_type','=',1)
-                        ->orderBy('data_cars.create_date', 'ASC')
+                        ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
           $title = 'รถยนต์นำเข้าใหม่';
         }
@@ -119,7 +119,7 @@ class DatacarController extends Controller
                                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                                })
                         ->where('data_cars.BorrowStatus','=','1')
-                        ->orderBy('data_cars.create_date', 'ASC')
+                        ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
           $title = 'รถยืมใช้';
         }
@@ -159,6 +159,10 @@ class DatacarController extends Controller
           // dd($data);
           $type = $request->type;
           return view('homecar.viewDetail',compact('type','data'));
+        }
+        elseif ($request->type == 99) {
+          $type = $request->type;
+          return view('homecar.chart',compact('type'));
         }
 
         $type = $request->type;
@@ -391,15 +395,16 @@ class DatacarController extends Controller
      */
     public function store(Request $request)
     {
-      if($request->get('AccountingCost') != Null){
+      if($request->get('PriceCar') != Null){
         $SetPriceStr = str_replace (",","",$request->get('PriceCar'));
       }else{
         $SetPriceStr = Null;
       }
-      $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
 
-      if ($SetOfferStr == "") {
-        $SetOfferStr = $request->get('OfferPrice');
+      if $request->get('OfferPrice') != Null) {
+         $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
+      }else{
+         $SetOfferStr = Null;
       }
 
       $SetDateCar = str_replace ("/","-",$request->get('DateCar'));
@@ -593,6 +598,7 @@ class DatacarController extends Controller
         'Hi 4Dr' => 'Hi 4Dr',
         'Hi Cab' => 'Hi Cab',
         'Hi 4WD' => 'Hi 4WD',
+        'Hi 4Dr 4WD' => 'Hi 4Dr 4WD',
         'STD' => 'STD',
         '4DR' => '4DR',
         'Van' => 'Van',
@@ -744,12 +750,24 @@ class DatacarController extends Controller
       $user->Accounting_Cost = $SetAccountingCost;
       $user->Name_Sale = $request->get('SaleCar');
       $user->Origin_Car = $request->get('OriginCar');
-      $SetAddPriceStr = str_replace (",","",$request->get('AddPrice'));
+      if($request->get('AddPrice') != Null){
+        $SetAddPriceStr = str_replace (",","",$request->get('AddPrice'));
+      }else{
+        $SetAddPriceStr = Null;
+      }
       $user->Add_Price = $SetAddPriceStr;
       //$user->Add_Price = $request->get('AddPrice');
-      $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
+      if($request->get('OfferPrice') != Null){
+        $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
+      }else{
+        $SetOfferStr = Null;
+      }
       $user->Offer_Price = $SetOfferStr;
-      $SetColorStr = str_replace (",","",$request->get('ColorPrice'));
+      if($request->get('ColorPrice') != Null){
+        $SetColorStr = str_replace (",","",$request->get('ColorPrice'));
+      }else{
+        $SetColorStr = Null;
+      }
 
       $user->Date_Borrowcar = $request->get('DateBorrowcar');
       $user->Date_Returncar = $request->get('DateReturncar');
@@ -905,6 +923,7 @@ class DatacarController extends Controller
       }
 
       if ($request->id == 1) {
+        // dd($fdate,$tdate,$carType);
         if ($carType != Null) {
           $dataReport = DB::table('data_cars')
           ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
@@ -937,7 +956,7 @@ class DatacarController extends Controller
         }
 
         $ReportType = $request->id;
-        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType', 'AdminType']));
+        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType', 'AdminType','fdate','tdate']));
         $html = $view->render();
         $pdf = new PDF();
         $pdf::SetTitle('รายการรถยนต์ทั้งหมด');
@@ -957,7 +976,7 @@ class DatacarController extends Controller
                      ->get();
 
         $ReportType = $request->id;
-        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType']));
+        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType','fdate','tdate']));
         $html = $view->render();
         $pdf = new PDF();
         $pdf::SetTitle('รายการรถยนต์ที่ขายแล้ว');

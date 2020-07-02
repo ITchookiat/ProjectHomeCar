@@ -98,8 +98,8 @@
                       <th class="text-center" style="width: 150px">สี</th>
                       <th class="text-center" style="width: 50px">ซีซี</th>
                       <th class="text-center" style="width: 150px">ราคาซื้อ</th>
-                      <th class="text-center" style="width: 100px">ต้นทุนบัญชี</th>
-                      <th class="text-center" style="width: 150px">สถานะ</th>
+                      <th class="text-center" style="width: 120px">ต้นทุนยอดจัด</th>
+                      <th class="text-center" style="width: 120px">สถานะ</th>
                     </tr>
                   </thead>
                 @endif

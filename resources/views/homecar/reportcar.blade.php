@@ -44,17 +44,13 @@
         @endphp
         <br />
         @if($ReportType != 3)
+          @if($fdate != Null)
             จากวันที่
-          @if($fdate == Null)
-            N/A
-          @else
             {{ date_format($create_fdate, 'd-m-Y')}}
           @endif
 
+          @if($tdate != Null)
             ถึงวันที่
-          @if($tdate == Null)
-            N/A
-          @else
             {{ date_format($create_tdate, 'd-m-Y')}}
           @endif
         @endif
@@ -87,7 +83,11 @@
               <tr align="center">
                 <td width="50px">{{ $key+1 }}</td>
                 <td width="80px">{{ date_format($create_date, 'd-m-Y')}}</td>
-                <td width="70px">{{ Number_format($value->Fisrt_Price) }}</td>
+                @if($value->Fisrt_Price == '')
+                <td width="70px">{{ $value->Fisrt_Price }}</td>
+                @else
+                <td width="70px">{{ Number_format($value->Fisrt_Price,2) }}</td>
+                @endif
                 <td width="110px">
                   @php
                       date_default_timezone_set('Asia/Bangkok');

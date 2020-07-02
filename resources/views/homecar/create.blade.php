@@ -105,10 +105,11 @@
                             <select name="ModelCar" class="form-control" style="width: 250px;">
                               <option value="" selected>--- เลือกลักษณะรถ ---</option>
                               <option value="เก๋ง">เก๋ง</option>
-                              <option value="Cab">cab</option>
-                              <option value="Hi 4DR">Hi 4Dr</option>
+                              <option value="cab">cab</option>
+                              <option value="Hi 4Dr">Hi 4Dr</option>
                               <option value="Hi Cab">Hi Cab</option>
                               <option value="Hi 4WD">Hi 4WD</option>
+                              <option value="Hi 4Dr 4WD">Hi 4Dr 4WD</option>
                               <option value="STD">STD</option>
                               <option value="4DR">4DR</option>
                               <option value="Van">Van</option>
@@ -120,7 +121,7 @@
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>เลขไมล์ :</label>
-                            <input type="text" id="MilesCar" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" oninput="mile();" maxlength="9"/>
+                            <input type="text" id="MilesCar" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" oninput="mile();" maxlength="10"/>
                           </div>
                         </div>
                       </div> <!-- endrow -->
@@ -176,7 +177,7 @@
                         <div class="col-md-5">
                           <div class="float-right form-inline">
                             <label>ราคาแนะนำ :</label>
-                            <input type="text" id="OfferPrice" name="OfferPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาแนะนำ" oninput="mile();" maxlength="9"/>
+                            <input type="text" id="OfferPrice" name="OfferPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาแนะนำ" oninput="mile();" maxlength="10"/>
                           </div>
                         </div>
                       </div> <!-- endrow -->
@@ -217,15 +218,15 @@
                           <div class="col-md-5">
                             <div class="float-right form-inline">
                               <label><font color="red">*</font> ราคาซื้อ :</label>
-                              <input type="text" id="PriceCar" name="PriceCar" class="form-control" placeholder="ป้อนราคาซื้อ" style="width: 250px;" oninput="mile();" maxlength="9"/>
+                              <input type="text" id="PriceCar" name="PriceCar" class="form-control" placeholder="ป้อนราคาซื้อ" style="width: 250px;" oninput="mile();" maxlength="10"/>
                             </div>
                           </div>
                         @endif
 
                         <div class="col-md-5">
                           <div class="float-right form-inline">
-                            <label>ต้นทุนทางบัญชี :</label>
-                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนทางบัญชี" oninput="mile();" maxlength="9"/>
+                            <label>ต้นทุนยอดจัด :</label>
+                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนยอดจัด" oninput="mile();" maxlength="10"/>
                           </div>
                         </div>
                       </div> <!-- endrow -->

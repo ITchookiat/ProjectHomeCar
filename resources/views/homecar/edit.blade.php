@@ -42,17 +42,12 @@
                     @method('put')
 
                     <div class="row">
-                      @if(auth::user()->type == 1)
                         <div class="col-5">
                           <div class="float-right form-inline">
                             <label><font color="red">* </font> วันที่ซื้อ :</label>
                             <input type="date" class="form-control" name="DateCar" style="width: 250px;" value="{{$datacar->create_date}}" />
                           </div>
                         </div>
-                      @else 
-                           <input type="hidden" class="form-control" name="DateCar" style="width: 250px;" value="{{$datacar->create_date}}" /> 
-                      @endif
-
                     </div> <!-- endrow -->
 
                     <div class="row">
@@ -107,7 +102,7 @@
                       <div class="col-5">
                         <div class="float-right form-inline">
                           <label>เลขไมล์ :</label>
-                          <input type="text" id="MilesCar" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" value="{{$datacar->Number_Miles}}" oninput="mile();" maxlength="9"/>
+                          <input type="text" id="MilesCar" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" value="{{$datacar->Number_Miles}}" oninput="mile();" maxlength="10"/>
                         </div>
                       </div>
                     </div> <!-- endrow -->
@@ -174,17 +169,17 @@
                         <div class="float-right form-inline">
                           @if(auth::user()->type == 1 or auth::user()->type == 3)
                             <label><font color="red">*</font>ราคาซื้อ :</label>
-                            <input type="text" id="PriceCar" name="PriceCar" class="form-control" style="width: 250px;" placeholder="ป้อนราคาซื้อ" value="{{number_format($datacar->Fisrt_Price,2)}}" oninput="sum();" maxlength="9"/>
+                            <input type="text" id="PriceCar" name="PriceCar" class="form-control" style="width: 250px;" placeholder="ป้อนราคาซื้อ" value="{{number_format($datacar->Fisrt_Price,2)}}" oninput="sum();" maxlength="10"/>
                           @endif
                         </div>
                       </div>
                       <div class="col-5">
                         <div class="float-right form-inline">
-                          <label>ต้นทุนทางบัญชี :</label>
+                          <label>ต้นทุนยอดจัด :</label>
                           @if($datacar->Accounting_Cost == null)
-                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนทางบัญชี" value="" oninput="sum();" maxlength="9"/>
+                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนยอดจัด" value="" oninput="sum();" maxlength="10"/>
                           @else
-                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนทางบัญชี" value="{{$datacar->Accounting_Cost}}" oninput="sum();" maxlength="9"/>
+                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนยอดจัด" value="{{$datacar->Accounting_Cost}}" oninput="sum();" maxlength="10"/>
                           @endif
                         </div>
                       </div>
@@ -195,7 +190,7 @@
                       <div class="col-5">
                         <div class="float-right form-inline">
                           <label>ราคาแนะนำ :</label>
-                          <input type="text" id="OfferPrice" name="OfferPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาแนะนำ" value="{{number_format($datacar->Offer_Price, 2)}}" oninput="sum();"  maxlength="9"/>
+                          <input type="text" id="OfferPrice" name="OfferPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาแนะนำ" value="{{number_format($datacar->Offer_Price, 2)}}" oninput="sum();"  maxlength="10"/>
                         </div>
                       </div>
 
@@ -262,14 +257,14 @@
                       <div class="col-5">
                         <div class="float-right form-inline">
                           <label>ราคาซ่อม :</label>
-                          <input type="text" id="RepairCar" name="RepairCar" class="form-control" style="width: 250px;" placeholder="ป้อนราคาซ่อม" value="{{number_format($datacar->Repair_Price, 2)}}" oninput="sum();" maxlength="9"/>
+                          <input type="text" id="RepairCar" name="RepairCar" class="form-control" style="width: 250px;" placeholder="ป้อนราคาซ่อม" value="{{number_format($datacar->Repair_Price, 2)}}" oninput="sum();" maxlength="10"/>
                         </div>
                       </div>
 
                       <div class="col-5">
                         <div class="float-right form-inline">
                           <label>ราคาเพิ่มเติม :</label>
-                          <input type="text" id="AddPrice" name="AddPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาเพิ่มเติม" value="{{number_format($datacar->Add_Price, 2)}}" oninput="sum();"  maxlength="9"/>
+                          <input type="text" id="AddPrice" name="AddPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาเพิ่มเติม" value="{{number_format($datacar->Add_Price, 2)}}" oninput="sum();"  maxlength="10"/>
                         </div>
                       </div>
                     </div> <!-- endrow -->
@@ -278,14 +273,14 @@
                       <div class="col-5">
                         <div class="float-right form-inline">
                           <label>ราคาทำสี :</label>
-                          <input type="text" id="ColorPrice" name="ColorPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาทำสี" value="{{number_format($datacar->Color_Price, 2)}}" oninput="sum();"  maxlength="9"/>
+                          <input type="text" id="ColorPrice" name="ColorPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาทำสี" value="{{number_format($datacar->Color_Price, 2)}}" oninput="sum();"  maxlength="10"/>
                         </div>
                       </div>
 
                       <div class="col-5">
                         <div class="float-right form-inline">
                           <label>ราคาตั้งขาย :</label>
-                          <input type="text" id="NetCar" name="NetCar" class="form-control" style="width: 250px;" placeholder="ป้อนราคาขาย" value="{{number_format($datacar->Net_Price, 2)}}" oninput="sum();"  maxlength="9"/>
+                          <input type="text" id="NetCar" name="NetCar" class="form-control" style="width: 250px;" placeholder="ป้อนราคาขาย" value="{{number_format($datacar->Net_Price, 2)}}" oninput="sum();"  maxlength="10"/>
                         </div>
                       </div>
                     </div> <!-- endrow -->

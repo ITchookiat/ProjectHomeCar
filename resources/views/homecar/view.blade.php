@@ -350,17 +350,6 @@
     </div>
   </div>
 
-  {{-- Popup --}}
-  <script>
-    $(function () {
-      $("#modal-1").on("show.bs.modal", function (e) {
-        var link = $(e.relatedTarget).data("link");
-        $("#modal-1 .modal-body").load(link, function(){
-        });
-      });
-    });
-  </script>
-
   {{-- button-to-top --}}
   <script>
     var btn = $('#button');
@@ -410,6 +399,12 @@
       $("#modal-buyinfo").on("show.bs.modal", function (e) {
         var link = $(e.relatedTarget).data("link");
         $("#modal-buyinfo .modal-body").load(link, function(){
+        });
+      });
+
+      $("#modal-1").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-1 .modal-body").load(link, function(){
         });
       });
     });

@@ -395,23 +395,16 @@ class DatacarController extends Controller
      */
     public function store(Request $request)
     {
-      // $this->validate($request,[
-      //   'DateCar' => 'required',
-      //   'PriceCar' => 'required',
-      //   'BrandCar' => 'required',
-      //   'Number_Regist' => 'required|unique:data_cars',
-      //   'OriginCar' => 'required'
-      // ]);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
-
       if($request->get('PriceCar') != Null){
         $SetPriceStr = str_replace (",","",$request->get('PriceCar'));
       }else{
         $SetPriceStr = Null;
       }
-      $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
 
-      if ($SetOfferStr == "") {
-        $SetOfferStr = $request->get('OfferPrice');
+      if $request->get('OfferPrice') != Null) {
+         $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
+      }else{
+         $SetOfferStr = Null;
       }
 
       $SetDateCar = str_replace ("/","-",$request->get('DateCar'));
@@ -423,7 +416,6 @@ class DatacarController extends Controller
         $SetAccountingCost = Null;
       }
 
-        // dd($date1);
       $datacardb = new data_car([
         'create_date' => $DateCar,
         'Fisrt_Price' => $SetPriceStr,
@@ -446,8 +438,8 @@ class DatacarController extends Controller
         'Date_Status' => $DateCar,
         'Accounting_Cost' => $SetAccountingCost,
       ]);
-      // dd($datacardb);
       $datacardb->save();
+
       if ($request->get('DateNumberUser') != "") {
         $SetDateNumberUser = $request->get('DateNumberUser');
       }elseif ($request->get('DateNumberUserHidden') != "") {
@@ -477,7 +469,7 @@ class DatacarController extends Controller
         'Check_Note' => $request->get('CheckNote'),
       ]);
       $checkDoc->save();
-      // dd($checkDoc);
+      
       $type = 1;
       return redirect()->Route('datacar',$type)->with('success','บันทึกข้อมูลเรียบร้อย');
     }

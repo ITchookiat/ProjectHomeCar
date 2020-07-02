@@ -146,7 +146,9 @@
         @endif
       </td>
       <td width="50px">
-        {{$value->BookStatus_Car}}
+         @if($value->BookStatus_Car == 'จอง')
+            ลูกค้าจอง
+         @endif
       </td>
       </tr>
       @endforeach
@@ -301,7 +303,9 @@
                   @endif
                 </td>
                 <td width="50px">
-                  {{$value->BookStatus_Car}}
+                  @if($value->BookStatus_Car == 'จอง')
+                    ลูกค้าจอง
+                  @endif
                 </td>
             </tr>
             @endforeach

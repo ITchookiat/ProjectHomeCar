@@ -13,7 +13,7 @@ class data_car extends Model
                           'Origin_Car','Color_Price','Offer_Price','Add_Price','Date_Soldout_plus','Date_Withdraw','Net_Priceplus',
                           'Amount_Price','Name_Saleplus','Type_Sale','Name_Agent','Name_Buyer','Accounting_Cost','Date_Borrowcar',
                           'Date_Returncar','Name_Borrow','Note_Borrow','BorrowStatus',
-                          'Down_Price','Transfer_Price','Subdown_Price','Insurance_Price','Topcar_Price'];
+                          'Down_Price','Transfer_Price','Subdown_Price','Insurance_Price','Topcar_Price','BookStatus_Car'];
   
     public function datacar()
     {

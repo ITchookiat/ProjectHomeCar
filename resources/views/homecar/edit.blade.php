@@ -48,6 +48,16 @@
                             <input type="date" class="form-control" name="DateCar" style="width: 250px;" value="{{$datacar->create_date}}" />
                           </div>
                         </div>
+                        <div class="col-5">
+                          <div class="float-right form-inline">
+                              <label><font color="blue">สถานะจอง :</font></label>
+                              <select name="BookStatus" class="form-control" style="width: 250px;">
+                                <option value="" selected>--- เลือกสถานะ ---</option>
+                                <option value="จอง" {{($datacar->BookStatus_Car === 'จอง') ? 'selected' : '' }}>จอง</option>
+                                <option value="ยกเลิกจอง" {{($datacar->BookStatus_Car === 'ยกเลิกจอง') ? 'selected' : '' }}>ยกเลิกจอง</option>
+                              </select>
+                          </div>
+                        </div>
                     </div> <!-- endrow -->
 
                     <div class="row">

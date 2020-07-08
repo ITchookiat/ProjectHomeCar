@@ -804,6 +804,7 @@ class DatacarController extends Controller
           }
         }
       }
+        // dd($request->get('BookStatus'));
         $user->Car_type = $request->get('Cartype');
         $user->BookStatus_Car = $request->get('BookStatus');
         $user->update();

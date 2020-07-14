@@ -169,7 +169,8 @@ class DatacarController extends Controller
         return view('homecar.view', compact('data','title','type','fdate','tdate','carType'));
     }
 
-    public function SearchData(Request $request, $type){
+    public function SearchData(Request $request, $type)
+    {
 
       if ($type == 1) {
         $NameBrandcar = $request->get('select');

@@ -20,6 +20,7 @@ class ReportController extends Controller
     {
       $fdate = '';
       $tdate = '';
+      $originType = '';
 
       if ($request->has('Fromdate')) {
         $fdate = $request->get('Fromdate');
@@ -27,7 +28,9 @@ class ReportController extends Controller
       if ($request->has('Todate')) {
         $tdate = $request->get('Todate');
       }
-
+      if ($request->has('originType')) {
+        $originType = $request->get('originType');
+      }
       // $data = data_car::where('Origin_Car','<',3)->orderBy('id', 'ASC')->get();
 
       if ($request->type == 1) {      //รายงาน รถยนต์ทั้งหมด
@@ -84,11 +87,15 @@ class ReportController extends Controller
                    ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                           return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                           })
-                   ->where('data_cars.Origin_Car','=',3)
+                    ->when(!empty($originType), function($q) use($originType){
+                      return $q->where('data_cars.Origin_Car',$originType);
+                    })
+                  //  ->whereIn('data_cars.Origin_Car',[1,3])
+                  //  ->where('data_cars.Origin_Car','=',3)
                    ->where('data_cars.car_type','<>',6)
                    ->orderBy('data_cars.create_date', 'ASC')
                    ->get();
-         $title = 'รถยึด';
+         $title = 'รถยึด / CKL';
       }
       elseif ($request->type == 6) {  //รายงาน สรุปกำไรรถยนต์ต่อคัน
         $data = DB::table('data_cars')
@@ -105,7 +112,7 @@ class ReportController extends Controller
 
       $type = $request->type;
 
-      return view('homecar.viewreport', compact('data','title','type','fdate','tdate'));
+      return view('homecar.viewreport', compact('data','title','type','fdate','tdate','originType'));
     }
 
     /**
@@ -178,12 +185,16 @@ class ReportController extends Controller
     {
       $fdate = '';
       $tdate = '';
+      $originType = '';
 
       if ($request->has('Fromdate')) {
         $fdate = $request->get('Fromdate');
       }
       if ($request->has('Todate')) {
         $tdate = $request->get('Todate');
+      }
+      if ($request->has('originType')) {
+        $originType = $request->get('originType');
       }
 
 
@@ -212,16 +223,18 @@ class ReportController extends Controller
           // dd($dataReport);
 
       }
-      elseif ($request->id == 5) {
+      elseif ($request->id == 5) { // pdf รถยึด กับ ckl
           $dataReport = DB::table('data_cars')
-                        ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                        ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                               return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
-                               })
-                        ->where('data_cars.Origin_Car','=',3)
-                        ->where('data_cars.car_type','<>',6)
-                        ->orderBy('data_cars.create_date', 'ASC')
-                        ->get();
+                      ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                      ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+                            return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+                            })
+                      ->when(!empty($originType), function($q) use($originType){
+                        return $q->where('data_cars.Origin_Car',$originType);
+                      })
+                      ->where('data_cars.car_type','<>',6)
+                      ->orderBy('data_cars.create_date', 'ASC')
+                      ->get();
 
       }
       elseif ($request->id == 6) {
@@ -238,7 +251,7 @@ class ReportController extends Controller
 
       $ReportType = $request->id;
 
-      $view = \View::make('homecar.reportcar' ,compact(['dataReport','ReportType','fdate','tdate']));
+      $view = \View::make('homecar.reportcar' ,compact(['dataReport','ReportType','fdate','tdate','originType']));
       $html = $view->render();
 
       $pdf = new PDF();
@@ -249,7 +262,7 @@ class ReportController extends Controller
         $pdf::SetTitle('รายงาน วันหมดอายุบัตร');
         $pdf::SetFont('freeserif','',13,'false');
       }elseif ($request->id == 5) {
-        $pdf::SetTitle('รายงาน รถยึด');
+        $pdf::SetTitle('รายงาน รถยึด / CKL');
         $pdf::SetFont('freeserif','',10,'false');
       }elseif ($request->id == 6) {
         $pdf::SetTitle('รายงาน สรุปกำไรรถยนต์ต่อคัน');

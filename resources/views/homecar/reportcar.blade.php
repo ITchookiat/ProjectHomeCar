@@ -23,8 +23,23 @@
       $DateNew = date('d-m-Y');
     @endphp
 
+    @if($originType == 1) 
+      @php
+        $origin_car = 'รถ CKL';
+      @endphp
+    @elseif($originType == 3)
+      @php
+        $origin_car = 'รถยึด';
+      @endphp
+    @else
+      @php
+        $origin_car = 'รถยึด / CKL';
+      @endphp
+    @endif
+    
 
-    วันที่ {{ DateThai($DateNew)}}
+
+    วันที่พิมพ์ {{ DateThai($DateNew)}}
     <hr>
     <b align="center">
       <h2>
@@ -33,7 +48,7 @@
         @elseif( $ReportType == 4)
           รายงาน วันหมดอายุบัตร
         @elseif( $ReportType == 5)
-          รายงาน รถยึด
+          รายงาน {{$origin_car}}
         @elseif( $ReportType == 6)
           รายงาน สรุปกำไรรถยนต์ต่อคัน
         @endif
@@ -208,19 +223,19 @@
 
         @if( $ReportType == 5)
           <thead>
-            <tr align="center">
+            <tr align="center" style="line-height: 250%;background-color:grey;">
               <th class="text-center" width="40px"><b>ลำดับ</b></th>
               <th class="text-center" width="60px"><b>วันที่ซื้อรถ</b></th>
               <th class="text-center" width="90px"><b>ระยะเวลา</b></th>
               <th class="text-center" width="70px"><b>ทะเบียน</b></th>
-              <th class="text-center" width="80px"><b>ยี่ห้อ</b></th>
+              <th class="text-center" width="70px"><b>ยี่ห้อ</b></th>
               <th class="text-center" width="70px"><b>รุ่น</b></th>
               <th class="text-center" width="70px"><b>ลักษณะ</b></th>
               <th class="text-center" width="40px"><b>ซีซี</b></th>
               <th class="text-center" width="40px"><b>ปีรถ</b></th>
               <th class="text-center" width="50px"><b>สีรถ</b></th>
               <th class="text-center" width="60px"><b>ราคาซื้อ</b></th>
-              <th class="text-center" width="50px"><b>ต้นทุนบัญชี</b></th>
+              <th class="text-center" width="60px"><b>ต้นทุนบัญชี</b></th>
               <th class="text-center" width="60px"><b>สถานะ</b></th>
             </tr>
           </thead>
@@ -230,7 +245,7 @@
                 $create_date = date_create($value->create_date);
               @endphp
 
-              <tr align="center">
+              <tr align="center" style="line-height: 200%;">
                 <td width="40px">{{ $key+1 }}</td>
                 <td width="60px">{{ date_format($create_date, 'd-m-Y')}}</td>
                 <td width="90px">
@@ -260,17 +275,21 @@
                   @endif
                 </td>
                 <td width="70px">{{$value->Number_Regist}}</td>
-                <td width="80px">{{$value->Brand_Car}}</td>
+                <td width="70px">{{$value->Brand_Car}}</td>
                 <td width="70px">{{$value->Version_Car}}</td>
                 <td width="70px">{{$value->Model_Car}}</td>
                 <td width="40px">{{$value->Size_Car}}</td>
                 <td width="40px">{{$value->Year_Product}}</td>
                 <td width="50px">{{$value->Color_Car}}</td>
-                <td width="60px">{{ Number_format($value->Fisrt_Price, 2) }}</td>
-                @if($value->Accounting_Cost == null)
-                <td width="50px">{{$value->Accounting_Cost}}</td>
+                @if($value->Fisrt_Price == null)
+                  <td width="60px">{{ $value->Fisrt_Price }}</td>
                 @else
-                <td width="50px">{{number_format($value->Accounting_Cost, 2)}}</td>
+                  <td width="60px">{{ number_format($value->Fisrt_Price,2) }}</td>
+                @endif
+                @if($value->Accounting_Cost == null)
+                  <td width="60px">{{$value->Accounting_Cost}}</td>
+                @else
+                  <td width="60px">{{number_format($value->Accounting_Cost, 2)}}</td>
                 @endif
                 <td width="60px">
                   @if($value->Car_type == 1)

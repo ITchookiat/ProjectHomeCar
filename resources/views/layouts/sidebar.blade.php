@@ -159,7 +159,7 @@
                     <li class="nav-item">
                       <a href="{{ route('reportcar',5) }}" class="nav-link {{ Request::is('reportcar/viewreport/5') ? 'active' : '' }}">
                         <i class="far fa-dot-circle nav-icon"></i>
-                        <p>รายงาน รถยึด</p>
+                        <p>รายงาน รถยึด / CKL</p>
                       </a>
                     </li>
                     <li class="nav-item">

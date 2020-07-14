@@ -31,7 +31,7 @@
           <div class="card-body">
             <form method="get" action="{{ route('report',$type) }}">
               <div class="float-right form-inline"> 
-                <a target="_blank" href="{{ action('ReportController@ReportStockcar') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}" 
+                <a target="_blank" href="{{ action('ReportController@ReportStockcar') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&originType={{$originType}}" 
                   class="btn bg-primary btn-app">
                   <span class="fas fa-print"></span> ปริ้นรายการ
                 </a>
@@ -46,19 +46,29 @@
                 <br><br><br>
                 <div class="float-right form-inline"> 
                   <label>จากวันที่ : </label>
-                  <input type="date" name="Fromdate" style="width: 180px;" value="{{ ($fdate != '') ?$fdate: $date }}" class="form-control" />
+                  <input type="date" name="Fromdate" style="width: 180px;" value="{{ ($fdate != '') ?$fdate: '' }}" class="form-control" />
 
                   <label>ถึงวันที่ : </label>
-                  <input type="date" name="Todate" style="width: 180px;" value="{{ ($tdate != '') ?$tdate: $date }}" class="form-control" />
+                  <input type="date" name="Todate" style="width: 180px;" value="{{ ($tdate != '') ?$tdate: '' }}" class="form-control" />
+                
+                  @if($type == 5)
+                  <label>ประเภท :</lable>
+                  <select name="originType" class="form-control">
+                    <option selected value="">---เลือกประเภท---</option>
+                    <option value="1" {{ ($originType == '1') ? 'selected' : '' }}>CKL</otion>
+                    <option value="3" {{ ($originType == '3') ? 'selected' : '' }}>รถยึด</otion>
+                  </select>
+                  @endif
+
                 </div>
               @endif
             </form>
-
+            <br><br>
+            <hr>
             <div class="table-responsive">
               <table class="table table-bordered" id="example1">
                 @if($type == 3)
                   <thead class="thead-dark bg-gray-light">
-                    <br>
                     <tr>
                       <th class="text-center" style="width: 120px">วันที่ซื้อ</th>
                       <th class="text-center" style="width: 220px">เลขทะเบียน</th>
@@ -73,7 +83,6 @@
 
                 @if($type == 4)
                   <thead class="thead-dark bg-gray-light">
-                    <br>
                     <tr>
                       <th class="text-center" style="width: 120px">วันทีหมดอายุบัตร</th>
                       <th class="text-center" style="width: 220px">เลขทะเบียน</th>
@@ -86,19 +95,19 @@
                   </thead>
                 @endif
 
-                @if($type == 5)
+                @if($type == 5) {{--รายงาน รถยึด / CKL--}}
                   <thead class="thead-dark bg-gray-light">
-                    <br>
                     <tr>
-                      <th class="text-center" style="width: 120px">วันที่ซื้อ</th>
-                      <th class="text-center" style="width: 150px">เลขทะเบียน</th>
+                      <th class="text-center" style="width: 100px">วันที่ซื้อ</th>
+                      <th class="text-center" style="width: 120px">เลขทะเบียน</th>
                       <th class="text-center" style="width: 150px">ยี่ห้อ</th>
                       <th class="text-center" style="width: 150px">รุ่น</th>
                       <th class="text-center" style="width: 150px">ลักษณะ</th>
                       <th class="text-center" style="width: 150px">สี</th>
                       <th class="text-center" style="width: 50px">ซีซี</th>
                       <th class="text-center" style="width: 150px">ราคาซื้อ</th>
-                      <th class="text-center" style="width: 120px">ต้นทุนยอดจัด</th>
+                      <th class="text-center" style="width: 150px">ต้นทุนยอดจัด</th>
+                      <th class="text-center" style="width: 100px">ประเภท</th>
                       <th class="text-center" style="width: 120px">สถานะ</th>
                     </tr>
                   </thead>
@@ -106,10 +115,9 @@
 
                 @if($type == 6)
                   <thead class="thead-dark bg-gray-light">
-                    <br>
                     <tr>
-                      <th class="text-center" style="width: 120px">วันที่ขาย</th>
-                      <th class="text-center" style="width: 150px">เลขทะเบียน</th>
+                      <th class="text-center" style="width: 100px">วันที่ขาย</th>
+                      <th class="text-center" style="width: 120px">เลขทะเบียน</th>
                       <th class="text-center" style="width: 150px">ยี่ห้อ</th>
                       <th class="text-center" style="width: 150px">รุ่น</th>
                       <th class="text-center" style="width: 130px">ราคาซื้อ</th>
@@ -214,7 +222,7 @@
                   </tbody>
                 @endif
 
-                @if($type == 5)
+                @if($type == 5) {{--รายงาน รถยึด --}}
                   <tbody>
                     @foreach($data as $row)
                       <tr>
@@ -243,7 +251,17 @@
                         @else
                         <td class="text-center">{{number_format($row->Accounting_Cost, 2)}}</td>
                         @endif
-
+                        <td class="text-center">
+                          @if($row->Origin_Car == 1)
+                            CKL
+                          @elseif ($row->Origin_Car  == 2)
+                            รถประมูล
+                          @elseif ($row->Origin_Car  == 3)
+                            รถยึด
+                          @elseif ($row->Origin_Car  == 4)
+                            ฝากขาย
+                          @endif
+                        </td>
                         <td class="text-center">
                           @if($row->Car_type == 1)
                             นำเข้าใหม่

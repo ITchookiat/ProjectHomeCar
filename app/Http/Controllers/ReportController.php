@@ -92,6 +92,7 @@ class ReportController extends Controller
                     })
                   //  ->whereIn('data_cars.Origin_Car',[1,3])
                   //  ->where('data_cars.Origin_Car','=',3)
+                   ->where('data_cars.Origin_Car','!=',2)
                    ->where('data_cars.car_type','<>',6)
                    ->orderBy('data_cars.create_date', 'ASC')
                    ->get();
@@ -232,6 +233,7 @@ class ReportController extends Controller
                       ->when(!empty($originType), function($q) use($originType){
                         return $q->where('data_cars.Origin_Car',$originType);
                       })
+                      ->where('data_cars.Origin_Car', '!=', 2);
                       ->where('data_cars.car_type','<>',6)
                       ->orderBy('data_cars.create_date', 'ASC')
                       ->get();

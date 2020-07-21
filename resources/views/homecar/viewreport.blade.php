@@ -46,14 +46,14 @@
                 <br><br><br>
                 <div class="float-right form-inline"> 
                   <label>จากวันที่ : </label>
-                  <input type="date" name="Fromdate" style="width: 150px;" value="{{ ($fdate != '') ?$fdate: $date }}" class="form-control" />
+                  <input type="date" name="Fromdate" style="width: 170px;" value="{{ ($fdate != '') ?$fdate: $date }}" class="form-control" />
 
                   <label>ถึงวันที่ : </label>
-                  <input type="date" name="Todate" style="width: 150px;" value="{{ ($tdate != '') ?$tdate: $date }}" class="form-control" />
+                  <input type="date" name="Todate" style="width: 170px;" value="{{ ($tdate != '') ?$tdate: $date }}" class="form-control" />
                 
                   @if($type == 5 or $type == 6)
                   <label>ประเภท :</lable>
-                  <select name="originType" class="form-control" style="width: 150px;">
+                  <select name="originType" class="form-control" style="width: 170px;">
                     <option selected value="">---เลือกประเภท---</option>
                     <option value="1" {{ ($originType == '1') ? 'selected' : '' }}>CKL</otion>
                     @if($type == 6)
@@ -73,13 +73,13 @@
                 @if($type == 3)
                   <thead class="thead-dark bg-gray-light">
                     <tr>
-                      <th class="text-center" style="width: 120px">วันที่ซื้อ</th>
-                      <th class="text-center" style="width: 220px">เลขทะเบียน</th>
-                      <th class="text-center" style="width: 150px">ยี่ห้อ</th>
-                      <th class="text-center" style="width: 150px">รุ่น</th>
-                      <th class="text-center" style="width: 150px">ลักษณะ</th>
-                      <th class="text-center" style="width: 150px">ที่มา</th>
-                      <th class="text-center" style="width: 150px">สถานะ</th>
+                      <th class="text-center" >วันที่ซื้อ</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ลักษณะ</th>
+                      <th class="text-center" >ที่มา</th>
+                      <th class="text-center" >สถานะ</th>
                     </tr>
                   </thead>
                 @endif
@@ -87,13 +87,13 @@
                 @if($type == 4)
                   <thead class="thead-dark bg-gray-light">
                     <tr>
-                      <th class="text-center" style="width: 120px">วันทีหมดอายุบัตร</th>
-                      <th class="text-center" style="width: 220px">เลขทะเบียน</th>
-                      <th class="text-center" style="width: 150px">ยี่ห้อ</th>
-                      <th class="text-center" style="width: 150px">รุ่น</th>
-                      <th class="text-center" style="width: 150px">ลักษณะ</th>
-                      <th class="text-center" style="width: 150px">ที่มา</th>
-                      <th class="text-center" style="width: 150px">สถานะ</th>
+                      <th class="text-center" >วันทีหมดอายุบัตร</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ลักษณะ</th>
+                      <th class="text-center" >ที่มา</th>
+                      <th class="text-center" >สถานะ</th>
                     </tr>
                   </thead>
                 @endif
@@ -101,17 +101,17 @@
                 @if($type == 5) {{--รายงาน รถยึด / CKL--}}
                   <thead class="thead-dark bg-gray-light">
                     <tr>
-                      <th class="text-center" style="width: 100px">วันที่ซื้อ</th>
-                      <th class="text-center" style="width: 120px">เลขทะเบียน</th>
-                      <th class="text-center" style="width: 150px">ยี่ห้อ</th>
-                      <th class="text-center" style="width: 150px">รุ่น</th>
-                      <th class="text-center" style="width: 150px">ลักษณะ</th>
-                      <th class="text-center" style="width: 150px">สี</th>
-                      <th class="text-center" style="width: 50px">ซีซี</th>
-                      <th class="text-center" style="width: 150px">ราคาซื้อ</th>
-                      <th class="text-center" style="width: 120px">ต้นทุนบัญชี</th>
-                      <th class="text-center" style="width: 100px">ประเภท</th>
-                      <th class="text-center" style="width: 120px">สถานะ</th>
+                      <th class="text-center" >วันที่ซื้อ</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ลักษณะ</th>
+                      <th class="text-center" >สี</th>
+                      <th class="text-center" >ซีซี</th>
+                      <th class="text-center" >ราคาซื้อ</th>
+                      <th class="text-center" >ต้นทุนบัญชี</th>
+                      <th class="text-center" >ประเภท</th>
+                      <th class="text-center" >สถานะ</th>
                     </tr>
                   </thead>
                 @endif
@@ -119,17 +119,17 @@
                 @if($type == 6)
                   <thead class="thead-dark bg-gray-light">
                     <tr>
-                      <th class="text-center" style="width: 100px">วันที่ขาย</th>
-                      <th class="text-center" style="width: 120px">เลขทะเบียน</th>
-                      <th class="text-center" style="width: 120px">ยี่ห้อ</th>
-                      <th class="text-center" style="width: 150px">รุ่น</th>
-                      <th class="text-center" style="width: 130px">ราคาซื้อ</th>
-                      <th class="text-center" style="width: 130px">ราคาต้นทุน</th>
-                      <th class="text-center" style="width: 130px">ราคาขาย</th>
-                      <th class="text-center" style="width: 130px">ราคาหัก VAT</th>
-                      <th class="text-center" style="width: 130px">กำไรขาดทุน</th>
-                      <th class="text-center" style="width: 100px">ประเภท</th>
-                      <th class="text-center" style="width: 100px">สถานะ</th>
+                      <th class="text-center" >วันที่ขาย</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ราคาซื้อ</th>
+                      <th class="text-center" >ราคาต้นทุน</th>
+                      <th class="text-center" >ราคาขาย</th>
+                      <th class="text-center" >ราคาหัก VAT</th>
+                      <th class="text-center" >กำไรขาดทุน</th>
+                      <th class="text-center" >ประเภท</th>
+                      <th class="text-center" >สถานะ</th>
                     </tr>
                   </thead>
                 @endif

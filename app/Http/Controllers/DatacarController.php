@@ -928,7 +928,7 @@ class DatacarController extends Controller
       if ($request->id == 1) {
         // dd($fdate,$tdate,$carType);
         if ($carType != Null) {
-          $data = DB::connection('sqlsrv2')->table('data_cars')
+          $dataReport = DB::connection('sqlsrv2')->table('data_cars')
           ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
           ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
             return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -939,7 +939,7 @@ class DatacarController extends Controller
           ->orderBy('data_cars.create_date', 'ASC')
           ->get();
         }else {
-          $data = DB::connection('sqlsrv2')->table('data_cars')
+          $dataReport = DB::connection('sqlsrv2')->table('data_cars')
           ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
           ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
             return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -974,7 +974,7 @@ class DatacarController extends Controller
         $pdf::Output($SetConn.'.pdf');
       }
       elseif ($request->id == 6) {
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $dataReport = DB::connection('sqlsrv2')->table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                              return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
@@ -997,7 +997,7 @@ class DatacarController extends Controller
 
     public function ReportPDF(Request $request)
     {
-      $data = DB::connection('sqlsrv2')->table('data_cars')
+      $dataReport = DB::connection('sqlsrv2')->table('data_cars')
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                     ->where('data_cars.Car_type','=',$request->id)
                     ->orderBy('data_cars.create_date', 'ASC')->get();

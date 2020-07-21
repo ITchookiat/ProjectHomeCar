@@ -185,7 +185,7 @@
   </script>
 </head>
 
-<body  class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse" style="height: auto;">
+<body  class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="height: auto;">
 
   <!-- Site wrapper -->
   <div class="wrapper">

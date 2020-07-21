@@ -13,7 +13,8 @@ class CreateDataCarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('data_cars', function (Blueprint $table) {
+        Schema::connection('sqlsrv2')->create('data_cars', function (Blueprint $table) {
+        // Schema::create('data_cars', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('F_DataCus_id')->nullable();
             $table->string('Car_type')->nullable();

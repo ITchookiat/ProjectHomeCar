@@ -13,7 +13,8 @@ class CreateCheckDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('check_documents', function (Blueprint $table) {
+        Schema::connection('sqlsrv2')->create('check_documents', function (Blueprint $table) {
+        // Schema::create('check_documents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('Datacar_id')->nullable();
             $table->string('Contracts_Car')->nullable();  //สัญญาซื้อขาย

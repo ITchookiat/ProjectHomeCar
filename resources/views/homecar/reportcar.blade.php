@@ -7,7 +7,7 @@
   <body style="margin-top: 0px">
 
     @php
-    function DateThai($strDate)
+      function DateThai($strDate)
       {
       $strYear = date("Y",strtotime($strDate))+543;
       $strMonth= date("n",strtotime($strDate));
@@ -42,7 +42,7 @@
     วันที่พิมพ์ {{ DateThai($DateNew)}}
     <hr>
     <b align="center">
-      <h2>
+      <h2 style="line-height:50%;">
         @if( $ReportType == 3)
           รายงาน สต๊อกบัญชี
         @elseif( $ReportType == 4)
@@ -57,7 +57,8 @@
           $create_fdate = date_create($fdate);
           $create_tdate = date_create($tdate);
         @endphp
-        <br />
+      </h2>
+      <h4 style="line-height:10%;">
         @if($ReportType != 3)
           @if($fdate != Null)
             จากวันที่
@@ -69,9 +70,8 @@
             {{ date_format($create_tdate, 'd-m-Y')}}
           @endif
         @endif
-      </h2>
+      </h4>
     </b>
-
 
       <table border="1">
         @if( $ReportType == 3)
@@ -313,18 +313,19 @@
 
         @if( $ReportType == 6)
           <thead>
-            <tr align="center" style="line-height:280%;">
-              <th class="text-center" width="40px"><b>ลำดับ</b></th>
-              <th class="text-center" width="60px"><b>วันที่ขาย</b></th>
-              <th class="text-center" width="70px"><b>ทะเบียน</b></th>
-              <th class="text-center" width="70px"><b>ยี่ห้อ</b></th>
-              <th class="text-center" width="50px"><b>รุ่น</b></th>
-              <th class="text-center" width="40px"><b>ปีรถ</b></th>
-              <th class="text-center" width="70px"><b>ราคาซื้อ</b></th>
-              <th class="text-center" width="70px"><b>ราคาต้นทุน</b></th>
-              <th class="text-center" width="70px"><b>ราคาขาย</b></th>
-              <th class="text-center" width="70px"><b>ราคาหัก VAT</b></th>
+            <tr align="center" style="line-height:280%;background-color:grey;">
+              <th class="text-center" width="30px"><b>ลำดับ</b></th>
+              <th class="text-center" width="55px"><b>วันที่ขาย</b></th>
+              <th class="text-center" width="65px"><b>ทะเบียน</b></th>
+              <th class="text-center" width="60px"><b>ยี่ห้อ</b></th>
+              <th class="text-center" width="70px"><b>รุ่น</b></th>
+              <th class="text-center" width="35px"><b>ปีรถ</b></th>
+              <th class="text-center" width="60px"><b>ราคาซื้อ</b></th>
+              <th class="text-center" width="65px"><b>รวม คชจ.</b></th>
+              <th class="text-center" width="65px"><b>ราคาขาย</b></th>
+              <th class="text-center" width="70px"><b>ราคาหลัง VAT</b></th>
               <th class="text-center" width="70px"><b>กำไรขาดทุน</b></th>
+              <th class="text-center" width="50px"><b>เปอร์เซ็นต์</b></th>
               <th class="text-center" width="50px"><b>ประเภท</b></th>
               <th class="text-center" width="50px"><b>สถานะ</b></th>
             </tr>
@@ -336,31 +337,39 @@
               @endphp
 
               <tr align="center">
-                <td style="line-height:200%;" width="40px">{{ $key+1 }}</td>
-                <td style="line-height:200%;" width="60px">{{ date_format($DateSoldout, 'd-m-Y')}}</td>
-                <td style="line-height:200%;" width="70px">{{$value->Number_Regist}}</td>
-                <td style="line-height:200%;" width="70px">{{$value->Brand_Car}}</td>
-                <td style="line-height:200%;" width="50px">{{$value->Version_Car}}</td>
-                <td style="line-height:200%;" width="40px">{{$value->Year_Product}}</td>
-                <td style="line-height:200%;" width="70px">{{number_format($value->Fisrt_Price, 2)}}</td>
-                <td style="line-height:200%;" width="70px">
+                <td style="line-height:200%;" width="30px">{{ $key+1 }}</td>
+                <td style="line-height:200%;" width="55px">{{ date_format($DateSoldout, 'd-m-Y')}}</td>
+                <td style="line-height:200%;" width="65px">{{$value->Number_Regist}}</td>
+                <td style="line-height:200%;" width="60px">{{$value->Brand_Car}}</td>
+                <td style="line-height:200%;" width="70px">{{$value->Version_Car}}</td>
+                <td style="line-height:200%;" width="35px">{{$value->Year_Product}}</td>
+                <td style="line-height:200%;" width="60px">{{number_format($value->Fisrt_Price, 2)}}</td>
+                <td style="line-height:200%;" width="65px">
                   @php
                     $SumAmount = $value->Fisrt_Price + $value->Repair_Price + $value->Offer_Price + $value->Color_Price + $value->Add_Price;
+                    @$SumBuyprice += $value->Fisrt_Price;
+                    @$SumPayprice += $SumAmount;
+                    @$SumNetprice += $value->Net_Priceplus;
                   @endphp
                   {{number_format($SumAmount, 2)}}
                 </td>
-                <td style="line-height:200%;" width="70px">
+                <td style="line-height:200%;" width="65px">
                   {{number_format($value->Net_Priceplus, 2)}}
                 </td>
                 <td style="line-height:200%;" width="70px">
                   @php
                     $SumPrice = 0;
                     $SumPrice = (($value->Net_Priceplus * 100)/107);
+                    @$SumVatprice += $SumPrice;
+                    @$SumProfitprice += $SumPrice - $SumAmount;
                   @endphp
                   {{number_format($SumPrice, 2)}}
                 </td>
                 <td style="line-height:200%;" width="70px">
                   {{number_format($SumPrice - $SumAmount, 2)}}
+                </td>
+                <td style="line-height:200%;" width="50px">
+                  {{number_format($SumAmount / ($SumPrice - $SumAmount), 2)}}
                 </td>
                 <td style="line-height:200%;" width="50px">
                   @if($value->Origin_Car == 1)
@@ -390,9 +399,16 @@
                 </td>
               </tr>
             @endforeach
+            <tr style="line-height:200%;">
+              <td align="right" width="315px"><b>รวมยอด &nbsp;</b></td>
+              <td align="center" width="60px"><b>{{number_format($SumBuyprice,2)}}&nbsp;</b></td>
+              <td align="center" width="65px"><b>{{number_format($SumPayprice,2)}}&nbsp;</b></td>
+              <td align="center" width="65px"><b>{{number_format($SumNetprice,2)}}&nbsp;</b></td>
+              <td align="center" width="70px"><b>{{number_format($SumVatprice,2)}}&nbsp;</b></td>
+              <td align="center" width="70px"><b>{{number_format($SumProfitprice,2)}}&nbsp;</b></td>
+            </tr>
           </tbody>
         @endif
       </table>
-
   </body>
 </html>

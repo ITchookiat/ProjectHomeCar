@@ -556,8 +556,9 @@ class DatacarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request ,$id)
+    public function edit(Request $request ,$id, $car_type)
     {
+
       $datacar = DB::connection('sqlsrv2')->table('data_cars')
       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
       ->where('data_cars.id',$id)->first();
@@ -623,15 +624,15 @@ class DatacarController extends Controller
         2 => 'คืนแล้ว',
       ];
 
-      $setcarType = $request->Car_type;
-      if ($request->Car_type == 6) {
+      $setcarType = $car_type;
+      if ($car_type == 6) {
         return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus'));
       }else {
         return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus'));
       }
     }
 
-    public function viewsee(Request $request, $id)
+    public function viewsee(Request $request, $id, $car_type)
     {
       $datacar = DB::connection('sqlsrv2')->table('data_cars')
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
@@ -696,7 +697,7 @@ class DatacarController extends Controller
         1 => 'ยืม',
         2 => 'คืนแล้ว',
       ];
-      $setcarType = $request->Car_type;
+      $setcarType = $car_type;
       return view('homecar.viewsee',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','setcarType', 'arrayTypeSale','arrayBorrowStatus'));
     }
 

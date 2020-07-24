@@ -109,6 +109,8 @@
                       $m = date('m');
                       $d = date('d');
                       $ifdate = $Y.'-'.$m.'-'.$d;
+
+                      @$TotalFirstprice += $value->Fisrt_Price;
                   @endphp
 
                   @if($ifdate > $value->create_date && $value->Date_Sale == Null)
@@ -160,6 +162,11 @@
                 </td>
               </tr>
             @endforeach
+            <tr style="line-height:150%;">
+              <td align="right" width="130px"><b>รวมราคาซื้อ &nbsp;</b></td>
+              <td align="center" width="70px"><b>{{number_format(@$TotalFirstprice,2)}}&nbsp;</b></td>
+              <td align="left" width="570px"> บาท</td>
+            </tr>
           </tbody>
         @endif
 
@@ -337,7 +344,7 @@
               <th class="text-center" width="60px"><b>ยี่ห้อ</b></th>
               <th class="text-center" width="70px"><b>รุ่น</b></th>
               <th class="text-center" width="35px"><b>ปีรถ</b></th>
-              <th class="text-center" width="60px"><b>ราคาซื้อ</b></th>
+              <th class="text-center" width="65px"><b>ราคาซื้อ</b></th>
               <th class="text-center" width="65px"><b>รวม คชจ.</b></th>
               <th class="text-center" width="65px"><b>ราคาขาย</b></th>
               <th class="text-center" width="70px"><b>ราคาหลัง VAT</b></th>
@@ -360,7 +367,7 @@
                 <td width="60px">{{$value->Brand_Car}}</td>
                 <td width="70px">{{$value->Version_Car}}</td>
                 <td width="35px">{{$value->Year_Product}}</td>
-                <td width="60px">{{number_format($value->Fisrt_Price, 2)}}</td>
+                <td width="65px">{{number_format($value->Fisrt_Price, 2)}}</td>
                 <td width="65px">
                   @php
                     $SumAmount = $value->Fisrt_Price + $value->Repair_Price + $value->Offer_Price + $value->Color_Price + $value->Add_Price;
@@ -379,6 +386,7 @@
                     $SumPrice = (($value->Net_Priceplus * 100)/107);
                     @$SumVatprice += $SumPrice;
                     @$SumProfitprice += $SumPrice - $SumAmount;
+                    $Profit = $SumPrice - $SumAmount;
                   @endphp
                   {{number_format($SumPrice, 2)}}
                 </td>
@@ -386,7 +394,11 @@
                   {{number_format($SumPrice - $SumAmount, 2)}}
                 </td>
                 <td width="50px">
-                  {{number_format((($SumPrice - $SumAmount)/$SumAmount)*100, 2)}}
+                  @if($SumAmount == 0)
+                    0
+                  @else
+                    {{number_format(($Profit/$SumAmount)*100, 2)}}
+                  @endif
                 </td>
                 <td width="50px">
                   @if($value->Origin_Car == 1)
@@ -418,7 +430,7 @@
             @endforeach
             <tr style="line-height:150%;">
               <td align="right" width="315px"><b>รวมยอด &nbsp;</b></td>
-              <td align="center" width="60px"><b>{{number_format(@$SumBuyprice,2)}}&nbsp;</b></td>
+              <td align="center" width="65px"><b>{{number_format(@$SumBuyprice,2)}}&nbsp;</b></td>
               <td align="center" width="65px"><b>{{number_format(@$SumPayprice,2)}}&nbsp;</b></td>
               <td align="center" width="65px"><b>{{number_format(@$SumNetprice,2)}}&nbsp;</b></td>
               <td align="center" width="70px"><b>{{number_format(@$SumVatprice,2)}}&nbsp;</b></td>

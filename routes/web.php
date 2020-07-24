@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     route::resource('reportBetween','ReportController');
     Route::get('/reportcar/viewreport/{type}', 'ReportController@index')->name('reportcar');
-    Route::get('/ExportStockcar', 'ReportController@ReportStockcar');
+    Route::get('/ExportStockcar', 'ReportController@ReportExpire');
     Route::post('/Report/homecar', 'ReportController@ReportStockcar')->name('report.holdcar');
     Route::get('/Report/Home/{type}', 'ReportController@index')->name('report');
 

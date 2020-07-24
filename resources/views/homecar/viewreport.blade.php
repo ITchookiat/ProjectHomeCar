@@ -30,11 +30,13 @@
 
           <div class="card-body">
             <form method="get" action="{{ route('report',$type) }}">
-              <div class="float-right form-inline"> 
-                <!-- <a target="_blank" href="{{ action('ReportController@ReportStockcar') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}"  -->
-                <a href="#" data-toggle="modal" data-target="#modal-report" class="btn bg-primary btn-app" data-backdrop="static" data-keyboard="false">
+              <div class="float-right form-inline">
+                  <!-- <a target="_blank" href="{{ action('ReportController@ReportExpire') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}" class="btn bg-primary btn-app">
                   <span class="fas fa-print"></span> ปริ้นรายการ
-                </a>
+                  </a> -->
+                  <a href="#" data-toggle="modal" data-target="#modal-report" class="btn bg-primary btn-app" data-backdrop="static" data-keyboard="false">
+                    <span class="fas fa-print"></span> ปริ้นรายการ
+                  </a>
                 @if($type != 3)
                   <button type="submit" class="btn bg-warning btn-app">
                     <span class="fas fa-search"></span> Search
@@ -353,9 +355,11 @@
           <div class="modal-header">
             @if($type == 3)
             <h4 class="modal-title">รายงาน สต๊อกบัญชี</h4>
+            @elseif($type == 4)
+            <h4 class="modal-title">รายงาน วันหมดอายุบัตร</h4>
             @elseif($type == 5)
             <h4 class="modal-title">รายงาน รถยึด / CKL</h4>
-            @elseif($type ==6)
+            @elseif($type == 6)
             <h4 class="modal-title">รายงาน ยอดทุนรถต่อคัน</h4>
             @endif
             <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
@@ -381,42 +385,58 @@
                 </div>
               </div>
             </div>
-            <br>
-            <div class="row">
-              <div class="col-sm-1"></div>
-              <div class="col-sm-11">
-                <!-- checkbox -->
-                <div class="form-group clearfix">
-                  <div class="icheck-primary d-inline">
-                    <input type="checkbox" name="originType[]" id="checkboxPrimary1" value="1">
-                    <label for="checkboxPrimary1">
-                      รถ CKL
-                    </label>
-                  </div>
-                  &nbsp;
-                  <div class="icheck-primary d-inline">
-                    <input type="checkbox" name="originType[]" id="checkboxPrimary2" value="2">
-                    <label for="checkboxPrimary2">
-                      รถประมูล
-                    </label>
-                  </div>
-                  &nbsp;
-                  <div class="icheck-primary d-inline">
-                    <input type="checkbox" name="originType[]" id="checkboxPrimary3" value="3">
-                    <label for="checkboxPrimary3">
-                      รถยึด
-                    </label>
-                  </div>
-                  &nbsp;
-                  <div class="icheck-primary d-inline">
-                    <input type="checkbox" name="originType[]" id="checkboxPrimary4" value="4">
-                    <label for="checkboxPrimary4">
-                      รถฝากขาย
-                    </label>
+              <br>
+              <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11">
+                  <!-- checkbox -->
+                  <div class="form-group clearfix">
+                    <div class="icheck-primary d-inline">
+                      <input type="checkbox" name="originType[]" id="checkboxPrimary1" value="1">
+                      <label for="checkboxPrimary1">
+                        รถ CKL
+                      </label>
+                    </div>
+                    &nbsp;
+                    <div class="icheck-primary d-inline">
+                      <input type="checkbox" name="originType[]" id="checkboxPrimary2" value="2">
+                      <label for="checkboxPrimary2">
+                        รถประมูล
+                      </label>
+                    </div>
+                    &nbsp;
+                    @if($type == 4 or $type == 6)
+                      <div class="icheck-primary d-inline">
+                        <input type="checkbox" name="originType[]" id="checkboxPrimary3" value="3">
+                        <label for="checkboxPrimary3">
+                          รถยึด
+                        </label>
+                      </div>
+                      &nbsp;
+                      <div class="icheck-primary d-inline">
+                        <input type="checkbox" name="originType[]" id="checkboxPrimary4" value="4">
+                        <label for="checkboxPrimary4">
+                          รถฝากขาย
+                        </label>
+                      </div>
+                    @else
+                      <div class="icheck-primary d-inline">
+                        <input type="checkbox" name="originType[]" id="checkboxPrimary3" value="3" disabled>
+                        <label for="checkboxPrimary3" style="color:#CCC">
+                          รถยึด
+                        </label>
+                      </div>
+                      &nbsp;
+                      <div class="icheck-primary d-inline">
+                        <input type="checkbox" name="originType[]" id="checkboxPrimary4" value="4" disabled>
+                        <label for="checkboxPrimary4" style="color:#CCC">
+                          รถฝากขาย
+                        </label>
+                      </div>
+                    @endif
                   </div>
                 </div>
               </div>
-            </div>
           <hr>
           </div>
           <input type="hidden" name="id" value="{{$type}}">

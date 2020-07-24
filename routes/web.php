@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/datacar/view/{type}', 'DatacarController@index')->name('datacar');
     Route::get('/datacar/create/{type}', 'DatacarController@create')->name('datacar.create');
     Route::post('/datacar/store', 'DatacarController@store')->name('datacar.store');
+    Route::post('/datacar/report', 'DatacarController@ReportPDFManager')->name('datacar.report');
     Route::get('/datacar/edit/{id}/{car_type}', 'DatacarController@edit')->name('datacar.edit');
     Route::patch('/datacar/update/{id}', 'DatacarController@update')->name('datacar.update');
     Route::patch('/datacar/updateinfo/{id}', 'DatacarController@updateinfo')->name('datacar.updateinfo');
@@ -34,6 +35,7 @@ Route::group(['middleware' => 'auth'], function(){
     route::resource('reportBetween','ReportController');
     Route::get('/reportcar/viewreport/{type}', 'ReportController@index')->name('reportcar');
     Route::get('/ExportStockcar', 'ReportController@ReportStockcar');
+    Route::post('/Report/homecar', 'ReportController@ReportStockcar')->name('report.holdcar');
     Route::get('/Report/Home/{type}', 'ReportController@index')->name('report');
 
     Route::get('/ResearchCus/view/{type}', 'ResearchCusController@index')->name('ResearchCus');

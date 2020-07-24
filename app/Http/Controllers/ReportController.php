@@ -212,9 +212,11 @@ class ReportController extends Controller
         $dataReport = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                               return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
-                               })
-                        ->where('data_cars.Origin_Car','<',3)
+                          return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+                        })
+                        ->when(!empty($originType), function($q) use($originType){
+                          return $q->whereIn('data_cars.Origin_Car',$originType);
+                        })
                         ->where('data_cars.Car_type','<>',6)
                         ->orderBy('data_cars.create_date', 'ASC')
                         ->get();

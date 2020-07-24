@@ -1025,13 +1025,17 @@ class DatacarController extends Controller
       $carType = '';
       $originType = '';
 
-      if ($request->has('Fromdate')) {
+      if ($request->Fromdate != '') {
         $b_fdate = $request->get('Fromdate');
         $fdate = \Carbon\Carbon::parse($b_fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($b_fdate)->format('m')."-". \Carbon\Carbon::parse($b_fdate)->format('d');
+      }else{
+        $fdate = $request->get('Fromdate');
       }
-      if ($request->has('Todate')) {
+      if ($request->Todate != '') {
         $b_tdate = $request->get('Todate');
         $tdate = \Carbon\Carbon::parse($b_tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($b_tdate)->format('m')."-". \Carbon\Carbon::parse($b_tdate)->format('d');
+      }else{
+        $tdate = $request->get('Todate');
       }
       // if ($request->has('Fromdate')) {
       //     $fdate = $request->get('Fromdate');

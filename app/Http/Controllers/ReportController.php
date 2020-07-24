@@ -192,18 +192,21 @@ class ReportController extends Controller
       // if ($request->has('Todate')) {
       //     $tdate = $request->get('Todate');
       // }
-      if ($request->has('Fromdate')) {
+      if ($request->Fromdate != '') {
         $b_fdate = $request->get('Fromdate');
         $fdate = \Carbon\Carbon::parse($b_fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($b_fdate)->format('m')."-". \Carbon\Carbon::parse($b_fdate)->format('d');
+      }else{
+        $fdate = $request->get('Fromdate');
       }
-      if ($request->has('Todate')) {
+      if ($request->Todate != '') {
         $b_tdate = $request->get('Todate');
         $tdate = \Carbon\Carbon::parse($b_tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($b_tdate)->format('m')."-". \Carbon\Carbon::parse($b_tdate)->format('d');
+      }else{
+        $tdate = $request->get('Todate');
       }
       if ($request->has('originType')) {
         $originType = $request->originType;
       }
-
 
       if ($request->id == 3) {
         $dataReport = DB::connection('sqlsrv2')->table('data_cars')
@@ -215,7 +218,7 @@ class ReportController extends Controller
                         ->where('data_cars.Car_type','<>',6)
                         ->orderBy('data_cars.create_date', 'ASC')
                         ->get();
-
+                        // dd($fdate,$tdate,$dataReport);
       }
       elseif ($request->id == 4) {
         $dataReport = DB::connection('sqlsrv2')->table('data_cars')
@@ -258,6 +261,7 @@ class ReportController extends Controller
                        ->where('data_cars.Name_Buyer','!=',"โมบายฝ่ายกฎหมาย")
                         ->orderBy('data_cars.Date_Soldout_plus', 'ASC')
                         ->get();
+                        //  dd($fdate,$tdate,$dataReport);
       }
 
       $ReportType = $request->id;

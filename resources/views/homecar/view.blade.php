@@ -60,7 +60,7 @@
                               <ul class="dropdown-menu" role="menu">
                                 <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}">สำหรับพนักงาน</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-report" >สำหรับผู้บริหาร</a></li>
+                                <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-report" data-backdrop="static" data-keyboard="false">สำหรับผู้บริหาร</a></li>
                               </ul>
                             </div>
                           @elseif($type == 6)
@@ -344,7 +344,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">รายงานสต็อกรถยนต์</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
@@ -354,7 +354,7 @@
                 <div class="form-group row mb-1">
                   <label class="col-sm-4 col-form-label text-right">จากวันที่ : </label>
                   <div class="col-sm-7">
-                  <input type="date" name="Fromdate" value="{{ ($fdate != '') ?$fdate: '' }}" class="form-control" />
+                  <input type="date" id="Fromdate" name="Fromdate" value="{{ ($fdate != '') ?$fdate: '' }}" class="form-control" />
                   </div>
                 </div>
               </div>
@@ -362,7 +362,7 @@
                 <div class="form-group row mb-1">
                 <label class="col-sm-4 col-form-label text-right">ถึงวันที่ : </label>
                   <div class="col-sm-7">
-                    <input type="date" name="Todate" value="{{ ($tdate != '') ?$tdate: '' }}" class="form-control" />
+                    <input type="date" id="Todate" name="Todate" value="{{ ($tdate != '') ?$tdate: '' }}" class="form-control" />
                   </div>
                 </div>
               </div>
@@ -477,5 +477,14 @@
       });
     });
   </script>
+
+<script type="text/javascript">
+    $("#close").click(function () {
+      $("#modal-report").modal('hide');
+      var Datepay = ''
+      $('#Fromdate').val(Datepay);
+      $('#Todate').val(Datepay);
+    });
+</script>
 
 @endsection

@@ -351,8 +351,10 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            @if($type == 5)
-            <h4 class="modal-title">รายงานรถยึด / CKL</h4>
+            @if($type == 3)
+            <h4 class="modal-title">รายงาน สต๊อกบัญชี</h4>
+            @elseif($type == 5)
+            <h4 class="modal-title">รายงาน รถยึด / CKL</h4>
             @elseif($type ==6)
             <h4 class="modal-title">รายงาน ยอดทุนรถต่อคัน</h4>
             @endif

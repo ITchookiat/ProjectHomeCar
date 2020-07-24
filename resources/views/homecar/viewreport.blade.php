@@ -32,7 +32,7 @@
             <form method="get" action="{{ route('report',$type) }}">
               <div class="float-right form-inline"> 
                 <!-- <a target="_blank" href="{{ action('ReportController@ReportStockcar') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}"  -->
-                <a href="#" data-toggle="modal" data-target="#modal-report" class="btn bg-primary btn-app">
+                <a href="#" data-toggle="modal" data-target="#modal-report" class="btn bg-primary btn-app" data-backdrop="static" data-keyboard="false">
                   <span class="fas fa-print"></span> ปริ้นรายการ
                 </a>
                 @if($type != 3)
@@ -356,7 +356,7 @@
             @elseif($type ==6)
             <h4 class="modal-title">รายงาน ยอดทุนรถต่อคัน</h4>
             @endif
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
@@ -366,7 +366,7 @@
                 <div class="form-group row mb-1">
                   <label class="col-sm-4 col-form-label text-right">จากวันที่ : </label>
                   <div class="col-sm-7">
-                  <input type="date" name="Fromdate" value="{{ ($fdate != '') ?$fdate: '' }}" class="form-control" />
+                  <input type="date" id="Fromdate" name="Fromdate" value="{{ ($fdate != '') ?$fdate: '' }}" class="form-control" />
                   </div>
                 </div>
               </div>
@@ -374,7 +374,7 @@
                 <div class="form-group row mb-1">
                 <label class="col-sm-4 col-form-label text-right">ถึงวันที่ : </label>
                   <div class="col-sm-7">
-                    <input type="date" name="Todate" value="{{ ($tdate != '') ?$tdate: '' }}" class="form-control" />
+                    <input type="date" id="Todate" name="Todate" value="{{ ($tdate != '') ?$tdate: '' }}" class="form-control" />
                   </div>
                 </div>
               </div>
@@ -487,5 +487,14 @@
     }
     setInterval(blinker, 1000);
   </script>
+
+<script type="text/javascript">
+    $("#close").click(function () {
+      $("#modal-report").modal('hide');
+      var Datepay = ''
+      $('#Fromdate').val(Datepay);
+      $('#Todate').val(Datepay);
+    });
+</script>
 
 @endsection

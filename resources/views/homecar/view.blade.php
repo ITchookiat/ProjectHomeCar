@@ -168,19 +168,20 @@
                               <th class="text-center" style="width: 100px">วันที่รับ</th>
                               <th class="text-center" style="width: 120px">วันที่เปลี่ยนสถานะ</th>
                               @endif
-                              @if($type == 5)
-                                <th class="text-center" style="width: 100px">ราคาขาย</th>
-                              @endif
                               @if($type == 6)
                                 <th class="text-center" style="width: 100px">วันที่ขาย</th>
                               @endif
-                              <th class="text-center" style="width: 120px">เลขทะเบียน</th>
+                              <th class="text-center" style="width: 100px">เลขทะเบียน</th>
+                              @if($type == 5)
+                                <th class="text-center" style="width: 100px">ราคาขาย</th>
+                                <th class="text-center" style="width: 70px">ลักษณะ</th>
+                              @endif
                               <th class="text-center" style="width: 80px">ที่มา</th>
-                              <th class="text-center" style="width: 80px">Job No.</th>
+                              <th class="text-center" style="width: 60px">Job No.</th>
                               <th class="text-center" style="width: 100px">ประเภท</th>
                               <th class="text-center" style="width: 150px">หมายเหตุ</th>
 
-                              <th class="text-center" style="width: 180px">Action</th>
+                              <th class="text-center" style="width: 100px">Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -206,13 +207,14 @@
                                   @endif
                                 @endif
 
-                                @if($type == 5)
-                                  <td class="text-center">{{number_format($row->Net_Price, 2)}}</td>
-                                @endif
                                 @if($type == 6)
                                   <td class="text-center">{{ date_format($Date_Soldout_plus, 'd-m-Y')}}</td>
                                 @endif
                                 <td class="text-center">{{$row->Number_Regist}}</td>
+                                @if($type == 5)
+                                  <td class="text-center">{{number_format($row->Net_Price, 2)}}</td>
+                                  <td class="text-center">{{$row->Model_Car}}</td>
+                                @endif
                                 <td class="text-center">
                                   @if($row->Origin_Car == 1)
                                     CKL
@@ -251,7 +253,7 @@
                                   @endif
                                 </td>
 
-                                <td class="text-center">
+                                <td class="text-left">
                                   <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default" title="ดูรายการ"
                                     data-link="{{ action('DatacarController@viewsee',[$row->Datacar_id,$row->Car_type]) }}">
                                     <i class="far fa-eye"></i>
@@ -280,6 +282,11 @@
                                         </button>
                                       </form>
                                     @endif
+                                  @endif
+                                  @if($row->Name_fileimage != null)
+                                    <a href="{{ asset('upload-image/'.$row->Name_fileimage) }}" data-toggle="lightbox" data-title="รถทะเบียน {{$row->Number_Regist}}" class="btn btn-secondary btn-sm" title="รูปภาพประกอบ">
+                                      <i class="far fa-image"></i> 
+                                    </a>
                                   @endif
                                 </td>
                               </tr>
@@ -337,6 +344,7 @@
     </div>
   </div>
 
+@if($type != 12)
   <form target="_blank" action="{{ route('datacar.report') }}" method="post">
     @csrf
     <div class="modal fade" id="modal-report" aria-hidden="true" style="display: none;">
@@ -417,7 +425,7 @@
       <!-- /.modal-dialog -->
     </div>
   </form>
-
+@endif
   {{-- button-to-top --}}
   <script>
     var btn = $('#button');
@@ -485,6 +493,23 @@
       $('#Fromdate').val(Datepay);
       $('#Todate').val(Datepay);
     });
+</script>
+
+<script>
+  $(function () {
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox({
+        alwaysShowClose: true
+      });
+    });
+
+    $('.filter-container').filterizr({gutterPixels: 3});
+    $('.btn[data-filter]').on('click', function() {
+      $('.btn[data-filter]').removeClass('active');
+      $(this).addClass('active');
+    });
+  })
 </script>
 
 @endsection

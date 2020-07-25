@@ -171,14 +171,24 @@
     color:#cd4400;
     }
 </style>
+<link type="text/css" rel="stylesheet" href="{{ asset('css/magiczoomplus.css') }}"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
 
+<script type="text/javascript" src="{{ asset('js/magiczoomplus.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/fileinput.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
 
     <!-- Main content -->
     <section class="content">
       <div class="content-header">
         <div class="card">
           <div class="card-header">
-            <h1 class="" style="text-align:center;"><b>แก้ไขข้อมูลรถยนต์</b></h1>
+            <h1 class="" style="text-align:center;">
+            <b>แก้ไขข้อมูลรถยนต์</b>
+            <a href="#" class="btn btn-default btn-sm float-right" title="เพิ่มรูปรถ" data-toggle="modal" data-target="#modal-default">
+              <i class="far fa-image"></i> 
+            </a>
+            </h1>
           </div>
 
             <div class="card-body">
@@ -611,12 +621,41 @@
                       </a>
                     </div>
                     <input type="hidden" name="_method" value="PATCH"/>
-                  </form>
+                    <div class="modal fade" id="modal-default" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-body">
+                              <div class="form-group">
+                                <div class="file-loading">
+                                  <input id="image-file" type="file" name="file_image[]" accept="image/*" data-min-file-count="1" multiple>
+                                </div>
+                              </div>
+                              <div class="row">
+                                @foreach($dataImage as $key => $images)
+                                    <div class="col-sm-2">
+                                      <a href="{{ asset('upload-image/'.$images->Name_fileimage) }}" data-title="ภาพผู้เช่าซื้อ">
+                                        <img src="{{ asset('upload-image/'.$images->Name_fileimage) }}" width="450px">
+                                      </a>
+                                    </div>
+                                @endforeach
+                              </div>
+                            <hr>
+                            </div>
+                            <div class="text-center">
+                              <button type="submit" class="btn btn-success">อัพโหลด</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                            </div>
+                            <br>
+                          </div>
+                          <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
 
+                  </form>
                 </div>
               </div>
             </div>
-
             <a id="button"></a>
         </div>
       </div>
@@ -661,6 +700,21 @@
     $(".alert").fadeTo(3000, 500).slideUp(500, function(){
     $(".alert").alert('close');
     });;
+  </script>
+
+{{-- image --}}
+  <script type="text/javascript">
+    $("#image-file,#Account_image,#image_checker_1,#image_checker_2").fileinput({
+      uploadUrl:"{{ route('MasterDatacar.store') }}",
+      theme:'fa',
+      uploadExtraData:function(){
+        return{
+          _token:"{{csrf_token()}}",
+        }
+      },
+      allowedFileExtensions:['jpg','png','gif'],
+      maxFileSize:10240
+    })
   </script>
 
 @endsection

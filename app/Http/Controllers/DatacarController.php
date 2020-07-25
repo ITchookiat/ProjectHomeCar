@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 use PDF;
+use Storage;
+use File;
 use App\data_car;
 use App\Holdcar;
 use App\checkDocument;
+use App\UploadfileImage;
 
 class DatacarController extends Controller
 {
@@ -37,6 +40,7 @@ class DatacarController extends Controller
             if ($request->has('carType') != Null) {
               $data = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                           return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                         })
@@ -49,6 +53,7 @@ class DatacarController extends Controller
             }else {
               $data = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                           return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                         })
@@ -141,7 +146,7 @@ class DatacarController extends Controller
                 ->orderBy('holdcars.Date_hold', 'ASC')
                 ->get();
 
-          $dataDB = DB::table('data_cars')
+          $dataDB = DB::connection('sqlsrv2')->table('data_cars')
                   ->get();
 
           $title = 'รถยึดจากเร่งรัด';
@@ -563,6 +568,9 @@ class DatacarController extends Controller
       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
       ->where('data_cars.id',$id)->first();
 
+      $dataImage = DB::connection('sqlsrv2')->table('uploadfile_images')->where('Datacarfileimage_id',$id)->get();
+      // dd($datacar,$dataImage);
+
       $arrayCarType = [
         1 => 'รถยนต์นำเข้าใหม่',
         2 => 'รถยนต์ระหว่างทำสี',
@@ -626,9 +634,9 @@ class DatacarController extends Controller
 
       $setcarType = $car_type;
       if ($car_type == 6) {
-        return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus'));
+        return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus','dataImage'));
       }else {
-        return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus'));
+        return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage'));
       }
     }
 
@@ -834,6 +842,35 @@ class DatacarController extends Controller
         $checkeditDoc->Date_Expire = $SetDateExpire;
         $checkeditDoc->Expire_Tax = $request->get('ExpireTax');
         $checkeditDoc->update();
+
+        if ($request->hasFile('file_image')) {
+          $image_array = $request->file('file_image');
+          $array_len = count($image_array);
+  
+          for ($i=0; $i < $array_len; $i++) {
+            $image_size = $image_array[$i]->getClientSize();
+            $image_new_name = $request->get('RegistCar'). '.' .$image_array[$i]->getClientOriginalExtension();
+  
+              $destination_path = public_path('/upload-image');
+              $image_array[$i]->move($destination_path,$image_new_name);
+
+            // $dataImage = DB::connection('sqlsrv2')->table('uploadfile_images')->where('Datacarfileimage_id',$id)->count();
+            $dataImage = UploadfileImage::where('Datacarfileimage_id',$id)->first();
+            if($dataImage == ''){
+              $Uploaddb = new UploadfileImage([
+                'Datacarfileimage_id' => $id,
+                'Type_fileimage' => 1,
+                'Name_fileimage' => $image_new_name,
+                'Size_fileimage' => $image_size,
+              ]);
+              $Uploaddb ->save();
+            }else{
+              $dataImage->Name_fileimage = $image_new_name;
+              $dataImage->Size_fileimage = $image_size;
+              $dataImage->update();
+            }
+          }
+        }
 
       return redirect()->Route('datacar',$type)->with('success','อัพเดตข้อมูลเรียบร้อย');
     }

@@ -66,6 +66,7 @@ class DatacarController extends Controller
         elseif ($request->type == 2) {          //รถยนต์ระหว่างทำสี
           $data = DB::connection('sqlsrv2')->table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                      ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                       ->where('data_cars.Car_type','=',2)
                       ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
@@ -74,6 +75,7 @@ class DatacarController extends Controller
         elseif ($request->type == 3) {          //รถยนต์รอซ่อม
           $data = DB::connection('sqlsrv2')->table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                      ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                       ->where('data_cars.Car_type','=',3)
                       ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
@@ -82,6 +84,7 @@ class DatacarController extends Controller
         elseif ($request->type == 4) {          //รถยนต์ระหว่างซ่อม
           $data = DB::connection('sqlsrv2')->table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                      ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                       ->where('data_cars.Car_type','=',4)
                       ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
@@ -90,6 +93,7 @@ class DatacarController extends Controller
         elseif ($request->type == 5) {          //รถยนต์ที่พร้อมขาย
           $data = DB::connection('sqlsrv2')->table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                      ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                       ->where('data_cars.Car_type','=',5)
                       ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
@@ -98,6 +102,7 @@ class DatacarController extends Controller
         elseif ($request->type == 6) {          //รถยนต์ที่ขายแล้ว
           $data = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                                return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
                                })
@@ -109,6 +114,7 @@ class DatacarController extends Controller
         elseif ($request->type == 7) {          //รถยนต์นำเข้าใหม่
           $data = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                                })
@@ -120,6 +126,7 @@ class DatacarController extends Controller
         elseif ($request->type == 8) {          //รถยืมใช้
           $data = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                                })

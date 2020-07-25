@@ -181,7 +181,7 @@
                               <th class="text-center" style="width: 100px">ประเภท</th>
                               <th class="text-center" style="width: 150px">หมายเหตุ</th>
 
-                              <th class="text-center" style="width: 100px">Action</th>
+                              <th class="text-center" style="width: 120px">Action</th>
                             </tr>
                           </thead>
                           <tbody>

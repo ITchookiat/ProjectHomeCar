@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class data_car extends Model
 {
-    protected $connection = 'sqlsrv2';
+    // protected $connection = 'sqlsrv2';
     protected $table = 'data_cars';
     protected $fillable = ['F_DataCus_id','Car_type','create_date','Date_Status','Date_Soldout','Date_Repair','Date_Sale','Date_Color','Date_Wait',
                           'Brand_Car','Version_Car','Model_Car','Color_Car','Size_Car','Job_Number','Number_Miles','Gearcar',

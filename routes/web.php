@@ -47,6 +47,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('/ResearchCus/delete/{id}/{type}', 'ResearchCusController@destroy')->name('ResearchCus.destroy');
     Route::get('/ResearchCus/ReportCus/{type}', 'ResearchCusController@ReportCustoms')->name('ResearchCus.ReportCus');
 
+    Route::get('/BoardMaster/view/{type}', 'BoardController@index')->name('BoardMaster');
+
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
     Route::get('/{name}', 'HomeController@index')->name('index');
 });

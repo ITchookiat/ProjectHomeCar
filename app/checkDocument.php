@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class checkDocument extends Model
 {
-    protected $connection = 'sqlsrv2';
+    // protected $connection = 'sqlsrv2';
     protected $table = 'check_documents';
     protected $fillable = ['Datacar_id','Contracts_Car','Manual_Car','Act_Car','Insurance_Car',
                           'Key_Reserve','Expire_Tax','Date_NumberUser','Date_Expire','Check_Note'];

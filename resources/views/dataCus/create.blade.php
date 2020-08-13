@@ -152,13 +152,33 @@
       @csrf
       <div class="card-body text-sm">
         <h5 class="text-center"><b>แบบฟอร์มข้อมูลลูกค้า</b></h5>
+        <script>
+          function addCommas(nStr){
+              nStr += '';
+              x = nStr.split('.');
+              x1 = x[0];
+              x2 = x.length > 1 ? '.' + x[1] : '';
+              var rgx = /(\d+)(\d{3})/;
+              while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+              }
+            return x1 + x2;
+          }
+          function Comma(){
+            var num11 = document.getElementById('CashStatusCus').value;
+            var num1 = num11.replace(",","");
+
+            document.form1.CashStatusCus.value = addCommas(num1);
+          }
+        </script>
+
         <div>
           <div class="row">
             <div class="col-6">
               <div class="form-group row mb-0">
                 <label class="col-sm-3 col-form-label text-right">ชื่อ - นามสกุล : </label>
                 <div class="col-sm-8">
-                  <input type="text" name="NameCus" class="form-control" style="height:30px;" placeholder="ป้อนชื่อ-นามสกุล" />
+                  <input type="text" name="NameCus" class="form-control" style="height:30px;" placeholder="ป้อนชื่อ-นามสกุล" required/>
                 </div>
               </div>
             </div>
@@ -261,6 +281,17 @@
               </div>
             </div>
           </div>
+
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group row mb-0">
+                <label class="col-sm-3 col-form-label text-right">เงินมัดจำ : </label>
+                <div class="col-sm-8">
+                <input type="text" name="CashStatusCus" id="CashStatusCus" class="form-control" style="height:30px;" placeholder="เงินมัดจำ" oninput="Comma();"/>
+                </div>
+              </div>
+            </div>
+          </div>
   
           <div class="row">
             <div class="col-6">
@@ -285,19 +316,7 @@
                   </span>
                 </div>
               </div>
-  
-              <div class="form-group row mb-1">
-                <label class="col-sm-3 col-form-label text-right"></label>
-                <div class="col-sm-4">
-                  <span class="todo-wrap">
-                    <input type="checkbox" id="3" name="StatusCus" value="ส่งมอบ"/>
-                    <label for="3" class="todo">
-                      <i class="fa fa-check"></i>
-                      ส่งมอบ
-                    </label>
-                  </span>
-                </div>
-              </div>
+
             </div>
             <div class="col-6">
               <div class="form-group row mb-0">
@@ -356,53 +375,6 @@
             </ul>
           </div>
 
-          <script>
-            function addCommas(nStr){
-                nStr += '';
-                x = nStr.split('.');
-                x1 = x[0];
-                x2 = x.length > 1 ? '.' + x[1] : '';
-                var rgx = /(\d+)(\d{3})/;
-                while (rgx.test(x1)) {
-                  x1 = x1.replace(rgx, '$1' + ',' + '$2');
-                }
-              return x1 + x2;
-            }
-            function Comma(){
-              var num11 = document.getElementById('CashCar').value;
-              var num1 = num11.replace(",","");
-              var num22 = document.getElementById('CashdownCar').value;
-              var num2 = num22.replace(",","");
-              var num33 = document.getElementById('PaymentCar').value;
-              var num3 = num33.replace(",","");
-              var num44 = document.getElementById('Turn_WantPriceCar').value;
-              var num4 = num44.replace(",","");
-              var num55 = document.getElementById('Turn_ComPriceCar').value;
-              var num5 = num55.replace(",","");
-              var num66 = document.getElementById('By_CashDown').value;
-              var num6 = num66.replace(",","");
-              var num77 = document.getElementById('By_Transfer').value;
-              var num7 = num77.replace(",","");
-              var num88 = document.getElementById('By_Register').value;
-              var num8 = num88.replace(",","");
-              var num99 = document.getElementById('By_Act').value;
-              var num9 = num99.replace(",","");
-              var num112 = document.getElementById('SumPrice').value;
-              var num12 = num112.replace(",","");
-
-              document.form1.CashCar.value = addCommas(num1);
-              document.form1.CashdownCar.value = addCommas(num2);
-              document.form1.PaymentCar.value = addCommas(num3);
-              document.form1.Turn_WantPriceCar.value = addCommas(num4);
-              document.form1.Turn_ComPriceCar.value = addCommas(num5);
-              document.form1.By_CashDown.value = addCommas(num6);
-              document.form1.By_Transfer.value = addCommas(num7);
-              document.form1.By_Register.value = addCommas(num8);
-              document.form1.By_Act.value = addCommas(num9);
-              document.form1.SumPrice.value = addCommas(num12);
-            }
-          </script>
-
           <div class="tab-content">
             <div class="tab-pane fade show active" id="Sub-tab1" role="tabpanel" aria-labelledby="Sub-custom-tab1">
               <div>
@@ -412,7 +384,7 @@
                     <div class="form-group row mb-1">
                       <label class="col-sm-3 col-form-label text-right">เลขทะเบียน : </label>
                       <div class="col-sm-8">
-                        <select name="RegisterCar" id="RegisterCar" class="form-control RegisterCar  select2 select2-hidden-accessible">
+                        <select name="RegisterCar" id="RegisterCar" class="form-control RegisterCar select2 select2-hidden-accessible">
                           <option value="" selected>--- เลขทะเบียน ---</option>
                           @foreach ($data as $key => $value)
                             <option value="{{$value->id}}">{{$value->Number_Regist}}</option>

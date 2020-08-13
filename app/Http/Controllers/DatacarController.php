@@ -170,7 +170,6 @@ class DatacarController extends Controller
     }
 
     public function SearchData(Request $request, $type){
-
       if ($type == 1) {
         $NameBrandcar = $request->get('select');
   
@@ -401,7 +400,7 @@ class DatacarController extends Controller
         $SetPriceStr = Null;
       }
 
-      if $request->get('OfferPrice') != Null) {
+      if ($request->get('OfferPrice') != Null) {
          $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
       }else{
          $SetOfferStr = Null;

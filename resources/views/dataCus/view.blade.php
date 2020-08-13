@@ -7,158 +7,174 @@
     <!-- Main content -->
     <section class="content">
         <div class="content-header">
-        @if(session()->has('success'))
-            <script type="text/javascript">
-                toastr.success('{{ session()->get('success') }}')
-            </script>
-        @endif
+            @if(session()->has('success'))
+                <script type="text/javascript">
+                    toastr.success('{{ session()->get('success') }}')
+                </script>
+            @endif
 
             <!-- Main content -->
             <section class="content">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h1 class="" style="text-align:center;"><b>Research Customer</b></h1>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body text-sm">
-                            <div style="text-align:right;">
-                                <a class="btn bg-success btn-app" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('ResearchCus', 2) }}">
-                                <i class="fas fa-plus"></i> เพิ่มข้อมูล
-                                </a>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h1 class="" style="text-align:center;"><b>Research Customer</b></h1>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-7 col-6">
-                                    <div class="card card-danger">
-                                        <div class="card-header">
-                                        <h3 class="card-title">รายชื่อลูกค้า</h3>
-                        
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-tool" data-card-widget="maximize">
-                                                <i class="fas fa-expand"></i>
-                                            </button>
-                                        </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-valign-middle" id="table1">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-left">No.</th>
-                                                            <th class="text-center">วันที่</th>
-                                                            <th class="text-center">ชื่อ-สกุล</th>
-                                                            <th class="text-left">สถานะ</th>
-                                                            <th class="text-center" style="width: 70px"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach($data as $key => $row)
-                                                        <tr>
-                                                            <td class="text-left">{{$key+1}}</td>
-                                                            <td class="text-center">{{ date('d-m-Y', strtotime($row->DateSale_Cus)) }}</td>
-                                                            <td class="text-center">{{ $row->Name_Cus }}</td>
-                                                            <td class="text-left">{{ $row->Status_Cus }}</td>
-                                                            <td class="text-right">
-                                                                <a href="{{ action('ResearchCusController@edit',[$row->DataCus_id, 1]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
-                                                                    <i class="far fa-edit"></i>
-                                                                </a>
-                                                                <form method="post" class="delete_form" action="#" style="display:inline;">
-                                                                    {{csrf_field()}}
-                                                                    <input type="hidden" name="_method" value="DELETE" />
-                                                                    <button type="submit" class="delete-modal btn btn-danger btn-sm" title="ลบรายการ">
-                                                                        <i class="far fa-trash-alt"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                            <div class="card-body text-sm">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form method="get" action="#">
+                                        <div class="float-right form-inline">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn bg-primary btn-app" data-toggle="dropdown">
+                                                    <span class="fas fa-print"></span> ปริ้นรายงาน
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a target="_blank" class="dropdown-item" data-toggle="modal" data-target="#modal-2" data-link="{{ route('ResearchCus', 3) }}"> รายงานข้อมูลลูกค้า</a></li>
+                                                    {{-- <li class="dropdown-divider"></li> --}}
+                                                </ul>
                                             </div>
+                                            <a class="btn bg-success btn-app" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('ResearchCus', 2) }}">
+                                                <i class="fas fa-plus"></i> เพิ่มข้อมูล
+                                            </a>
+                                            <button type="submit" class="btn bg-warning btn-app">
+                                                <span class="fas fa-search"></span> Search
+                                            </button>
                                         </div>
+                                        <br><br><br><p></p>
+                                        <div class="float-right form-inline">
+                                            <label>จากวันที่ : </label>
+                                            <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control" />
+                    
+                                            <label>ถึงวันที่ : </label>
+                                            <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control" />
+                                        </div>
+                                        </form>
+                                        <br><br>
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-6">
-                                    <div class="card">
-                                        <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                        <h3 class="card-title">
-                                            <i class="fas fa-chart-pie mr-1"></i>
-                                            Sales
-                                        </h3>
-                                        <div class="card-tools">
-                                            <ul class="nav nav-pills ml-auto">
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#revenue-chart" data-toggle="tab">Area</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" href="#sales-chart" data-toggle="tab">Donut</a>
-                                                </li>
-                                                <li class="nav-item">
+                                <div class="row">
+                                    <div class="col-lg-12 col-12">
+                                        <div class="card card-danger">
+                                            <div class="card-header">
+                                                <h3 class="card-title">รายชื่อลูกค้า</h3>
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
                                                     <button type="button" class="btn btn-tool" data-card-widget="maximize">
                                                         <i class="fas fa-expand"></i>
                                                     </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        </div><!-- /.card-header -->
-                                        <div class="card-body">
-                                            <div class="tab-content p-0">
-                                                <div class="chart tab-pane" id="revenue-chart" style="position: relative; height: 300px;">
-                                                    <div class="chartjs-size-monitor">
-                                                        <div class="chartjs-size-monitor-expand">
-                                                            <div class=""></div>
-                                                        </div>
-                                                        <div class="chartjs-size-monitor-shrink">
-                                                            <div class=""></div>
-                                                        </div>
-                                                    </div>
-                                                    <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 747px;" width="1494" height="500" class="chartjs-render-monitor"></canvas>
                                                 </div>
-
-                                                <div class="chart tab-pane active" id="sales-chart" style="position: relative; height: 300px;">
-                                                    <div class="chartjs-size-monitor">
-                                                        <div class="chartjs-size-monitor-expand">
-                                                            <div class=""></div>
-                                                        </div>
-                                                        <div class="chartjs-size-monitor-shrink">
-                                                            <div class=""></div>
-                                                        </div>
-                                                    </div>
-                                                    <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 659px;" width="1318" height="500" class="chartjs-render-monitor"></canvas>
-                                                </div>
-                                                
                                             </div>
-                                        </div><!-- /.card-body -->
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-valign-middle" id="table1">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-left">No.</th>
+                                                                <th class="text-center">วันที่</th>
+                                                                <th class="text-center">ชื่อ-สกุล</th>
+                                                                <th class="text-left">สถานะ</th>
+                                                                <th class="text-left">เลขทะเบียน</th>
+                                                                <th class="text-center" style="width: 70px"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($data as $key => $row)
+                                                            <tr>
+                                                                <td class="text-left">{{$key+1}}</td>
+                                                                <td class="text-center">{{ date('d-m-Y', strtotime($row->DateSale_Cus)) }}</td>
+                                                                <td class="text-center">{{ $row->Name_Cus }}</td>
+                                                                <td class="text-left">
+                                                                    <button type="button" class="btn btn-warning btn-sm">
+                                                                        <i class="fas fa-bell"></i> {{ $row->Status_Cus }}</span>
+                                                                    </button>
+                                                                </td>
+                                                                <td class="text-left">{{ $row->RegistCar_Cus }}</td>
+                                                                <td class="text-right">
+                                                                    <a href="{{ action('ResearchCusController@edit',[$row->DataCus_id, 1]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                                                        <i class="far fa-edit"></i>
+                                                                    </a>
+                                                                    <form method="post" class="delete_form" action="{{ action('ResearchCusController@destroy',[$row->DataCus_id, 1]) }}" style="display:inline;">
+                                                                        {{csrf_field()}}
+                                                                        <input type="hidden" name="_method" value="DELETE" />
+                                                                        <button type="submit" class="delete-modal btn btn-danger btn-sm" title="ลบรายการ">
+                                                                            <i class="far fa-trash-alt"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    {{-- <div class="col-lg-5 col-6">
+                                        <div class="card">
+                                            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                                <h3 class="card-title">
+                                                    <i class="fas fa-chart-pie mr-1"></i>
+                                                    Sales
+                                                </h3>
+                                                <div class="card-tools">
+                                                    <ul class="nav nav-pills ml-auto">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="#revenue-chart" data-toggle="tab">Area</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" href="#sales-chart" data-toggle="tab">Donut</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                                                                <i class="fas fa-expand"></i>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="tab-content">
+                                                    <div class="chart tab-pane" id="revenue-chart">
+                                                        <div class="chartjs-size-monitor">
+                                                            <div class="chartjs-size-monitor-expand">
+                                                                <div class=""></div>
+                                                            </div>
+                                                            <div class="chartjs-size-monitor-shrink">
+                                                                <div class=""></div>
+                                                            </div>
+                                                        </div>
+                                                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 747px;" width="1494" height="500" class="chartjs-render-monitor"></canvas>
+                                                    </div>
+
+                                                    <div class="chart tab-pane active" id="sales-chart">
+                                                        <div class="chartjs-size-monitor">
+                                                            <div class="chartjs-size-monitor-expand">
+                                                                <div class=""></div>
+                                                            </div>
+                                                            <div class="chartjs-size-monitor-shrink">
+                                                                <div class=""></div>
+                                                            </div>
+                                                        </div>
+                                                        <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 659px;" width="1318" height="500" class="chartjs-render-monitor"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}}
                                 </div>
                             </div>
+                            <a id="button"></a>
                         </div>
-
-                        <a id="button"></a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
         </div>
     </section>
-
-    <!-- Pop up รายละเอียดค่าใช้จ่าย -->
-    <div class="modal fade" id="modal-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <p>One fine body…</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <script>
         $(function () {
             //-------------
@@ -255,6 +271,32 @@
         })
     </script>
 
+    <!-- Pop up เพิ่มข้อมูล -->
+    <div class="modal fade" id="modal-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pop up รายงาน -->
+    <div class="modal fade" id="modal-2">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(function () {
         $("#table1").DataTable({
@@ -278,7 +320,20 @@
             });
           });
         });
+        $(function () {
+          $("#modal-2").on("show.bs.modal", function (e) {
+            var link = $(e.relatedTarget).data("link");
+            $("#modal-2 .modal-body").load(link, function(){
+            });
+          });
+        });
     </script>
-      
 
+    <script>
+        function blinker() {
+        $('.prem').fadeOut(1500);
+        $('.prem').fadeIn(1500);
+        }
+        setInterval(blinker, 1500);
+    </script>
 @endsection

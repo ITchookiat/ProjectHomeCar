@@ -163,7 +163,7 @@
                     </div>
                     <div class="col-6">
                       <div class="card-tools d-inline float-right">
-                        <a class="delete-modal btn btn-primary" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('ResearchCus', 3) }}">
+                        <a class="delete-modal btn btn-primary" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('ResearchCus.edit', [$id, 2]) }}">
                           <i class="fas fa-plus"></i> Tracking
                         </a>
                         <button type="submit" class="delete-modal btn btn-success">
@@ -178,228 +178,243 @@
                 </div>
                 <div class="card-body text-sm">
                   <h5 class="text-center"><b>แบบฟอร์มข้อมูลลูกค้า</b></h5>
-                    <div>
-                      <div class="row">
-                        <div class="col-6">
-                          <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label text-right">ชื่อ - นามสกุล : </label>
-                            <div class="col-sm-8">
-                              <input type="text" name="NameCus" class="form-control" style="height:30px;" value="{{ $data->Name_Cus }}"/>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label text-right">เบอร์ติดต่อ : </label>
-                            <div class="col-sm-8">
-                              <input type="text" name="PhoneCus" class="form-control" style="height:30px;" value="{{ $data->Phone_Cus }}" data-inputmask="&quot;mask&quot;:&quot;999-9999999,999-9999999&quot;" data-mask=""/>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-            
-                      <div class="row">
-                        <div class="col-6">
-                          <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label text-right">ที่อยู่ : </label>
-                            <div class="col-sm-8">
-                              <input type="text" name="AddressCus" class="form-control" style="height:30px;" value="{{ $data->Address_Cus }}"/>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label text-right">จังหวัด/ไปรษณีย์ : </label>
-                            <div class="col-sm-4">
-                              <input type="text" name="ProvinceCus" class="form-control" style="height:30px;" value="{{ $data->Province_Cus }}"/>
-                            </div>
-                            <div class="col-sm-4">
-                              <input type="text" name="ZipCus" class="form-control" style="height:30px;"value="{{ $data->Zip_Cus }}" data-inputmask="&quot;mask&quot;:&quot;99999&quot;" data-mask=""/>
-                            </div>
+                  <script>
+                    function addCommas(nStr){
+                        nStr += '';
+                        x = nStr.split('.');
+                        x1 = x[0];
+                        x2 = x.length > 1 ? '.' + x[1] : '';
+                        var rgx = /(\d+)(\d{3})/;
+                        while (rgx.test(x1)) {
+                          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                        }
+                      return x1 + x2;
+                    }
+                    function Comma(){
+                      var num11 = document.getElementById('CashStatusCus').value;
+                      var num1 = num11.replace(",","");
+          
+                      document.form1.CashStatusCus.value = addCommas(num1);
+                    }
+                  </script>
+
+                  <div>
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">ชื่อ - นามสกุล : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="NameCus" class="form-control" style="height:30px;" value="{{ $data->Name_Cus }}"/>
                           </div>
                         </div>
                       </div>
-            
-                      <div class="row">
-                        <div class="col-6">
-                          <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label text-right">อาชีพ : </label>
-                            <div class="col-sm-8">
-                              <input type="text" name="CareerCus" class="form-control" style="height:30px;" value="{{ $data->Career_Cus }}" />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label text-right">Email : </label>
-                            <div class="col-sm-8">
-                              <input type="text" name="EmailCus" class="form-control" style="height:30px;" value="{{ $data->Email_Cus }}"/>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-            
-                      <div class="row">
-                        <div class="col-6">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">แหล่งที่มาลูกค้า : </label>
-                            <div class="col-sm-8">
-                              <select name="OriginCus" class="form-control">
-                                <option value="" selected>--- แหล่งที่มา ---</option>
-                                <option value="ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย" {{ ($data->Origin_Cus === 'ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย') ? 'selected' : '' }}>ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย</option>
-                                <option value="ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า" {{ ($data->Origin_Cus === 'ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า') ? 'selected' : '' }}>ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า</option>
-                                <option value="นายหน้า/ลูกค้าแนะนำ" {{ ($data->Origin_Cus === 'นายหน้า/ลูกค้าแนะนำ') ? 'selected' : '' }}>นายหน้า/ลูกค้าแนะนำ</option>
-                                <option value="อื่นๆ..." {{ ($data->Origin_Cus === 'อื่นๆ...') ? 'selected' : '' }}>อื่นๆ...</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">รูปแบบลูกค้า : </label>
-                            <div class="col-sm-8">
-                              <select name="modelCus" class="form-control">
-                                <option value="" selected>--- เลือกรูปแบบ ---</option>
-                                <option value="Walk In" {{ ($data->model_Cus === 'Walk In') ? 'selected' : '' }}>Walk In</option>
-                                <option value="Call In" {{ ($data->model_Cus === 'Call In') ? 'selected' : '' }}>Call In</option>
-                                <option value="Other" {{ ($data->model_Cus === 'Other') ? 'selected' : '' }}>Other</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-            
-                      <div class="row">
-                        <div class="col-6">
-                          <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label text-right"><font color="red">ผู้เสนอราคา : </font></label>
-                            <div class="col-sm-8">
-                            <input type="text" name="SaleCus" value="{{ $data->Sale_Cus }}" class="form-control" style="height:30px;" readonly/>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label text-right"><font color="red">วันที่รับลูกค้า : </font></label>
-                            <div class="col-sm-8">
-                              <input type="date" name="DateSaleCus" class="form-control" value="{{ $data->DateSale_Cus }}" style="height:30px;" readonly/>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-              
-                      <div class="row">
-                        <div class="col-6">
-                          <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label text-right"><font color="red">สถานะลูกค้า : </font></label>
-                            <div class="col-sm-4">
-                              <span class="todo-wrap">
-                                @if($data->Status_Cus == "ติดตาม")
-                                  <input type="checkbox" id="1" name="StatusCus" value="{{ $data->Status_Cus }}" checked="checked"/>
-                                @else
-                                  <input type="checkbox" id="1" name="StatusCus" value="ติดตาม"/>
-                                @endif
-                                <label for="1" class="todo">
-                                  <i class="fa fa-check"></i>
-                                  ติดตาม
-                                </label>
-                              </span>
-                            </div>
-                            <div class="col-sm-4">
-                              <span class="todo-wrap">
-                                @if($data->Status_Cus == "จองรถ")
-                                  <input type="checkbox" id="2" name="StatusCus" value="{{ $data->Status_Cus }}" checked="checked"/>
-                                @else
-                                  <input type="checkbox" id="2" name="StatusCus" value="จองรถ"/>
-                                @endif
-                                <label for="2" class="todo">
-                                  <i class="fa fa-check"></i>
-                                  จองรถ
-                                </label>
-                              </span>
-                            </div>
-                          </div>
-              
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right"></label>
-                            <div class="col-sm-4">
-                              <span class="todo-wrap">
-                                @if($data->Status_Cus == "ส่งมอบ")
-                                  <input type="checkbox" id="3" name="StatusCus" value="{{ $data->Status_Cus }}" checked="checked"/>
-                                @else
-                                  <input type="checkbox" id="3" name="StatusCus" value="ส่งมอบ"/>
-                                @endif
-                                <label for="3" class="todo">
-                                  <i class="fa fa-check"></i>
-                                  ส่งมอบ
-                                </label>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label text-right"><font color="red">ประเภทลูกค้า : </font></label>
-                            <div class="col-sm-4">
-                              <span class="todo-wrap">
-                                @if($data->Type_Cus == "Very Hot")
-                                  <input type="checkbox" id="5" name="TypeCus" value="{{ $data->Type_Cus }}" checked="checked"/>
-                                @else
-                                  <input type="checkbox" id="5" name="TypeCus" value="Very Hot"/>
-                                @endif
-                                <label for="5" class="todo">
-                                  <i class="fa fa-check"></i>
-                                  Very Hot
-                                </label>
-                              </span>
-                            </div>
-                            <div class="col-sm-4">
-                              <span class="todo-wrap">
-                                @if($data->Type_Cus == "Hot")
-                                  <input type="checkbox" id="6" name="TypeCus" value="{{ $data->Type_Cus }}" checked="checked"/>
-                                @else
-                                  <input type="checkbox" id="6" name="TypeCus" value="Hot"/>
-                                @endif
-                                <label for="6" class="todo">
-                                  <i class="fa fa-check"></i>
-                                  Hot (1-5)
-                                </label>
-                              </span>
-                            </div>
-                          </div>
-              
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right"></label>
-                            <div class="col-sm-4">
-                              <span class="todo-wrap">
-                                @if($data->Type_Cus == "Warm")
-                                  <input type="checkbox" id="7" name="TypeCus" value="{{ $data->Type_Cus }}" checked="checked"/>
-                                @else
-                                  <input type="checkbox" id="7" name="TypeCus" value="Warm"/>
-                                @endif
-                                <label for="7" class="todo">
-                                  <i class="fa fa-check"></i>
-                                  Warm (6-15)
-                                </label>
-                              </span>
-                            </div>
-                            <div class="col-sm-4">
-                              <span class="todo-wrap">
-                                @if($data->Type_Cus == "Cold")
-                                  <input type="checkbox" id="8" name="TypeCus" value="{{ $data->Type_Cus }}" checked="checked"/>
-                                @else
-                                  <input type="checkbox" id="8" name="TypeCus" value="Cold"/>
-                                @endif
-                                <label for="8" class="todo">
-                                  <i class="fa fa-check"></i>
-                                  Cold (มากกว่า 15)
-                                </label>
-                              </span>
-                            </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">เบอร์ติดต่อ : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="PhoneCus" class="form-control" style="height:30px;" value="{{ $data->Phone_Cus }}" data-inputmask="&quot;mask&quot;:&quot;999-9999999,999-9999999&quot;" data-mask=""/>
                           </div>
                         </div>
                       </div>
                     </div>
+          
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">ที่อยู่ : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="AddressCus" class="form-control" style="height:30px;" value="{{ $data->Address_Cus }}"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">จังหวัด/ไปรษณีย์ : </label>
+                          <div class="col-sm-4">
+                            <input type="text" name="ProvinceCus" class="form-control" style="height:30px;" value="{{ $data->Province_Cus }}"/>
+                          </div>
+                          <div class="col-sm-4">
+                            <input type="text" name="ZipCus" class="form-control" style="height:30px;"value="{{ $data->Zip_Cus }}" data-inputmask="&quot;mask&quot;:&quot;99999&quot;" data-mask=""/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">อาชีพ : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="CareerCus" class="form-control" style="height:30px;" value="{{ $data->Career_Cus }}" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">Email : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="EmailCus" class="form-control" style="height:30px;" value="{{ $data->Email_Cus }}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-1">
+                          <label class="col-sm-3 col-form-label text-right">แหล่งที่มาลูกค้า : </label>
+                          <div class="col-sm-8">
+                            <select name="OriginCus" class="form-control">
+                              <option value="" selected>--- แหล่งที่มา ---</option>
+                              <option value="ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย" {{ ($data->Origin_Cus === 'ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย') ? 'selected' : '' }}>ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย</option>
+                              <option value="ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า" {{ ($data->Origin_Cus === 'ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า') ? 'selected' : '' }}>ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า</option>
+                              <option value="นายหน้า/ลูกค้าแนะนำ" {{ ($data->Origin_Cus === 'นายหน้า/ลูกค้าแนะนำ') ? 'selected' : '' }}>นายหน้า/ลูกค้าแนะนำ</option>
+                              <option value="อื่นๆ..." {{ ($data->Origin_Cus === 'อื่นๆ...') ? 'selected' : '' }}>อื่นๆ...</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-1">
+                          <label class="col-sm-3 col-form-label text-right">รูปแบบลูกค้า : </label>
+                          <div class="col-sm-8">
+                            <select name="modelCus" class="form-control">
+                              <option value="" selected>--- เลือกรูปแบบ ---</option>
+                              <option value="Walk In" {{ ($data->model_Cus === 'Walk In') ? 'selected' : '' }}>Walk In</option>
+                              <option value="Call In" {{ ($data->model_Cus === 'Call In') ? 'selected' : '' }}>Call In</option>
+                              <option value="Other" {{ ($data->model_Cus === 'Other') ? 'selected' : '' }}>Other</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"><font color="red">ผู้เสนอราคา : </font></label>
+                          <div class="col-sm-8">
+                          <input type="text" name="SaleCus" value="{{ $data->Sale_Cus }}" class="form-control" style="height:30px;" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"><font color="red">วันที่รับลูกค้า : </font></label>
+                          <div class="col-sm-8">
+                            <input type="date" name="DateSaleCus" class="form-control" value="{{ $data->DateSale_Cus }}" style="height:30px;" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">เงินมัดจำ : </label>
+                          <div class="col-sm-8">
+                          <input type="text" name="CashStatusCus" id="CashStatusCus" class="form-control" value="{{ number_format($data->CashStatus_Cus, 0) }}" style="height:30px;" oninput="Comma();"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"><font color="red">สถานะลูกค้า : </font></label>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($data->Status_Cus == "ติดตาม")
+                                <input type="checkbox" id="1" name="StatusCus" value="{{ $data->Status_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="1" name="StatusCus" value="ติดตาม"/>
+                              @endif
+                              <label for="1" class="todo">
+                                <i class="fa fa-check"></i>
+                                ติดตาม
+                              </label>
+                            </span>
+                          </div>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($data->Status_Cus == "จองรถ")
+                                <input type="checkbox" id="2" name="StatusCus" value="{{ $data->Status_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="2" name="StatusCus" value="จองรถ"/>
+                              @endif
+                              <label for="2" class="todo">
+                                <i class="fa fa-check"></i>
+                                จองรถ
+                              </label>
+                            </span>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"><font color="red">ประเภทลูกค้า : </font></label>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($data->Type_Cus == "Very Hot")
+                                <input type="checkbox" id="5" name="TypeCus" value="{{ $data->Type_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="5" name="TypeCus" value="Very Hot"/>
+                              @endif
+                              <label for="5" class="todo">
+                                <i class="fa fa-check"></i>
+                                Very Hot
+                              </label>
+                            </span>
+                          </div>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($data->Type_Cus == "Hot")
+                                <input type="checkbox" id="6" name="TypeCus" value="{{ $data->Type_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="6" name="TypeCus" value="Hot"/>
+                              @endif
+                              <label for="6" class="todo">
+                                <i class="fa fa-check"></i>
+                                Hot (1-5)
+                              </label>
+                            </span>
+                          </div>
+                        </div>
+            
+                        <div class="form-group row mb-1">
+                          <label class="col-sm-3 col-form-label text-right"></label>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($data->Type_Cus == "Warm")
+                                <input type="checkbox" id="7" name="TypeCus" value="{{ $data->Type_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="7" name="TypeCus" value="Warm"/>
+                              @endif
+                              <label for="7" class="todo">
+                                <i class="fa fa-check"></i>
+                                Warm (6-15)
+                              </label>
+                            </span>
+                          </div>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($data->Type_Cus == "Cold")
+                                <input type="checkbox" id="8" name="TypeCus" value="{{ $data->Type_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="8" name="TypeCus" value="Cold"/>
+                              @endif
+                              <label for="8" class="todo">
+                                <i class="fa fa-check"></i>
+                                Cold (มากกว่า 15)
+                              </label>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
           
                   <div class="card card-warning card-tabs">
                     <div class="card-header p-0 pt-1">
@@ -407,157 +422,174 @@
                         <li class="nav-item">
                           <a class="nav-link active" id="Sub-custom-tab1" data-toggle="pill" href="#Sub-tab1" role="tab" aria-controls="Sub-tab1" aria-selected="false">ความต้องการลูกค้า</a>
                         </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="Sub-custom-tab2" data-toggle="pill" href="#Sub-tab2" role="tab" aria-controls="Sub-tab2" aria-selected="false">บันทึกการติดตาม</a>
+                        </li>
                       </ul>
                     </div>
           
-                    <script>
-                      function addCommas(nStr){
-                          nStr += '';
-                          x = nStr.split('.');
-                          x1 = x[0];
-                          x2 = x.length > 1 ? '.' + x[1] : '';
-                          var rgx = /(\d+)(\d{3})/;
-                          while (rgx.test(x1)) {
-                            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-                          }
-                        return x1 + x2;
-                      }
-                      function Comma(){
-                        var num11 = document.getElementById('CashCar').value;
-                        var num1 = num11.replace(",","");
-                        var num22 = document.getElementById('CashdownCar').value;
-                        var num2 = num22.replace(",","");
-                        var num33 = document.getElementById('PaymentCar').value;
-                        var num3 = num33.replace(",","");
-                        var num44 = document.getElementById('Turn_WantPriceCar').value;
-                        var num4 = num44.replace(",","");
-                        var num55 = document.getElementById('Turn_ComPriceCar').value;
-                        var num5 = num55.replace(",","");
-                        var num66 = document.getElementById('By_CashDown').value;
-                        var num6 = num66.replace(",","");
-                        var num77 = document.getElementById('By_Transfer').value;
-                        var num7 = num77.replace(",","");
-                        var num88 = document.getElementById('By_Register').value;
-                        var num8 = num88.replace(",","");
-                        var num99 = document.getElementById('By_Act').value;
-                        var num9 = num99.replace(",","");
-                        var num112 = document.getElementById('SumPrice').value;
-                        var num12 = num112.replace(",","");
-          
-                        document.form1.CashCar.value = addCommas(num1);
-                        document.form1.CashdownCar.value = addCommas(num2);
-                        document.form1.PaymentCar.value = addCommas(num3);
-                        document.form1.Turn_WantPriceCar.value = addCommas(num4);
-                        document.form1.Turn_ComPriceCar.value = addCommas(num5);
-                        document.form1.By_CashDown.value = addCommas(num6);
-                        document.form1.By_Transfer.value = addCommas(num7);
-                        document.form1.By_Register.value = addCommas(num8);
-                        document.form1.By_Act.value = addCommas(num9);
-                        document.form1.SumPrice.value = addCommas(num12);
-                      }
-                    </script>
-          
                     <div class="tab-content">
                       <div class="tab-pane fade show active" id="Sub-tab1" role="tabpanel" aria-labelledby="Sub-custom-tab1">
-                        {{--
                         <div>
                           <p></p>
                           <div class="row">
                             <div class="col-6">
-                              <div class="form-group row mb-0">
-                                <label class="col-sm-3 col-form-label text-right">ยี่ห้อ : </label>
+                              <div class="form-group row mb-1">
+                                <label class="col-sm-3 col-form-label text-right">เลขทะเบียน : </label>
                                 <div class="col-sm-8">
-                                  <input type="text" name="BrandCar" class="form-control" style="height:30px;" value="{{ $row->Brand_Car }}"/>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-6">
-                              <div class="form-group row mb-0">
-                                <label class="col-sm-3 col-form-label text-right">รุ่น/สี : </label>
-                                <div class="col-sm-4">
-                                  <input type="text" name="VersionCar" class="form-control" style="height:30px;" value="{{ $row->Version_Car }}"/>
-                                </div>
-                                <div class="col-sm-4">
-                                  <input type="text" name="ColorCar" class="form-control" style="height:30px;" value="{{ $row->Color_Car }}"/>
+                                  <select name="RegisterCar" id="RegisterCar" class="form-control RegisterCar select2 select2-hidden-accessible">
+                                    <option value="" selected>--- เลขทะเบียน ---</option>
+                                    @if ($data->F_DataCus_id == NULL)
+                                      @foreach ($dataRegis as $key => $value)
+                                        @if ($value->F_DataCus_id == NULL)
+                                          <option value="{{$value->id}}" {{ ($value->Number_Regist == $data->RegistCar_Cus) ? 'selected' : '' }}>{{ $value->Number_Regist }}</option>
+                                        @endif
+                                      @endforeach
+                                    @else
+                                      @foreach ($dataRegis as $key => $value)
+                                        <option value="{{$value->id}}" {{ ($value->Number_Regist == $data->RegistCar_Cus) ? 'selected' : '' }}>{{ $value->Number_Regist }}</option>
+                                      @endforeach
+                                    @endif
+                                  </select>
+                                  <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="10"></span>
                                 </div>
                               </div>
                             </div>
                           </div>
-          
-                          <div class="row">
-                            <div class="col-6">
-                              <div class="form-group row mb-0">
-                                <label class="col-sm-3 col-form-label text-right">เกียร์/ปี : </label>
-                                <div class="col-sm-4">
-                                  <input type="text" name="GearCar" class="form-control" style="height:30px;" value="{{ $row->Gearcar }}"/>
+
+                          <div id="ShowData"></div>
+                          <script>
+                            $('#RegisterCar').change(function(){
+                                var value = document.getElementById('RegisterCar').value;
+                                if(value == ''){
+                                  $('#ShowCom').show();
+                                }
+                                else{
+                                  $('#ShowCom').hide();
+                                }
+                            });
+                          </script>
+                          
+                          <div id="ShowCom">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="form-group row mb-0">
+                                  <label class="col-sm-3 col-form-label text-right">ยี่ห้อ : </label>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="Brand_Car" class="form-control" style="height:30px;" value="{{ $data->BrandCar_Cus }}" readonly/>
+                                    <input type="hidden" name="Regist_Car" value="{{ $data->RegistCar_Cus }}">
+                                  </div>
                                 </div>
-                                <div class="col-sm-4">
-                                  <input type="text" name="YearCar" class="form-control" style="height:30px;" value="{{ $row->Year_Product }}"/>
+                              </div>
+                              <div class="col-6">
+                                <div class="form-group row mb-0">
+                                  <label class="col-sm-3 col-form-label text-right">รุ่น/สี : </label>
+                                  <div class="col-sm-4">
+                                    <input type="text" name="Version_Car" class="form-control" style="height:30px;" value="{{ $data->VersionCar_Cus }}" readonly/>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <input type="text" name="Color_Car" class="form-control" style="height:30px;" value="{{ $data->ColorCar_Cus }}" readonly/>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="col-6">
-                              <div class="form-group row mb-0">
-                                <label class="col-sm-3 col-form-label text-right">ราคา : </label>
-                                <div class="col-sm-8">
-                                  <input type="text" name="CashCar" id="CashCar" class="form-control" style="height:30px;" value="{{ number_format($row->Net_Price, 0) }}" oninput="Comma();"/>
+            
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="form-group row mb-0">
+                                  <label class="col-sm-3 col-form-label text-right">เกียร์/ปี : </label>
+                                  <div class="col-sm-4">
+                                    <input type="text" name="Gear_Car" class="form-control" style="height:30px;" value="{{ $data->GearCar_Cus }}" readonly/>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <input type="text" name="Year_Car" class="form-control" style="height:30px;" value="{{ $data->YearCar_Cus }}" readonly/>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-          
-                          <div class="row">
-                            <div class="col-6">
-                              <div class="form-group row mb-0">
-                                <label class="col-sm-3 col-form-label text-right">เงินดาวน์/ดอกเบี้ย : </label>
-                                <div class="col-sm-4">
-                                  <input type="text" name="CashdownCar" id="CashdownCar" class="form-control" style="height:30px;" value="{{ number_format($row->Down_Price, 0) }}" oninput="Comma();"/>
-                                </div>
-                                <div class="col-sm-4">
-                                  <input type="number" name="InterestCar" class="form-control" style="height:30px;" value="{{ $row->Interest_Car }}"/>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-6">
-                              <div class="form-group row mb-0">
-                                <label class="col-sm-3 col-form-label text-right">ระยะเวลา/ค่างวด : </label>
-                                <div class="col-sm-4">
-                                  <input type="number" name="PeriodCar" class="form-control" style="height:30px;"value="{{ $row->Period_Car }}"/>
-                                </div>
-                                <div class="col-sm-4">
-                                  <input type="text" name="PaymentCar" id="PaymentCar" class="form-control" style="height:30px;" value="{{ number_format($row->Payment_Car, 0) }}" oninput="Comma();"/>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-          
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <div class="form-group row mb-0">
-                                <label class="col-sm-3 col-form-label text-right">รายการอื่นๆ : </label>
-                                <div class="col-sm-8">
-                                  <textarea name="NoteCar" class="form-control" rows="2"> {{ $row->Note_Car }} </textarea>
+                              <div class="col-6">
+                                <div class="form-group row mb-0">
+                                  <label class="col-sm-3 col-form-label text-right">ราคา : </label>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="Price_Car" class="form-control" style="height:30px;" value="{{ number_format($data->PriceCar_Cus, 0) }}" oninput="Comma();" readonly/>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                        --}}  
-                        <p></p>
+                      </div>
+              <input type="hidden" name="_method" value="PATCH"/>
+            </form>
+                      <div class="tab-pane fade show" id="Sub-tab2" role="tabpanel" aria-labelledby="Sub-custom-tab2">
+                        <div class="table-responsive">
+                          <table class="table table-striped table-valign-middle" id="table1">
+                            <thead>
+                              <tr>
+                                <th class="text-center">No.</th>
+                                <th class="text-center">วันที่</th>
+                                <th class="text-center">สถานะ</th>
+                                <th class="text-center">บันทึกการติดตาม</th>
+                                <th class="text-center">หมายเหตุ</th>
+                                <th class="text-center"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($tracking as $key => $row)
+                                  <tr>
+                                    <td class="text-center">{{ $key+1 }}</td>
+                                    <td class="text-center">{{ date('d-m-Y', strtotime($row->Date_Tracking)) }}</td>
+                                    <td class="text-left">{{ $row->Status_Tracking }}</td>
+                                    <td class="text-center">{{ $row->Follow_Tracking }}</td>
+                                    <td class="text-center">{{ $row->Note_tracking }}</td>
+                                    <td class="text-center">
+                                      <a class="btn btn-warning btn-sm" title="แก้ไขรายการ" data-toggle="modal" data-target="#modal-2" data-backdrop="static" data-link="{{ route('ResearchCus.edit', [$row->Tracking_id, 3]) }}">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <form method="post" class="delete_form" action="{{ action('ResearchCusController@destroy',[$row->Tracking_id, 2]) }}" style="display:inline;">
+                                        {{csrf_field()}}
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        <button type="submit" class="delete-modal btn btn-danger btn-sm" title="ลบรายการ">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                    </td>
+                                  </tr>
+                                @endforeach
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <a id="button"></a>
                 </div>
               </div>
-              <input type="hidden" name="_method" value="PATCH"/>
-
-            </form>
           </div>
         </div>
       </section>
     </div>
   </section>
+
+  <script type="text/javascript">
+    $('.RegisterCar').change(function() {
+      if ($(this).val() != '') {
+        
+        var select = $(this).val();
+        // console.log(select);
+        var _token = $('input[name="_token"]').val();
+  
+        $.ajax({
+          url:"{{ route('ResearchCus.SearchData', 1) }}",
+          method:"POST",
+          data:{select:select,_token:_token},
+  
+          success:function(result){ //เสร็จแล้วทำอะไรต่อ
+            $('#ShowData').html(result);
+          }
+        })
+      }
+    });
+  </script>
 
   {{-- Popup --}}
   <script>
@@ -570,7 +602,35 @@
     });
   </script>
 
-  <!-- Pop up รายละเอียดค่าใช้จ่าย -->
+  <script>
+    $(function () {
+      $("#modal-2").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-2 .modal-body").load(link, function(){
+        });
+      });
+    });
+  </script>
+  {{-- Popup --}}
+
+  <script>
+    $(function () {
+      $('[data-mask]').inputmask()
+    })
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#table1').DataTable( {
+        "searching" : false,
+        "lengthChange" : false,
+        "info" : false,
+        "pageLength": 5,
+      } );
+    } );
+  </script>
+
+  {{-- Modal --}}
   <div class="modal fade" id="modal-1">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -583,20 +643,16 @@
     </div>
   </div>
 
-  <script>
-    $(function () {
-      $('[data-mask]').inputmask()
-    })
-  </script>
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('#table').DataTable( {
-        "searching" : false,
-        "lengthChange" : false,
-        "info" : false,
-        "pageLength": 5,
-      } );
-    } );
-  </script>
+  <div class="modal fade" id="modal-2">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>One fine body…</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+            </div>
+        </div>
+    </div>
+  </div>
+  {{-- Modal --}}
 @endsection

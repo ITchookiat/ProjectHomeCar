@@ -26,10 +26,19 @@ class CreateDataCustomersTable extends Migration
             $table->string('model_Cus')->nullable();     
             $table->string('Sale_Cus')->nullable();   
             $table->date('DateSale_Cus')->nullable();   
+            $table->string('CashStatus_Cus')->nullable();   
             $table->string('Status_Cus')->nullable();   
             $table->date('DateStatus_Cus')->nullable();   
             $table->string('Type_Cus')->nullable();   
-            $table->date('DateType_Cus')->nullable();   
+            $table->date('DateType_Cus')->nullable();
+            
+            $table->string('RegistCar_Cus')->nullable();       //ป้ายทะเบียน
+            $table->string('BrandCar_Cus')->nullable();        //ยี่ห้อ
+            $table->string('VersionCar_Cus')->nullable();      //รุ่น
+            $table->string('ColorCar_Cus')->nullable();        //สี
+            $table->string('GearCar_Cus')->nullable();         //เกียร์
+            $table->string('YearCar_Cus')->nullable();         //ปี
+            $table->string('PriceCar_Cus')->nullable();        //ราคารถ
             $table->timestamps();
         });
     }

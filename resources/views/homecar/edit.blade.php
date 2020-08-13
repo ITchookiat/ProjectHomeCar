@@ -15,13 +15,180 @@
   $date3 = $Y.'-'.'01'.'-'.'01';
 @endphp
 
+<style>
+    #todo-list{
+    width:100%;
+    margin:0 auto 50px auto;
+    padding:5px;
+    background:white;
+    position:relative;
+    /*box-shadow*/
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+          box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+    /*border-radius*/
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+          border-radius:5px;}
+    #todo-list:before{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    /*box-shadow*/
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.4);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.4);
+          box-shadow:0 0 20px rgba(0,0,0,0.4);
+    top:50%;
+    bottom:0;
+    left:10px;
+    right:10px;
+    /*border-radius*/
+    -webkit-border-radius:100px / 10px;
+    -moz-border-radius:100px / 10px;
+          border-radius:100px / 10px;
+    }
+    .todo-wrap{
+    display:block;
+    position:relative;
+    padding-left:35px;
+    /*box-shadow*/
+    -webkit-box-shadow:0 2px 0 -1px #ebebeb;
+    -moz-box-shadow:0 2px 0 -1px #ebebeb;
+          box-shadow:0 2px 0 -1px #ebebeb;
+    }
+    .todo-wrap:last-of-type{
+    /*box-shadow*/
+    -webkit-box-shadow:none;
+    -moz-box-shadow:none;
+          box-shadow:none;
+    }
+    input[type="checkbox"]{
+    position:absolute;
+    height:0;
+    width:0;
+    opacity:0;
+    /* top:-600px; */
+    }
+    .todo{
+    display:inline-block;
+    font-weight:200;
+    padding:10px 5px;
+    height:37px;
+    position:relative;
+    }
+    .todo:before{
+    content:'';
+    display:block;
+    position:absolute;
+    top:calc(50% + 2px);
+    left:0;
+    width:0%;
+    height:1px;
+    background:#cd4400;
+    /*transition*/
+    -webkit-transition:.25s ease-in-out;
+    -moz-transition:.25s ease-in-out;
+      -o-transition:.25s ease-in-out;
+          transition:.25s ease-in-out;
+    }
+    .todo:after{
+    content:'';
+    display:block;
+    position:absolute;
+    z-index:0;
+    height:18px;
+    width:18px;
+    top:9px;
+    left:-25px;
+    /*box-shadow*/
+    -webkit-box-shadow:inset 0 0 0 2px #d8d8d8;
+    -moz-box-shadow:inset 0 0 0 2px #d8d8d8;
+          box-shadow:inset 0 0 0 2px #d8d8d8;
+    /*transition*/
+    -webkit-transition:.25s ease-in-out;
+    -moz-transition:.25s ease-in-out;
+      -o-transition:.25s ease-in-out;
+          transition:.25s ease-in-out;
+    /*border-radius*/
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+          border-radius:4px;
+    }
+    .todo:hover:after{
+    /*box-shadow*/
+    -webkit-box-shadow:inset 0 0 0 2px #949494;
+    -moz-box-shadow:inset 0 0 0 2px #949494;
+          box-shadow:inset 0 0 0 2px #949494;
+    }
+    .todo .fa-check{
+    position:absolute;
+    z-index:1;
+    left:-31px;
+    top:0;
+    font-size:1px;
+    line-height:36px;
+    width:36px;
+    height:36px;
+    text-align:center;
+    color:transparent;
+    text-shadow:1px 1px 0 white, -1px -1px 0 white;
+    }
+    :checked + .todo{
+    color:#717171;
+    }
+    :checked + .todo:before{
+    width:100%;
+    }
+    :checked + .todo:after{
+    /*box-shadow*/
+    -webkit-box-shadow:inset 0 0 0 2px #0eb0b7;
+    -moz-box-shadow:inset 0 0 0 2px #0eb0b7;
+          box-shadow:inset 0 0 0 2px #0eb0b7;
+    }
+    :checked + .todo .fa-check{
+    font-size:20px;
+    line-height:35px;
+    color:#0eb0b7;
+    }
+    /* Delete Items */
+
+    .delete-item{
+    display:block;
+    position:absolute;
+    height:36px;
+    width:36px;
+    line-height:36px;
+    right:0;
+    top:0;
+    text-align:center;
+    color:#d8d8d8;
+    opacity:0;
+    }
+    .todo-wrap:hover .delete-item{
+    opacity:1;
+    }
+    .delete-item:hover{
+    color:#cd4400;
+    }
+</style>
+<link type="text/css" rel="stylesheet" href="{{ asset('css/magiczoomplus.css') }}"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript" src="{{ asset('js/magiczoomplus.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/fileinput.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
 
     <!-- Main content -->
     <section class="content">
       <div class="content-header">
         <div class="card">
           <div class="card-header">
-            <h1 class="" style="text-align:center;"><b>แก้ไขข้อมูลรถยนต์</b></h1>
+            <h1 class="" style="text-align:center;">
+            <b>แก้ไขข้อมูลรถยนต์</b>
+            <a href="#" class="btn btn-default btn-sm float-right" title="เพิ่มรูปรถ" data-toggle="modal" data-target="#modal-default">
+              <i class="far fa-image"></i> 
+            </a>
+            </h1>
           </div>
 
             <div class="card-body">
@@ -46,6 +213,31 @@
                           <div class="float-right form-inline">
                             <label><font color="red">* </font> วันที่ซื้อ :</label>
                             <input type="date" class="form-control" name="DateCar" style="width: 250px;" value="{{$datacar->create_date}}" />
+                          </div>
+                        </div>
+                        <div class="col-5">
+                          <div class="float-right form-inline">
+                              <span class="todo-wrap">
+                                @if($datacar->BookStatus_Car == 'จอง')
+                                  <input type="checkbox" id="1" name="BookStatus" value="{{$datacar->BookStatus_Car}}" checked="checked"/>
+                                @else
+                                  <input type="checkbox" id="1" name="BookStatus" value="จอง" />
+                                @endif
+                                <label for="1" class="todo">
+                                  <i class="fa fa-check"></i>
+                                  <font color="blue">รถยนต์ติดจอง</font>
+                                </label>
+                              </span>
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              {{--
+                              <!-- <label><font color="blue">สถานะจอง :</font></label>
+                              <select name="BookStatus" class="form-control" style="width: 250px;">
+                                <option value="" selected>--- เลือกสถานะ ---</option>
+                                <option value="จอง" {{($datacar->BookStatus_Car === 'จอง') ? 'selected' : '' }}>จอง</option>
+                                <option value="ยกเลิกจอง" {{($datacar->BookStatus_Car === 'ยกเลิกจอง') ? 'selected' : '' }}>ยกเลิกจอง</option>
+                              </select> -->
+                              --}}
                           </div>
                         </div>
                     </div> <!-- endrow -->
@@ -429,12 +621,41 @@
                       </a>
                     </div>
                     <input type="hidden" name="_method" value="PATCH"/>
-                  </form>
+                    <div class="modal fade" id="modal-default" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-body">
+                              <div class="form-group">
+                                <div class="file-loading">
+                                  <input id="image-file" type="file" name="file_image[]" accept="image/*" data-min-file-count="1" multiple>
+                                </div>
+                              </div>
+                              <div class="row">
+                                @foreach($dataImage as $key => $images)
+                                    <div class="col-sm-2">
+                                      <a href="{{ asset('upload-image/'.$images->Name_fileimage) }}" data-title="ภาพผู้เช่าซื้อ">
+                                        <img src="{{ asset('upload-image/'.$images->Name_fileimage) }}" width="450px">
+                                      </a>
+                                    </div>
+                                @endforeach
+                              </div>
+                            <hr>
+                            </div>
+                            <div class="text-center">
+                              <button type="submit" class="btn btn-success">อัพโหลด</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                            </div>
+                            <br>
+                          </div>
+                          <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
 
+                  </form>
                 </div>
               </div>
             </div>
-
             <a id="button"></a>
         </div>
       </div>
@@ -479,6 +700,21 @@
     $(".alert").fadeTo(3000, 500).slideUp(500, function(){
     $(".alert").alert('close');
     });;
+  </script>
+
+{{-- image --}}
+  <script type="text/javascript">
+    $("#image-file,#Account_image,#image_checker_1,#image_checker_2").fileinput({
+      uploadUrl:"{{ route('MasterDatacar.store') }}",
+      theme:'fa',
+      uploadExtraData:function(){
+        return{
+          _token:"{{csrf_token()}}",
+        }
+      },
+      allowedFileExtensions:['jpg','png','gif'],
+      maxFileSize:10240
+    })
   </script>
 
 @endsection

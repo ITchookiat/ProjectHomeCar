@@ -159,13 +159,13 @@
                     <li class="nav-item">
                       <a href="{{ route('reportcar',5) }}" class="nav-link {{ Request::is('reportcar/viewreport/5') ? 'active' : '' }}">
                         <i class="far fa-dot-circle nav-icon"></i>
-                        <p>รายงาน รถยึด</p>
+                        <p>รายงาน รถยึด / CKL</p>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a href="{{ route('reportcar',6) }}" class="nav-link {{ Request::is('reportcar/viewreport/6') ? 'active' : '' }}">
                         <i class="far fa-dot-circle nav-icon"></i>
-                        <p>รายงาน ยอดขาดทุนรถต่อคัน</p>
+                        <p>รายงาน ยอดทุนรถต่อคัน</p>
                       </a>
                     </li>
                   </ul>
@@ -173,7 +173,7 @@
               </ul>
           </li>
 
-          <li class="nav-item has-treeview">
+          <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-luggage-cart"></i>
               <p>
@@ -189,7 +189,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
 
           <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">

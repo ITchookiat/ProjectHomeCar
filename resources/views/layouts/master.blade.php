@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/ekko-lightbox/ekko-lightbox.css') }}">
 
 
   <!-- <style>
@@ -179,13 +180,14 @@
   <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+  <script src="{{ asset('plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
 
   <script>
     $.widget.bridge('uibutton', $.ui.button)
   </script>
 </head>
 
-<body  class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse" style="height: auto;">
+<body  class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="height: auto;">
 
   <!-- Site wrapper -->
   <div class="wrapper">

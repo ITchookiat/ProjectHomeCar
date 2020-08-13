@@ -7,7 +7,7 @@
   $Y = date('Y') + 543;
   $m = date('m');
   $d = date('d');
-  //$date = date('Y-m-d');
+  $date1 = date('Y-m-d');
   $time = date('H:i');
   $date = $Y.'-'.$m.'-'.$d;
 @endphp
@@ -30,11 +30,13 @@
 
           <div class="card-body">
             <form method="get" action="{{ route('report',$type) }}">
-              <div class="float-right form-inline"> 
-                <a target="_blank" href="{{ action('ReportController@ReportStockcar') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}" 
-                  class="btn bg-primary btn-app">
+              <div class="float-right form-inline">
+                  <!-- <a target="_blank" href="{{ action('ReportController@ReportExpire') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}" class="btn bg-primary btn-app">
                   <span class="fas fa-print"></span> ปริ้นรายการ
-                </a>
+                  </a> -->
+                  <a href="#" data-toggle="modal" data-target="#modal-report" class="btn bg-primary btn-app" data-backdrop="static" data-keyboard="false">
+                    <span class="fas fa-print"></span> ปริ้นรายการ
+                  </a>
                 @if($type != 3)
                   <button type="submit" class="btn bg-warning btn-app">
                     <span class="fas fa-search"></span> Search
@@ -46,79 +48,78 @@
                 <br><br><br>
                 <div class="float-right form-inline"> 
                   <label>จากวันที่ : </label>
-                  <input type="date" name="Fromdate" style="width: 180px;" value="{{ ($fdate != '') ?$fdate: $date }}" class="form-control" />
+                  <input type="date" name="Fromdate" style="width: 170px;" value="{{ ($fdate != '') ?$fdate: $date }}" class="form-control" />
 
                   <label>ถึงวันที่ : </label>
-                  <input type="date" name="Todate" style="width: 180px;" value="{{ ($tdate != '') ?$tdate: $date }}" class="form-control" />
+                  <input type="date" name="Todate" style="width: 170px;" value="{{ ($tdate != '') ?$tdate: $date }}" class="form-control" />
+
                 </div>
               @endif
             </form>
-
+            <br><br>
+            <hr>
             <div class="table-responsive">
               <table class="table table-bordered" id="example1">
                 @if($type == 3)
                   <thead class="thead-dark bg-gray-light">
-                    <br>
                     <tr>
-                      <th class="text-center" style="width: 120px">วันที่ซื้อ</th>
-                      <th class="text-center" style="width: 220px">เลขทะเบียน</th>
-                      <th class="text-center" style="width: 150px">ยี่ห้อ</th>
-                      <th class="text-center" style="width: 150px">รุ่น</th>
-                      <th class="text-center" style="width: 150px">ลักษณะ</th>
-                      <th class="text-center" style="width: 150px">ที่มา</th>
-                      <th class="text-center" style="width: 150px">สถานะ</th>
+                      <th class="text-center" >วันที่ซื้อ</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ลักษณะ</th>
+                      <th class="text-center" >ที่มา</th>
+                      <th class="text-center" >สถานะ</th>
                     </tr>
                   </thead>
                 @endif
 
                 @if($type == 4)
                   <thead class="thead-dark bg-gray-light">
-                    <br>
                     <tr>
-                      <th class="text-center" style="width: 120px">วันทีหมดอายุบัตร</th>
-                      <th class="text-center" style="width: 220px">เลขทะเบียน</th>
-                      <th class="text-center" style="width: 150px">ยี่ห้อ</th>
-                      <th class="text-center" style="width: 150px">รุ่น</th>
-                      <th class="text-center" style="width: 150px">ลักษณะ</th>
-                      <th class="text-center" style="width: 150px">ที่มา</th>
-                      <th class="text-center" style="width: 150px">สถานะ</th>
+                      <th class="text-center" >วันทีหมดอายุบัตร</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ลักษณะ</th>
+                      <th class="text-center" >ที่มา</th>
+                      <th class="text-center" >สถานะ</th>
                     </tr>
                   </thead>
                 @endif
 
-                @if($type == 5)
+                @if($type == 5) {{--รายงาน รถยึด--}}
                   <thead class="thead-dark bg-gray-light">
-                    <br>
                     <tr>
-                      <th class="text-center" style="width: 120px">วันที่ซื้อ</th>
-                      <th class="text-center" style="width: 150px">เลขทะเบียน</th>
-                      <th class="text-center" style="width: 150px">ยี่ห้อ</th>
-                      <th class="text-center" style="width: 150px">รุ่น</th>
-                      <th class="text-center" style="width: 150px">ลักษณะ</th>
-                      <th class="text-center" style="width: 150px">สี</th>
-                      <th class="text-center" style="width: 50px">ซีซี</th>
-                      <th class="text-center" style="width: 150px">ราคาซื้อ</th>
-                      <th class="text-center" style="width: 120px">ต้นทุนยอดจัด</th>
-                      <th class="text-center" style="width: 120px">สถานะ</th>
+                      <th class="text-center" >วันที่ซื้อ</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ลักษณะ</th>
+                      <th class="text-center" >สี</th>
+                      <th class="text-center" >ซีซี</th>
+                      <th class="text-center" >ราคาซื้อ</th>
+                      <th class="text-center" >ต้นทุนบัญชี</th>
+                      <th class="text-center" >ประเภท</th>
+                      <th class="text-center" >สถานะ</th>
                     </tr>
                   </thead>
                 @endif
 
                 @if($type == 6)
                   <thead class="thead-dark bg-gray-light">
-                    <br>
                     <tr>
-                      <th class="text-center" style="width: 120px">วันที่ขาย</th>
-                      <th class="text-center" style="width: 150px">เลขทะเบียน</th>
-                      <th class="text-center" style="width: 150px">ยี่ห้อ</th>
-                      <th class="text-center" style="width: 150px">รุ่น</th>
-                      <th class="text-center" style="width: 130px">ราคาซื้อ</th>
-                      <th class="text-center" style="width: 130px">ราคาต้นทุน</th>
-                      <th class="text-center" style="width: 130px">ราคาขาย</th>
-                      <th class="text-center" style="width: 130px">ราคาหัก VAT</th>
-                      <th class="text-center" style="width: 130px">กำไรขาดทุน</th>
-                      <th class="text-center" style="width: 100px">ประเภท</th>
-                      <th class="text-center" style="width: 100px">สถานะ</th>
+                      <th class="text-center" >วันที่ขาย</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ราคาซื้อ</th>
+                      <th class="text-center" >ราคาต้นทุน</th>
+                      <th class="text-center" >ราคาขาย</th>
+                      <th class="text-center" >ราคาหัก VAT</th>
+                      <th class="text-center" >กำไรขาดทุน</th>
+                      <th class="text-center" >ประเภท</th>
+                      <th class="text-center" >สถานะ</th>
                     </tr>
                   </thead>
                 @endif
@@ -214,7 +215,7 @@
                   </tbody>
                 @endif
 
-                @if($type == 5)
+                @if($type == 5) {{--รายงาน รถยึด --}}
                   <tbody>
                     @foreach($data as $row)
                       <tr>
@@ -243,7 +244,17 @@
                         @else
                         <td class="text-center">{{number_format($row->Accounting_Cost, 2)}}</td>
                         @endif
-
+                        <td class="text-center">
+                          @if($row->Origin_Car == 1)
+                            CKL
+                          @elseif ($row->Origin_Car  == 2)
+                            รถประมูล
+                          @elseif ($row->Origin_Car  == 3)
+                            รถยึด
+                          @elseif ($row->Origin_Car  == 4)
+                            ฝากขาย
+                          @endif
+                        </td>
                         <td class="text-center">
                           @if($row->Car_type == 1)
                             นำเข้าใหม่
@@ -336,25 +347,110 @@
       </div>
     </section>
 
-    <div class="modal fade" id="modal-default">
-      <div class="modal-dialog modal-lg">
+  <form target="_blank" action="{{ route('report.holdcar') }}" method="post">
+    @csrf
+    <div class="modal fade" id="modal-report" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">ข้อมูลรายละเอียด...</h4>
+            @if($type == 3)
+            <h4 class="modal-title">รายงาน สต๊อกบัญชี</h4>
+            @elseif($type == 4)
+            <h4 class="modal-title">รายงาน วันหมดอายุบัตร</h4>
+            @elseif($type == 5)
+            <h4 class="modal-title">รายงาน รถยึด / CKL</h4>
+            @elseif($type == 6)
+            <h4 class="modal-title">รายงาน ยอดทุนรถต่อคัน</h4>
+            @endif
+            <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
           </div>
           <div class="modal-body">
-
-          <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button> -->
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row mb-1">
+                  <label class="col-sm-4 col-form-label text-right">จากวันที่ : </label>
+                  <div class="col-sm-7">
+                  <input type="date" id="Fromdate" name="Fromdate" value="{{ ($fdate != '') ?$fdate: '' }}" class="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group row mb-1">
+                <label class="col-sm-4 col-form-label text-right">ถึงวันที่ : </label>
+                  <div class="col-sm-7">
+                    <input type="date" id="Todate" name="Todate" value="{{ ($tdate != '') ?$tdate: '' }}" class="form-control" />
+                  </div>
+                </div>
+              </div>
+            </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11">
+                  <!-- checkbox -->
+                  <div class="form-group clearfix">
+                    <div class="icheck-primary d-inline">
+                      <input type="checkbox" name="originType[]" id="checkboxPrimary1" value="1">
+                      <label for="checkboxPrimary1">
+                        รถ CKL
+                      </label>
+                    </div>
+                    &nbsp;
+                    <div class="icheck-primary d-inline">
+                      <input type="checkbox" name="originType[]" id="checkboxPrimary2" value="2">
+                      <label for="checkboxPrimary2">
+                        รถประมูล
+                      </label>
+                    </div>
+                    &nbsp;
+                    @if($type == 4 or $type == 6)
+                      <div class="icheck-primary d-inline">
+                        <input type="checkbox" name="originType[]" id="checkboxPrimary3" value="3">
+                        <label for="checkboxPrimary3">
+                          รถยึด
+                        </label>
+                      </div>
+                      &nbsp;
+                      <div class="icheck-primary d-inline">
+                        <input type="checkbox" name="originType[]" id="checkboxPrimary4" value="4">
+                        <label for="checkboxPrimary4">
+                          รถฝากขาย
+                        </label>
+                      </div>
+                    @else
+                      <div class="icheck-primary d-inline">
+                        <input type="checkbox" name="originType[]" id="checkboxPrimary3" value="3" disabled>
+                        <label for="checkboxPrimary3" style="color:#CCC">
+                          รถยึด
+                        </label>
+                      </div>
+                      &nbsp;
+                      <div class="icheck-primary d-inline">
+                        <input type="checkbox" name="originType[]" id="checkboxPrimary4" value="4" disabled>
+                        <label for="checkboxPrimary4" style="color:#CCC">
+                          รถฝากขาย
+                        </label>
+                      </div>
+                    @endif
+                  </div>
+                </div>
+              </div>
+          <hr>
           </div>
+          <input type="hidden" name="id" value="{{$type}}">
+          <div class="text-center">
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+            <button type="submit" class="btn btn-primary">ปริ้นรายงาน</button>
+          </div>
+          <br>
         </div>
         <!-- /.modal-content -->
       </div>
+      <!-- /.modal-dialog -->
     </div>
-  <!-- /.modal -->
+  </form>
 
   {{-- button-to-top --}}
   <script>
@@ -413,5 +509,14 @@
     }
     setInterval(blinker, 1000);
   </script>
+
+<script type="text/javascript">
+    $("#close").click(function () {
+      $("#modal-report").modal('hide');
+      var Datepay = ''
+      $('#Fromdate').val(Datepay);
+      $('#Todate').val(Datepay);
+    });
+</script>
 
 @endsection

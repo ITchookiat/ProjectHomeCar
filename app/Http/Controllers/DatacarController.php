@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 use PDF;
+use Storage;
+use File;
 use App\data_car;
 use App\Holdcar;
 use App\checkDocument;
+use App\UploadfileImage;
 
 class DatacarController extends Controller
 {
@@ -35,86 +38,95 @@ class DatacarController extends Controller
 
         if ($request->type == 1) {              //หน้าแรก
             if ($request->has('carType') != Null) {
-              $data = DB::table('data_cars')
+              $data = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                           return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                         })
                         ->when(!empty($carType), function($q) use($carType){
-                          return $q->where('data_cars.car_type',$carType);
+                          return $q->where('data_cars.Car_type',$carType);
                         })
                         ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
 
             }else {
-              $data = DB::table('data_cars')
+              $data = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                           return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                         })
-                        ->where('data_cars.car_type','<>',6)
+                        ->where('data_cars.Car_type','<>',6)
                         ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
             }
           $title = 'รถยนต์ทั้งหมด';
         }
         elseif ($request->type == 2) {          //รถยนต์ระหว่างทำสี
-          $data = DB::table('data_cars')
+          $data = DB::connection('sqlsrv2')->table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                      ->where('data_cars.car_type','=',2)
+                      ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
+                      ->where('data_cars.Car_type','=',2)
                       ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์ระหว่างทำสี';
         }
         elseif ($request->type == 3) {          //รถยนต์รอซ่อม
-          $data = DB::table('data_cars')
+          $data = DB::connection('sqlsrv2')->table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                      ->where('data_cars.car_type','=',3)
+                      ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
+                      ->where('data_cars.Car_type','=',3)
                       ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์รอซ่อม';
         }
         elseif ($request->type == 4) {          //รถยนต์ระหว่างซ่อม
-          $data = DB::table('data_cars')
+          $data = DB::connection('sqlsrv2')->table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                      ->where('data_cars.car_type','=',4)
+                      ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
+                      ->where('data_cars.Car_type','=',4)
                       ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์ระหว่างซ่อม';
         }
         elseif ($request->type == 5) {          //รถยนต์ที่พร้อมขาย
-          $data = DB::table('data_cars')
+          $data = DB::connection('sqlsrv2')->table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                      ->where('data_cars.car_type','=',5)
+                      ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
+                      ->where('data_cars.Car_type','=',5)
                       ->orderBy('data_cars.create_date', 'DESC')
                       ->get();
           $title = 'รถยนต์ที่พร้อมขาย';
         }
         elseif ($request->type == 6) {          //รถยนต์ที่ขายแล้ว
-          $data = DB::table('data_cars')
+          $data = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                                return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
                                })
-                        ->where('data_cars.car_type','=',6)
+                        ->where('data_cars.Car_type','=',6)
                         ->orderBy('data_cars.Date_Soldout_plus', 'DESC')
                         ->get();
           $title = 'รถยนต์ที่ขายแล้ว';
         }
         elseif ($request->type == 7) {          //รถยนต์นำเข้าใหม่
-          $data = DB::table('data_cars')
+          $data = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                                })
-                        ->where('data_cars.car_type','=',1)
+                        ->where('data_cars.Car_type','=',1)
                         ->orderBy('data_cars.create_date', 'DESC')
                         ->get();
           $title = 'รถยนต์นำเข้าใหม่';
         }
         elseif ($request->type == 8) {          //รถยืมใช้
-          $data = DB::table('data_cars')
+          $data = DB::connection('sqlsrv2')->table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                                })
@@ -125,11 +137,11 @@ class DatacarController extends Controller
         }
         elseif ($request->type == 11){         //หน้าข้อมูลยอด
           $data1 = data_car::count(); //รถในสต็อกทั้งหมด
-          $data2 = data_car::where('car_type', '=', 2 )->count(); //ระหว่างทำสี
-          $data3 = data_car::where('car_type', '=', 3 )->count(); //รอซ่อม
-          $data4 = data_car::where('car_type', '=', 4 )->count(); //ระหว่างซ่อม
-          $data5 = data_car::where('car_type', '=', 5 )->count(); //พร้อมขาย
-          $data6 = data_car::where('car_type', '=', 6 )->count(); //ขายแล้ว
+          $data2 = data_car::where('Car_type', '=', 2 )->count(); //ระหว่างทำสี
+          $data3 = data_car::where('Car_type', '=', 3 )->count(); //รอซ่อม
+          $data4 = data_car::where('Car_type', '=', 4 )->count(); //ระหว่างซ่อม
+          $data5 = data_car::where('Car_type', '=', 5 )->count(); //พร้อมขาย
+          $data6 = data_car::where('Car_type', '=', 6 )->count(); //ขายแล้ว
 
           $type = $request->type;
           return view('homecar.home', compact('data1', 'data2', 'data3', 'data4', 'data5', 'data6','type'));
@@ -141,7 +153,7 @@ class DatacarController extends Controller
                 ->orderBy('holdcars.Date_hold', 'ASC')
                 ->get();
 
-          $dataDB = DB::table('data_cars')
+          $dataDB = DB::connection('sqlsrv2')->table('data_cars')
                   ->get();
 
           $title = 'รถยึดจากเร่งรัด';
@@ -150,9 +162,9 @@ class DatacarController extends Controller
         }
         elseif ($request->type == 13) {
           
-          $data = DB::table('data_cars')
+          $data = DB::connection('sqlsrv2')->table('data_cars')
                 ->select('data_cars.Brand_Car')
-                ->where('data_cars.car_type','=',6)
+                ->where('data_cars.Car_type','=',6)
                 ->groupBy('data_cars.Brand_Car')
                 ->get();
 
@@ -173,9 +185,9 @@ class DatacarController extends Controller
       if ($type == 1) {
         $NameBrandcar = $request->get('select');
   
-        $data = DB::table('data_cars')
+        $data = DB::connection('sqlsrv2')->table('data_cars')
               ->select('data_cars.Version_Car')
-              ->where('data_cars.car_type','=',6)
+              ->where('data_cars.Car_type','=',6)
               ->where('data_cars.Brand_Car','=', $NameBrandcar)
               ->groupBy('data_cars.Version_Car')
               ->get();
@@ -190,9 +202,9 @@ class DatacarController extends Controller
       elseif ($type == 2) {
         $NameVersionCar = $request->get('select1');
   
-        $data = DB::table('data_cars')
+        $data = DB::connection('sqlsrv2')->table('data_cars')
               ->select('data_cars.Year_Product')
-              ->where('data_cars.car_type','=',6)
+              ->where('data_cars.Car_type','=',6)
               ->where('data_cars.Version_Car','=', $NameVersionCar)
               ->groupBy('data_cars.Year_Product')
               ->get();
@@ -208,9 +220,9 @@ class DatacarController extends Controller
         $GetVersion = $request->get('select1');
         $YearCar = $request->get('select2');
 
-        $data = DB::table('data_cars')
+        $data = DB::connection('sqlsrv2')->table('data_cars')
               ->select('data_cars.*')
-              ->where('data_cars.car_type','=',6)
+              ->where('data_cars.Car_type','=',6)
               ->where('data_cars.Version_Car','=', $GetVersion)
               ->where('data_cars.Year_Product','=', $YearCar)
               ->orderBy('data_cars.create_date', 'DESC')
@@ -263,9 +275,9 @@ class DatacarController extends Controller
       }
       elseif($type == 4){
         $NameBrandcar = $request->get('select');
-        $data = DB::table('data_cars')
+        $data = DB::connection('sqlsrv2')->table('data_cars')
               ->select('data_cars.*')
-              ->where('data_cars.car_type','=',6)
+              ->where('data_cars.Car_type','=',6)
               ->where('data_cars.Brand_Car','=', $NameBrandcar)
               ->orderBy('data_cars.create_date', 'DESC')
               ->get();
@@ -318,9 +330,9 @@ class DatacarController extends Controller
         $NameBrandcar = $request->get('brand');
         $NameVersionCar = $request->get('version');
 
-        $data = DB::table('data_cars')
+        $data = DB::connection('sqlsrv2')->table('data_cars')
               ->select('data_cars.*')
-              ->where('data_cars.car_type','=',6)
+              ->where('data_cars.Car_type','=',6)
               ->where('data_cars.Brand_Car','=', $NameBrandcar)
               ->where('data_cars.Version_Car','=', $NameVersionCar)
               ->orderBy('data_cars.create_date', 'DESC')
@@ -554,11 +566,15 @@ class DatacarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request ,$id)
+    public function edit(Request $request ,$id, $car_type)
     {
-      $datacar = DB::table('data_cars')
+
+      $datacar = DB::connection('sqlsrv2')->table('data_cars')
       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
       ->where('data_cars.id',$id)->first();
+
+      $dataImage = DB::connection('sqlsrv2')->table('uploadfile_images')->where('Datacarfileimage_id',$id)->get();
+      // dd($datacar,$dataImage);
 
       $arrayCarType = [
         1 => 'รถยนต์นำเข้าใหม่',
@@ -621,17 +637,17 @@ class DatacarController extends Controller
         2 => 'คืนแล้ว',
       ];
 
-      $setcarType = $request->car_type;
-      if ($request->car_type == 6) {
-        return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus'));
+      $setcarType = $car_type;
+      if ($car_type == 6) {
+        return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus','dataImage'));
       }else {
-        return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus'));
+        return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage'));
       }
     }
 
-    public function viewsee(Request $request, $id)
+    public function viewsee(Request $request, $id, $car_type)
     {
-      $datacar = DB::table('data_cars')
+      $datacar = DB::connection('sqlsrv2')->table('data_cars')
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                     ->where('data_cars.id',$id)->first();
       // dd($datacar);
@@ -683,18 +699,12 @@ class DatacarController extends Controller
         'ขายสด' => 'ขายสด',
         'ขายผ่อน' => 'ขายผ่อน',
       ];
-      $arrayTypeSale = [
-        'ประมูล' => 'ประมูล',
-        'ขายตัด' => 'ขายตัด',
-        'ขายสด' => 'ขายสด',
-        'ขายผ่อน' => 'ขายผ่อน',
-      ];
       $arrayBorrowStatus = [
         NULL => '',
         1 => 'ยืม',
         2 => 'คืนแล้ว',
       ];
-      $setcarType = $request->car_type;
+      $setcarType = $car_type;
       return view('homecar.viewsee',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','setcarType', 'arrayTypeSale','arrayBorrowStatus'));
     }
 
@@ -713,7 +723,6 @@ class DatacarController extends Controller
         // 'BrandCar' => 'required',
         // 'RegistCar' => 'required']);  /**required =ตรวจสอบ,จำเป็นต้องป้อนข้อมูล */
       $user = data_car::find($id);
-      // dd($request->get('PriceCar'));
       $user->create_date = $request->get('DateCar');
       $user->Date_Status = $request->get('DateCar');
       if($request->get('PriceCar') != Null){
@@ -804,8 +813,11 @@ class DatacarController extends Controller
           }
         }
       }
+        // dd($request->get('BookStatus'));
         $user->Car_type = $request->get('Cartype');
+        $user->BookStatus_Car = $request->get('BookStatus');
         $user->update();
+
         $type = $user->Car_type;  //Get ค่าใหม่
         $checkeditDoc = checkDocument::where('Datacar_id',$id)->first();
         // dd($checkeditDoc);
@@ -835,6 +847,35 @@ class DatacarController extends Controller
         $checkeditDoc->Date_Expire = $SetDateExpire;
         $checkeditDoc->Expire_Tax = $request->get('ExpireTax');
         $checkeditDoc->update();
+
+        if ($request->hasFile('file_image')) {
+          $image_array = $request->file('file_image');
+          $array_len = count($image_array);
+  
+          for ($i=0; $i < $array_len; $i++) {
+            $image_size = $image_array[$i]->getClientSize();
+            $image_new_name = $request->get('RegistCar'). '.' .$image_array[$i]->getClientOriginalExtension();
+  
+              $destination_path = public_path('/upload-image');
+              $image_array[$i]->move($destination_path,$image_new_name);
+
+            // $dataImage = DB::connection('sqlsrv2')->table('uploadfile_images')->where('Datacarfileimage_id',$id)->count();
+            $dataImage = UploadfileImage::where('Datacarfileimage_id',$id)->first();
+            if($dataImage == ''){
+              $Uploaddb = new UploadfileImage([
+                'Datacarfileimage_id' => $id,
+                'Type_fileimage' => 1,
+                'Name_fileimage' => $image_new_name,
+                'Size_fileimage' => $image_size,
+              ]);
+              $Uploaddb ->save();
+            }else{
+              $dataImage->Name_fileimage = $image_new_name;
+              $dataImage->Size_fileimage = $image_size;
+              $dataImage->update();
+            }
+          }
+        }
 
       return redirect()->Route('datacar',$type)->with('success','อัพเดตข้อมูลเรียบร้อย');
     }
@@ -900,7 +941,7 @@ class DatacarController extends Controller
 
     public function ReportPDFIndex(Request $request)
     {
-      // dd($request);
+      // dump($request);
       date_default_timezone_set('Asia/Bangkok');
       $Y = date('Y')+543;
       $m = date('m');
@@ -910,6 +951,7 @@ class DatacarController extends Controller
       $fdate = '';
       $tdate = '';
       $carType = '';
+      $originType = '';
 
       if ($request->has('Fromdate')) {
         $fdate = $request->get('Fromdate');
@@ -920,27 +962,47 @@ class DatacarController extends Controller
       if ($request->has('carType')) {
         $carType = $request->get('carType');
       }
+      if ($request->has('originType')) {
+        $originType = $request->originType;
+      }
 
       if ($request->id == 1) {
-        // dd($fdate,$tdate,$carType);
         if ($carType != Null) {
-          $dataReport = DB::table('data_cars')
+          $dataReport = DB::connection('sqlsrv2')->table('data_cars')
           ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
           ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
             return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
           })
           ->when(!empty($carType), function($q) use($carType){
-            return $q->where('data_cars.car_type',$carType);
+            return $q->where('data_cars.Car_type',$carType);
+          })
+          ->when(!empty($originType), function($q) use($originType){
+            return $q->whereIn('data_cars.Origin_Car',$originType);
           })
           ->orderBy('data_cars.create_date', 'ASC')
           ->get();
-        }else {
-          $dataReport = DB::table('data_cars')
+        }
+        elseif($originType != Null)
+        {
+          $dataReport = DB::connection('sqlsrv2')->table('data_cars')
           ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
           ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
             return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
           })
-          ->where('data_cars.car_type','<>',6)
+          ->when(!empty($originType), function($q) use($originType){
+            return $q->whereIn('data_cars.Origin_Car',$originType);
+          })
+          ->where('data_cars.Car_type','<>',6)
+          ->orderBy('data_cars.create_date', 'ASC')
+          ->get();
+        }
+        else{
+          $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+          ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+          ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+            return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+          })
+          ->where('data_cars.Car_type','<>',6)
           ->orderBy('data_cars.create_date', 'ASC')
           ->get();
         }
@@ -954,23 +1016,28 @@ class DatacarController extends Controller
           $AdminType = '0';
         }
 
+        // dd($dataReport);
+
         $ReportType = $request->id;
         $view = \View::make('homecar.export' ,compact(['dataReport','ReportType', 'AdminType','fdate','tdate']));
         $html = $view->render();
         $pdf = new PDF();
         $pdf::SetTitle('รายการรถยนต์ทั้งหมด');
         $pdf::AddPage('L', 'A4');
-        $pdf::SetFont('freeserif');
+        // $pdf::SetFont('freeserif');
+        $pdf::SetFont('thsarabunpsk', '', 15, '', true);
+        $pdf::SetMargins(10, 5, 5, 5);
+        $pdf::SetAutoPageBreak(TRUE, 25);
         $pdf::WriteHTML($html,true,false,true,false,'');
         $pdf::Output($SetConn.'.pdf');
       }
       elseif ($request->id == 6) {
-        $dataReport = DB::table('data_cars')
+        $dataReport = DB::connection('sqlsrv2')->table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                              return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
                              })
-                     ->where('data_cars.car_type','=',6)
+                     ->where('data_cars.Car_type','=',6)
                      ->orderBy('data_cars.Date_Soldout_plus', 'ASC')
                      ->get();
 
@@ -986,11 +1053,84 @@ class DatacarController extends Controller
       }
     }
 
+    public function ReportPDFManager(Request $request)
+    {
+      // dump($request);
+      date_default_timezone_set('Asia/Bangkok');
+      $Y = date('Y')+543;
+      $m = date('m');
+      $d = date('d');
+      $date = $d.'-'.$m.'-'.$Y;
+
+      $fdate = '';
+      $tdate = '';
+      $carType = '';
+      $originType = '';
+
+      if ($request->Fromdate != '') {
+        $b_fdate = $request->get('Fromdate');
+        $fdate = \Carbon\Carbon::parse($b_fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($b_fdate)->format('m')."-". \Carbon\Carbon::parse($b_fdate)->format('d');
+      }else{
+        $fdate = $request->get('Fromdate');
+      }
+      if ($request->Todate != '') {
+        $b_tdate = $request->get('Todate');
+        $tdate = \Carbon\Carbon::parse($b_tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($b_tdate)->format('m')."-". \Carbon\Carbon::parse($b_tdate)->format('d');
+      }else{
+        $tdate = $request->get('Todate');
+      }
+      // if ($request->has('Fromdate')) {
+      //     $fdate = $request->get('Fromdate');
+      // }
+      // if ($request->has('Todate')) {
+      //     $tdate = $request->get('Todate');
+      // }
+      if ($request->has('originType')) {
+        $originType = $request->originType;
+      }
+
+          $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+          ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+          ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+            return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+          })
+          ->when(!empty($originType), function($q) use($originType){
+            return $q->whereIn('data_cars.Origin_Car',$originType);
+          })
+          ->where('data_cars.Car_type','<>',6)
+          ->orderBy('data_cars.create_date', 'ASC')
+          ->get();
+
+
+        $SetConn = "StockCAR ".$date;
+
+        $ReportType = $request->id;
+        $AdminType = 1;
+
+
+        // $fdate = $request->get('Fromdate');
+        // $tdate = $request->get('Todate');
+
+        $ReportType = $request->id;
+        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType', 'AdminType','fdate','tdate']));
+        $html = $view->render();
+        $pdf = new PDF();
+        $pdf::SetTitle('รายการสต็อกรถยนต์');
+        $pdf::AddPage('L', 'A4');
+        // $pdf::SetFont('freeserif');
+        $pdf::SetFont('thsarabunpsk', '', 15, '', true);
+        $pdf::SetMargins(10, 5, 5, 5);
+        $pdf::SetAutoPageBreak(TRUE, 25);
+        $pdf::WriteHTML($html,true,false,true,false,'');
+        $pdf::Output($SetConn.'.pdf');
+      
+    }
+
     public function ReportPDF(Request $request)
     {
-      $dataReport = DB::table('data_cars')
+      $dataReport = DB::connection('sqlsrv2')->table('data_cars')
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                    ->where('data_cars.car_type','=',$request->id)
+                    ->where('data_cars.Car_type','=',$request->id)
                     ->orderBy('data_cars.create_date', 'ASC')->get();
       $ReportType = $request->id;
       // dd($dataReport);

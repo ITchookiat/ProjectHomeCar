@@ -60,7 +60,7 @@
                               <ul class="dropdown-menu" role="menu">
                                 <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}">สำหรับพนักงาน</a></li>
                                 <li class="divider"></li>
-                                <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}&admin={{1}}">สำหรับผู้บริหาร</a></li>
+                                <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-report" data-backdrop="static" data-keyboard="false">สำหรับผู้บริหาร</a></li>
                               </ul>
                             </div>
                           @elseif($type == 6)
@@ -168,19 +168,20 @@
                               <th class="text-center" style="width: 100px">วันที่รับ</th>
                               <th class="text-center" style="width: 120px">วันที่เปลี่ยนสถานะ</th>
                               @endif
-                              @if($type == 5)
-                                <th class="text-center" style="width: 100px">ราคาขาย</th>
-                              @endif
                               @if($type == 6)
                                 <th class="text-center" style="width: 100px">วันที่ขาย</th>
                               @endif
-                              <th class="text-center" style="width: 120px">เลขทะเบียน</th>
+                              <th class="text-center" style="width: 100px">เลขทะเบียน</th>
+                              @if($type == 5)
+                                <th class="text-center" style="width: 100px">ราคาขาย</th>
+                                <th class="text-center" style="width: 70px">ลักษณะ</th>
+                              @endif
                               <th class="text-center" style="width: 80px">ที่มา</th>
-                              <th class="text-center" style="width: 80px">Job No.</th>
-                              <th class="text-center" style="width: 100px">สถานะ</th>
+                              <th class="text-center" style="width: 60px">Job No.</th>
+                              <th class="text-center" style="width: 100px">ประเภท</th>
                               <th class="text-center" style="width: 150px">หมายเหตุ</th>
 
-                              <th class="text-center" style="width: 180px">Action</th>
+                              <th class="text-center" style="width: 120px">Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -206,13 +207,14 @@
                                   @endif
                                 @endif
 
-                                @if($type == 5)
-                                  <td class="text-center">{{number_format($row->Net_Price, 2)}}</td>
-                                @endif
                                 @if($type == 6)
                                   <td class="text-center">{{ date_format($Date_Soldout_plus, 'd-m-Y')}}</td>
                                 @endif
                                 <td class="text-center">{{$row->Number_Regist}}</td>
+                                @if($type == 5)
+                                  <td class="text-center">{{number_format($row->Net_Price, 2)}}</td>
+                                  <td class="text-center">{{$row->Model_Car}}</td>
+                                @endif
                                 <td class="text-center">
                                   @if($row->Origin_Car == 1)
                                     CKL
@@ -251,14 +253,14 @@
                                   @endif
                                 </td>
 
-                                <td class="text-center">
-                                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default"
+                                <td class="text-left">
+                                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default" title="ดูรายการ"
                                     data-link="{{ action('DatacarController@viewsee',[$row->Datacar_id,$row->Car_type]) }}">
-                                    <i class="far fa-eye"></i> ดู
+                                    <i class="far fa-eye"></i>
                                   </button>
                                   @if($type != 6)
                                     <a href="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
-                                    <i class="far fa-edit"></i> แก้ไข
+                                    <i class="far fa-edit"></i> 
                                     </a>
                                   @elseif ($type == 6)
                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-buyinfo"
@@ -276,10 +278,15 @@
                                       {{csrf_field()}}
                                         <input type="hidden" name="_method" value="DELETE" />
                                         <button type="submit" class="delete-modal btn btn-danger btn-sm" title="ลบรายการ" onclick="return confirm('คุณต้องการลบข้อมูลนี้หรือไม่?')">
-                                          <i class="far fa-trash-alt"></i> ลบ
+                                          <i class="far fa-trash-alt"></i>
                                         </button>
                                       </form>
                                     @endif
+                                  @endif
+                                  @if($row->Name_fileimage != null)
+                                    <a href="{{ asset('upload-image/'.$row->Name_fileimage) }}" data-toggle="lightbox" data-title="รถทะเบียน {{$row->Number_Regist}}" class="btn btn-secondary btn-sm" title="รูปภาพประกอบ">
+                                      <i class="far fa-image"></i> 
+                                    </a>
                                   @endif
                                 </td>
                               </tr>
@@ -299,19 +306,6 @@
       </section>
     </div>
   </section>
-
-    <!-- Pop up รายละเอียดค่าใช้จ่าย -->
-    <div class="modal fade" id="modal-1">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-body">
-            <p>One fine body…</p>
-          </div>
-          <div class="modal-footer justify-content-between">
-          </div>
-        </div>
-      </div>
-    </div>
 
   <!-- Pop up รายละเอียดค่าใช้จ่าย -->
   <div class="modal fade" id="modal-1">
@@ -350,6 +344,88 @@
     </div>
   </div>
 
+@if($type != 12)
+  <form target="_blank" action="{{ route('datacar.report') }}" method="post">
+    @csrf
+    <div class="modal fade" id="modal-report" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">รายงานสต็อกรถยนต์</h4>
+            <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row mb-1">
+                  <label class="col-sm-4 col-form-label text-right">จากวันที่ : </label>
+                  <div class="col-sm-7">
+                  <input type="date" id="Fromdate" name="Fromdate" value="{{ ($fdate != '') ?$fdate: '' }}" class="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group row mb-1">
+                <label class="col-sm-4 col-form-label text-right">ถึงวันที่ : </label>
+                  <div class="col-sm-7">
+                    <input type="date" id="Todate" name="Todate" value="{{ ($tdate != '') ?$tdate: '' }}" class="form-control" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-1"></div>
+              <div class="col-sm-11">
+                <!-- checkbox -->
+                <div class="form-group clearfix">
+                  <div class="icheck-primary d-inline">
+                    <input type="checkbox" name="originType[]" id="checkboxPrimary1" value="1">
+                    <label for="checkboxPrimary1">
+                      รถ CKL
+                    </label>
+                  </div>
+                  &nbsp;
+                  <div class="icheck-primary d-inline">
+                    <input type="checkbox" name="originType[]" id="checkboxPrimary2" value="2">
+                    <label for="checkboxPrimary2">
+                      รถประมูล
+                    </label>
+                  </div>
+                  &nbsp;
+                  <div class="icheck-primary d-inline">
+                    <input type="checkbox" name="originType[]" id="checkboxPrimary3" value="3">
+                    <label for="checkboxPrimary3">
+                      รถยึด
+                    </label>
+                  </div>
+                  &nbsp;
+                  <div class="icheck-primary d-inline">
+                    <input type="checkbox" name="originType[]" id="checkboxPrimary4" value="4">
+                    <label for="checkboxPrimary4">
+                      รถฝากขาย
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <hr>
+          </div>
+          <input type="hidden" name="id" value="1">
+          <div class="text-center">
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+            <button type="submit" class="btn btn-primary">ปริ้นรายงาน</button>
+          </div>
+          <br>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </form>
+@endif
   {{-- button-to-top --}}
   <script>
     var btn = $('#button');
@@ -409,5 +485,31 @@
       });
     });
   </script>
+
+<script type="text/javascript">
+    $("#close").click(function () {
+      $("#modal-report").modal('hide');
+      var Datepay = ''
+      $('#Fromdate').val(Datepay);
+      $('#Todate').val(Datepay);
+    });
+</script>
+
+<script>
+  $(function () {
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox({
+        alwaysShowClose: true
+      });
+    });
+
+    $('.filter-container').filterizr({gutterPixels: 3});
+    $('.btn[data-filter]').on('click', function() {
+      $('.btn[data-filter]').removeClass('active');
+      $(this).addClass('active');
+    });
+  })
+</script>
 
 @endsection

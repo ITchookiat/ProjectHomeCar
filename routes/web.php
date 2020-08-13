@@ -44,7 +44,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/ResearchCus/edit/{id}/{type}', 'ResearchCusController@edit')->name('ResearchCus.edit');
     Route::patch('/ResearchCus/update/{id}/{type}', 'ResearchCusController@update')->name('ResearchCus.update');
     Route::post('/ResearchCus/SearchData/{type}', 'ResearchCusController@SearchData')->name('ResearchCus.SearchData');
-    
+    Route::delete('/ResearchCus/delete/{id}/{type}', 'ResearchCusController@destroy')->name('ResearchCus.destroy');
+    Route::get('/ResearchCus/ReportCus/{type}', 'ResearchCusController@ReportCustoms')->name('ResearchCus.ReportCus');
+
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
     Route::get('/{name}', 'HomeController@index')->name('index');
 });

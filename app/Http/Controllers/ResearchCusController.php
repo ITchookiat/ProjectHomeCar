@@ -7,6 +7,7 @@ use DB;
 use Carbon\Carbon;
 use App\dataCustomer;
 use App\data_car;
+use App\tracking_cus;
 
 class ResearchCusController extends Controller
 {
@@ -17,28 +18,52 @@ class ResearchCusController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->type == 1) {
-            $data = DB::table('data_customers')
-                    ->orderBy('data_customers.DataCus_id', 'ASC')
-                    ->get();
+        if ($request->type == 1) {      //index
+            $newfdate = '';
+            $newtdate = '';
+            if ($request->has('Fromdate')){
+                $newfdate = $request->get('Fromdate');
+            }
+            if ($request->has('Todate')){
+                $newtdate = $request->get('Todate');
+            }
+
+            if ($request->has('Fromdate') == false and $request->has('Todate') == false) {
+                $data = DB::table('data_customers')
+                        ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
+                        ->where('data_customers.Status_Cus','=', 'ติดตาม')
+                        ->orderBy('data_customers.DataCus_id', 'ASC')
+                        ->get();
+            }
+            else {
+                $data = DB::table('data_customers')
+                        ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
+                        ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                            return $q->whereBetween('data_customers.DateSale_Cus',[$newfdate,$newtdate]);
+                        })
+                        ->orderBy('data_customers.DataCus_id', 'ASC')
+                        ->get();
+            }
+
+                $dataTrack = DB::table('tracking_cuses')
+                        ->where('tracking_cuses.Tag_Tracking','=', 'Y')
+                        ->get();
 
             $type = $request->type;
-            return view('dataCus.view', compact('data','type'));
+            return view('dataCus.view', compact('data','dataTrack','newfdate','newtdate','type'));
         }
-        elseif ($request->type == 2) {
+        elseif ($request->type == 2) {  //create
             $data = DB::table('data_cars')
                     ->where('data_cars.car_type','<>',6)
+                    ->where('data_cars.F_DataCus_id','=', NULL)
                     ->orderBy('data_cars.create_date', 'ASC')
                     ->get();
 
-            // dd($data);
             $type = $request->type;
             return view('dataCus.create', compact('type','data'));
         }
-        elseif ($request->type == 3) {
-
-            $type = $request->type;
-            return view('dataCus.createTracking', compact('type'));
+        elseif ($request->type == 3) {  //view ReportCus
+            dd('dsf0');
         }
     }
 
@@ -53,7 +78,6 @@ class ResearchCusController extends Controller
     }
 
     public function SearchData(Request $request, $type){
-
         if ($type == 1) {       //ค้นหาป้ายทเะบียน ตาราง data_cars
             $GetRegis = $request->get('select');
             
@@ -68,6 +92,7 @@ class ResearchCusController extends Controller
                                     <label class="col-sm-3 col-form-label text-right">ยี่ห้อ : </label>
                                         <div class="col-sm-8">
                                             <input type="text" name="BrandCar" class="form-control" style="height:30px;" value="'.$row->Brand_Car.'" readonly/>
+                                            <input type="hidden" name="RegistCar" value="'.$row->Number_Regist.'"/>
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +125,7 @@ class ResearchCusController extends Controller
                                 <div class="form-group row mb-0">
                                 <label class="col-sm-3 col-form-label text-right">ราคา : </label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="YearCar" class="form-control" style="height:30px;" value="'.number_format($row->Net_Price, 2).'" readonly/>
+                                        <input type="text" name="PriceCar" class="form-control" style="height:30px;" value="'.number_format($row->Net_Price, 2).'" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +145,6 @@ class ResearchCusController extends Controller
     public function store(Request $request, $type)
     {
         if ($type == 1) {       //เพิ่มรายการ ลูกค้า
-            // dd($request);
             //ประเภทลูกค้า
             if ($request->get('TypeCus') == "Very Hot") {
                 $SetDateType = date('Y-m-d');
@@ -133,6 +157,7 @@ class ResearchCusController extends Controller
             }else {
                 $SetDateType = NULL;
             }
+
             //ดึงจาก สถานะลูกค้า
             if ($request->get('StatusCus') != NULL) {
                 $SetDateStatus = date('Y-m-d');
@@ -140,6 +165,18 @@ class ResearchCusController extends Controller
                 $SetDateStatus = NULL;
             }
 
+            if($request->get('CashStatusCus') != NULL){
+                $SetCash = str_replace (",","",$request->get('CashStatusCus'));
+            }else{
+                $SetCash = NULL;
+            }
+
+            if($request->get('PriceCar') != NULL){
+                $SetPriceCar = str_replace (",","",$request->get('PriceCar'));
+            }else{
+                $SetPriceCar = NULL;
+            }
+            // dd($request->RegistCar);
             $dataCus = new dataCustomer([
                 'Name_Cus' => $request->get('NameCus'),
                 'Phone_Cus' =>  $request->get('PhoneCus'),
@@ -152,24 +189,31 @@ class ResearchCusController extends Controller
                 'model_Cus' => $request->get('modelCus'),
                 'Sale_Cus' => $request->get('SaleCus'),
                 'DateSale_Cus' => $request->get('DateSaleCus'),
+                'CashStatus_Cus' => $SetCash,
                 'Status_Cus' => $request->get('StatusCus'),
                 'DateStatus_Cus' => $SetDateStatus,
                 'Type_Cus' => $request->get('TypeCus'),
                 'DateType_Cus' => $SetDateType,
+                'RegistCar_Cus' =>  $request->get('RegistCar'),
+                'BrandCar_Cus' =>  $request->get('BrandCar'),
+                'VersionCar_Cus' => $request->get('VersionCar'),
+                'ColorCar_Cus' => $request->get('ColorCar'),
+                'GearCar_Cus' => $request->get('GearCar'),
+                'YearCar_Cus' => $request->get('YearCar'),
+                'PriceCar_Cus' => $SetPriceCar,
               ]);
             $dataCus->save();
 
-            if ($request->get('RegisterCar') != NULL) {
-                $dataCars = data_car::find($request->RegisterCar);
-                    $dataCars->F_DataCus_id = $dataCus->DataCus_id;
-                    $dataCars->BookStatus_Car = $request->get('StatusCus');
-                    $dataCars->DateStatus_Car = $SetDateStatus;
-                $dataCars->update();
+            if ($request->get('StatusCus') == 'จองรถ' or $request->get('StatusCus') == 'ส่งมอบ') {
+                if ($request->get('RegisterCar') != NULL) {
+                    $dataCars = data_car::find($request->RegisterCar);
+                        $dataCars->F_DataCus_id = $dataCus->DataCus_id;
+                        $dataCars->BookStatus_Car = $request->get('StatusCus');
+                        $dataCars->DateStatus_Car = $SetDateStatus;
+                    $dataCars->update();
+                }
             }
             return redirect()->Route('ResearchCus',$type)->with('success','บันทึกข้อมูลเรียบร้อย');
-        }
-        elseif ($type == 2) {   //เพิ่ม Tracking
-            // dd('sdf');
         }
     }
 
@@ -192,13 +236,35 @@ class ResearchCusController extends Controller
      */
     public function edit(Request $request ,$id, $type)
     {
-        if ($type == 1) { 
+        if ($type == 1) {       // edit
             $data = DB::table('data_customers')
-                        ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
-                        ->where('data_customers.DataCus_id',$id)
-                        ->first();
+                    ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
+                    ->where('data_customers.DataCus_id',$id)
+                    ->first();
 
-             return view('dataCus.edit', compact('data','id','type'));
+            $dataRegis = DB::table('data_cars')
+                    ->where('data_cars.car_type','<>',6)
+                    // ->where('data_cars.F_DataCus_id','=', NULL)
+                    ->orderBy('data_cars.create_date', 'ASC')
+                    ->get();
+
+            $tracking = DB::table('tracking_cuses')
+                    ->where('tracking_cuses.F_DataCus_id',$id)
+                    ->orderBy('tracking_cuses.Date_Tracking', 'ASC')
+                    ->get();
+
+             return view('dataCus.edit', compact('data','dataRegis','tracking','id','type'));
+        }
+        elseif ($type == 2) {   // view createTracking
+            return view('dataCus.createTracking', compact('id','type'));
+        }
+        elseif ($type == 3) {   // edit Tracking
+            $tracking = DB::table('tracking_cuses')
+                    ->where('tracking_cuses.Tracking_id',$id)
+                    ->orderBy('tracking_cuses.Date_Tracking', 'ASC')
+                    ->first();
+
+            return view('dataCus.editTracking', compact('tracking','type'));
         }
     }
 
@@ -211,128 +277,150 @@ class ResearchCusController extends Controller
      */
     public function update(Request $request, $id, $type)
     {
-        if ($type == 1) {
+        if ($type == 1) {           //edit
+            //ข้อมูลลูกค้า
+            $dataCus = dataCustomer::find($id);
+                $dataCus->Name_Cus = $request->get('NameCus');
+                $dataCus->Phone_Cus = $request->get('PhoneCus');
+                $dataCus->Address_Cus = $request->get('AddressCus');
+                $dataCus->Province_Cus = $request->get('ProvinceCus');
+                $dataCus->Zip_Cus = $request->get('ZipCus');
+                $dataCus->Career_Cus = $request->get('CareerCus');
+                $dataCus->Email_Cus = $request->get('EmailCus');
+                $dataCus->Origin_Cus = $request->get('OriginCus');
+                $dataCus->model_Cus = $request->get('modelCus');
+                $dataCus->Sale_Cus = $request->get('SaleCus');
+                $dataCus->DateSale_Cus = $request->get('DateSaleCus');
 
-        //ข้อมูลลูกค้า
-        $dataCus = dataCustomer::find($id);
-            $dataCus->Name_Cus = $request->get('NameCus');
-            $dataCus->Phone_Cus = $request->get('PhoneCus');
-            $dataCus->Address_Cus = $request->get('AddressCus');
-            $dataCus->Province_Cus = $request->get('ProvinceCus');
-            $dataCus->Zip_Cus = $request->get('ZipCus');
-            $dataCus->Career_Cus = $request->get('CareerCus');
-            $dataCus->Email_Cus = $request->get('EmailCus');
-            $dataCus->Origin_Cus = $request->get('OriginCus');
-            $dataCus->model_Cus = $request->get('modelCus');
-            $dataCus->Sale_Cus = $request->get('SaleCus');
-            $dataCus->DateSale_Cus = $request->get('DateSaleCus');
+                if($request->get('CashStatusCus') != NULL){
+                    $dataCus->CashStatus_Cus = str_replace (",","",$request->get('CashStatusCus'));
+                }else{
+                    $dataCus->CashStatus_Cus = NULL;
+                }
 
-            if ($request->get('StatusCus') == $dataCus->Status_Cus) {
-                $SetDateStatus = $dataCus->DateSale_Cus;
-            }else {
-                $SetDateStatus = date('Y-m-d');
-            }
-            $dataCus->Status_Cus = $request->get('StatusCus');
-            $dataCus->DateStatus_Cus = $SetDateStatus;
-            
-            if ($request->get('TypeCus') == $dataCus->Type_Cus) {
-                $SetDateType = $dataCus->DateType_Cus;
-            }else {
-                if ($request->get('TypeCus') == "Very Hot") {
-                    $SetDateType = date('Y-m-d');
-                }elseif ($request->get('TypeCus') == "Hot") {
-                    $SetDateType = date('Y-m-d', strtotime('+5 days'));
-                }elseif ($request->get('TypeCus') == "Warm") {
-                    $SetDateType = date('Y-m-d', strtotime('+15 days'));
-                }elseif ($request->get('TypeCus') == "Cold") {
-                    $SetDateType = date('Y-m-d', strtotime('+30 days'));
+                if ($request->get('StatusCus') == $dataCus->Status_Cus) {
+                    $SetDateStatus = $dataCus->DateSale_Cus;
+                }else {
+                    $SetDateStatus = date('Y-m-d');
+                }
+                $dataCus->Status_Cus = $request->get('StatusCus');
+                $dataCus->DateStatus_Cus = $SetDateStatus;
+                
+                if ($request->get('TypeCus') == $dataCus->Type_Cus) {
+                    $SetDateType = $dataCus->DateType_Cus;
+                }else {
+                    if ($request->get('TypeCus') == "Very Hot") {
+                        $SetDateType = date('Y-m-d');
+                    }elseif ($request->get('TypeCus') == "Hot") {
+                        $SetDateType = date('Y-m-d', strtotime('+5 days'));
+                    }elseif ($request->get('TypeCus') == "Warm") {
+                        $SetDateType = date('Y-m-d', strtotime('+15 days'));
+                    }elseif ($request->get('TypeCus') == "Cold") {
+                        $SetDateType = date('Y-m-d', strtotime('+30 days'));
+                    }
+                }
+                $dataCus->Type_Cus = $request->get('TypeCus');
+                $dataCus->DateType_Cus = $SetDateType;
+
+                if ($request->get('RegistCar') != NULL) {
+                    $dataCus->RegistCar_Cus =  $request->get('RegistCar');
+                }else {
+                    $dataCus->RegistCar_Cus =  $request->get('Regist_Car');
+                }
+
+                if ($request->get('BrandCar') != NULL) {
+                    $dataCus->BrandCar_Cus =  $request->get('BrandCar');
+                }else {
+                    $dataCus->BrandCar_Cus =  $request->get('Brand_Car');
+                }
+
+                if ($request->get('VersionCar') != NULL) {
+                    $dataCus->VersionCar_Cus =  $request->get('VersionCar');
+                }else {
+                    $dataCus->VersionCar_Cus =  $request->get('Version_Car');
+                }
+
+                if ($request->get('ColorCar') != NULL) {
+                    $dataCus->ColorCar_Cus =  $request->get('ColorCar');
+                }else {
+                    $dataCus->ColorCar_Cus =  $request->get('Color_Car');
+                }
+
+                if ($request->get('GearCar') != NULL) {
+                    $dataCus->GearCar_Cus =  $request->get('GearCar');
+                }else {
+                    $dataCus->GearCar_Cus =  $request->get('Gear_Car');
+                }
+
+                if ($request->get('YearCar') != NULL) {
+                    $dataCus->YearCar_Cus =  $request->get('YearCar');
+                }else {
+                    $dataCus->YearCar_Cus =  $request->get('Year_Car');
+                }
+                
+                if($request->get('PriceCar') != NULL){
+                    $SetPrice = str_replace (",","",$request->get('PriceCar'));
+                    $dataCus->PriceCar_Cus = $SetPrice;
+                }else{
+                    $SetPrice = str_replace (",","",$request->get('Price_Car'));
+                    $dataCus->PriceCar_Cus = $SetPrice;
+                }
+            $dataCus->update();
+
+            if ($request->get('StatusCus') == 'จองรถ') {
+                $dataCar = data_car::where('F_DataCus_id',$id)->first();
+
+                if ($request->get('RegisterCar') != $dataCar->id) {     //อัพเดต รถคันเดิม
+                    $dataCar = data_car::where('F_DataCus_id',$id)->first();
+                        $dataCar->F_DataCus_id = NULL;
+                        $dataCar->BookStatus_Car = NULL;
+                        $dataCar->DateStatus_Car = NULL;
+                    $dataCar->update();
+
+                    $dataCar = data_car::find($request->get('RegisterCar'));
+                        $dataCar->F_DataCus_id = $dataCus->DataCus_id;
+                        $dataCar->BookStatus_Car = $request->get('StatusCus');
+                        $dataCar->DateStatus_Car = date('Y-m-d');
+                    $dataCar->update();
                 }
             }
-            $dataCus->Type_Cus = $request->get('TypeCus');
-            $dataCus->DateType_Cus = $SetDateType;
-        $dataCus->update();
+            return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อยแล้ว');
+        }
+        elseif ($type == 2) {       //เพิ่ม รายการ Tracking
 
-        //รถที่ต้องการ & ค่าใช้จ่ายออกรถ
-        $dataCar = data_car::where('F_DataCus_id',$id)->where('Car_type', 20)->first();
-            $dataCar->Brand_Car = $request->get('BrandCar');
-            $dataCar->Version_Car = $request->get('VersionCar');
-            $dataCar->Color_Car = $request->get('ColorCar');
-            $dataCar->Gearcar = $request->get('GearCar');
-            $dataCar->Year_Product = $request->get('YearCar');
+            $data = DB::table('tracking_cuses')
+                ->where('F_DataCus_id', $id)
+                ->orderBy('F_DataCus_id', 'desc')->limit(1)
+                ->first();
 
-            if($request->get('CashCar') != NULL){
-                $dataCar->Net_Price = str_replace (",","",$request->get('CashCar'));
-            }else{
-                $dataCar->Net_Price = NULL;
+            if ($data != NULL) {
+                $dataTrack = tracking_cus::find($data->Tracking_id);
+                    $dataTrack->Tag_Tracking = 'N';
+                $dataTrack->update();
             }
-            if($request->get('CashdownCar') != Null){
-                $dataCar->Down_Price = str_replace (",","",$request->get('CashdownCar'));
-            }else{
-                $dataCar->Down_Price  = Null;
-            }
-            $dataCar->Interest_Car = $request->get('InterestCar');
-            $dataCar->Period_Car = $request->get('PeriodCar');
 
-            if($request->get('PaymentCar') != Null){
-                $dataCar->Payment_Car = str_replace (",","",$request->get('PaymentCar'));
-            }else{
-                $dataCar->Payment_Car = Null;
-            }
-            $dataCar->Note_Car = $request->get('NoteCar');
+            $dataTrack = new tracking_cus([
+                'F_DataCus_id' => $id,
+                'User_Tracking' => auth()->user()->name,
+                'Date_Tracking' => $request->get('DateTrack'),
+                'Status_Tracking' => $request->get('StatusTrack'),
+                'Tag_Tracking' => 'Y',
+                'Follow_Tracking' => $request->get('FollowTrack'),
+                'Note_tracking' => $request->get('NoteTrack'),
+              ]);
+            $dataTrack->save();
 
-            //ค่าใช้จ่ายออกรถ
-            if($request->get('By_CashDown') != Null){
-                $dataCar->Subdown_Price = str_replace (",","",$request->get('By_CashDown'));
-            }else{
-                $dataCar->Subdown_Price = Null;
-            }
-            if($request->get('By_Transfer') != Null){
-                $dataCar->Transfer_Price = str_replace (",","",$request->get('By_Transfer'));
-            }else{
-                $dataCar->Transfer_Price = Null;
-            }
-            if($request->get('By_Register') != Null){
-                $dataCar->Regis_Price = str_replace (",","",$request->get('By_Register'));
-            }else{
-                $dataCar->Regis_Price = Null;
-            }
-            if($request->get('By_Act') != Null){
-                $dataCar->Act_Price = str_replace (",","",$request->get('By_Act'));
-            }else{
-                $dataCar->Act_Price = Null;
-            }
-            if($request->get('SumPrice') != Null){
-                $dataCar->Topcar_Price = str_replace (",","",$request->get('SumPrice'));
-            }else{
-                $dataCar->Topcar_Price = Null;
-            }
-        $dataCar->update();
+            return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อยแล้ว');
+        }
+        elseif ($type == 3) {       //แก้ไข รายการ Tracking
+            $dataTrack = tracking_cus::find($id);
+                $dataTrack->Date_Tracking = $request->get('DateTrack');
+                $dataTrack->Status_Tracking = $request->get('StatusTrack');
+                $dataTrack->Follow_Tracking = $request->get('FollowTrack');
+                $dataTrack->Note_tracking = $request->get('NoteTrack');
+            $dataTrack->update();
 
-        //รถแลกเปลี่ยน
-        $dataCar = data_car::where('F_DataCus_id',$id)->where('Car_type', 21)->first();
-            $dataCar->Brand_Car = $request->get('Turn_BrandCar');
-            $dataCar->Version_Car = $request->get('Turn_VersionCar');
-            $dataCar->Color_Car = $request->get('Turn_ColorCar');
-            $dataCar->Gearcar = $request->get('Turn_GearCar');
-            $dataCar->Year_Product = $request->get('Turn_YearCar');
-            $dataCar->Number_Miles = $request->get('Turn_MileCar');
-            $dataCar->Inside_Car = $request->get('Turn_InsideCar');
-            $dataCar->Outside_Car = $request->get('Turn_OutsideCar');
-
-            if($request->get('Turn_WantPriceCar') != Null){
-                $dataCar->Fisrt_Price = str_replace (",","",$request->get('Turn_WantPriceCar'));
-            }else{
-                $dataCar->Fisrt_Price = Null;
-            }
-            if($request->get('Turn_ComPriceCar') != Null){
-                $dataCar->Offer_Price = str_replace (",","",$request->get('Turn_ComPriceCar'));
-            }else{
-                $dataCar->Offer_Price = Null;
-            }
-            $dataCar->Note_Car = $request->get('Turn_anotherCar');
-        $dataCar->update();
-  
-          return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อยแล้ว');
+            return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อยแล้ว');
         }
     }
 
@@ -342,8 +430,30 @@ class ResearchCusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $type)
     {
-        //
+        if ($type == 1) {           //ลบรายการ
+            $item = dataCustomer::find($id);
+
+            
+            $dataCar = data_car::where('F_DataCus_id',$id)->first();
+                $dataCar->F_DataCus_id = NULL;
+                $dataCar->BookStatus_Car = NULL;
+                $dataCar->DateStatus_Car = NULL;
+            $dataCar->update();
+
+            $item->Delete();
+        }
+        elseif ($type == 2) {       //ลบบันทึกการติดตาม
+            $item = tracking_cus::find($id);
+            $item->Delete();
+        }
+
+        return redirect()->back()->with('success','ลบข้อมูลเรียบร้อย');
+    }
+
+    public function ReportCustoms(Request $request, $type)
+    {
+        dd($type);
     }
 }

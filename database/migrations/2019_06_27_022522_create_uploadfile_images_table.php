@@ -13,6 +13,7 @@ class CreateUploadfileImagesTable extends Migration
      */
     public function up()
     {
+        // Schema::connection('sqlsrv2')->create('uploadfile_images', function (Blueprint $table) {
         Schema::create('uploadfile_images', function (Blueprint $table) {
             $table->bigIncrements('fileimage_id');
             $table->integer('Datacarfileimage_id')->nullable();

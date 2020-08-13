@@ -7,9 +7,9 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a class="nav-link" href="../../../../Projectleasing/public/home">
+        {{-- <a class="nav-link" href="../../../../Projectleasing/public/home">
           <i class="fab fa-accusoft"></i> ระบบลิสซิ่ง
-        </a>
+        </a> --}}
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         {{-- <a href="#" class="nav-link">Contact</a> --}}

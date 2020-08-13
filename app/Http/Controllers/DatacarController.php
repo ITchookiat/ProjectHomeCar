@@ -38,7 +38,7 @@ class DatacarController extends Controller
 
         if ($request->type == 1) {              //หน้าแรก
             if ($request->has('carType') != Null) {
-              $data = DB::connection('sqlsrv2')->table('data_cars')
+              $data = DB::table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                         ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
@@ -51,7 +51,7 @@ class DatacarController extends Controller
                         ->get();
 
             }else {
-              $data = DB::connection('sqlsrv2')->table('data_cars')
+              $data = DB::table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                         ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
@@ -64,7 +64,7 @@ class DatacarController extends Controller
           $title = 'รถยนต์ทั้งหมด';
         }
         elseif ($request->type == 2) {          //รถยนต์ระหว่างทำสี
-          $data = DB::connection('sqlsrv2')->table('data_cars')
+          $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                       ->where('data_cars.Car_type','=',2)
@@ -73,7 +73,7 @@ class DatacarController extends Controller
           $title = 'รถยนต์ระหว่างทำสี';
         }
         elseif ($request->type == 3) {          //รถยนต์รอซ่อม
-          $data = DB::connection('sqlsrv2')->table('data_cars')
+          $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                       ->where('data_cars.Car_type','=',3)
@@ -82,7 +82,7 @@ class DatacarController extends Controller
           $title = 'รถยนต์รอซ่อม';
         }
         elseif ($request->type == 4) {          //รถยนต์ระหว่างซ่อม
-          $data = DB::connection('sqlsrv2')->table('data_cars')
+          $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                       ->where('data_cars.Car_type','=',4)
@@ -91,7 +91,7 @@ class DatacarController extends Controller
           $title = 'รถยนต์ระหว่างซ่อม';
         }
         elseif ($request->type == 5) {          //รถยนต์ที่พร้อมขาย
-          $data = DB::connection('sqlsrv2')->table('data_cars')
+          $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                       ->where('data_cars.Car_type','=',5)
@@ -100,7 +100,7 @@ class DatacarController extends Controller
           $title = 'รถยนต์ที่พร้อมขาย';
         }
         elseif ($request->type == 6) {          //รถยนต์ที่ขายแล้ว
-          $data = DB::connection('sqlsrv2')->table('data_cars')
+          $data = DB::table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                         ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
@@ -112,7 +112,7 @@ class DatacarController extends Controller
           $title = 'รถยนต์ที่ขายแล้ว';
         }
         elseif ($request->type == 7) {          //รถยนต์นำเข้าใหม่
-          $data = DB::connection('sqlsrv2')->table('data_cars')
+          $data = DB::table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                         ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
@@ -124,7 +124,7 @@ class DatacarController extends Controller
           $title = 'รถยนต์นำเข้าใหม่';
         }
         elseif ($request->type == 8) {          //รถยืมใช้
-          $data = DB::connection('sqlsrv2')->table('data_cars')
+          $data = DB::table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                         ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
@@ -148,12 +148,12 @@ class DatacarController extends Controller
 
         }
         elseif ($request->type == 12){          //สต๊อกรถเร่งรัด
-          $data = DB::table('holdcars')
+          $data = DB::connection('sqlsrv2')->table('holdcars')
                 ->where('holdcars.Statuscar', '=', 5)
                 ->orderBy('holdcars.Date_hold', 'ASC')
                 ->get();
 
-          $dataDB = DB::connection('sqlsrv2')->table('data_cars')
+          $dataDB = DB::table('data_cars')
                   ->get();
 
           $title = 'รถยึดจากเร่งรัด';
@@ -162,7 +162,7 @@ class DatacarController extends Controller
         }
         elseif ($request->type == 13) {
           
-          $data = DB::connection('sqlsrv2')->table('data_cars')
+          $data = DB::table('data_cars')
                 ->select('data_cars.Brand_Car')
                 ->where('data_cars.Car_type','=',6)
                 ->groupBy('data_cars.Brand_Car')
@@ -185,7 +185,7 @@ class DatacarController extends Controller
       if ($type == 1) {
         $NameBrandcar = $request->get('select');
   
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
               ->select('data_cars.Version_Car')
               ->where('data_cars.Car_type','=',6)
               ->where('data_cars.Brand_Car','=', $NameBrandcar)
@@ -202,7 +202,7 @@ class DatacarController extends Controller
       elseif ($type == 2) {
         $NameVersionCar = $request->get('select1');
   
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
               ->select('data_cars.Year_Product')
               ->where('data_cars.Car_type','=',6)
               ->where('data_cars.Version_Car','=', $NameVersionCar)
@@ -220,7 +220,7 @@ class DatacarController extends Controller
         $GetVersion = $request->get('select1');
         $YearCar = $request->get('select2');
 
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
               ->select('data_cars.*')
               ->where('data_cars.Car_type','=',6)
               ->where('data_cars.Version_Car','=', $GetVersion)
@@ -275,7 +275,7 @@ class DatacarController extends Controller
       }
       elseif($type == 4){
         $NameBrandcar = $request->get('select');
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
               ->select('data_cars.*')
               ->where('data_cars.Car_type','=',6)
               ->where('data_cars.Brand_Car','=', $NameBrandcar)
@@ -330,7 +330,7 @@ class DatacarController extends Controller
         $NameBrandcar = $request->get('brand');
         $NameVersionCar = $request->get('version');
 
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
               ->select('data_cars.*')
               ->where('data_cars.Car_type','=',6)
               ->where('data_cars.Brand_Car','=', $NameBrandcar)
@@ -569,11 +569,11 @@ class DatacarController extends Controller
     public function edit(Request $request ,$id, $car_type)
     {
 
-      $datacar = DB::connection('sqlsrv2')->table('data_cars')
+      $datacar = DB::table('data_cars')
       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
       ->where('data_cars.id',$id)->first();
 
-      $dataImage = DB::connection('sqlsrv2')->table('uploadfile_images')->where('Datacarfileimage_id',$id)->get();
+      $dataImage = DB::table('uploadfile_images')->where('Datacarfileimage_id',$id)->get();
       // dd($datacar,$dataImage);
 
       $arrayCarType = [
@@ -647,7 +647,7 @@ class DatacarController extends Controller
 
     public function viewsee(Request $request, $id, $car_type)
     {
-      $datacar = DB::connection('sqlsrv2')->table('data_cars')
+      $datacar = DB::table('data_cars')
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                     ->where('data_cars.id',$id)->first();
       // dd($datacar);
@@ -859,7 +859,7 @@ class DatacarController extends Controller
               $destination_path = public_path('/upload-image');
               $image_array[$i]->move($destination_path,$image_new_name);
 
-            // $dataImage = DB::connection('sqlsrv2')->table('uploadfile_images')->where('Datacarfileimage_id',$id)->count();
+            // $dataImage = DB::table('uploadfile_images')->where('Datacarfileimage_id',$id)->count();
             $dataImage = UploadfileImage::where('Datacarfileimage_id',$id)->first();
             if($dataImage == ''){
               $Uploaddb = new UploadfileImage([
@@ -968,7 +968,7 @@ class DatacarController extends Controller
 
       if ($request->id == 1) {
         if ($carType != Null) {
-          $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+          $dataReport = DB::table('data_cars')
           ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
           ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
             return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -984,7 +984,7 @@ class DatacarController extends Controller
         }
         elseif($originType != Null)
         {
-          $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+          $dataReport = DB::table('data_cars')
           ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
           ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
             return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -997,7 +997,7 @@ class DatacarController extends Controller
           ->get();
         }
         else{
-          $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+          $dataReport = DB::table('data_cars')
           ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
           ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
             return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -1032,7 +1032,7 @@ class DatacarController extends Controller
         $pdf::Output($SetConn.'.pdf');
       }
       elseif ($request->id == 6) {
-        $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+        $dataReport = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                              return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
@@ -1089,7 +1089,7 @@ class DatacarController extends Controller
         $originType = $request->originType;
       }
 
-          $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+          $dataReport = DB::table('data_cars')
           ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
           ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
             return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -1128,7 +1128,7 @@ class DatacarController extends Controller
 
     public function ReportPDF(Request $request)
     {
-      $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+      $dataReport = DB::table('data_cars')
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                     ->where('data_cars.Car_type','=',$request->id)
                     ->orderBy('data_cars.create_date', 'ASC')->get();

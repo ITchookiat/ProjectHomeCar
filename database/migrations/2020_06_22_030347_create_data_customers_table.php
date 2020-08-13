@@ -13,8 +13,8 @@ class CreateDataCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::connection('sqlsrv2')->create('data_customers', function (Blueprint $table) {
-        // Schema::create('data_customers', function (Blueprint $table) {
+        // Schema::connection('sqlsrv2')->create('data_customers', function (Blueprint $table) {
+        Schema::create('data_customers', function (Blueprint $table) {
             $table->bigIncrements('DataCus_id');
             $table->string('Name_Cus')->nullable();     
             $table->string('Phone_Cus')->nullable();    

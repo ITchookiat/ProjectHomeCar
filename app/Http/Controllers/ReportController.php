@@ -29,7 +29,7 @@ class ReportController extends Controller
       }
 
       if ($request->type == 1) {     //รายงาน รถยนต์ทั้งหมด
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                              return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -41,7 +41,7 @@ class ReportController extends Controller
 
       }
       elseif ($request->type == 2) {  //รายงาน รถยนต์พร้อมขาย
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                              return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -52,7 +52,7 @@ class ReportController extends Controller
         $title = 'รถยนต์พร้อมขาย';
       }
       elseif ($request->type == 3) {  //รายงาน สต๊อกบัญชี
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                              return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -64,7 +64,7 @@ class ReportController extends Controller
        $title = 'สต๊อกบัญชี';
       }
       elseif ($request->type == 4) {  //รายงาน วันหมดอายุบัตร
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                              return $q->whereBetween('check_documents.Date_NumberUser',[$fdate,$tdate]);
@@ -77,7 +77,7 @@ class ReportController extends Controller
          $title = 'วันหมดอายุบัตร';
       }
       elseif ($request->type == 5) {  //รายงาน รถยึด
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
                    ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                    ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                           return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -92,19 +92,26 @@ class ReportController extends Controller
          $title = 'รถยึด / CKL';
       }
       elseif ($request->type == 6) {  //รายงาน ยอดทุนรถต่อคัน
-        $data = DB::connection('sqlsrv2')->table('data_cars')
+        $data = DB::table('data_cars')
                   ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                   ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                          return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
                          })
-                  // ->when(!empty($originType), function($q) use($originType){
-                  //   return $q->where('data_cars.Origin_Car',$originType);
-                  // })
                   ->where('data_cars.Car_type','=',6)
                   ->where('data_cars.Name_Buyer','!=',"โมบายฝ่ายกฎหมาย")
                   ->orderBy('data_cars.Date_Soldout_plus', 'ASC')
                   ->get();
          $title = 'ยอดทุนรถต่อคัน';
+      }elseif ($request->type == 7) {  //Report Sold Car
+        $data = DB::table('data_cars')
+                        ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                        ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+                               return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
+                               })
+                        ->where('data_cars.Car_type','=',6)
+                        ->orderBy('data_cars.Date_Soldout_plus', 'DESC')
+                        ->get();
+         $title = 'รถยนต์ขายแล้ว';
       }
 
       $type = $request->type;
@@ -209,7 +216,7 @@ class ReportController extends Controller
       }
 
       if ($request->id == 3) {
-        $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+        $dataReport = DB::table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                           return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -223,7 +230,7 @@ class ReportController extends Controller
                         // dd($fdate,$tdate,$dataReport);
       }
       elseif ($request->id == 4) {
-        $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+        $dataReport = DB::table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                                return $q->whereBetween('check_documents.Date_NumberUser',[$fdate,$tdate]);
@@ -236,7 +243,7 @@ class ReportController extends Controller
 
       }
       elseif ($request->id == 5) { // pdf รถยึด กับ ckl
-        $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+        $dataReport = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                             return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
@@ -251,7 +258,7 @@ class ReportController extends Controller
 
       }
       elseif ($request->id == 6) {
-        $dataReport = DB::connection('sqlsrv2')->table('data_cars')
+        $dataReport = DB::table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                                return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);

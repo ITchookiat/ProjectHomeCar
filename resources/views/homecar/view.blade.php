@@ -181,7 +181,7 @@
                               <th class="text-center" style="width: 100px">ประเภท</th>
                               <th class="text-center" style="width: 150px">หมายเหตุ</th>
 
-                              <th class="text-center" style="width: 120px">Action</th>
+                              <th style="width: 80px"></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -191,8 +191,6 @@
                                   $create_date = date_create($row->create_date);
                                   $date_status = date_create($row->Date_Status);
                                   $Date_Soldout_plus = date_create($row->Date_Soldout_plus);
-
-                                  // dd(date_format($create_date, 'd-m-Y'));
                                 @endphp
 
                                 @if($type != 6)
@@ -210,7 +208,7 @@
                                 @if($type == 6)
                                   <td class="text-center">{{ date_format($Date_Soldout_plus, 'd-m-Y')}}</td>
                                 @endif
-                                <td class="text-center">{{$row->Number_Regist}}</td>
+                                <td class="text-left">{{$row->Number_Regist}}</td>
                                 @if($type == 5)
                                   <td class="text-center">{{number_format($row->Net_Price, 2)}}</td>
                                   <td class="text-center">{{$row->Model_Car}}</td>
@@ -227,7 +225,7 @@
                                   @endif
                                 </td>
                                 <td class="text-center">{{$row->Job_Number}}</td>
-                                <td class="text-center">
+                                <td class="text-left">
                                   @if($row->Car_type == 1)
                                     นำเข้าใหม่ @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
                                   @elseif ($row->Car_type  == 2)
@@ -253,7 +251,7 @@
                                   @endif
                                 </td>
 
-                                <td class="text-left">
+                                <td class="text-right">
                                   <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default" title="ดูรายการ"
                                     data-link="{{ action('DatacarController@viewsee',[$row->Datacar_id,$row->Car_type]) }}">
                                     <i class="far fa-eye"></i>

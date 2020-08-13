@@ -34,9 +34,11 @@
                   <!-- <a target="_blank" href="{{ action('ReportController@ReportExpire') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}" class="btn bg-primary btn-app">
                   <span class="fas fa-print"></span> ปริ้นรายการ
                   </a> -->
+                @if($type != 7)
                   <a href="#" data-toggle="modal" data-target="#modal-report" class="btn bg-primary btn-app" data-backdrop="static" data-keyboard="false">
                     <span class="fas fa-print"></span> ปริ้นรายการ
                   </a>
+                @endif
                 @if($type != 3)
                   <button type="submit" class="btn bg-warning btn-app">
                     <span class="fas fa-search"></span> Search
@@ -55,11 +57,12 @@
 
                 </div>
               @endif
+
             </form>
             <br><br>
             <hr>
             <div class="table-responsive">
-              <table class="table table-bordered" id="example1">
+              <table class="table table-bordered" id="table1">
                 @if($type == 3)
                   <thead class="thead-dark bg-gray-light">
                     <tr>
@@ -72,59 +75,6 @@
                       <th class="text-center" >สถานะ</th>
                     </tr>
                   </thead>
-                @endif
-
-                @if($type == 4)
-                  <thead class="thead-dark bg-gray-light">
-                    <tr>
-                      <th class="text-center" >วันทีหมดอายุบัตร</th>
-                      <th class="text-center" >เลขทะเบียน</th>
-                      <th class="text-center" >ยี่ห้อ</th>
-                      <th class="text-center" >รุ่น</th>
-                      <th class="text-center" >ลักษณะ</th>
-                      <th class="text-center" >ที่มา</th>
-                      <th class="text-center" >สถานะ</th>
-                    </tr>
-                  </thead>
-                @endif
-
-                @if($type == 5) {{--รายงาน รถยึด--}}
-                  <thead class="thead-dark bg-gray-light">
-                    <tr>
-                      <th class="text-center" >วันที่ซื้อ</th>
-                      <th class="text-center" >เลขทะเบียน</th>
-                      <th class="text-center" >ยี่ห้อ</th>
-                      <th class="text-center" >รุ่น</th>
-                      <th class="text-center" >ลักษณะ</th>
-                      <th class="text-center" >สี</th>
-                      <th class="text-center" >ซีซี</th>
-                      <th class="text-center" >ราคาซื้อ</th>
-                      <th class="text-center" >ต้นทุนบัญชี</th>
-                      <th class="text-center" >ประเภท</th>
-                      <th class="text-center" >สถานะ</th>
-                    </tr>
-                  </thead>
-                @endif
-
-                @if($type == 6)
-                  <thead class="thead-dark bg-gray-light">
-                    <tr>
-                      <th class="text-center" >วันที่ขาย</th>
-                      <th class="text-center" >เลขทะเบียน</th>
-                      <th class="text-center" >ยี่ห้อ</th>
-                      <th class="text-center" >รุ่น</th>
-                      <th class="text-center" >ราคาซื้อ</th>
-                      <th class="text-center" >ราคาต้นทุน</th>
-                      <th class="text-center" >ราคาขาย</th>
-                      <th class="text-center" >ราคาหัก VAT</th>
-                      <th class="text-center" >กำไรขาดทุน</th>
-                      <th class="text-center" >ประเภท</th>
-                      <th class="text-center" >สถานะ</th>
-                    </tr>
-                  </thead>
-                @endif
-
-                @if($type == 3)
                   <tbody>
                     @foreach($data as $row)
                       <tr>
@@ -171,6 +121,17 @@
                 @endif
 
                 @if($type == 4)
+                  <thead class="thead-dark bg-gray-light">
+                    <tr>
+                      <th class="text-center" >วันทีหมดอายุบัตร</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ลักษณะ</th>
+                      <th class="text-center" >ที่มา</th>
+                      <th class="text-center" >สถานะ</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     @foreach($data as $row)
                       <tr>
@@ -215,7 +176,22 @@
                   </tbody>
                 @endif
 
-                @if($type == 5) {{--รายงาน รถยึด --}}
+                @if($type == 5) {{--รายงาน รถยึด--}}
+                  <thead class="thead-dark bg-gray-light">
+                    <tr>
+                      <th class="text-center" >วันที่ซื้อ</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ลักษณะ</th>
+                      <th class="text-center" >สี</th>
+                      <th class="text-center" >ซีซี</th>
+                      <th class="text-center" >ราคาซื้อ</th>
+                      <th class="text-center" >ต้นทุนบัญชี</th>
+                      <th class="text-center" >ประเภท</th>
+                      <th class="text-center" >สถานะ</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     @foreach($data as $row)
                       <tr>
@@ -276,6 +252,21 @@
                 @endif
 
                 @if($type == 6)
+                  <thead class="thead-dark bg-gray-light">
+                    <tr>
+                      <th class="text-center" >วันที่ขาย</th>
+                      <th class="text-center" >เลขทะเบียน</th>
+                      <th class="text-center" >ยี่ห้อ</th>
+                      <th class="text-center" >รุ่น</th>
+                      <th class="text-center" >ราคาซื้อ</th>
+                      <th class="text-center" >ราคาต้นทุน</th>
+                      <th class="text-center" >ราคาขาย</th>
+                      <th class="text-center" >ราคาหัก VAT</th>
+                      <th class="text-center" >กำไรขาดทุน</th>
+                      <th class="text-center" >ประเภท</th>
+                      <th class="text-center" >สถานะ</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     @foreach($data as $row)
                       <tr>
@@ -360,7 +351,7 @@
             @elseif($type == 5)
             <h4 class="modal-title">รายงาน รถยึด / CKL</h4>
             @elseif($type == 6)
-            <h4 class="modal-title">รายงาน ยอดทุนรถต่อคัน</h4>
+            <h4 class="modal-title">รายงาน ยอดต้นทุนรถต่อคัน</h4>
             @endif
             <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>

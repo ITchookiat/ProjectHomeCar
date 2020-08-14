@@ -806,11 +806,11 @@ class DatacarController extends Controller
         }elseif ($request->get('Cartype') == 6) {
           $user->Date_Soldout = $date;
           $user->Date_Status = $date;
-          $hold = Holdcar::where('Number_Regist',$request->get('RegistCar'))->first();
-          if($hold != null){
-            $hold->Soldout_hold = 'Y';
-            $hold->update();
-          }
+          // $hold = Holdcar::where('Number_Regist',$request->get('RegistCar'))->first();
+          // if($hold != null){
+          //   $hold->Soldout_hold = 'Y';
+          //   $hold->update();
+          // }
         }
       }
         // dd($request->get('BookStatus'));

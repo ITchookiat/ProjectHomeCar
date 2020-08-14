@@ -26,7 +26,6 @@ class BoardController extends Controller
         if ($request->type == 1) {
             $data = DB::table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                        ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                             return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
                             })

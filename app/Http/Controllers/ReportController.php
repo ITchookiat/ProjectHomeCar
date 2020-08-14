@@ -102,7 +102,8 @@ class ReportController extends Controller
                   ->orderBy('data_cars.Date_Soldout_plus', 'ASC')
                   ->get();
          $title = 'ยอดทุนรถต่อคัน';
-      }elseif ($request->type == 7) {  //Report Sold Car
+      }
+      elseif ($request->type == 7) {  //Report Sold Car
         $data = DB::table('data_cars')
                         ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                         ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {

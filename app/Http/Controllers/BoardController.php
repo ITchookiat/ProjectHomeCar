@@ -22,6 +22,11 @@ class BoardController extends Controller
         if ($request->has('Sale')) {
           $Sale = $request->get('Sale');
         }
+
+        $fdate = \Carbon\Carbon::parse($fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($fdate)->format('m')."-". \Carbon\Carbon::parse($fdate)->format('d');
+        $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
+
+        // dd($fdate,$tdate);
         
         if ($request->type == 1) {
             $data = DB::table('data_cars')
@@ -43,7 +48,10 @@ class BoardController extends Controller
                 }
             }
 
+            $fdate = $request->get('Fromdate');
+            $tdate = $request->get('Todate');
             $type = $request->type;
+
             return view('Board.view', compact('data','type','fdate','tdate','Sale','SumCom'));
         }
     }

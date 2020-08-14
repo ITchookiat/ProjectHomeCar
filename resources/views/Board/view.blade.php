@@ -39,9 +39,9 @@
                   </div>
                   <div class="float-right form-inline"> 
                     <label>จากวันที่ : </label>
-                    <input type="date" name="Fromdate" value="{{ ($fdate != '') ?$fdate: $date }}" class="form-control" />
+                    <input type="date" name="Fromdate" value="{{ ($fdate != '') ?$fdate: date('Y-m-d') }}" class="form-control" />
                     <label>ถึงวันที่ : </label>
-                    <input type="date" name="Todate" value="{{ ($tdate != '') ?$tdate: $date }}" class="form-control" />
+                    <input type="date" name="Todate" value="{{ ($tdate != '') ?$tdate: date('Y-m-d') }}" class="form-control" />
                     <label>Sale : </label>
                     <select name="Sale" class="form-control">
                       <option selected value="">---เลือกเซลล์---</option>
@@ -61,21 +61,21 @@
 
             <div class="row">
               <div class="col-md-12">
-                    <div class="info-box bg-orange">
-                      <span class="info-box-icon bg-warning"><i class="fas fa-user-check"></i></span>
-                      <div class="info-box-content">
-                        <h5>เซลล์  {{ $Sale }}</h5>
-                        @php
-                          $Setfdate = date_create($fdate);
-                          $Settdate = date_create($tdate);
-                        @endphp
-                        <span class="info-box-number">ประจำวันที่ {{ date_format($Setfdate, 'd-m-Y') }} &nbsp;&nbsp; ถึงวันที่ {{ date_format($Settdate, 'd-m-Y') }}</span>
-                      </div>
-                      <div class="info-box-content">
-                        <h5>รวม :</h5>
-                        <input type="text" name="SumCom" style="text-align:right;" class="form-control" value="{{ number_format($SumCom,2) }}"/>
-                      </div>
+                  <div class="info-box bg-orange">
+                    <span class="info-box-icon bg-warning"><i class="fas fa-user-check"></i></span>
+                    <div class="info-box-content">
+                      <h5>เซลล์  {{ $Sale }}</h5>
+                      @php
+                        $Setfdate = date_create($fdate);
+                        $Settdate = date_create($tdate);
+                      @endphp
+                      <span class="info-box-number">ประจำวันที่ {{ date_format($Setfdate, 'd-m-Y') }} &nbsp;&nbsp; ถึงวันที่ {{ date_format($Settdate, 'd-m-Y') }}</span>
                     </div>
+                    <div class="info-box-content">
+                      <h5>รวม :</h5>
+                      <input type="text" name="SumCom" style="text-align:right;" class="form-control" value="{{ number_format($SumCom,2) }}"/>
+                    </div>
+                  </div>
                 <div class="table-responsive">
                   <table class="table table-striped table-valign-middle" id="table1">
                     @if($type == 1)

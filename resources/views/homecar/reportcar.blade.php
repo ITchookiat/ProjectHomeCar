@@ -241,7 +241,7 @@
               <th class="text-center" width="40px"><b>ปีรถ</b></th>
               <th class="text-center" width="50px"><b>สีรถ</b></th>
               <th class="text-center" width="60px"><b>ราคาซื้อ</b></th>
-              <th class="text-center" width="60px"><b>ต้นทุนบัญชี</b></th>
+              <th class="text-center" width="70px"><b>ต้นทุนบัญชี</b></th>
               <th class="text-center" width="40px"><b>ที่มา</b></th>
               <th class="text-center" width="60px"><b>สถานะ</b></th>
             </tr>
@@ -295,9 +295,9 @@
                   <td width="60px">{{ number_format($value->Fisrt_Price,2) }}</td>
                 @endif
                 @if($value->Accounting_Cost == null)
-                  <td width="60px">{{$value->Accounting_Cost}}</td>
+                  <td width="70px">{{$value->Accounting_Cost}}</td>
                 @else
-                  <td width="60px">{{number_format($value->Accounting_Cost, 2)}}</td>
+                  <td width="70px">{{number_format($value->Accounting_Cost, 2)}}</td>
                 @endif
                 <td width="40px">
                   @if($value->Origin_Car == 1 )
@@ -329,7 +329,7 @@
             @endforeach
               <tr style="line-height: 200%;">
                 <td width="635px" align="right"><b>รวมต้นทุน &nbsp;</b></td>
-                <td width="60px" align="right"><b>{{number_format(@$TotalAccountCost,2)}} &nbsp;</b></td>
+                <td width="70px" align="right"><b>{{number_format(@$TotalAccountCost,2)}} &nbsp;</b></td>
                 <td width="100px" align="left"> <b>บาท</b></td>
               </tr>
           </tbody>

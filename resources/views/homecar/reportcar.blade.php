@@ -48,7 +48,7 @@
         @elseif( $ReportType == 4)
           รายงาน วันหมดอายุบัตร
         @elseif( $ReportType == 5)
-          รายงานรถ
+          รายงาน {{$origin_car}}
         @elseif( $ReportType == 6)
           รายงาน ยอดทุนรถต่อคัน
         @endif

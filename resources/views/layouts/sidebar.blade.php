@@ -54,7 +54,7 @@
             </li>
           @endif
 
-          <li class="nav-item has-treeview {{ Request::is('datacar/view*') ? 'menu-open' : '' }} {{ Request::is('datacar/create/*') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/*') ? 'menu-open' : '' }} {{ Request::is('reportcar/viewreport*') ? 'menu-open' : '' }} {{ Request::is('BoardMaster/view/1') ? 'menu-open' : '' }}">
+          <li class="nav-item has-treeview {{ Request::is('datacar/view*') ? 'menu-open' : '' }} {{ Request::is('datacar/create/*') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/*') ? 'menu-open' : '' }} {{ Request::is('BoardMaster/view/1') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <i class="nav-icon far fa-handshake"></i>
               <p>
@@ -86,10 +86,28 @@
             @endif
 
             <ul class="nav nav-treeview">
+              <li class="nav-item has-treeview {{ Request::is('datacar/view/12') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link">
+                  <i class="far fa-window-restore text-red nav-icon"></i>
+                  <p>
+                    Produce Car
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview" style="margin-left: 15px;">
+                  <li class="nav-item">
+                    <a href="{{ route('datacar',12) }}" class="nav-link {{ Request::is('datacar/view/12') ? 'active' : '' }}">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>รถยึดจากเร่งรัด</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
               <li class="nav-item has-treeview {{ Request::is('datacar/view/1') ? 'menu-open' : '' }} {{ Request::is('datacar/view/7') ? 'menu-open' : '' }} {{ Request::is('datacar/view/2') ? 'menu-open' : '' }} {{ Request::is('datacar/view/3') ? 'menu-open' : '' }} {{ Request::is('datacar/view/4') ? 'menu-open' : '' }} {{ Request::is('datacar/view/5') ? 'menu-open' : '' }}
-                                                {{ Request::is('datacar/view/6') ? 'menu-open' : '' }} {{ Request::is('datacar/view/8') ? 'menu-open' : '' }} {{ Request::is('datacar/view/12') ? 'menu-open' : '' }}
+                                                {{ Request::is('datacar/view/6') ? 'menu-open' : '' }} {{ Request::is('datacar/view/8') ? 'menu-open' : '' }} {{ Request::is('datacar/view/14') ? 'menu-open' : '' }}
                                                 {{ Request::is('datacar/create/*') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/1') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/2') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/3') ? 'menu-open' : '' }} 
-                                                {{ Request::is('datacar/edit/*/4') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/5') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/6') ? 'menu-open' : '' }}">
+                                                {{ Request::is('datacar/edit/*/4') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/5') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/6') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/7') ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link">
                   <i class="far fa-window-restore text-red nav-icon"></i>
                   <p>
@@ -147,50 +165,48 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ route('datacar',12) }}" class="nav-link {{ Request::is('datacar/view/12') ? 'active' : '' }}">
+                    <a href="{{ route('datacar',14) }}" class="nav-link {{ Request::is('datacar/view/14') ? 'active' : '' }} {{ Request::is('datacar/edit/*/7') ? 'active' : '' }}">
                       <i class="far fa-dot-circle nav-icon"></i>
-                      <p>รถยึดจากเร่งรัด</p>
+                      <p>รถยนต์ส่งประมูล</p>
                     </a>
-                  </li>
+                  </li>  
                 </ul>
               </li>
             </ul>
+          </li>
 
-            <ul class="nav nav-treeview">
-              <li class="nav-item has-treeview {{ Request::is('reportcar/viewreport/3') ? 'menu-open' : '' }} {{ Request::is('reportcar/viewreport/4') ? 'menu-open' : '' }} {{ Request::is('reportcar/viewreport/5') ? 'menu-open' : '' }} {{ Request::is('reportcar/viewreport/6') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link">
-                  <i class="far fa-window-restore text-red nav-icon"></i>
-                  <p>
-                    Report
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
+          <li class="nav-item has-treeview {{ Request::is('reportcar/viewreport/3') ? 'menu-open' : '' }} {{ Request::is('reportcar/viewreport/4') ? 'menu-open' : '' }} {{ Request::is('reportcar/viewreport/5') ? 'menu-open' : '' }} {{ Request::is('reportcar/viewreport/6') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon far fa-file-alt"></i>
+              <p>
+                Report Car
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="margin-left: 15px;">
+              <li class="nav-item">
+                <a href="{{ route('reportcar',3) }}" class="nav-link {{ Request::is('reportcar/viewreport/3') ? 'active' : '' }}">
+                  <i class="far fa-dot-circle nav-icon"></i>
+                  <p>รายงาน สต๊อกบัญชี</p>
                 </a>
-                <ul class="nav nav-treeview" style="margin-left: 15px;">
-                  <li class="nav-item">
-                    <a href="{{ route('reportcar',3) }}" class="nav-link {{ Request::is('reportcar/viewreport/3') ? 'active' : '' }}">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>รายงาน สต๊อกบัญชี</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{ route('reportcar',4) }}" class="nav-link {{ Request::is('reportcar/viewreport/4') ? 'active' : '' }}">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>รายงาน วันหมดอายุบัตร</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{ route('reportcar',5) }}" class="nav-link {{ Request::is('reportcar/viewreport/5') ? 'active' : '' }}">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>รายงาน รถยึด / CKL</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{{ route('reportcar',6) }}" class="nav-link {{ Request::is('reportcar/viewreport/6') ? 'active' : '' }}">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>รายงาน ยอดต้นทุนรถ</p>
-                    </a>
-                  </li>
-                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('reportcar',4) }}" class="nav-link {{ Request::is('reportcar/viewreport/4') ? 'active' : '' }}">
+                  <i class="far fa-dot-circle nav-icon"></i>
+                  <p>รายงาน วันหมดอายุบัตร</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('reportcar',5) }}" class="nav-link {{ Request::is('reportcar/viewreport/5') ? 'active' : '' }}">
+                  <i class="far fa-dot-circle nav-icon"></i>
+                  <p>รายงาน รถยึด / CKL</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('reportcar',6) }}" class="nav-link {{ Request::is('reportcar/viewreport/6') ? 'active' : '' }}">
+                  <i class="far fa-dot-circle nav-icon"></i>
+                  <p>รายงาน ยอดต้นทุนรถ</p>
+                </a>
               </li>
             </ul>
           </li>

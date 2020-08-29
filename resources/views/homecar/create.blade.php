@@ -2,340 +2,519 @@
 @section('title','ร้อมูลรถยนต์มือ 2')
 @section('content')
 
-@php
-  date_default_timezone_set('Asia/Bangkok');
-  $Y = date('Y') + 543;
-  $Y2 = date('Y') + 531;
-  $m = date('m');
-  $d = date('d');
-  //$date = date('Y-m-d');
-  $time = date('H:i');
-  $date = $Y.'-'.$m.'-'.$d;
-  $date2 = $Y2.'-'.'01'.'-'.'01';
-@endphp
+  @php
+    date_default_timezone_set('Asia/Bangkok');
+    $Y = date('Y') + 543;
+    $Y2 = date('Y') + 531;
+    $m = date('m');
+    $d = date('d');
+    //$date = date('Y-m-d');
+    $time = date('H:i');
+    $date = $Y.'-'.$m.'-'.$d;
+    $date2 = $Y2.'-'.'01'.'-'.'01';
+  @endphp
 
+  <style>
+    #todo-list{
+    width:100%;
+    margin:0 auto 30px auto;
+    padding:5px;
+    background:white;
+    position:relative;
+    /*box-shadow*/
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+          box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+    /*border-radius*/
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+          border-radius:5px;}
+    #todo-list:before{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    /*box-shadow*/
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.4);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.4);
+          box-shadow:0 0 20px rgba(0,0,0,0.4);
+    top:50%;
+    bottom:0;
+    left:10px;
+    right:10px;
+    /*border-radius*/
+    -webkit-border-radius:100px / 10px;
+    -moz-border-radius:100px / 10px;
+          border-radius:100px / 10px;
+    }
+    .todo-wrap{
+    display:block;
+    position:relative;
+    padding-left:35px;
+    /*box-shadow*/
+    -webkit-box-shadow:0 2px 0 -1px #ebebeb;
+    -moz-box-shadow:0 2px 0 -1px #ebebeb;
+          box-shadow:0 2px 0 -1px #ebebeb;
+    }
+    .todo-wrap:last-of-type{
+    /*box-shadow*/
+    -webkit-box-shadow:none;
+    -moz-box-shadow:none;
+          box-shadow:none;
+    }
+    input[type="checkbox"]{
+    position:absolute;
+    height:0;
+    width:0;
+    opacity:0;
+    /* top:-600px; */
+    }
+    .todo{
+    display:inline-block;
+    font-weight:200;
+    padding:10px 5px;
+    height:37px;
+    position:relative;
+    }
+    .todo:before{
+    content:'';
+    display:block;
+    position:absolute;
+    top:calc(50% + 10px);
+    left:0;
+    width:0%;
+    height:1px;
+    background:#cd4400;
+    /*transition*/
+    -webkit-transition:.25s ease-in-out;
+    -moz-transition:.25s ease-in-out;
+      -o-transition:.25s ease-in-out;
+          transition:.25s ease-in-out;
+    }
+    .todo:after{
+    content:'';
+    display:block;
+    position:absolute;
+    z-index:0;
+    height:18px;
+    width:18px;
+    top:9px;
+    left:-25px;
+    /*box-shadow*/
+    -webkit-box-shadow:inset 0 0 0 2px #d8d8d8;
+    -moz-box-shadow:inset 0 0 0 2px #d8d8d8;
+          box-shadow:inset 0 0 0 2px #d8d8d8;
+    /*transition*/
+    -webkit-transition:.25s ease-in-out;
+    -moz-transition:.25s ease-in-out;
+      -o-transition:.25s ease-in-out;
+          transition:.25s ease-in-out;
+    /*border-radius*/
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+          border-radius:4px;
+    }
+    .todo:hover:after{
+    /*box-shadow*/
+    -webkit-box-shadow:inset 0 0 0 2px #949494;
+    -moz-box-shadow:inset 0 0 0 2px #949494;
+          box-shadow:inset 0 0 0 2px #949494;
+    }
+    .todo .fa-check{
+    position:absolute;
+    z-index:1;
+    left:-31px;
+    top:0;
+    font-size:1px;
+    line-height:36px;
+    width:36px;
+    height:36px;
+    text-align:center;
+    color:transparent;
+    text-shadow:1px 1px 0 white, -1px -1px 0 white;
+    }
+    :checked + .todo{
+    color:#717171;
+    }
+    :checked + .todo:before{
+    width:100%;
+    }
+    :checked + .todo:after{
+    /*box-shadow*/
+    -webkit-box-shadow:inset 0 0 0 2px #0eb0b7;
+    -moz-box-shadow:inset 0 0 0 2px #0eb0b7;
+          box-shadow:inset 0 0 0 2px #0eb0b7;
+    }
+    :checked + .todo .fa-check{
+    font-size:20px;
+    line-height:35px;
+    color:#0eb0b7;
+    }
+  
+  </style>
 
-      <!-- Main content -->
-      <section class="content">
-        <div class="content-header">
-          <div class="card">
-            <div class="card-header">
-              <h1 class="" style="text-align:center;"><b>เพิ่มข้อมูลรถยนต์</b></h1>
+  <!-- Main content -->
+  <section class="content">
+    <div class="content-header">
+      <div class="card">
+        <form name="form1" action="{{ route('datacar.store') }}" method="post" id="formimage" enctype="multipart/form-data">
+          @csrf
+
+          <div class="card-header">
+            {{-- <h5 class="" style="text-align:center;"><b>เพิ่มข้อมูลรถยนต์</b></h5> --}}
+            <div class="row">
+              <div class="col-4">
+                <div class="form-inline">
+                  <h5>เพิ่มข้อมูลรถยนต์</h5>
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="card-tools d-inline float-right">
+                  <button type="submit" class="delete-modal btn btn-success">
+                    <i class="fas fa-save"></i> บันทึก
+                  </button>
+                  <a class="delete-modal btn btn-danger" href="{{ route('datacar',1) }}">
+                    <i class="far fa-window-close"></i> ยกเลิก
+                  </a>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="card-body text-sm"> 
+            <div class="row">
+              <div class="col-md-9">
+                <div class="card card-warning">
+                  <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-user-tag"></i> ข้อมูลผู้เช่าซื้อ</h3>
 
-              <div class="card-body">
-                @if (count($errors) > 0)
-                  <div class="alert alert-danger">
-                    <ul>
-                      @foreach($errors->all() as $error)
-                      <li>กรุณากรอกข้อมูลอีกครั้ง {{$error}}</li>
-                      @endforeach
-                    </ul>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                      </button>
+                    </div>
                   </div>
-                @endif
-
-                <div class="row">
-                  <div class="col-md-12"> <br />
-                    <form name="form1" action="{{ route('datacar.store') }}" method="post" id="formimage" enctype="multipart/form-data">
-                      @csrf
+                  <div class="card-body">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right"><font color="red">* วันที่ซื้อ</font> :</label>
+                            <div class="col-sm-8">
+                              <input type="date" class="form-control form-control-sm" name="DateCar" value="{{ $date }}" min="{{ $date2 }}" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                       <div class="row">
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label><font color="red">*</font> วันที่ซื้อ : &nbsp;</label>
-                            <input type="date" class="form-control" name="DateCar" style="width: 250px;" value="{{ $date }}" min="{{ $date2 }}" required>
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right"><font color="red">* ยี่ห้อรถ</font> :</label>
+                            <div class="col-sm-8">
+                              <select name="BrandCar" class="form-control form-control-sm" required>
+                                <option value="" selected>--- เลือกยี่ห้อรถ ---</option>
+                                <option value="TOYOTA">TOYOTA</option>
+                                <option value="MAZDA">MAZDA</option>
+                                <option value="NISSAN">NISSAN</option>
+                                <option value="FORD">FORD</option>
+                                <option value="MITSUBISHI">MITSUBISHI</option>
+                                <option value="ISUZU">ISUZU</option>
+                                <option value="HONDA">HONDA</option>
+                                <option value="CHEVROLET">CHEVROLET</option>
+                                <option value="SUZUKI">SUZUKI</option>
+                                <option value="MG">MG</option>
+                              </select>
+                            </div>
                           </div>
                         </div>
-                      </div> <!-- endrow -->
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right"><font color="red">* เลขทะเบียน</font> :</label>
+                            <div class="col-sm-8">
+                              <input type="text" name="Number_Regist" class="form-control form-control-sm" placeholder="ป้อนเลขทะเบียน" required/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                       <div class="row">
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label><font color="red">*</font> ยี่ห้อรถ :</label>
-                            <select name="BrandCar" class="form-control" style="width: 250px;" required>
-                              <option value="" selected>--- เลือกยี่ห้อรถ ---</option>
-                              <option value="TOYOTA">TOYOTA</option>
-                              <option value="MAZDA">MAZDA</option>
-                              <option value="NISSAN">NISSAN</option>
-                              <option value="FORD">FORD</option>
-                              <option value="MITSUBISHI">MITSUBISHI</option>
-                              <option value="ISUZU">ISUZU</option>
-                              <option value="HONDA">HONDA</option>
-                              <option value="CHEVROLET">CHEVROLET</option>
-                              <option value="SUZUKI">SUZUKI</option>
-                              <option value="MG">MG</option>
-                            </select>
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right"><font color="red">* ที่มาของรถ</font> :</label>
+                            <div class="col-sm-8">
+                              <select name="OriginCar" class="form-control form-control-sm" required>
+                                <option value="" selected>--- เลือกที่มาของรถ ---</option>
+                                <option value="1">CKL</option>
+                                <option value="2">รถประมูล</option>
+                                <option value="3">รถยึด</option>
+                                <option value="4">ฝากขาย</option>
+                              </select>
+                            </div>
                           </div>
                         </div>
-
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label><font color="red">*</font>เลขทะเบียน :</label>
-                            <input type="text" name="Number_Regist" class="form-control" style="width: 250px;" placeholder="ป้อนเลขทะเบียน" required/>
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">Sale :</label>
+                            <div class="col-sm-8">
+                              <input type="text" name="SaleCar" class="form-control form-control-sm" placeholder="ป้อน Sale" />
+                            </div>
                           </div>
                         </div>
-                      </div> <!-- endrow -->
+                      </div>
 
                       <div class="row">
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label><font color="red">*</font>ที่มาของรถ :</label>
-                            <select name="OriginCar" class="form-control" style="width: 250px;" required>
-                              <option value="" selected>--- เลือกที่มาของรถ ---</option>
-                              <option value="1">CKL</option>
-                              <option value="2">รถประมูล</option>
-                              <option value="3">รถยึด</option>
-                              <option value="4">ฝากขาย</option>
-                            </select>
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">ลักษณะรถ :</label>
+                            <div class="col-sm-8">
+                              <select name="ModelCar" class="form-control form-control-sm">
+                                <option value="" selected>--- เลือกลักษณะรถ ---</option>
+                                <option value="เก๋ง">เก๋ง</option>
+                                <option value="cab">cab</option>
+                                <option value="Hi 4Dr">Hi 4Dr</option>
+                                <option value="Hi Cab">Hi Cab</option>
+                                <option value="Hi 4WD">Hi 4WD</option>
+                                <option value="Hi 4Dr 4WD">Hi 4Dr 4WD</option>
+                                <option value="STD">STD</option>
+                                <option value="4DR">4DR</option>
+                                <option value="Van">Van</option>
+                                <option value="Van 4WD">Van 4WD</option>
+                              </select>
+                            </div>
                           </div>
                         </div>
-
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label> Sale :</label>
-                            <input type="text" name="SaleCar" class="form-control" style="width: 250px;" placeholder="ป้อน Sale" />
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">เลขไมล์ :</label>
+                            <div class="col-sm-8">
+                              <input type="text" id="MilesCar" name="MilesCar" class="form-control form-control-sm" placeholder="ป้อนเลขไมล์" oninput="mile();" maxlength="10"/>
+                            </div>
                           </div>
                         </div>
-                      </div> <!-- endrow -->
-
-                      <div class="row">
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label>ลักษณะรถ :</label>
-                            <select name="ModelCar" class="form-control" style="width: 250px;">
-                              <option value="" selected>--- เลือกลักษณะรถ ---</option>
-                              <option value="เก๋ง">เก๋ง</option>
-                              <option value="cab">cab</option>
-                              <option value="Hi 4Dr">Hi 4Dr</option>
-                              <option value="Hi Cab">Hi Cab</option>
-                              <option value="Hi 4WD">Hi 4WD</option>
-                              <option value="Hi 4Dr 4WD">Hi 4Dr 4WD</option>
-                              <option value="STD">STD</option>
-                              <option value="4DR">4DR</option>
-                              <option value="Van">Van</option>
-                              <option value="Van 4WD">Van 4WD</option>
-                            </select>
-                          </div>
-                        </div>
-
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label>เลขไมล์ :</label>
-                            <input type="text" id="MilesCar" name="MilesCar" class="form-control" style="width: 250px;" placeholder="ป้อนเลขไมล์" oninput="mile();" maxlength="10"/>
-                          </div>
-                        </div>
-                      </div> <!-- endrow -->
+                      </div>
 
                       <div class="row">
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label>รุ่นรถ :</label>
-                            <input type="text" name="VersionCar" class="form-control" style="width: 250px;" placeholder="ป้อนรุ่นรถ" />
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">รุ่นรถ :</label>
+                            <div class="col-sm-8">
+                              <input type="text" name="VersionCar" class="form-control form-control-sm" placeholder="ป้อนรุ่นรถ" />
+                            </div>
                           </div>
                         </div>
-
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label>เกียร์รถ :</label>
-                            <select name="Gearcar" class="form-control" style="width: 88px;">
-                              <option value="">-เลือก-</option>
-                              <option value="MT">MT</option>
-                              <option value="AT">AT</option>
-                            </select>
-                            &nbsp;&nbsp;&nbsp;
-                            <label>ปีที่ผลิต :</label>
-                            <input type="text" name="YearCar" class="form-control" style="width: 88px;" />
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">เกียร์รถ / ปีรถ :</label>
+                            <div class="col-sm-4">
+                              <select name="Gearcar" class="form-control form-control-sm">
+                                <option value="">-----เลือกเกียร์รถ------</option>
+                                <option value="MT">MT</option>
+                                <option value="AT">AT</option>
+                              </select>
+                            </div>
+                            <div class="col-sm-4">
+                              <input type="text" name="YearCar" class="form-control form-control-sm"  placeholder="ป้อนปีที่ผลิต"/>
+                            </div>
                           </div>
                         </div>
-                      </div> <!-- endrow -->
-
-                      <div class="row">
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label>ขนาด :</label>
-                            <input type="text" name="SizeCar" class="form-control" style="width: 225px;" placeholder="ป้อนขนาด" />
-                            <label>ซีซี</label>
-                          </div>
-                        </div>
-
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label>สีรถ :</label>
-                            <input type="text" name="ColorCar" class="form-control" style="width: 250px;" placeholder="ป้อนสีรถ" />
-                          </div>
-                        </div>
-                      </div> <!-- endrow -->
+                      </div>
 
                       <div class="row">
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label>Job Number :</label>
-                            <input type="text" name="JobCar" class="form-control" style="width: 250px;" placeholder="ป้อน JobNumber" />
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">ขนาด :</label>
+                            <div class="col-sm-8">
+                              <input type="text" name="SizeCar" class="form-control form-control-sm" placeholder="ป้อนขนาด C.C." />
+                          </div>
                           </div>
                         </div>
-
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label>ราคาแนะนำ :</label>
-                            <input type="text" id="OfferPrice" name="OfferPrice" class="form-control" style="width: 250px;" placeholder="ป้อนราคาแนะนำ" oninput="mile();" maxlength="10"/>
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">สีรถ :</label>
+                            <div class="col-sm-8">
+                              <input type="text" name="ColorCar" class="form-control form-control-sm" placeholder="ป้อนสีรถ" />
+                            </div>
                           </div>
                         </div>
-                      </div> <!-- endrow -->
+                      </div>
 
                       <div class="row">
-                      <script>
-                        function addCommas(nStr){
-                          nStr += '';
-                          x = nStr.split('.');
-                          x1 = x[0];
-                          x2 = x.length > 1 ? '.' + x[1] : '';
-                          var rgx = /(\d+)(\d{3})/;
-                          while (rgx.test(x1)) {
-                          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">Job Number :</label>
+                            <div class="col-sm-8">
+                              <input type="text" name="JobCar" class="form-control form-control-sm" placeholder="ป้อน JobNumber" />
+                          </div>
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">ราคาแนะนำ :</label>
+                            <div class="col-sm-8">
+                              <input type="text" id="OfferPrice" name="OfferPrice" class="form-control form-control-sm" placeholder="ป้อนราคาแนะนำ" oninput="mile();" maxlength="10"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <script>
+                          function addCommas(nStr){
+                            nStr += '';
+                            x = nStr.split('.');
+                            x1 = x[0];
+                            x2 = x.length > 1 ? '.' + x[1] : '';
+                            var rgx = /(\d+)(\d{3})/;
+                            while (rgx.test(x1)) {
+                            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                            }
+                            return x1 + x2;
                           }
-                          return x1 + x2;
-                        }
 
-                        function mile(){
-                          var num11 = document.getElementById('MilesCar').value;
-                          var num1 = num11.replace(",","");
-                          document.form1.MilesCar.value = addCommas(num1);
+                          function mile(){
+                            var num11 = document.getElementById('MilesCar').value;
+                            var num1 = num11.replace(",","");
+                            document.form1.MilesCar.value = addCommas(num1);
 
-                          var num22 = document.getElementById('AccountingCost').value;
-                          var num2 = num22.replace(",","");
-                          document.form1.AccountingCost.value = addCommas(num2);
+                            var num22 = document.getElementById('AccountingCost').value;
+                            var num2 = num22.replace(",","");
+                            document.form1.AccountingCost.value = addCommas(num2);
 
-                          var num44 = document.getElementById('OfferPrice').value;
-                          var num4 = num44.replace(",","");
-                          document.form1.OfferPrice.value = addCommas(num4);
+                            var num44 = document.getElementById('OfferPrice').value;
+                            var num4 = num44.replace(",","");
+                            document.form1.OfferPrice.value = addCommas(num4);
 
-                          var num33 = document.getElementById('PriceCar').value;
-                          var num3 = num33.replace(",","");
-                          document.form1.PriceCar.value = addCommas(num3);
-                        }
-                      </script>
+                            var num33 = document.getElementById('PriceCar').value;
+                            var num3 = num33.replace(",","");
+                            document.form1.PriceCar.value = addCommas(num3);
+                          }
+                        </script>
                         @if(auth::user()->type == 1 or auth::user()->type == 3)
-                          <div class="col-md-5">
-                            <div class="float-right form-inline">
-                              <label><font color="red">*</font> ราคาซื้อ :</label>
-                              <input type="text" id="PriceCar" name="PriceCar" class="form-control" placeholder="ป้อนราคาซื้อ" style="width: 250px;" oninput="mile();" maxlength="10"/>
+                          <div class="col-6">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-3 col-form-label text-right"><font color="red">*</font> ราคาซื้อ :</label>
+                              <div class="col-sm-8">
+                                <input type="text" id="PriceCar" name="PriceCar" class="form-control form-control-sm" placeholder="ป้อนราคาซื้อ" oninput="mile();" maxlength="10"/>
+                              </div>
                             </div>
                           </div>
                         @endif
 
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label>ต้นทุนยอดจัด :</label>
-                            <input type="text" id="AccountingCost" name="AccountingCost" class="form-control" style="width: 250px;" placeholder="ต้นทุนยอดจัด" oninput="mile();" maxlength="10"/>
+                        <div class="col-6">
+                          <div class="form-group row mb-1">
+                            <label class="col-sm-3 col-form-label text-right">ต้นทุนยอดจัด :</label>
+                            <div class="col-sm-8">
+                              <input type="text" id="AccountingCost" name="AccountingCost" class="form-control form-control-sm" placeholder="ต้นทุนยอดจัด" oninput="mile();" maxlength="10"/>
+                            </div>
                           </div>
                         </div>
-                      </div> <!-- endrow -->
-
-                      <P></p>
-                      <hr>
-                      <h3 align="center"><b>เช็คเอกสารรถยนต์</b></h3>
-
-                      <div class="table-responsive">
-                        <table class="table table-bordered" id="table" style="width: 65%;" align="center">
-                          <thead class="thead-dark">
-                            <tr>
-                              <th class="text-center" width="20%">สัญญาซื้อขาย</th>
-                              <th class="text-center">คู่มือ</th>
-                              <th class="text-center">กุญแจ</th>
-                              <th class="text-center">ป้ายภาษี</th>
-                              <th class="text-center">พ.ร.บ.</th>
-                              <th class="text-center">ประกัน</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th class="text-center">
-                                <label class="con3">
-                                <input type="checkbox" class="checkbox" name="ContractsCar" id="" value="complete"> <!-- checked="checked"  -->
-                                <span class="checkmark3"></span>
-                                </label>
-                              </th>
-                              <th class="text-center">
-                                <label class="con3">
-                                <input type="checkbox" name="ManualCar" id="" value="complete">
-                                <span class="checkmark3"></span>
-                                </label>
-                              </th>
-                              <th class="text-center">
-                                <label class="con3">
-                                <input type="checkbox" name="KeyReserve" id="" value="complete">
-                                <span class="checkmark3"></span>
-                                </label>
-                              </th>
-                              <th class="text-center">
-                                <label class="con3">
-                                <input type="checkbox" name="ExpireTax" id="" value="complete">
-                                <span class="checkmark3"></span>
-                                </label>
-                              </th>
-                              <th class="text-center">
-                                <label class="con3">
-                                <input type="checkbox" name="ActCar" id="" value="complete">
-                                <span class="checkmark3"></span>
-                                </label>
-                              </th>
-                              <th class="text-center">
-                                <label class="con3">
-                                <input type="checkbox" name="InsuranceCar" id="" value="complete">
-                                <span class="checkmark3"></span>
-                                </label>
-                              </th>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
-
-                      <br>
-                      <div class="row">
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label style="vertical-align: top;">หมายเหตุ :</label>
-                            <textarea name="CheckNote" class="form-control" placeholder="ป้อนหมายเหตุ" rows="4" style="width: 250px;"></textarea>
-                          </div>
-                        </div>
-
-                        <div class="col-md-5">
-                          <div class="float-right form-inline">
-                            <label>วันที่หมดอายุ ปชช :</label>
-                            <input type="date" id="DateNumberUser" class="form-control" name="DateNumberUser" style="width: 250px;" min="{{ $date2 }}" placeholder="ป้อนวันที่หมดอายุ ปชช">
-                          </div>
-
-                          <div class="float-right form-inline">
-                            <label>วันที่หมดอายุภาษี :</label>
-                            <input type="date" id="DateExpire" class="form-control" name="DateExpire" style="width: 250px;" min="{{ $date2 }}" placeholder="ป้อนวันที่หมดอายุภาษี">
-                          </div>
-
-                          <input type="hidden" id="mySelect1" class="form-control" name="DateNumberUserHidden" >
-                          <input type="hidden" id="mySelect2" class="form-control" name="DateExpireHidden" >
-                        </div>
-                      </div>
-
-                      <input type="hidden" name="_token" value="{{csrf_token()}}" />
-                      <hr>
-                      <div class="form-group">
-                        <input type="hidden" readonly name="Cartype" value="{{ $type }}" class="form-control" />
-                      </div>
-                      <div class="form-group" align="center">
-                        <button type="submit" class="delete-modal btn btn-success">
-                          <span class="glyphicon glyphicon-floppy-save"></span> บันทึก
-                        </button>
-                        <a class="delete-modal btn btn-danger" href="{{ route('datacar',1) }}">
-                          <span class="glyphicon glyphicon-remove"></span> ยกเลิก
-                        </a>
-                      </div>
-                    </form>
 
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-3">
+                <div class="card card-danger">
+                  <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-tasks"></i> เช็คเอกสารรถยนต์</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="" id="todo-list">
+                            <span class="todo-wrap">
+                              <input type="checkbox" id="1" name="ContractsCar" value="complete"/>
+                              <label for="1" class="todo">
+                                <i class="fa fa-check"></i>
+                                สัญญาซื้อขาย
+                              </label>
+                            </span>
+                            <span class="todo-wrap">
+                              <input type="checkbox" id="2" name="ManualCar" value="complete"/>
+                              <label for="2" class="todo">
+                                <i class="fa fa-check"></i>
+                                คู่มือ
+                              </label>
+                            </span>
+                            <span class="todo-wrap">
+                              <input type="checkbox" id="3" name="KeyReserve" value="complete"/>
+                              <label for="3" class="todo">
+                                <i class="fa fa-check"></i>
+                                กุญแจ
+                              </label>
+                            </span>
+                            <span class="todo-wrap">
+                              <input type="checkbox" id="4" name="ExpireTax" value="complete"/>
+                              <label for="4" class="todo">
+                                <i class="fa fa-check"></i>
+                                ป้ายภาษี
+                              </label>
+                            </span>
+                            <span class="todo-wrap">
+                              <input type="checkbox" id="5" name="ActCar" value="complete"/>
+                              <label for="5" class="todo">
+                                <i class="fa fa-check"></i>
+                                พ.ร.บ.
+                              </label>
+                            </span>
+                            <span class="todo-wrap">
+                              <input type="checkbox" id="6" name="InsuranceCar" value="complete"/>
+                              <label for="6" class="todo">
+                                <i class="fa fa-check"></i>
+                                ประกัน
+                              </label>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group row mb-1">
+                  <label class="col-sm-3 col-form-label text-right">วันที่หมดอายุ ปชช :</label>
+                  <div class="col-sm-8">
+                    <input type="date" id="DateNumberUser" class="form-control form-control-sm" name="DateNumberUser" min="{{ $date2 }}" placeholder="ป้อนวันที่หมดอายุ ปชช">
+                  </div>
+                </div>
+                <div class="form-group row mb-1">
+                  <label class="col-sm-3 col-form-label text-right">วันที่หมดอายุภาษี:</label>
+                  <div class="col-sm-8">
+                    <input type="date" id="DateExpire" class="form-control form-control-sm" name="DateExpire" min="{{ $date2 }}" placeholder="ป้อนวันที่หมดอายุภาษี">
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group row mb-1">
+                  <label class="col-sm-3 col-form-label text-right">หมายเหตุ :</label>
+                  <div class="col-sm-8">
+                    <textarea name="CheckNote" class="form-control form-control-sm" placeholder="ป้อนหมายเหตุ" rows="4"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <input type="hidden" id="mySelect1" class="form-control form-control-sm" name="DateNumberUserHidden" >
+            <input type="hidden" id="mySelect2" class="form-control form-control-sm" name="DateExpireHidden" >
+            <input type="hidden" name="Cartype" value="{{ $type }}" class="form-control"/>         
           </div>
-        </div>
-      </section>
+
+          <input type="hidden" name="_token" value="{{csrf_token()}}" />
+        </form>
+      </div>
+    </div>
+  </section>
 
   <!-- DateNumberUserHidden -->
   <script>
@@ -358,5 +537,4 @@
     $(".alert").alert('close');
     });
   </script>
-
 @endsection

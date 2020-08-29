@@ -67,6 +67,9 @@ class CreateDataCarsTable extends Migration
             //ข้อมูลลูกค้า Research Cus
             $table->string('BookStatus_Car')->nullable();      //สถานะจอง
             $table->string('DateStatus_Car')->nullable();      //วันที่สถานะจอง
+            //ข้อมูลประมูลรถ
+            $table->string('Open_auction')->nullable();        //เปิดประมูล
+            $table->string('Close_auction')->nullable();      //ปิดประมูล
             
             $table->timestamps();
           });

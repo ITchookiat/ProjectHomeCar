@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Holdcar extends Model
+class holdcar extends Model
 {
-    //
+    protected $connection = 'sqlsrv2';
     protected $table = 'holdcars';
     protected $primaryKey = 'Hold_id';
     protected $fillable = ['Contno_hold','Name_hold','Brandcar_hold','Number_Regist','Year_Product','Date_hold','Dateupdate_hold','Team_hold','Price_hold',

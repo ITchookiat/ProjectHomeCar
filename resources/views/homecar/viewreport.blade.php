@@ -50,10 +50,10 @@
                 <br><br><br>
                 <div class="float-right form-inline"> 
                   <label>จากวันที่ : </label>
-                  <input type="date" name="Fromdate" style="width: 170px;" value="{{ ($fdate != '') ?$fdate: $date }}" class="form-control" />
+                  <input type="date" name="Fromdate" style="width: 170px;" value="{{ ($fdate != '') ?$fdate: date('Y-m-d') }}" class="form-control" />
 
                   <label>ถึงวันที่ : </label>
-                  <input type="date" name="Todate" style="width: 170px;" value="{{ ($tdate != '') ?$tdate: $date }}" class="form-control" />
+                  <input type="date" name="Todate" style="width: 170px;" value="{{ ($tdate != '') ?$tdate: date('Y-m-d') }}" class="form-control" />
 
                 </div>
               @endif

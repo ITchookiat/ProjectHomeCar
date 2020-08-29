@@ -12,6 +12,29 @@
                                 {{ session('status') }}
                             </div>
                         @endif
+                        <div class="row">
+                            <div class="col-6">
+                              <div class="form-inline">
+                                <h1 class="m-0 text-dark">Chookiat HomeCar</h1>
+                              </div>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn bg-danger btn-app float-right" data-toggle="modal" data-target="#modal-1" data-link="{{ route('datacar', 13) }}" data-backdrop="static" data-keyboard="false" style="border-radius: 10px;">
+                                    <span class="fas fa-balance-scale prem fa-5x"></span> <label class="prem">เทียบราคา</label>
+                                </a>
+                            </div>
+                        </div>
+                        {{-- <div class="row mb-0">
+                            <div class="col-sm-6">
+                              <h1 class="m-0 text-dark">LAB Leasing</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <a class="btn bg-danger btn-app float-right" data-toggle="modal" data-target="#modal-1" data-link="{{ route('datacar', 13) }}" data-backdrop="static" data-keyboard="false" style="border-radius: 10px;">
+                                    <span class="fas fa-balance-scale prem fa-5x"></span> <label class="prem">เทียบราคา</label>
+                                </a>
+                            </div>
+                        </div> --}}
+
                         <div align="center">
                             <img class="img-responsive" src="{{ asset('dist/img/homecar.png') }}" alt="User Image" style = "width: 40%">
                         </div>
@@ -103,5 +126,36 @@
         </div>
 
     </div>
+
+    <div class="modal fade" id="modal-1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-body">
+              <p>One fine body…</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <script>
+        function blinker() {
+        $('.prem').fadeOut(1500);
+        $('.prem').fadeIn(1500);
+        }
+        setInterval(blinker, 1500);
+    </script>
+
+     {{-- Popup --}}
+  <script>
+    $(function () {
+      $("#modal-1").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-1 .modal-body").load(link, function(){
+        });
+      });
+    });
+  </script>
 
 @endsection

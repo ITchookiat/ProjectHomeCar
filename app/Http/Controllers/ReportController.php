@@ -64,6 +64,11 @@ class ReportController extends Controller
        $title = 'สต๊อกบัญชี';
       }
       elseif ($request->type == 4) {  //รายงาน วันหมดอายุบัตร
+        if ($request->get('Fromdate') or $request->get('Todate') != NULL){
+          $fdate = \Carbon\Carbon::parse($fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($fdate)->format('m')."-". \Carbon\Carbon::parse($fdate)->format('d');
+          $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
+        }
+        
         $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
@@ -73,25 +78,37 @@ class ReportController extends Controller
                       ->where('data_cars.Car_type','<>',6)
                       ->orderBy('check_documents.Date_NumberUser', 'ASC')
                       ->get();
-         // dd($data);
-         $title = 'วันหมดอายุบัตร';
+
+        $fdate = $request->get('Fromdate');
+        $tdate = $request->get('Todate');
+        $title = 'วันหมดอายุบัตร';
       }
       elseif ($request->type == 5) {  //รายงาน รถยึด
+        if ($request->get('Fromdate') or $request->get('Todate') != NULL){
+          $fdate = \Carbon\Carbon::parse($fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($fdate)->format('m')."-". \Carbon\Carbon::parse($fdate)->format('d');
+          $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
+        }
+
         $data = DB::table('data_cars')
-                   ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                   ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                          return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
-                          })
-                    // ->when(!empty($originType), function($q) use($originType){
-                    //   return $q->where('data_cars.Origin_Car',$originType);
-                    // })
-                   ->where('data_cars.Origin_Car','=',3)
-                   ->where('data_cars.Car_type','<>',6)
-                   ->orderBy('data_cars.create_date', 'ASC')
-                   ->get();
-         $title = 'รถยึด / CKL';
+            ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+            ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+                  return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+                  })
+            ->where('data_cars.Origin_Car','=',3)
+            ->where('data_cars.Car_type','<>',6)
+            ->orderBy('data_cars.create_date', 'ASC')
+            ->get();
+
+        $fdate = $request->get('Fromdate');
+        $tdate = $request->get('Todate');
+        $title = 'รถยึด / CKL';
       }
       elseif ($request->type == 6) {  //รายงาน ยอดทุนรถต่อคัน
+        if ($request->get('Fromdate') or $request->get('Todate') != NULL){
+          $fdate = \Carbon\Carbon::parse($fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($fdate)->format('m')."-". \Carbon\Carbon::parse($fdate)->format('d');
+          $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
+        }
+
         $data = DB::table('data_cars')
                   ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                   ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
@@ -101,7 +118,10 @@ class ReportController extends Controller
                   ->where('data_cars.Name_Buyer','!=',"โมบายฝ่ายกฎหมาย")
                   ->orderBy('data_cars.Date_Soldout_plus', 'ASC')
                   ->get();
-         $title = 'ยอดทุนรถต่อคัน';
+
+        $fdate = $request->get('Fromdate');
+        $tdate = $request->get('Todate');
+        $title = 'ยอดทุนรถต่อคัน';
       }
       elseif ($request->type == 7) {  //Report Sold Car
         $data = DB::table('data_cars')

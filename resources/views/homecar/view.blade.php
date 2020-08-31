@@ -288,7 +288,7 @@
                         <th class="text-center" style="width: 100px">ประเภท</th>
                         <th class="text-center" style="width: 150px">หมายเหตุ</th>
 
-                        <th style="width: 80px"></th>
+                        <th style="width: 120px"></th>
                       </tr>
                     </thead>
                     <tbody>

@@ -225,7 +225,8 @@ class DatacarController extends Controller
         return view('homecar.view', compact('data','title','type','fdate','tdate','carType'));
     }
 
-    public function SearchData(Request $request, $type){
+    public function SearchData(Request $request, $type)
+    {
       if ($type == 1) {
         $NameBrandcar = $request->get('select');
   
@@ -827,7 +828,7 @@ class DatacarController extends Controller
             $user->Date_Status = $date;
           
             $hold = Holdcar::where('holdcars.Number_Regist', $request->get('Number_Regist'))->first();
-            // dd($hold);
+            // dd($hold );
 
             if($hold != NULL){
                 $hold->StatSold_Homecar = 'Y';

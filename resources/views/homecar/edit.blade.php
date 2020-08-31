@@ -756,7 +756,7 @@
                           <div class="form-group row mb-1">
                             <label class="col-sm-3 col-form-label text-right">หมายเหตุ :</label>
                             <div class="col-sm-8">
-                              <textarea type="text" name="NoteBorrow" class="form-control form-control-sm" rows="4" placeholder="ป้อนหมายเหตุ">{{ $datacar->Note_Borrow }}</textarea>
+                              <textarea type="text" name="CheckNote" class="form-control form-control-sm" rows="4" placeholder="ป้อนหมายเหตุ">{{ $datacar->Check_Note }}</textarea>
                             </div>
                           </div>
                         </div>

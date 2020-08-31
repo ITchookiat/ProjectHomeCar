@@ -827,13 +827,13 @@ class DatacarController extends Controller
             $user->Date_Soldout = $date;
             $user->Date_Status = $date;
           
-            $hold = Holdcar::where('holdcars.Number_Regist', $request->get('Number_Regist'))->first();
-            // dd($hold );
+            // $hold = Holdcar::where('holdcars.Number_Regist', $request->get('Number_Regist'))->first();
+            // // dd($hold );
 
-            if($hold != NULL){
-                $hold->StatSold_Homecar = 'Y';
-                $hold->update();
-            }
+            // if($hold != NULL){
+            //     $hold->StatSold_Homecar = 'Y';
+            //     $hold->update();
+            // }
           }
         }
         $user->Car_type = $request->get('Cartype');

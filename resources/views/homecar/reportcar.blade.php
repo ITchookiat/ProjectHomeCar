@@ -435,7 +435,8 @@
               <td align="center" width="65px"><b>{{number_format(@$SumNetprice,2)}}&nbsp;</b></td>
               <td align="center" width="70px"><b>{{number_format(@$SumVatprice,2)}}&nbsp;</b></td>
               <td align="center" width="70px"><b>{{number_format(@$SumProfitprice,2)}}&nbsp;</b></td>
-              <td align="center" width="150px"></td>
+              <td align="center" width="50px"><b>{{number_format(($SumProfitprice/$SumPayprice)*100, 2)}}</b></td>
+              <td align="center" width="100px"></td>
             </tr>
           </tbody>
         @endif

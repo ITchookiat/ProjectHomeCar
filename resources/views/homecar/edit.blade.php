@@ -456,7 +456,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาคาดว่าจะขาย</font> :</label>
                               <div class="col-sm-8">
-                                <input type="text" id="NetCar" name="NetCar" class="form-control form-control-sm" value="{{number_format($datacar->Net_Price, 2)}}" oninput="sum();" required/>
+                                <input type="text" id="Expected_Sell" name="Expected_Sell" class="form-control form-control-sm" value="{{number_format($datacar->Expected_Sell, 2)}}" oninput="sum();" required/>
                               </div>
                             </div>
                           </div>
@@ -470,6 +470,17 @@
                               <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาปิดประมูล</font> :</label>
                               <div class="col-sm-8">
                                 <input type="text" id="Close_auction" name="Close_auction" class="form-control form-control-sm" value="{{number_format($datacar->Close_auction,2)}}" oninput="sum();" required/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาขาย</font> :</label>
+                              <div class="col-sm-8">
+                                <input type="text" id="NetCar" name="NetCar" class="form-control form-control-sm" value="{{number_format($datacar->Net_Price, 2)}}" oninput="sum();" required/>
                               </div>
                             </div>
                           </div>
@@ -515,6 +526,8 @@
                               var num8 = num88.replace(",","");
                               var num99 = document.getElementById('Close_auction').value;
                               var num9 = num99.replace(",","");
+                              var num10 = document.getElementById('Expected_Sell').value;
+                              var num10 = num10.replace(",","");
                               var result = parseFloat(num11)+parseFloat(num22)+parseFloat(num33)+parseFloat(num44)+parseFloat(num55);
                               
                               document.form1.PriceCar.value = addCommas(num11);
@@ -526,6 +539,7 @@
                               document.form1.AccountingCost.value = addCommas(num77);
                               document.form1.Open_auction.value = addCommas(num8);
                               document.form1.Close_auction.value = addCommas(num9);
+                              document.form1.Expected_Sell.value = addCommas(num10);
 
                               if(!isNaN(result)){
                                 var final_result = parseFloat(result);

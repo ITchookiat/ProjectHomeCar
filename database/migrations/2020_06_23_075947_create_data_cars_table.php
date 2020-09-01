@@ -36,7 +36,7 @@ class CreateDataCarsTable extends Migration
             $table->string('Year_Product')->nullable();
             $table->string('Number_Regist')->nullable();
             $table->string('Name_Sale')->nullable();
-            $table->string('Net_Price')->nullable();
+            $table->string('Net_Price')->nullable();        //ราคาขาย
             $table->string('Repair_Price')->nullable();
             $table->string('Fisrt_Price')->nullable();
             $table->string('Color_Price')->nullable();
@@ -45,7 +45,7 @@ class CreateDataCarsTable extends Migration
             $table->string('Add_Price')->nullable();
             $table->string('Date_Soldout_plus')->nullable();
             $table->string('Date_Withdraw')->nullable();
-            $table->string('Net_Priceplus')->nullable();
+            $table->string('Net_Priceplus')->nullable();    //ราคาขายจริง
             $table->string('Amount_Price')->nullable();
             $table->string('Name_Saleplus')->nullable();
             $table->string('Type_Sale')->nullable();
@@ -69,7 +69,8 @@ class CreateDataCarsTable extends Migration
             $table->string('DateStatus_Car')->nullable();      //วันที่สถานะจอง
             //ข้อมูลประมูลรถ
             $table->string('Open_auction')->nullable();        //เปิดประมูล
-            $table->string('Close_auction')->nullable();      //ปิดประมูล
+            $table->string('Close_auction')->nullable();       //ปิดประมูล
+            $table->string('Expected_Sell')->nullable();       //ราคาคาดว่าจะขาย
             
             $table->timestamps();
           });

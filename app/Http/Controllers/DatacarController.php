@@ -735,8 +735,16 @@ class DatacarController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $SetRepairStr = str_replace (",","",$request->get('RepairCar'));
-      $SetNetStr = str_replace (",","",$request->get('NetCar'));
+      if($request->get('RepairCar') != Null){
+        $SetRepairStr = str_replace (",","",$request->get('RepairCar'));
+      }else{
+        $SetRepairStr = Null;
+      }
+      if($request->get('NetCar') != Null){
+        $SetNetStr = str_replace (",","",$request->get('NetCar'));
+      }else{
+        $SetNetStr = Null;
+      }
       if($request->get('PriceCar') != Null){
         $SetPriceStr = str_replace (",","",$request->get('PriceCar'));
       }else{
@@ -776,6 +784,11 @@ class DatacarController extends Controller
         $SetClose_auction = str_replace (",","",$request->get('Close_auction'));
       }else{
         $SetClose_auction = Null;
+      }
+      if($request->get('Expected_Sell') != Null){
+        $SetExpected_Sell = str_replace (",","",$request->get('Expected_Sell'));
+      }else{
+        $SetExpected_Sell = Null;
       }
 
       $user = data_car::find($id);
@@ -826,20 +839,16 @@ class DatacarController extends Controller
           }elseif ($request->get('Cartype') == 6) {
             $user->Date_Soldout = $date;
             $user->Date_Status = $date;
-          
-            // $hold = Holdcar::where('holdcars.Number_Regist', $request->get('Number_Regist'))->first();
-            // // dd($hold );
-
-            // if($hold != NULL){
-            //     $hold->StatSold_Homecar = 'Y';
-            //     $hold->update();
-            // }
+          }elseif ($request->get('Cartype') == 7) {
+            $user->Date_Soldout = $date;
+            $user->Date_Status = $date;
           }
         }
         $user->Car_type = $request->get('Cartype');
         $user->BookStatus_Car = $request->get('BookStatus');
         $user->Open_auction = $SetOpen_auction;
         $user->Close_auction = $SetClose_auction;
+        $user->Expected_Sell = $SetExpected_Sell;
       $user->update();
 
       $checkeditDoc = checkDocument::where('Datacar_id',$id)->first();

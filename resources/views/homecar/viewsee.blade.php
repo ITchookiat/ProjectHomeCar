@@ -593,14 +593,16 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-6">
-                    <div class="form-group row mb-0">
-                      <label class="col-sm-4 col-form-label text-right"><font color="red">ราคาเปิดประมูล</font> :</label>
-                      <div class="col-sm-8">
-                          <input type="text" name="Open_auction" class="form-control form-control-sm" placeholder="ยังไม่มีการป้อน" value="{{number_format($datacar->Open_auction, 2)}}" readonly />
+                  @if($datacar->Car_type == '7')
+                    <div class="col-6">
+                      <div class="form-group row mb-0">
+                        <label class="col-sm-4 col-form-label text-right"><font color="red">ราคาเปิดประมูล</font> :</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="Open_auction" class="form-control form-control-sm" placeholder="ยังไม่มีการป้อน" value="{{number_format($datacar->Open_auction, 2)}}" readonly />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  @endif
                 </div>
 
                 <div class="row">
@@ -608,19 +610,28 @@
                     <div class="form-group row mb-0">
                       <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาคาดว่าจะขาย</font> :</label>
                       <div class="col-sm-8">
-                        @if($datacar->Net_Price == '' OR $datacar->Net_Price == Null )
-                          <input type="text" name="NetCar" class="form-control form-control-sm" placeholder="ยังไม่มีการป้อน" value="" readonly />
-                        @else
-                          <input type="text" name="NetCar" class="form-control form-control-sm" placeholder="ยังไม่มีการป้อน" value="{{number_format($datacar->Net_Price, 2)}}" readonly />
-                        @endif
+                        <input type="text" name="Expected_Sell" class="form-control form-control-sm" placeholder="ยังไม่มีการป้อน" value="{{ ($datacar->Expected_Sell !== NULL) ? $datacar->Expected_Sell : number_format($datacar->Expected_Sell, 2) }}" readonly />
                       </div>
                     </div>
                   </div>
+                  @if($datacar->Car_type == '7')
+                    <div class="col-6">
+                      <div class="form-group row mb-0">
+                        <label class="col-sm-4 col-form-label text-right"><font color="red">ราคาปิดประมูล</font> :</label>
+                        <div class="col-sm-8">
+                          <input type="text" name="Close_auction" class="form-control form-control-sm" placeholder="ยังไม่มีการป้อน" value="{{number_format($datacar->Close_auction, 2)}}" readonly />
+                        </div>
+                      </div>
+                    </div>
+                  @endif
+                </div>
+
+                <div class="row">
                   <div class="col-6">
-                    <div class="form-group row mb-0">
-                      <label class="col-sm-4 col-form-label text-right"><font color="red">ราคาปิดประมูล</font> :</label>
+                    <div class="form-group row mb-1">
+                      <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาขาย</font> :</label>
                       <div class="col-sm-8">
-                        <input type="text" name="Close_auction" class="form-control form-control-sm" placeholder="ยังไม่มีการป้อน" value="{{number_format($datacar->Close_auction, 2)}}" readonly />
+                        <input type="text" id="NetCar" name="NetCar" class="form-control form-control-sm" value="{{number_format($datacar->Net_Price, 2)}}" oninput="sum();" readonly/>
                       </div>
                     </div>
                   </div>

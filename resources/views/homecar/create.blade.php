@@ -388,10 +388,10 @@
                             document.form1.PriceCar.value = addCommas(num3);
                           }
                         </script>
-                        @if(auth::user()->type == 1 or auth::user()->type == 3)
+                        @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
                           <div class="col-6">
                             <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right"><font color="red">*</font> ราคาซื้อ :</label>
+                              <label class="col-sm-3 col-form-label text-right"><font color="red">* ราคาซื้อ</font> :</label>
                               <div class="col-sm-8">
                                 <input type="text" id="PriceCar" name="PriceCar" class="form-control form-control-sm" placeholder="ป้อนราคาซื้อ" oninput="mile();" maxlength="10"/>
                               </div>

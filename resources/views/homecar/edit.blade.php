@@ -22,143 +22,143 @@
     $date3 = $Y.'-'.'01'.'-'.'01';
   @endphp
 
-<style>
-  #todo-list{
-  width:100%;
-  margin:0 auto 190px auto;
-  padding:5px;
-  background:white;
-  position:relative;
-  /*box-shadow*/
-  -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
-        box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
-  /*border-radius*/
-  -webkit-border-radius:5px;
-  -moz-border-radius:5px;
-        border-radius:5px;}
-  #todo-list:before{
-  content:"";
-  position:absolute;
-  z-index:-1;
-  /*box-shadow*/
-  -webkit-box-shadow:0 0 20px rgba(0,0,0,0.4);
-  -moz-box-shadow:0 0 20px rgba(0,0,0,0.4);
-        box-shadow:0 0 20px rgba(0,0,0,0.4);
-  top:50%;
-  bottom:0;
-  left:10px;
-  right:10px;
-  /*border-radius*/
-  -webkit-border-radius:100px / 10px;
-  -moz-border-radius:100px / 10px;
-        border-radius:100px / 10px;
-  }
-  .todo-wrap{
-  display:block;
-  position:relative;
-  padding-left:35px;
-  /*box-shadow*/
-  -webkit-box-shadow:0 2px 0 -1px #ebebeb;
-  -moz-box-shadow:0 2px 0 -1px #ebebeb;
-        box-shadow:0 2px 0 -1px #ebebeb;
-  }
-  .todo-wrap:last-of-type{
-  /*box-shadow*/
-  -webkit-box-shadow:none;
-  -moz-box-shadow:none;
-        box-shadow:none;
-  }
-  input[type="checkbox"]{
-  position:absolute;
-  height:0;
-  width:0;
-  opacity:0;
-  /* top:-600px; */
-  }
-  .todo{
-  display:inline-block;
-  font-weight:200;
-  padding:10px 5px;
-  height:37px;
-  position:relative;
-  }
-  .todo:before{
-  content:'';
-  display:block;
-  position:absolute;
-  top:calc(50% + 10px);
-  left:0;
-  width:0%;
-  height:1px;
-  background:#cd4400;
-  /*transition*/
-  -webkit-transition:.25s ease-in-out;
-  -moz-transition:.25s ease-in-out;
-    -o-transition:.25s ease-in-out;
-        transition:.25s ease-in-out;
-  }
-  .todo:after{
-  content:'';
-  display:block;
-  position:absolute;
-  z-index:0;
-  height:18px;
-  width:18px;
-  top:9px;
-  left:-25px;
-  /*box-shadow*/
-  -webkit-box-shadow:inset 0 0 0 2px #d8d8d8;
-  -moz-box-shadow:inset 0 0 0 2px #d8d8d8;
-        box-shadow:inset 0 0 0 2px #d8d8d8;
-  /*transition*/
-  -webkit-transition:.25s ease-in-out;
-  -moz-transition:.25s ease-in-out;
-    -o-transition:.25s ease-in-out;
-        transition:.25s ease-in-out;
-  /*border-radius*/
-  -webkit-border-radius:4px;
-  -moz-border-radius:4px;
-        border-radius:4px;
-  }
-  .todo:hover:after{
-  /*box-shadow*/
-  -webkit-box-shadow:inset 0 0 0 2px #949494;
-  -moz-box-shadow:inset 0 0 0 2px #949494;
-        box-shadow:inset 0 0 0 2px #949494;
-  }
-  .todo .fa-check{
-  position:absolute;
-  z-index:1;
-  left:-31px;
-  top:0;
-  font-size:1px;
-  line-height:36px;
-  width:36px;
-  height:36px;
-  text-align:center;
-  color:transparent;
-  text-shadow:1px 1px 0 white, -1px -1px 0 white;
-  }
-  :checked + .todo{
-  color:#717171;
-  }
-  :checked + .todo:before{
-  width:100%;
-  }
-  :checked + .todo:after{
-  /*box-shadow*/
-  -webkit-box-shadow:inset 0 0 0 2px #0eb0b7;
-  -moz-box-shadow:inset 0 0 0 2px #0eb0b7;
-        box-shadow:inset 0 0 0 2px #0eb0b7;
-  }
-  :checked + .todo .fa-check{
-  font-size:20px;
-  line-height:35px;
-  color:#0eb0b7;
-  }
+  <style>
+    #todo-list{
+    width:100%;
+    margin:0 auto 190px auto;
+    padding:5px;
+    background:white;
+    position:relative;
+    /*box-shadow*/
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+          box-shadow:0 1px 4px rgba(0, 0, 0, 0.3);
+    /*border-radius*/
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+          border-radius:5px;}
+    #todo-list:before{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    /*box-shadow*/
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.4);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.4);
+          box-shadow:0 0 20px rgba(0,0,0,0.4);
+    top:50%;
+    bottom:0;
+    left:10px;
+    right:10px;
+    /*border-radius*/
+    -webkit-border-radius:100px / 10px;
+    -moz-border-radius:100px / 10px;
+          border-radius:100px / 10px;
+    }
+    .todo-wrap{
+    display:block;
+    position:relative;
+    padding-left:35px;
+    /*box-shadow*/
+    -webkit-box-shadow:0 2px 0 -1px #ebebeb;
+    -moz-box-shadow:0 2px 0 -1px #ebebeb;
+          box-shadow:0 2px 0 -1px #ebebeb;
+    }
+    .todo-wrap:last-of-type{
+    /*box-shadow*/
+    -webkit-box-shadow:none;
+    -moz-box-shadow:none;
+          box-shadow:none;
+    }
+    input[type="checkbox"]{
+    position:absolute;
+    height:0;
+    width:0;
+    opacity:0;
+    /* top:-600px; */
+    }
+    .todo{
+    display:inline-block;
+    font-weight:200;
+    padding:10px 5px;
+    height:37px;
+    position:relative;
+    }
+    .todo:before{
+    content:'';
+    display:block;
+    position:absolute;
+    top:calc(50% + 10px);
+    left:0;
+    width:0%;
+    height:1px;
+    background:#cd4400;
+    /*transition*/
+    -webkit-transition:.25s ease-in-out;
+    -moz-transition:.25s ease-in-out;
+      -o-transition:.25s ease-in-out;
+          transition:.25s ease-in-out;
+    }
+    .todo:after{
+    content:'';
+    display:block;
+    position:absolute;
+    z-index:0;
+    height:18px;
+    width:18px;
+    top:9px;
+    left:-25px;
+    /*box-shadow*/
+    -webkit-box-shadow:inset 0 0 0 2px #d8d8d8;
+    -moz-box-shadow:inset 0 0 0 2px #d8d8d8;
+          box-shadow:inset 0 0 0 2px #d8d8d8;
+    /*transition*/
+    -webkit-transition:.25s ease-in-out;
+    -moz-transition:.25s ease-in-out;
+      -o-transition:.25s ease-in-out;
+          transition:.25s ease-in-out;
+    /*border-radius*/
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+          border-radius:4px;
+    }
+    .todo:hover:after{
+    /*box-shadow*/
+    -webkit-box-shadow:inset 0 0 0 2px #949494;
+    -moz-box-shadow:inset 0 0 0 2px #949494;
+          box-shadow:inset 0 0 0 2px #949494;
+    }
+    .todo .fa-check{
+    position:absolute;
+    z-index:1;
+    left:-31px;
+    top:0;
+    font-size:1px;
+    line-height:36px;
+    width:36px;
+    height:36px;
+    text-align:center;
+    color:transparent;
+    text-shadow:1px 1px 0 white, -1px -1px 0 white;
+    }
+    :checked + .todo{
+    color:#717171;
+    }
+    :checked + .todo:before{
+    width:100%;
+    }
+    :checked + .todo:after{
+    /*box-shadow*/
+    -webkit-box-shadow:inset 0 0 0 2px #0eb0b7;
+    -moz-box-shadow:inset 0 0 0 2px #0eb0b7;
+          box-shadow:inset 0 0 0 2px #0eb0b7;
+    }
+    :checked + .todo .fa-check{
+    font-size:20px;
+    line-height:35px;
+    color:#0eb0b7;
+    }
 
-</style>
+  </style>
 
     <!-- Main content -->
     <section class="content">
@@ -366,124 +366,6 @@
                               </div>
                             </div>
                           </div>
-                          <div class="col-6">
-                            <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right">ต้นทุนยอดจัด :</label>
-                              <div class="col-sm-8">
-                                @if($datacar->Accounting_Cost == null)
-                                  <input type="text" id="AccountingCost" name="AccountingCost" class="form-control form-control-sm" placeholder="ต้นทุนยอดจัด" value="" oninput="sum();" maxlength="10"/>
-                                @else
-                                  <input type="text" id="AccountingCost" name="AccountingCost" class="form-control form-control-sm" placeholder="ต้นทุนยอดจัด" value="{{$datacar->Accounting_Cost}}" oninput="sum();" maxlength="10"/>
-                                @endif
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-  
-                        <div class="row">
-                          <script>
-                            function addCommas(nStr){
-                              nStr += '';
-                              x = nStr.split('.');
-                              x1 = x[0];
-                              x2 = x.length > 1 ? '.' + x[1] : '';
-                              var rgx = /(\d+)(\d{3})/;
-                              while (rgx.test(x1)) {
-                              x1 = x1.replace(rgx, '$1' + ',' + '$2');
-                              }
-                              return x1 + x2;
-                            }
-  
-                            function mile(){
-                              var num11 = document.getElementById('MilesCar').value;
-                              var num1 = num11.replace(",","");
-                              document.form1.MilesCar.value = addCommas(num1);
-  
-                              var num22 = document.getElementById('AccountingCost').value;
-                              var num2 = num22.replace(",","");
-                              document.form1.AccountingCost.value = addCommas(num2);
-  
-                              var num44 = document.getElementById('OfferPrice').value;
-                              var num4 = num44.replace(",","");
-                              document.form1.OfferPrice.value = addCommas(num4);
-  
-                              var num33 = document.getElementById('PriceCar').value;
-                              var num3 = num33.replace(",","");
-                              document.form1.PriceCar.value = addCommas(num3);
-                            }
-                          </script>
-
-                          <script>
-                            $('#Cartype').change(function(){
-                              var value = document.getElementById('Cartype').value;
-                              if(value == '7'){
-                                $('#show1').show();
-                                $('#show2').show();
-                              }else{
-                                $('#show1').hide();
-                                $('#show2').hide();
-                              }
-                            });
-                          </script>
-
-                          @if(auth::user()->type == 1 or auth::user()->type == 3)
-                            <div class="col-6">
-                              <div class="form-group row mb-1">
-                                <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาซื้อ</font> :</label>
-                                <div class="col-sm-8">
-                                  <input type="text" id="PriceCar" name="PriceCar" class="form-control form-control-sm" value="{{number_format($datacar->Fisrt_Price,2)}}" oninput="sum();" maxlength="10" required/>
-                                </div>
-                              </div>
-                            </div>
-                          @endif
-
-                          @if($datacar->Car_type == "7")
-                            <div div class="col-6" id="show1">
-                          @else
-                            <div div class="col-6" id="show1" style="display:none;">
-                          @endif
-                            <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาเปิดประมูล</font> :</label>
-                              <div class="col-sm-8">
-                                <input type="text" id="Open_auction" name="Open_auction" class="form-control form-control-sm" value="{{number_format($datacar->Open_auction,2)}}" oninput="sum();" required/>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-6">
-                            <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาคาดว่าจะขาย</font> :</label>
-                              <div class="col-sm-8">
-                                <input type="text" id="Expected_Sell" name="Expected_Sell" class="form-control form-control-sm" value="{{number_format($datacar->Expected_Sell, 2)}}" oninput="sum();" required/>
-                              </div>
-                            </div>
-                          </div>
-
-                          @if($datacar->Car_type == "7")
-                            <div div class="col-6" id="show2">
-                          @else
-                            <div div class="col-6" id="show2" style="display:none;">
-                          @endif
-                            <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาปิดประมูล</font> :</label>
-                              <div class="col-sm-8">
-                                <input type="text" id="Close_auction" name="Close_auction" class="form-control form-control-sm" value="{{number_format($datacar->Close_auction,2)}}" oninput="sum();" required/>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-6">
-                            <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาขาย</font> :</label>
-                              <div class="col-sm-8">
-                                <input type="text" id="NetCar" name="NetCar" class="form-control form-control-sm" value="{{number_format($datacar->Net_Price, 2)}}" oninput="sum();" required/>
-                              </div>
-                            </div>
-                          </div>
                         </div>
 
                         <hr>
@@ -549,6 +431,119 @@
                           }
                         </script>
 
+                        <script>
+                          function addCommas(nStr){
+                            nStr += '';
+                            x = nStr.split('.');
+                            x1 = x[0];
+                            x2 = x.length > 1 ? '.' + x[1] : '';
+                            var rgx = /(\d+)(\d{3})/;
+                            while (rgx.test(x1)) {
+                            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                            }
+                            return x1 + x2;
+                          }
+
+                          function mile(){
+                            var num11 = document.getElementById('MilesCar').value;
+                            var num1 = num11.replace(",","");
+                            document.form1.MilesCar.value = addCommas(num1);
+
+                            var num22 = document.getElementById('AccountingCost').value;
+                            var num2 = num22.replace(",","");
+                            document.form1.AccountingCost.value = addCommas(num2);
+
+                            var num44 = document.getElementById('OfferPrice').value;
+                            var num4 = num44.replace(",","");
+                            document.form1.OfferPrice.value = addCommas(num4);
+
+                            var num33 = document.getElementById('PriceCar').value;
+                            var num3 = num33.replace(",","");
+                            document.form1.PriceCar.value = addCommas(num3);
+                          }
+                        </script>
+
+                        <script>
+                          $('#Cartype').change(function(){
+                            var value = document.getElementById('Cartype').value;
+                            if(value == '7'){
+                              $('#show1').show();
+                              $('#show2').show();
+                            }else{
+                              $('#show1').hide();
+                              $('#show2').hide();
+                            }
+                          });
+                        </script>
+
+                        @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
+                          <div class="row">
+                            <div class="col-6">
+                              <div class="form-group row mb-1">
+                                <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาซื้อ</font> :</label>
+                                <div class="col-sm-8">
+                                  <input type="text" id="PriceCar" name="PriceCar" class="form-control form-control-sm" value="{{number_format($datacar->Fisrt_Price,2)}}" oninput="sum();" maxlength="10" required/>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-group row mb-1">
+                                <label class="col-sm-3 col-form-label text-right">ราคาต้นทุน :</label>
+                                <div class="col-sm-8">
+                                  <input type="text" id="CapitalPrice" name="CapitalPrice" class="form-control form-control-sm" value="{{number_format($datacar->Fisrt_Price+$datacar->Repair_Price+$datacar->Offer_Price+$datacar->Color_Price+$datacar->Add_Price,2)}}" placeholder="ราคาต้นทุน"  readonly />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        @endif
+
+                        <div class="row">
+                          @if($datacar->Car_type == "7")
+                            <div div class="col-6" id="show1">
+                          @else
+                            <div div class="col-6" id="show1" style="display:none;">
+                          @endif
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาเปิดประมูล</font> :</label>
+                              <div class="col-sm-8">
+                                <input type="text" id="Open_auction" name="Open_auction" class="form-control form-control-sm" value="{{number_format($datacar->Open_auction,2)}}" oninput="sum();" required/>
+                              </div>
+                            </div>
+                          </div>
+
+                          @if($datacar->Car_type == "7")
+                            <div div class="col-6" id="show2">
+                          @else
+                            <div div class="col-6" id="show2" style="display:none;">
+                          @endif
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาปิดประมูล</font> :</label>
+                              <div class="col-sm-8">
+                                <input type="text" id="Close_auction" name="Close_auction" class="form-control form-control-sm" value="{{number_format($datacar->Close_auction,2)}}" oninput="sum();" required/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาคาดว่าจะขาย</font> :</label>
+                              <div class="col-sm-8">
+                                <input type="text" id="Expected_Sell" name="Expected_Sell" class="form-control form-control-sm" value="{{number_format($datacar->Expected_Sell, 2)}}" oninput="sum();" required/>
+                              </div>
+                            </div>
+                          </div>           
+                          <div class="col-6">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาขาย</font> :</label>
+                              <div class="col-sm-8">
+                                <input type="text" id="NetCar" name="NetCar" class="form-control form-control-sm" value="{{number_format($datacar->Net_Price, 2)}}" oninput="sum();" required/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
                         <div class="row">
                           <div class="col-6">
                             <div class="form-group row mb-1">
@@ -560,9 +555,13 @@
                           </div>
                           <div class="col-6">
                             <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right">ราคาต้นทุน :</label>
+                              <label class="col-sm-3 col-form-label text-right">ต้นทุนยอดจัด :</label>
                               <div class="col-sm-8">
-                                <input type="text" id="CapitalPrice" name="CapitalPrice" class="form-control form-control-sm" value="{{number_format($datacar->Fisrt_Price+$datacar->Repair_Price+$datacar->Offer_Price+$datacar->Color_Price+$datacar->Add_Price,2)}}" placeholder="ราคาต้นทุน"  readonly />
+                                @if($datacar->Accounting_Cost == null)
+                                  <input type="text" id="AccountingCost" name="AccountingCost" class="form-control form-control-sm" placeholder="ต้นทุนยอดจัด" value="" oninput="sum();" maxlength="10"/>
+                                @else
+                                  <input type="text" id="AccountingCost" name="AccountingCost" class="form-control form-control-sm" placeholder="ต้นทุนยอดจัด" value="{{$datacar->Accounting_Cost}}" oninput="sum();" maxlength="10"/>
+                                @endif
                               </div>
                             </div>
                           </div>

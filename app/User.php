@@ -16,8 +16,9 @@ class User extends Authenticatable
      * @var array
      */
     // protected $connection = 'sqlsrv2';
+    protected $table = 'users';
     protected $fillable = [
-        'name', 'email', 'password',
+        'name','username', 'email', 'password_token', 'password', 'branch', 'type','position',
     ];
 
     /**

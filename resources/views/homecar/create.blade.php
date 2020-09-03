@@ -508,6 +508,7 @@
             <input type="hidden" id="mySelect1" class="form-control form-control-sm" name="DateNumberUserHidden" >
             <input type="hidden" id="mySelect2" class="form-control form-control-sm" name="DateExpireHidden" >
             <input type="hidden" name="Cartype" value="{{ $type }}" class="form-control"/>         
+            <input type="hidden" name="type" value="1" class="form-control"/>         
           </div>
 
           <input type="hidden" name="_token" value="{{csrf_token()}}" />

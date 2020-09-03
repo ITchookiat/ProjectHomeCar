@@ -172,6 +172,24 @@
                   </li>  
                 </ul>
               </li>
+
+              <li class="nav-item has-treeview {{ Request::is('datacar/view/33') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/33') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link">
+                  <i class="far fa-window-restore text-red nav-icon"></i>
+                  <p>
+                     Mechanic Car
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview" style="margin-left: 15px;">
+                  <li class="nav-item">
+                    <a href="{{ route('datacar',33) }}" class="nav-link {{ Request::is('datacar/view/33') ? 'active' : '' }} {{ Request::is('datacar/edit/*/33') ? 'active' : '' }}">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>รถยนต์รอซ่อม</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </li>
 

@@ -13,6 +13,7 @@ use App\data_car;
 use App\Holdcar;
 use App\checkDocument;
 use App\UploadfileImage;
+use App\repair_part;
 
 class DatacarController extends Controller
 {
@@ -81,7 +82,7 @@ class DatacarController extends Controller
                       ->get();
           $title = 'รถยนต์ระหว่างทำสี';
         }
-        elseif ($request->type == 3) {          //รถยนต์รอซ่อม
+        elseif ($request->type == 3 or $request->type == 33) {          //รถยนต์รอซ่อม
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
@@ -449,83 +450,97 @@ class DatacarController extends Controller
      */
     public function store(Request $request)
     {
-      if($request->get('PriceCar') != Null){
-        $SetPriceStr = str_replace (",","",$request->get('PriceCar'));
-      }else{
-        $SetPriceStr = Null;
+      if($request->type == 1){
+        if($request->get('PriceCar') != Null){
+          $SetPriceStr = str_replace (",","",$request->get('PriceCar'));
+        }else{
+          $SetPriceStr = Null;
+        }
+
+        if ($request->get('OfferPrice') != Null) {
+          $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
+        }else{
+          $SetOfferStr = Null;
+        }
+
+        $SetDateCar = str_replace ("/","-",$request->get('DateCar'));
+        $dateConvert0 = date_create($SetDateCar);
+        $DateCar = date_format($dateConvert0, 'Y-m-d');
+        if($request->get('AccountingCost') != Null){
+          $SetAccountingCost = str_replace (",","",$request->get('AccountingCost'));
+        }else{
+          $SetAccountingCost = Null;
+        }
+
+        $datacardb = new data_car([
+          'create_date' => $DateCar,
+          'Fisrt_Price' => $SetPriceStr,
+          'Offer_Price' => $SetOfferStr,
+          'Brand_Car' => $request->get('BrandCar'),
+          'Number_Tank' => $request->get('Number_Tank'),
+          'Version_Car' => $request->get('VersionCar'),
+          'Number_Machine' => $request->get('Number_Machine'),
+          'Model_Car' => $request->get('ModelCar'),
+          'Number_Miles' => $request->get('MilesCar'),
+          'Color_Car' => $request->get('ColorCar'),
+          'Gearcar' => $request->get('Gearcar'),
+          'Year_Product' => $request->get('YearCar'),
+          'Size_Car' => $request->get('SizeCar'),
+          'Number_Regist' => $request->get('Number_Regist'),
+          'Job_Number' => $request->get('JobCar'),
+          'Name_Sale' => $request->get('SaleCar'),
+          'Origin_Car' => $request->get('OriginCar'),
+          'Car_type' => $request->get('Cartype'),
+          'Date_Status' => $DateCar,
+          'Accounting_Cost' => $SetAccountingCost,
+        ]);
+        $datacardb->save();
+
+        if ($request->get('DateNumberUser') != "") {
+          $SetDateNumberUser = $request->get('DateNumberUser');
+        }elseif ($request->get('DateNumberUserHidden') != "") {
+          $SetDateNumberUser = $request->get('DateNumberUserHidden');
+        }
+        else {
+          $SetDateNumberUser = null;
+        }
+        if ($request->get('DateExpire') != "") {
+          $SetDateExpire = $request->get('DateExpire');
+        }elseif ($request->get('DateExpireHidden') != "") {
+          $SetDateExpire = $request->get('DateExpireHidden');
+        }
+        else {
+          $SetDateExpire = null;
+        }
+        $checkDoc = new checkDocument([
+          'Datacar_id' => $datacardb->id,
+          'Contracts_Car' => $request->get('ContractsCar'),
+          'Manual_Car' => $request->get('ManualCar'),
+          'Act_Car' => $request->get('ActCar'),
+          'Insurance_Car' => $request->get('InsuranceCar'),
+          'Key_Reserve' => $request->get('KeyReserve'),
+          'Expire_Tax' => $request->get('ExpireTax'),
+          'Date_NumberUser' => $SetDateNumberUser,
+          'Date_Expire' => $SetDateExpire,
+          'Check_Note' => $request->get('CheckNote'),
+        ]);
+        $checkDoc->save();
+        
+        $type = 1;
+        return redirect()->Route('datacar',$type)->with('success','บันทึกข้อมูลเรียบร้อย');
+      }elseif($request->type == 2){
+        $repairdb = new repair_part([
+          'Datacar_id' => $request->get('Datacarid'),
+          'Repair_date' => date('Y-m-d'),
+          'Repair_list' => $request->get('RepairList'),
+          'Repair_amount' => $request->get('RepairAmount'),
+          'Repair_price' => $request->get('RepairPrice'),
+          'Repair_useradd' => $request->get('Nameuser'),
+        ]);
+        $repairdb->save();
+        return redirect()->back()->with('success','เพิ่มข้อมูลเรียบร้อย');
       }
 
-      if ($request->get('OfferPrice') != Null) {
-         $SetOfferStr = str_replace (",","",$request->get('OfferPrice'));
-      }else{
-         $SetOfferStr = Null;
-      }
-
-      $SetDateCar = str_replace ("/","-",$request->get('DateCar'));
-      $dateConvert0 = date_create($SetDateCar);
-      $DateCar = date_format($dateConvert0, 'Y-m-d');
-      if($request->get('AccountingCost') != Null){
-        $SetAccountingCost = str_replace (",","",$request->get('AccountingCost'));
-      }else{
-        $SetAccountingCost = Null;
-      }
-
-      $datacardb = new data_car([
-        'create_date' => $DateCar,
-        'Fisrt_Price' => $SetPriceStr,
-        'Offer_Price' => $SetOfferStr,
-        'Brand_Car' => $request->get('BrandCar'),
-        'Number_Tank' => $request->get('Number_Tank'),
-        'Version_Car' => $request->get('VersionCar'),
-        'Number_Machine' => $request->get('Number_Machine'),
-        'Model_Car' => $request->get('ModelCar'),
-        'Number_Miles' => $request->get('MilesCar'),
-        'Color_Car' => $request->get('ColorCar'),
-        'Gearcar' => $request->get('Gearcar'),
-        'Year_Product' => $request->get('YearCar'),
-        'Size_Car' => $request->get('SizeCar'),
-        'Number_Regist' => $request->get('Number_Regist'),
-        'Job_Number' => $request->get('JobCar'),
-        'Name_Sale' => $request->get('SaleCar'),
-        'Origin_Car' => $request->get('OriginCar'),
-        'Car_type' => $request->get('Cartype'),
-        'Date_Status' => $DateCar,
-        'Accounting_Cost' => $SetAccountingCost,
-      ]);
-      $datacardb->save();
-
-      if ($request->get('DateNumberUser') != "") {
-        $SetDateNumberUser = $request->get('DateNumberUser');
-      }elseif ($request->get('DateNumberUserHidden') != "") {
-        $SetDateNumberUser = $request->get('DateNumberUserHidden');
-      }
-      else {
-        $SetDateNumberUser = null;
-      }
-      if ($request->get('DateExpire') != "") {
-        $SetDateExpire = $request->get('DateExpire');
-      }elseif ($request->get('DateExpireHidden') != "") {
-        $SetDateExpire = $request->get('DateExpireHidden');
-      }
-      else {
-        $SetDateExpire = null;
-      }
-      $checkDoc = new checkDocument([
-        'Datacar_id' => $datacardb->id,
-        'Contracts_Car' => $request->get('ContractsCar'),
-        'Manual_Car' => $request->get('ManualCar'),
-        'Act_Car' => $request->get('ActCar'),
-        'Insurance_Car' => $request->get('InsuranceCar'),
-        'Key_Reserve' => $request->get('KeyReserve'),
-        'Expire_Tax' => $request->get('ExpireTax'),
-        'Date_NumberUser' => $SetDateNumberUser,
-        'Date_Expire' => $SetDateExpire,
-        'Check_Note' => $request->get('CheckNote'),
-      ]);
-      $checkDoc->save();
-      
-      $type = 1;
-      return redirect()->Route('datacar',$type)->with('success','บันทึกข้อมูลเรียบร้อย');
     }
 
     /**
@@ -573,9 +588,24 @@ class DatacarController extends Controller
       * @param  int  $id
       * @return \Illuminate\Http\Response
       */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        //
+      if($request->type == 1){
+        $data = DB::table('repair_parts')->where('Datacar_id',$id)->get();
+        $plate = $request->plate;
+        $SetTopic = "WalkinPDFReport ".date('Y-m-d');
+        $view = \View::make('homecar.receiptRepair' ,compact('data','type','plate'));
+        $html = $view->render();
+        $pdf = new PDF();
+        $pdf::SetTitle('รายการซ่อมรถยนต์');
+        $pdf::AddPage('L', 'A5');
+        $pdf::SetMargins(15, 5, 15);
+        $pdf::SetFont('thsarabunpsk', '', 16, '', true);
+        $pdf::SetAutoPageBreak(TRUE, 21);
+        $pdf::WriteHTML($html,true,false,true,false,'');
+        $pdf::Output($SetTopic.'.pdf');
+
+      }
     }
 
     /**
@@ -655,9 +685,14 @@ class DatacarController extends Controller
       ];
 
       $setcarType = $car_type;
-      if ($car_type == 6) {
+      if($car_type == 6) {
         return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus','dataImage'));
-      }else {
+      }
+      elseif($car_type == 33){
+        $dataRepair = DB::table('repair_parts')->where('Datacar_id',$id)->get();
+        return view('homecar.editRepair',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage','dataRepair'));
+      }
+      else {
         return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage'));
       }
     }
@@ -959,12 +994,17 @@ class DatacarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-      $item = data_car::find($id);
-      $item2 = checkDocument::where('Datacar_id',$id);
-      $item->Delete();
-      $item2->Delete();
+      if($request->type == 1){ //ลบรายการรถยนต์
+        $item = data_car::find($id);
+        $item2 = checkDocument::where('Datacar_id',$id);
+        $item->Delete();
+        $item2->Delete();
+      }elseif($request->type == 2){ //ลบรายการซ่อม
+        $item = repair_part::find($id);
+        $item->Delete();
+      }
 
       return redirect()->back()->with('success','ลบข้อมูลเรียบร้อย');
     }

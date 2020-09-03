@@ -229,9 +229,9 @@
                             <div class="col-sm-8">
                               <span class="todo-wrap">
                                 @if($datacar->BookStatus_Car == 'จอง')
-                                  <input type="checkbox" id="1" name="BookStatus" value="{{$datacar->BookStatus_Car}}" checked="checked"/>
+                                  <input type="checkbox" id="7" name="BookStatus" value="{{$datacar->BookStatus_Car}}" checked="checked"/>
                                 @else
-                                  <input type="checkbox" id="1" name="BookStatus" value="จอง" />
+                                  <input type="checkbox" id="7" name="BookStatus" value="จอง" />
                                 @endif
                                 <label for="1" class="todo">
                                   <i class="fa fa-check"></i>

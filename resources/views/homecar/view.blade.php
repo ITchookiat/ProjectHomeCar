@@ -361,25 +361,35 @@
                           </td>
 
                           <td class="text-right">
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default" title="ดูรายการ"
-                              data-link="{{ action('DatacarController@viewsee',[$row->Datacar_id,$row->Car_type]) }}">
-                              <i class="far fa-eye"></i>
-                            </button>
-                            @if($type != 6)
+                            @if($type != 33)
+                              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default" title="ดูรายการ"
+                                data-link="{{ action('DatacarController@viewsee',[$row->Datacar_id,$row->Car_type]) }}">
+                                <i class="far fa-eye"></i>
+                              </button>
+                            @endif
+                            @if($type != 6 and $type != 33)
                               <a href="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
                               <i class="far fa-edit"></i> 
                               </a>
-                            @elseif ($type == 6)
+                            @endif
+                            @if ($type == 6)
                               <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-buyinfo"
                                 data-link="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}">
                                 <i class="fas fa-file-invoice-dollar"></i> ข้อมูลขาย
                               </button>
                             @endif
 
+                            @if ($type == 33)
+                              <a href="{{ action('DatacarController@edit',[$row->Datacar_id,33]) }}" class="btn btn-primary btn-sm" title="เพิ่มรายการซ่อม">
+                                <i class="far fa-edit"></i> การซ่อม
+                              </a>
+                            @endif
+
                             @if($type == 1)
                               <form method="post" class="delete_form" action="{{ action('DatacarController@destroy',$row->Datacar_id) }}" style="display:inline;">
                                 {{csrf_field()}}
                                 <input type="hidden" name="_method" value="DELETE" />
+                                <input type="hidden" name="type" value="1" />
                                 <button type="submit" class="delete-modal btn btn-danger btn-sm" title="ลบรายการ" onclick="return confirm('คุณต้องการลบข้อมูลนี้หรือไม่?')">
                                   <i class="far fa-trash-alt"></i>
                                 </button>

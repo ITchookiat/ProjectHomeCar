@@ -233,7 +233,7 @@
                                 @else
                                   <input type="checkbox" id="7" name="BookStatus" value="จอง" />
                                 @endif
-                                <label for="1" class="todo">
+                                <label for="7" class="todo">
                                   <i class="fa fa-check"></i>
                                   <font color="blue">รถยนต์ติดจอง</font>
                                 </label>

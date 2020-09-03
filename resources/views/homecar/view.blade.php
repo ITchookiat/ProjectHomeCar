@@ -53,8 +53,10 @@
                         </button>
                         <ul class="dropdown-menu" role="menu">
                           <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}">รายงาน สำหรับพนักงาน</a></li>
-                          <li class="divider"></li>
-                          <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-report" data-backdrop="static" data-keyboard="false">รายงาน สำหรับผู้บริหาร</a></li>
+                          @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
+                            <li class="divider"></li>
+                            <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-report" data-backdrop="static" data-keyboard="false">รายงาน สำหรับผู้บริหาร</a></li>
+                          @endif
                         </ul>
                       </div>
                     @elseif($type == 6)

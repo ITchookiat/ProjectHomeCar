@@ -18,6 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function(){
+    //----------------Admin register-----------------//
+    route::resource('MasterMaindata','UserController');
+
     route::resource('MasterDatacar','DatacarController');
     Route::get('/ExportPDF', 'DatacarController@ReportPDF');
     Route::get('/ExportPDFIndex', 'DatacarController@ReportPDFIndex');

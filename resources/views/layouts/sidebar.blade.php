@@ -34,8 +34,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          @if(auth::user()->type == 1)
-            <li class="nav-item has-treeview {{ Request::is('maindata/view*') ? 'menu-open' : '' }}">
+          @if(auth::user()->type == "Admin")
+            <li class="nav-item has-treeview {{ Request::is('MasterMaindata') ? 'menu-open' : '' }}">
               <a href="#" class="nav-link active">
                 <i class="nav-icon fas fa-window-restore"></i>
                 <p>
@@ -45,7 +45,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="#" class="nav-link active">
+                  <a href="{{ route('MasterMaindata.index') }}" class="nav-link active">
                     <i class="far fa-id-badge text-red nav-icon"></i>
                     <p>ข้อมูลผู้ใช้งานระบบ</p>
                   </a>
@@ -63,7 +63,7 @@
               </p>
             </a>
 
-            @if(auth::user()->type == 1)
+            @if(auth::user()->type == "Admin")
               <ul class="nav nav-treeview">
                 <li class="nav-item has-treeview {{ Request::is('BoardMaster/view/1') ? 'menu-open' : '' }}">
                   <a href="#" class="nav-link">
@@ -183,32 +183,34 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview" style="margin-left: 15px;">
-              <li class="nav-item">
-                <a href="{{ route('reportcar',3) }}" class="nav-link {{ Request::is('reportcar/viewreport/3') ? 'active' : '' }}">
-                  <i class="far fa-dot-circle nav-icon"></i>
-                  <p>รายงาน สต๊อกบัญชี</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('reportcar',4) }}" class="nav-link {{ Request::is('reportcar/viewreport/4') ? 'active' : '' }}">
-                  <i class="far fa-dot-circle nav-icon"></i>
-                  <p>รายงาน วันหมดอายุบัตร</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('reportcar',5) }}" class="nav-link {{ Request::is('reportcar/viewreport/5') ? 'active' : '' }}">
-                  <i class="far fa-dot-circle nav-icon"></i>
-                  <p>รายงาน รถยึด / CKL</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('reportcar',6) }}" class="nav-link {{ Request::is('reportcar/viewreport/6') ? 'active' : '' }}">
-                  <i class="far fa-dot-circle nav-icon"></i>
-                  <p>รายงาน ยอดต้นทุนรถ</p>
-                </a>
-              </li>
-            </ul>
+            @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
+              <ul class="nav nav-treeview" style="margin-left: 15px;">
+                <li class="nav-item">
+                  <a href="{{ route('reportcar',3) }}" class="nav-link {{ Request::is('reportcar/viewreport/3') ? 'active' : '' }}">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>รายงาน สต๊อกบัญชี</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('reportcar',4) }}" class="nav-link {{ Request::is('reportcar/viewreport/4') ? 'active' : '' }}">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>รายงาน วันหมดอายุบัตร</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('reportcar',5) }}" class="nav-link {{ Request::is('reportcar/viewreport/5') ? 'active' : '' }}">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>รายงาน รถยึด / CKL</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('reportcar',6) }}" class="nav-link {{ Request::is('reportcar/viewreport/6') ? 'active' : '' }}">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>รายงาน ยอดต้นทุนรถ</p>
+                  </a>
+                </li>
+              </ul>
+            @endif
           </li>
 
           <!-- <li class="nav-item has-treeview">

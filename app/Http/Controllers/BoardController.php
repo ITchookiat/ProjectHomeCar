@@ -28,9 +28,9 @@ class BoardController extends Controller
         $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
 
         if ($request->type == 1) {
-            if ($fdate == false or $tdate == false) {
+            if ($request->get('Fromdate') == NULL or $request->get('Todate') == NULL) {
                 $GetMoth = date('m');
-                $GetYear = date('Y');
+                $GetYear = date('Y')+543;
 
                 $data = DB::table('data_cars')
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
@@ -39,6 +39,7 @@ class BoardController extends Controller
                     ->where('data_cars.Car_type','=',6)
                     ->orderBy('data_cars.Date_Soldout_plus', 'DESC')
                     ->get();
+                
             }else {
                 $data = DB::table('data_cars')
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')

@@ -388,14 +388,16 @@
                             @endif
 
                             @if($type == 1)
-                              <form method="post" class="delete_form" action="{{ action('DatacarController@destroy',$row->Datacar_id) }}" style="display:inline;">
-                                {{csrf_field()}}
-                                <input type="hidden" name="_method" value="DELETE" />
-                                <input type="hidden" name="type" value="1" />
-                                <button type="submit" class="delete-modal btn btn-danger btn-sm" title="ลบรายการ" onclick="return confirm('คุณต้องการลบข้อมูลนี้หรือไม่?')">
-                                  <i class="far fa-trash-alt"></i>
-                                </button>
-                              </form>
+                              @if(auth::user()->position != "STAFF")
+                                <form method="post" class="delete_form" action="{{ action('DatacarController@destroy',$row->Datacar_id) }}" style="display:inline;">
+                                  {{csrf_field()}}
+                                  <input type="hidden" name="_method" value="DELETE" />
+                                  <input type="hidden" name="type" value="1" />
+                                  <button type="submit" data-name="{{ $row->Number_Regist }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
+                                    <i class="far fa-trash-alt"></i>
+                                  </button>
+                                </form>
+                              @endif
                             @endif
                           </td>
                         </tr>
@@ -448,7 +450,6 @@
               <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-11">
-                  <!-- checkbox -->
                   <div class="form-group clearfix">
                     <div class="icheck-primary d-inline">
                       <input type="checkbox" name="originType[]" id="checkboxPrimary1" value="1">
@@ -484,14 +485,11 @@
             </div>
             <input type="hidden" name="id" value="1">
             <div class="text-center">
-              <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
               <button type="submit" class="btn btn-primary">ปริ้นรายงาน</button>
             </div>
             <br>
           </div>
-          <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
       </div>
     </form>
   @endif
@@ -569,30 +567,13 @@
     });
   </script>
 
-<script type="text/javascript">
-    $("#close").click(function () {
-      $("#modal-report").modal('hide');
-      var Datepay = ''
-      $('#Fromdate').val(Datepay);
-      $('#Todate').val(Datepay);
-    });
-</script>
-
-<script>
-  $(function () {
-    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-      event.preventDefault();
-      $(this).ekkoLightbox({
-        alwaysShowClose: true
+  <script type="text/javascript">
+      $("#close").click(function () {
+        $("#modal-report").modal('hide');
+        var Datepay = ''
+        $('#Fromdate').val(Datepay);
+        $('#Todate').val(Datepay);
       });
-    });
-
-    $('.filter-container').filterizr({gutterPixels: 3});
-    $('.btn[data-filter]').on('click', function() {
-      $('.btn[data-filter]').removeClass('active');
-      $(this).addClass('active');
-    });
-  })
-</script>
+  </script>
 
 @endsection

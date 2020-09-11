@@ -30,7 +30,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/datacar/store', 'DatacarController@store')->name('datacar.store');
     Route::post('/datacar/report', 'DatacarController@ReportPDFManager')->name('datacar.report');
     Route::get('/datacar/edit/{id}/{car_type}', 'DatacarController@edit')->name('datacar.edit');
-    Route::patch('/datacar/update/{id}', 'DatacarController@update')->name('datacar.update');
     Route::patch('/datacar/updateinfo/{id}', 'DatacarController@updateinfo')->name('datacar.updateinfo');
     Route::delete('/datacar/delete/{id}', 'DatacarController@destroy')->name('datacar.destroy');
     Route::get('/datacar/Savestore/{Str1}/{Str2}/{type}', 'DatacarController@Savestore')->name('datacar.Savestore');

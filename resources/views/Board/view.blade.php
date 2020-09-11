@@ -60,65 +60,129 @@
             </div>
 
             <div class="row">
-              <div class="col-md-12">
-                  <div class="info-box bg-orange">
-                    <span class="info-box-icon bg-warning"><i class="fas fa-user-check"></i></span>
-                    <div class="info-box-content">
-                      <h5>เซลล์  {{ $Sale }}</h5>
-                      @php
-                        $Setfdate = date_create($fdate);
-                        $Settdate = date_create($tdate);
-                      @endphp
-                      <span class="info-box-number">ประจำวันที่ {{ date_format($Setfdate, 'd-m-Y') }} &nbsp;&nbsp; ถึงวันที่ {{ date_format($Settdate, 'd-m-Y') }}</span>
-                    </div>
-                    <div class="info-box-content">
-                      <h5>รวม :</h5>
-                      <input type="text" name="SumCom" style="text-align:right;" class="form-control" value="{{ number_format($SumCom,2) }}"/>
-                    </div>
+              <div class="col-md-6">
+                <div class="info-box bg-orange">
+                  <span class="info-box-icon bg-warning"><i class="fas fa-user-check"></i></span>
+                  <div class="info-box-content">
+                    <h5>เซลล์  {{ $Sale }}</h5>
+                    @php
+                      $Setfdate = date_create($fdate);
+                      $Settdate = date_create($tdate);
+                    @endphp
+                    <span class="info-box-number">วันที่ {{ date_format($Setfdate, 'd-m-Y') }} &nbsp; ถึงวันที่ {{ date_format($Settdate, 'd-m-Y') }}</span>
                   </div>
+                  <div class="info-box-content">
+                    <h5>รวม :</h5>
+                    <input type="text" name="SumCom" style="text-align:right;" class="form-control" value="{{ number_format($SumCom,2) }}"/>
+                  </div>
+                </div>
                 <div class="table-responsive">
                   <table class="table table-striped table-valign-middle" id="table1">
                     @if($type == 1)
-                    <thead>
-                      <tr>
-                        <th class="text-center">วันที่ขาย</th>
-                        <th class="text-left">เลขทะเบียน</th>
-                        <th class="text-right">ราคาขาย</th>
-                        <th class="text-right">ค่าคอม</th>
-                        <th class="text-center">ที่มา</th>
-                        <th class="text-center">Sale</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($data as $row)
+                      <thead>
                         <tr>
-                          <td class="text-center">
-                            @php
-                              $Date_Soldout_plus = date_create($row->Date_Soldout_plus);
-                            @endphp
-                            {{ date_format($Date_Soldout_plus, 'd-m-Y')}}
-                          </td>
-                          <td class="text-left">{{$row->Number_Regist}}</td>
-                          <td class="text-right">{{number_format($row->Net_Priceplus, 2) }}</td>
-                          <td class="text-right">3,000.00</td>
-                          <td class="text-center">
-                            @if($row->Origin_Car == 1)
-                              CKL
-                            @elseif ($row->Origin_Car  == 2)
-                              รถประมูล
-                            @elseif ($row->Origin_Car  == 3)
-                              รถยึด
-                            @elseif ($row->Origin_Car  == 4)
-                              ฝากขาย
-                            @endif
-                          </td>
-                          <td class="text-center">{{$row->Name_Saleplus}}</td>
+                          <th class="text-center">วันที่ขาย</th>
+                          <th class="text-left">เลขทะเบียน</th>
+                          <th class="text-right">ราคาขาย</th>
+                          <th class="text-right">ค่าคอม</th>
+                          <th class="text-center">ที่มา</th>
+                          <th class="text-center">Sale</th>
                         </tr>
-                      @endforeach
-                    </tbody>
-                  @endif
-
+                      </thead>
+                      <tbody>
+                        @foreach($data as $row)
+                          <tr>
+                            <td class="text-center">
+                              @php
+                                $Date_Soldout_plus = date_create($row->Date_Soldout_plus);
+                              @endphp
+                              {{ date_format($Date_Soldout_plus, 'd-m-Y')}}
+                            </td>
+                            <td class="text-left">{{$row->Number_Regist}}</td>
+                            <td class="text-right">{{number_format($row->Net_Priceplus, 2) }}</td>
+                            <td class="text-right">3,000.00</td>
+                            <td class="text-center">
+                              @if($row->Origin_Car == 1)
+                                CKL
+                              @elseif ($row->Origin_Car  == 2)
+                                รถประมูล
+                              @elseif ($row->Origin_Car  == 3)
+                                รถยึด
+                              @elseif ($row->Origin_Car  == 4)
+                                ฝากขาย
+                              @endif
+                            </td>
+                            <td class="text-center">{{$row->Name_Saleplus}}</td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    @endif
                   </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                {{-- <div class="card card-warning">
+                  <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-book-reader"></i> Goal Completion</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="progress-group">
+                      No.1 แบมะ (Manager)
+                      <span class="float-right"><b>160</b>/200</span>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-primary" style="width: 80%"></div>
+                      </div>
+                    </div>
+    
+                    <div class="progress-group">
+                      No.2 ลี (Sale)
+                      <span class="float-right"><b>310</b>/400</span>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-danger" style="width: 75%"></div>
+                      </div>
+                    </div>
+    
+                    <div class="progress-group">
+                      No.3 มัรวัน (Sale)
+                      <span class="float-right"><b>480</b>/800</span>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" style="width: 60%"></div>
+                      </div>
+                    </div>
+    
+                    <div class="progress-group">
+                      No.4 เตี๊ยก (Sale)
+                      <span class="float-right"><b>250</b>/500</span>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-warning" style="width: 50%"></div>
+                      </div>
+                    </div>
+
+                    <div class="progress-group">
+                      No.5 สา (Sale)
+                      <span class="float-right"><b>250</b>/500</span>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-pink" style="width: 50%"></div>
+                      </div>
+                    </div>
+
+                    <div class="progress-group">
+                      No.6 กวาง (Sale)
+                      <span class="float-right"><b>250</b>/500</span>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-orage" style="width: 50%"></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div> --}}
+                <div class="card card-warning">
+                  <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-book-reader"></i> Goal Completion</h3>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="horizontalBar"></canvas>
+                  </div>
                 </div>
               </div>
             </div>
@@ -128,111 +192,38 @@
         </div>
       </div>
     </section>
-
-  <form target="_blank" action="{{ route('report.holdcar') }}" method="post">
-    @csrf
-    <div class="modal fade" id="modal-report" aria-hidden="true" style="display: none;">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            @if($type == 3)
-            <h4 class="modal-title">รายงาน สต๊อกบัญชี</h4>
-            @elseif($type == 4)
-            <h4 class="modal-title">รายงาน วันหมดอายุบัตร</h4>
-            @elseif($type == 5)
-            <h4 class="modal-title">รายงาน รถยึด / CKL</h4>
-            @elseif($type == 6)
-            <h4 class="modal-title">รายงาน ยอดต้นทุนรถต่อคัน</h4>
-            @endif
-            <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group row mb-1">
-                  <label class="col-sm-4 col-form-label text-right">จากวันที่ : </label>
-                  <div class="col-sm-7">
-                  <input type="date" id="Fromdate" name="Fromdate" value="{{ ($fdate != '') ?$fdate: '' }}" class="form-control" />
-                  </div>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group row mb-1">
-                <label class="col-sm-4 col-form-label text-right">ถึงวันที่ : </label>
-                  <div class="col-sm-7">
-                    <input type="date" id="Todate" name="Todate" value="{{ ($tdate != '') ?$tdate: '' }}" class="form-control" />
-                  </div>
-                </div>
-              </div>
-            </div>
-              <br>
-              <div class="row">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-11">
-                  <!-- checkbox -->
-                  <div class="form-group clearfix">
-                    <div class="icheck-primary d-inline">
-                      <input type="checkbox" name="originType[]" id="checkboxPrimary1" value="1">
-                      <label for="checkboxPrimary1">
-                        รถ CKL
-                      </label>
-                    </div>
-                    &nbsp;
-                    <div class="icheck-primary d-inline">
-                      <input type="checkbox" name="originType[]" id="checkboxPrimary2" value="2">
-                      <label for="checkboxPrimary2">
-                        รถประมูล
-                      </label>
-                    </div>
-                    &nbsp;
-                    @if($type == 4 or $type == 6)
-                      <div class="icheck-primary d-inline">
-                        <input type="checkbox" name="originType[]" id="checkboxPrimary3" value="3">
-                        <label for="checkboxPrimary3">
-                          รถยึด
-                        </label>
-                      </div>
-                      &nbsp;
-                      <div class="icheck-primary d-inline">
-                        <input type="checkbox" name="originType[]" id="checkboxPrimary4" value="4">
-                        <label for="checkboxPrimary4">
-                          รถฝากขาย
-                        </label>
-                      </div>
-                    @else
-                      <div class="icheck-primary d-inline">
-                        <input type="checkbox" name="originType[]" id="checkboxPrimary3" value="3" disabled>
-                        <label for="checkboxPrimary3" style="color:#CCC">
-                          รถยึด
-                        </label>
-                      </div>
-                      &nbsp;
-                      <div class="icheck-primary d-inline">
-                        <input type="checkbox" name="originType[]" id="checkboxPrimary4" value="4" disabled>
-                        <label for="checkboxPrimary4" style="color:#CCC">
-                          รถฝากขาย
-                        </label>
-                      </div>
-                    @endif
-                  </div>
-                </div>
-              </div>
-          <hr>
-          </div>
-          <input type="hidden" name="id" value="{{$type}}">
-          <div class="text-center">
-            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-            <button type="submit" class="btn btn-primary">ปริ้นรายงาน</button>
-          </div>
-          <br>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-    </div>
-  </form>
+  
+  <script>
+    new Chart(document.getElementById("horizontalBar"), {
+        "type": "horizontalBar",
+        "data": {
+          "labels": ["แบมะ", "ลี", "มัรวัน", "เตี๊ยก", "สา", "กวาง"],
+          "datasets": [{
+          "label": "รวมยอดขาย",
+          "data": [{{$Num1}}, {{$Num2}}, {{$Num3}}, {{$Num4}}, {{$Num5}}, {{$Num6}}],
+          "fill": false,
+          "backgroundColor": [
+            "rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
+            "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"
+          ],
+          "borderColor": [
+            "rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
+            "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"
+          ],
+          "borderWidth": 1
+          }]
+        },
+        "options": {
+          "scales": {
+          "xAxes": [{
+            "ticks": {
+              "beginAtZero": true
+            }
+          }]
+          }
+        }
+    });
+  </script>
 
   {{-- button-to-top --}}
   <script>
@@ -261,44 +252,9 @@
         "ordering": false,
         "info": true,
         "autoWidth": false,
+        "pageLength": 5,
       });
     });
   </script>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('.delete_form').on('submit',function(){
-        if (confirm("คุณต้องการลบข้อมูลหรือไม่")) {
-          return true;
-        }
-        else {
-          return false;
-        }
-        });
-      });
-  </script>
-
-  <script>
-      $(".alert").fadeTo(3000, 500).slideUp(500, function(){
-      $(".alert").alert('close');
-      });;
-  </script>
-
-  <script>
-    function blinker() {
-      $('.prem').fadeOut(1000);
-      $('.prem').fadeIn(1000);
-    }
-    setInterval(blinker, 1000);
-  </script>
-
-<script type="text/javascript">
-    $("#close").click(function () {
-      $("#modal-report").modal('hide');
-      var Datepay = ''
-      $('#Fromdate').val(Datepay);
-      $('#Todate').val(Datepay);
-    });
-</script>
 
 @endsection

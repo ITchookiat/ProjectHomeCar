@@ -424,14 +424,11 @@
           </div>
           <input type="hidden" name="id" value="{{$type}}">
           <div class="text-center">
-            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
             <button type="submit" class="btn btn-primary">ปริ้นรายงาน</button>
           </div>
           <br>
         </div>
-        <!-- /.modal-content -->
       </div>
-      <!-- /.modal-dialog -->
     </div>
   </form>
 
@@ -466,25 +463,6 @@
     });
   </script>
 
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('.delete_form').on('submit',function(){
-        if (confirm("คุณต้องการลบข้อมูลหรือไม่")) {
-          return true;
-        }
-        else {
-          return false;
-        }
-        });
-      });
-  </script>
-
-  <script>
-      $(".alert").fadeTo(3000, 500).slideUp(500, function(){
-      $(".alert").alert('close');
-      });;
-  </script>
-
   <script>
     function blinker() {
       $('.prem').fadeOut(1000);
@@ -493,13 +471,13 @@
     setInterval(blinker, 1000);
   </script>
 
-<script type="text/javascript">
-    $("#close").click(function () {
-      $("#modal-report").modal('hide');
-      var Datepay = ''
-      $('#Fromdate').val(Datepay);
-      $('#Todate').val(Datepay);
-    });
-</script>
+  <script type="text/javascript">
+      $("#close").click(function () {
+        $("#modal-report").modal('hide');
+        var Datepay = ''
+        $('#Fromdate').val(Datepay);
+        $('#Todate').val(Datepay);
+      });
+  </script>
 
 @endsection

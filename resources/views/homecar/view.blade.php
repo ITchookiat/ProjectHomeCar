@@ -363,13 +363,13 @@
                           </td>
 
                           <td class="text-right">
-                            @if($type != 33)
+                            @if($type != 44)
                               <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default" title="ดูรายการ"
                                 data-link="{{ action('DatacarController@viewsee',[$row->Datacar_id,$row->Car_type]) }}">
                                 <i class="far fa-eye"></i>
                               </button>
                             @endif
-                            @if($type != 6 and $type != 33)
+                            @if($type != 6 and $type != 44)
                               <a href="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
                               <i class="far fa-edit"></i> 
                               </a>
@@ -381,8 +381,8 @@
                               </button>
                             @endif
 
-                            @if ($type == 33)
-                              <a href="{{ action('DatacarController@edit',[$row->Datacar_id,33]) }}" class="btn btn-primary btn-sm" title="เพิ่มรายการซ่อม">
+                            @if ($type == 44)
+                              <a href="{{ action('DatacarController@edit',[$row->Datacar_id,44]) }}" class="btn btn-primary btn-sm" title="เพิ่มรายการซ่อม">
                                 <i class="far fa-edit"></i> การซ่อม
                               </a>
                             @endif

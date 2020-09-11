@@ -82,7 +82,7 @@ class DatacarController extends Controller
                       ->get();
           $title = 'รถยนต์ระหว่างทำสี';
         }
-        elseif ($request->type == 3 or $request->type == 33) {          //รถยนต์รอซ่อม
+        elseif ($request->type == 3) {          //รถยนต์รอซ่อม
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
@@ -91,7 +91,7 @@ class DatacarController extends Controller
                       ->get();
           $title = 'รถยนต์รอซ่อม';
         }
-        elseif ($request->type == 4) {          //รถยนต์ระหว่างซ่อม
+        elseif ($request->type == 4 or $request->type == 44) {       //รถยนต์ระหว่างซ่อม //รายการซ่อม
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
@@ -592,9 +592,9 @@ class DatacarController extends Controller
     {
       if($request->type == 1){
         $data = DB::table('repair_parts')->where('Datacar_id',$id)->get();
-        $plate = $request->plate;
-        $SetTopic = "WalkinPDFReport ".date('Y-m-d');
-        $view = \View::make('homecar.receiptRepair' ,compact('data','type','plate'));
+        $datacar = DB::table('data_cars')->where('id',$id)->first();
+        $SetTopic = "Receiptrepair ".date('Y-m-d');
+        $view = \View::make('homecar.receiptRepair' ,compact('data','datacar','type','plate'));
         $html = $view->render();
         $pdf = new PDF();
         $pdf::SetTitle('รายการซ่อมรถยนต์');
@@ -688,7 +688,7 @@ class DatacarController extends Controller
       if($car_type == 6) {
         return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus','dataImage'));
       }
-      elseif($car_type == 33){
+      elseif($car_type == 44){
         $dataRepair = DB::table('repair_parts')->where('Datacar_id',$id)->get();
         return view('homecar.editRepair',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage','dataRepair'));
       }
@@ -841,6 +841,7 @@ class DatacarController extends Controller
         $user->Year_Product = $request->get('YearCar');
         $user->Size_Car = $request->get('SizeCar');
         $user->Number_Regist = $request->get('Number_Regist');
+        $user->Chassis_car = $request->get('ChassisCar');
         $user->Job_Number = $request->get('JobCar');
         $user->Accounting_Cost = $SetAccountingCost;
         $user->Name_Sale = $request->get('SaleCar');
@@ -946,6 +947,11 @@ class DatacarController extends Controller
       }
       elseif ($user->Car_type == '7') {
         $type = 14;
+      }elseif($request->type == '44'){
+        $type = 44;
+        $user->Repair_Price = $request->get('Totalprice');
+        $user->update();
+        return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');
       }else {
         $type = $user->Car_type;  //Get ค่าใหม่
       }

@@ -30,6 +30,7 @@ class CreateDataCarsTable extends Migration
             $table->string('Model_Car')->nullable();
             $table->string('Color_Car')->nullable();
             $table->string('Size_Car')->nullable();
+            $table->string('Chassis_car')->nullable(); //เลขตัวถัง
             $table->string('Job_Number')->nullable();
             $table->string('Number_Miles')->nullable();
             $table->string('Gearcar')->nullable();

@@ -184,12 +184,12 @@
                 </div>
                 <div class="col-8">
                   <div class="card-tools d-inline float-right">
-                    <!-- <button type="submit" class="delete-modal btn btn-success">
+                    <button type="submit" class="delete-modal btn btn-success">
                       <i class="fas fa-save"></i> อัพเดท
-                    </button> -->
-                    <button type="button" class="delete-modal btn btn-primary" data-toggle="modal" data-target="#modal-default">
-                      <i class="fas fa-gear"></i> เพิ่ม
                     </button>
+                    <!-- <button type="button" class="delete-modal btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                      <i class="fas fa-gear"></i> เพิ่ม
+                    </button> -->
                     <a class="delete-modal btn btn-danger" href="{{ route('datacar',33) }}">
                       <i class="far fa-window-close"></i> ยกเลิก
                     </a>
@@ -229,7 +229,7 @@
                           <div class="form-group row mb-1">
                             <label class="col-sm-5 col-form-label text-right">สถานะ:</label>
                             <div class="col-sm-7">
-                              <select name="Cartype" id="Cartype" class="form-control form-control-sm" readonly>
+                              <select name="Cartype" id="Cartype" class="form-control form-control-sm">
                                 @foreach ($arrayCarType as $key => $value)
                                   <option value="{{$key}}" {{ ($key == $datacar->Car_type) ? 'selected' : '' }}>{{$value}}</option>
                                 @endforeach
@@ -362,7 +362,16 @@
                               </div>
                             </div>
                           </div>
+                          <div class="col-6">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-5 col-form-label text-right">เลขตัวถัง :</label>
+                              <div class="col-sm-7">
+                                <input type="text" name="ChassisCar" class="form-control form-control-sm" value="{{$datacar->Chassis_car}}" />
+                              </div>
+                            </div>
+                          </div>
                         </div>  
+                    
                     </div>
                   </div>
                 </div>
@@ -372,11 +381,14 @@
                     <div class="card-header">
                       <h3 class="card-title"><i class="fas fa-tasks"></i> รายการที่ซ่อม</h3>
                       <div class="card-tools">
-                        <a target="_blank" class="btn btn-tool" href="{{ route('MasterDatacar.show',[$datacar->Datacar_id]) }}?type={{1}}&plate={{$datacar->Number_Regist}}"> 
+                        <button type="button" class="btn btn-tool" data-toggle="modal" data-target="#modal-default" title="เพิ่มรายการซ่อม">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <a target="_blank" class="btn btn-tool" href="{{ route('MasterDatacar.show',[$datacar->Datacar_id]) }}?type={{1}}" title="พิมพ์รายการซ่อม"> 
                           <i class="fas fas fa-print"></i>
                         </a>
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                        </button>
+                        <!-- <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button> -->
                         <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                         </button>
                       </div>
@@ -442,6 +454,8 @@
             </div>
 
             <input type="hidden" name="_method" value="PATCH"/>
+            <input type="hidden" name="type" value="44">
+            <input type="hidden" name="Totalprice" value="{{$Totalprice}}">
           </form>
           <a id="button"></a>
         </div>

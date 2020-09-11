@@ -366,6 +366,14 @@
                               </div>
                             </div>
                           </div>
+                          <div class="col-6">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-3 col-form-label text-right">เลขตัวถัง :</label>
+                              <div class="col-sm-8">
+                                <input type="text" name="ChassisCar" class="form-control form-control-sm" value="{{$datacar->Chassis_car}}" />
+                              </div>
+                            </div>
+                          </div>
                         </div>
 
                         <hr>

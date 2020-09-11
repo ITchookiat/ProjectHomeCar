@@ -941,7 +941,10 @@ class DatacarController extends Controller
           }
         }
       }
-      if ($user->Car_type == '7') {
+      if ($user->Car_type == '1') {
+        $type = 7;
+      }
+      elseif ($user->Car_type == '7') {
         $type = 14;
       }else {
         $type = $user->Car_type;  //Get ค่าใหม่

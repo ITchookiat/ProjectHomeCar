@@ -164,7 +164,7 @@
     <section class="content">
       <div class="content-header">
         <div class="card">
-          <form name="form1" method="post" action="{{ action('DatacarController@update',$id) }}" enctype="multipart/form-data">
+          <form name="form1" method="post" action="{{ route('MasterDatacar.update',$id) }}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="card-header">

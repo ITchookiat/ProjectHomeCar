@@ -26,7 +26,6 @@
   <link rel="stylesheet" href="{{ asset('plugins/ekko-lightbox/ekko-lightbox.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
 
-
   <style>
     /* Hide scrollbar for Chrome, Safari and Opera */
     body::-webkit-scrollbar {
@@ -79,6 +78,7 @@
     /* Styles for the content section */
   </style>
 
+  <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -96,6 +96,9 @@
   <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
   <script src="{{ asset('plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+  <script src="{{asset('js/sweetAlert.js')}}"></script>
 
   <script>
     $.widget.bridge('uibutton', $.ui.button)

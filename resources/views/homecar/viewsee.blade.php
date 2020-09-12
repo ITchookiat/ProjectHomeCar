@@ -755,6 +755,14 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-6">
+                    <div class="form-group row mb-0">
+                      <label class="col-sm-4 col-form-label text-right">เลขตัวถัง :</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control form-control-sm" placeholder="ยังไม่มีการป้อน" value="{{$datacar->Chassis_car}}" readonly />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
               </div>

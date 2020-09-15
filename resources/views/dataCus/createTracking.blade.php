@@ -14,7 +14,6 @@
       @csrf
       @method('put')
       <div class="card-body text-sm">
-
         <div class="row">
           <div class="col-6">
             <div class="form-group row mb-0">
@@ -58,23 +57,17 @@
             </div>
           </div>
         </div>
-
-        <br>        
-        <div class="row">
-          <div class="col-12">
-            <div class="card-tools d-inline float-right">
-              <button type="submit" class="delete-modal btn btn-success">
-                <i class="fas fa-save"></i> บันทึก
-              </button>
-              <a class="delete-modal btn btn-danger" href="{{ URL::previous() }}">
-                <i class="far fa-window-close"></i> ยกเลิก
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <input type="hidden" name="_method" value="PATCH"/>
       </div>
+      <div class="card-footer text-center">
+        <button type="submit" class="delete-modal btn btn-success">
+          <i class="fas fa-save"></i> บันทึก
+        </button>
+        <a class="delete-modal btn btn-danger" href="{{ URL::previous() }}">
+          <i class="far fa-window-close"></i> ยกเลิก
+        </a>
+      </div>
+
+      <input type="hidden" name="_method" value="PATCH"/>
     </form>
   </div>
 </section>

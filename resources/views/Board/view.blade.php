@@ -72,9 +72,20 @@
                     <span class="info-box-number">วันที่ {{ date_format($Setfdate, 'd-m-Y') }} &nbsp; ถึงวันที่ {{ date_format($Settdate, 'd-m-Y') }}</span>
                   </div>
                   <div class="info-box-content">
-                    <h5>รวม :</h5>
-                    <input type="text" name="SumCom" style="text-align:right;" class="form-control" value="{{ number_format($SumCom,2) }}"/>
+                    <h5>รวมยอด / ค่าเป้า :</h5>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group row mb-0">
+                        <div class="col-sm-6">
+                          <input type="text" name="SumCom" style="text-align:right;" class="form-control" value="{{ number_format($SumCom,2) }}"/>
+                        </div>
+                        <div class="col-sm-6">
+                          <input type="text" name="SumCom" style="text-align:right;" class="form-control" value="{{ number_format($SumBlow,2) }}"/>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                </div>
                 </div>
                 <div class="table-responsive">
                   <table class="table table-striped table-valign-middle" id="table1">

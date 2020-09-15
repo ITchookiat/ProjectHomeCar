@@ -54,6 +54,24 @@
             </li>
           @endif
 
+          <li class="nav-item has-treeview {{ Request::is('ResearchCus/view/*') ? 'menu-open' : '' }} {{ Request::is('MasterResearchCus/*/*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-luggage-cart"></i>
+              <p>
+                Stock Customer
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('ResearchCus', 1) }}" class="nav-link {{ Request::is('ResearchCus/view/*') ? 'active' : '' }} {{ Request::is('MasterResearchCus/*/*') ? 'active' : '' }}">
+                  <i class="far fa-window-restore text-red nav-icon"></i>
+                  <p>SC001</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <li class="nav-item has-treeview {{ Request::is('datacar/view*') ? 'menu-open' : '' }} {{ Request::is('datacar/create/*') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/*') ? 'menu-open' : '' }} {{ Request::is('BoardMaster/view/1') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <i class="nav-icon far fa-handshake"></i>
@@ -63,7 +81,7 @@
               </p>
             </a>
 
-            @if(auth::user()->type == "Admin")
+            @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก ผู้จัดการ")
               <ul class="nav nav-treeview">
                 <li class="nav-item has-treeview {{ Request::is('BoardMaster/view/1') ? 'menu-open' : '' }}">
                   <a href="#" class="nav-link">
@@ -230,24 +248,6 @@
               </ul>
             @endif
           </li>
-
-          <!-- <li class="nav-item has-treeview">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-luggage-cart"></i>
-              <p>
-                Research Customer
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('ResearchCus',1) }}" class="nav-link">
-                  <i class="far fa-window-restore text-red nav-icon"></i>
-                  <p>SC001</p>
-                </a>
-              </li>
-            </ul>
-          </li> -->
 
           <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">

@@ -55,10 +55,10 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-12 col-12">
-                                        <div class="card card-danger">
+                                    <div class="col-md-6 col-sm-6 col-12">
+                                        <div class="card card-info">
                                             <div class="card-header">
-                                                <h3 class="card-title">รายชื่อลูกค้า</h3>
+                                                <h3 class="card-title">รายชื่อลูกค้าติดตาม</h3>
                                                 <div class="card-tools">
                                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                                         <i class="fas fa-minus"></i>
@@ -73,39 +73,35 @@
                                                     <table class="table table-striped table-valign-middle" id="table1">
                                                         <thead>
                                                             <tr>
-                                                                <th class="text-left">No.</th>
-                                                                <th class="text-center">วันที่</th>
                                                                 <th class="text-center">ชื่อ-สกุล</th>
-                                                                <th class="text-left">สถานะ</th>
+                                                                <th class="text-center">วันที่</th>
                                                                 <th class="text-left">เลขทะเบียน</th>
+                                                                <th class="text-left">เซลล์</th>
                                                                 <th class="text-center" style="width: 70px"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach($data as $key => $row)
-                                                            <tr>
-                                                                <td class="text-left">{{$key+1}}</td>
-                                                                <td class="text-center">{{ date('d-m-Y', strtotime($row->DateSale_Cus)) }}</td>
-                                                                <td class="text-center">{{ $row->Name_Cus }}</td>
-                                                                <td class="text-left">
-                                                                    <button type="button" class="btn btn-warning btn-sm">
-                                                                        <i class="fas fa-bell"></i> {{ $row->Status_Cus }}</span>
-                                                                    </button>
-                                                                </td>
-                                                                <td class="text-left">{{ $row->RegistCar_Cus }}</td>
-                                                                <td class="text-right">
-                                                                    <a href="{{ action('ResearchCusController@edit',[$row->DataCus_id, 1]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
-                                                                        <i class="far fa-edit"></i>
-                                                                    </a>
-                                                                    <form method="post" class="delete_form" action="{{ action('ResearchCusController@destroy',[$row->DataCus_id, 1]) }}" style="display:inline;">
-                                                                        {{csrf_field()}}
-                                                                        <input type="hidden" name="_method" value="DELETE" />
-                                                                        <button type="submit" class="delete-modal btn btn-danger btn-sm" title="ลบรายการ">
-                                                                            <i class="far fa-trash-alt"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
+                                                            @if($row->Status_Cus == 'ติดตาม')
+                                                                <tr>
+                                                                    <td class="text-center">{{ $row->Name_Cus }}</td>
+                                                                    <td class="text-center">{{ date('d-m-Y', strtotime($row->DateSale_Cus)) }}</td>
+                                                                    <td class="text-left">{{ $row->RegistCar_Cus }}</td>
+                                                                    <td class="text-left">{{ $row->Sale_Cus }}</td>
+                                                                    <td class="text-right">
+                                                                        <a href="{{ route('MasterResearchCus.edit',[$row->DataCus_id]) }}?type={{1}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                                                            <i class="far fa-edit"></i>
+                                                                        </a>
+                                                                        <form method="post" class="delete_form" action="{{ route('MasterResearchCus.destroy',[$row->DataCus_id]) }}?type={{1}}" style="display:inline;">
+                                                                            {{csrf_field()}}
+                                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                                            <button type="submit" data-name="{{ $row->RegistCar_Cus }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
+                                                                                <i class="far fa-trash-alt"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
                                                             @endforeach
                                                         </tbody>
                                                     </table>
@@ -113,8 +109,64 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-5 col-6">
-                                        <div class="card">
+
+                                    <div class="col-md-6 col-sm-6 col-12">
+                                        <div class="card card-danger">
+                                            <div class="card-header">
+                                                <h3 class="card-title">รายชื่อลูกค้าจอง</h3>
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                                                        <i class="fas fa-expand"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-valign-middle" id="table2">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">ชื่อ-สกุล</th>
+                                                                <th class="text-center">วันที่</th>
+                                                                <th class="text-left">เลขทะเบียน</th>
+                                                                <th class="text-left">เซลล์</th>
+                                                                <th class="text-center" style="width: 70px"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($data as $key => $row)
+                                                            @if($row->Status_Cus == 'จอง')
+                                                                <tr>
+                                                                    <td class="text-center">{{ $row->Name_Cus }}</td>
+                                                                    <td class="text-center">{{ date('d-m-Y', strtotime($row->DateSale_Cus)) }}</td>
+                                                                    <td class="text-left">{{ $row->RegistCar_Cus }}</td>
+                                                                    <td class="text-left">{{ $row->Sale_Cus }}</td>
+                                                                    <td class="text-right">
+                                                                        <a href="{{ route('MasterResearchCus.edit',[$row->DataCus_id]) }}?type={{1}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                                                            <i class="far fa-edit"></i>
+                                                                        </a>
+                                                                        <form method="post" class="delete_form" action="{{ action('ResearchCusController@destroy',[$row->DataCus_id, 1]) }}" style="display:inline;">
+                                                                            {{csrf_field()}}
+                                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                                            <button type="submit" data-name="{{ $row->RegistCar_Cus }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
+                                                                                <i class="far fa-trash-alt"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{--
+                                    <div class="col-md-6 col-sm-6 col-12">
+                                        <div class="card ">
                                             <div class="card-header ui-sortable-handle" style="cursor: move;">
                                                 <h3 class="card-title">
                                                     <i class="fas fa-chart-pie mr-1"></i>
@@ -164,7 +216,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
+                                    --}}
                                 </div>
                             </div>
                             <a id="button"></a>
@@ -299,7 +352,7 @@
 
     <script>
         $(function () {
-        $("#table1").DataTable({
+        $("#table1,#table2").DataTable({
             "responsive": true,
             "autoWidth": false,
             "ordering": false,

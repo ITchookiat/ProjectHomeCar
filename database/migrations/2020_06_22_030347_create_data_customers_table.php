@@ -16,8 +16,9 @@ class CreateDataCustomersTable extends Migration
         // Schema::connection('sqlsrv2')->create('data_customers', function (Blueprint $table) {
         Schema::create('data_customers', function (Blueprint $table) {
             $table->bigIncrements('DataCus_id');
-            $table->string('Name_Cus')->nullable();     
-            $table->string('Phone_Cus')->nullable();    
+            $table->string('Name_Cus')->nullable();
+            $table->string('Phone_Cus')->nullable();  
+            $table->string('IDCard_Cus')->nullable();  
             $table->string('Address_Cus')->nullable();    
             $table->string('Province_Cus')->nullable();  
             $table->string('Zip_Cus')->nullable();    
@@ -40,6 +41,7 @@ class CreateDataCustomersTable extends Migration
             $table->string('GearCar_Cus')->nullable();         //เกียร์
             $table->string('YearCar_Cus')->nullable();         //ปี
             $table->string('PriceCar_Cus')->nullable();        //ราคารถ
+            $table->string('Note_Cus')->nullable();        //ราคารถ
             $table->timestamps();
         });
     }

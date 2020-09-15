@@ -41,12 +41,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/Report/homecar', 'ReportController@ReportStockcar')->name('report.holdcar');
     Route::get('/Report/Home/{type}', 'ReportController@index')->name('report');
 
+    route::resource('MasterResearchCus','ResearchCusController');
     Route::get('/ResearchCus/view/{type}', 'ResearchCusController@index')->name('ResearchCus');
-    Route::post('/ResearchCus/store/{type}', 'ResearchCusController@store')->name('ResearchCus.store');
-    Route::get('/ResearchCus/edit/{id}/{type}', 'ResearchCusController@edit')->name('ResearchCus.edit');
-    Route::patch('/ResearchCus/update/{id}/{type}', 'ResearchCusController@update')->name('ResearchCus.update');
     Route::post('/ResearchCus/SearchData/{type}', 'ResearchCusController@SearchData')->name('ResearchCus.SearchData');
-    Route::delete('/ResearchCus/delete/{id}/{type}', 'ResearchCusController@destroy')->name('ResearchCus.destroy');
     Route::get('/ResearchCus/ReportCus/{type}', 'ResearchCusController@ReportCustoms')->name('ResearchCus.ReportCus');
 
     Route::get('/BoardMaster/view/{type}', 'BoardController@index')->name('BoardMaster');

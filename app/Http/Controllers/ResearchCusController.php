@@ -31,7 +31,7 @@ class ResearchCusController extends Controller
             if ($request->has('Fromdate') == false and $request->has('Todate') == false) {
                 $data = DB::table('data_customers')
                         ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
-                        ->where('data_customers.Status_Cus','=', 'ติดตาม')
+                        // ->where('data_customers.Status_Cus','=', 'ติดตาม')
                         ->orderBy('data_customers.DataCus_id', 'ASC')
                         ->get();
             }
@@ -43,6 +43,7 @@ class ResearchCusController extends Controller
                         })
                         ->orderBy('data_customers.DataCus_id', 'ASC')
                         ->get();
+                        dd($data);
             }
 
                 $dataTrack = DB::table('tracking_cuses')
@@ -56,7 +57,8 @@ class ResearchCusController extends Controller
             $data = DB::table('data_cars')
                     ->where('data_cars.car_type','<>',6)
                     ->where('data_cars.F_DataCus_id','=', NULL)
-                    ->orderBy('data_cars.create_date', 'ASC')
+                    ->where('data_cars.BookStatus_Car','=', NULL)
+                    ->orderBy('data_cars.Number_Regist', 'ASC')
                     ->get();
 
             $type = $request->type;
@@ -86,50 +88,52 @@ class ResearchCusController extends Controller
                 ->get();
 
                 foreach($data as $row){
-                    $output ='<div class="row">
+                    if ($GetRegis != 'NULL') {
+                        $output ='<div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group row mb-0">
+                                        <label class="col-sm-3 col-form-label text-right">ยี่ห้อ : </label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="BrandCar" class="form-control" style="height:30px;" value="'.$row->Brand_Car.'" readonly/>
+                                                <input type="hidden" name="RegistCar" value="'.$row->Number_Regist.'"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group row mb-0">
+                                        <label class="col-sm-3 col-form-label text-right">รุ่น/สี : </label>
+                                            <div class="col-sm-4">
+                                                <input type="text" name="VersionCar" class="form-control" style="height:30px;" value="'.$row->Version_Car.'" readonly/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input type="text" name="ColorCar" class="form-control" style="height:30px;" value="'.$row->Color_Car.'" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+
+                        $output.='<div class="row">
                                 <div class="col-6">
                                     <div class="form-group row mb-0">
-                                    <label class="col-sm-3 col-form-label text-right">ยี่ห้อ : </label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="BrandCar" class="form-control" style="height:30px;" value="'.$row->Brand_Car.'" readonly/>
-                                            <input type="hidden" name="RegistCar" value="'.$row->Number_Regist.'"/>
+                                    <label class="col-sm-3 col-form-label text-right">เกียร์/ปี : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" name="GearCar" class="form-control" style="height:30px;"value="'.$row->Gearcar.'" readonly/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" name="YearCar" class="form-control" style="height:30px;" value="'.$row->Year_Product.'" readonly/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group row mb-0">
-                                    <label class="col-sm-3 col-form-label text-right">รุ่น/สี : </label>
-                                        <div class="col-sm-4">
-                                            <input type="text" name="VersionCar" class="form-control" style="height:30px;" value="'.$row->Version_Car.'" readonly/>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" name="ColorCar" class="form-control" style="height:30px;" value="'.$row->Color_Car.'" readonly/>
+                                    <label class="col-sm-3 col-form-label text-right">ราคา : </label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="PriceCar" class="form-control" style="height:30px;" value="'.number_format($row->Net_Price, 2).'" readonly/>
                                         </div>
                                     </div>
                                 </div>
                             </div>';
-
-                    $output.='<div class="row">
-                            <div class="col-6">
-                                <div class="form-group row mb-0">
-                                <label class="col-sm-3 col-form-label text-right">เกียร์/ปี : </label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="GearCar" class="form-control" style="height:30px;"value="'.$row->Gearcar.'" readonly/>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="YearCar" class="form-control" style="height:30px;" value="'.$row->Year_Product.'" readonly/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group row mb-0">
-                                <label class="col-sm-3 col-form-label text-right">ราคา : </label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="PriceCar" class="form-control" style="height:30px;" value="'.number_format($row->Net_Price, 2).'" readonly/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
+                    }
                 }
 
             echo $output;
@@ -142,9 +146,9 @@ class ResearchCusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $type)
+    public function store(Request $request)
     {
-        if ($type == 1) {       //เพิ่มรายการ ลูกค้า
+        if ($request->type == 1) {       //เพิ่มรายการ ลูกค้า
             //ประเภทลูกค้า
             if ($request->get('TypeCus') == "Very Hot") {
                 $SetDateType = date('Y-m-d');
@@ -180,6 +184,7 @@ class ResearchCusController extends Controller
             $dataCus = new dataCustomer([
                 'Name_Cus' => $request->get('NameCus'),
                 'Phone_Cus' =>  $request->get('PhoneCus'),
+                'IDCard_Cus' =>  $request->get('IDCardCus'),
                 'Address_Cus' =>  $request->get('AddressCus'),
                 'Province_Cus' =>  $request->get('ProvinceCus'),
                 'Zip_Cus' =>  $request->get('ZipCus'),
@@ -201,18 +206,19 @@ class ResearchCusController extends Controller
                 'GearCar_Cus' => $request->get('GearCar'),
                 'YearCar_Cus' => $request->get('YearCar'),
                 'PriceCar_Cus' => $SetPriceCar,
+                'Note_Cus' => $request->get('CusNote'),
               ]);
             $dataCus->save();
 
-            if ($request->get('StatusCus') == 'จองรถ' or $request->get('StatusCus') == 'ส่งมอบ') {
-                if ($request->get('RegisterCar') != NULL) {
-                    $dataCars = data_car::find($request->RegisterCar);
-                        $dataCars->F_DataCus_id = $dataCus->DataCus_id;
-                        $dataCars->BookStatus_Car = $request->get('StatusCus');
-                        $dataCars->DateStatus_Car = $SetDateStatus;
-                    $dataCars->update();
-                }
+            if ($request->get('RegisterCar') != NULL) {
+                $dataCars = data_car::find($request->RegisterCar);
+                    $dataCars->F_DataCus_id = $dataCus->DataCus_id;
+                    $dataCars->BookStatus_Car = $request->get('StatusCus');
+                    $dataCars->DateStatus_Car = $SetDateStatus;
+                $dataCars->update();
             }
+
+            $type = $request->type;
             return redirect()->Route('ResearchCus',$type)->with('success','บันทึกข้อมูลเรียบร้อย');
         }
     }
@@ -234,9 +240,9 @@ class ResearchCusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request ,$id, $type)
+    public function edit(Request $request, $id)
     {
-        if ($type == 1) {       // edit
+        if ($request->type == 1) {       // edit
             $data = DB::table('data_customers')
                     ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
                     ->where('data_customers.DataCus_id',$id)
@@ -245,7 +251,7 @@ class ResearchCusController extends Controller
             $dataRegis = DB::table('data_cars')
                     ->where('data_cars.car_type','<>',6)
                     // ->where('data_cars.F_DataCus_id','=', NULL)
-                    ->orderBy('data_cars.create_date', 'ASC')
+                    ->orderBy('data_cars.Number_Regist', 'ASC')
                     ->get();
 
             $tracking = DB::table('tracking_cuses')
@@ -253,16 +259,22 @@ class ResearchCusController extends Controller
                     ->orderBy('tracking_cuses.Date_Tracking', 'ASC')
                     ->get();
 
+            $type = $request->type;
+
              return view('dataCus.edit', compact('data','dataRegis','tracking','id','type'));
         }
-        elseif ($type == 2) {   // view createTracking
+        elseif ($request->type == 2) {   // view createTracking
+            $type = $request->type;
+
             return view('dataCus.createTracking', compact('id','type'));
         }
-        elseif ($type == 3) {   // edit Tracking
+        elseif ($request->type == 3) {   // edit Tracking
             $tracking = DB::table('tracking_cuses')
                     ->where('tracking_cuses.Tracking_id',$id)
                     ->orderBy('tracking_cuses.Date_Tracking', 'ASC')
                     ->first();
+
+            $type = $request->type;
 
             return view('dataCus.editTracking', compact('tracking','type'));
         }
@@ -275,9 +287,9 @@ class ResearchCusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $type)
+    public function update(Request $request, $id)
     {
-        if ($type == 1) {           //edit
+        if ($request->type == 1) {           //edit
             //ข้อมูลลูกค้า
             $dataCus = dataCustomer::find($id);
                 $dataCus->Name_Cus = $request->get('NameCus');
@@ -367,27 +379,26 @@ class ResearchCusController extends Controller
                 }
             $dataCus->update();
 
-            if ($request->get('StatusCus') == 'จองรถ') {
-                $dataCar = data_car::where('F_DataCus_id',$id)->first();
+            $dataCar = data_car::where('F_DataCus_id',$id)->first();
 
-                if ($request->get('RegisterCar') != $dataCar->id) {     //อัพเดต รถคันเดิม
-                    $dataCar = data_car::where('F_DataCus_id',$id)->first();
-                        $dataCar->F_DataCus_id = NULL;
-                        $dataCar->BookStatus_Car = NULL;
-                        $dataCar->DateStatus_Car = NULL;
-                    $dataCar->update();
-
-                    $dataCar = data_car::find($request->get('RegisterCar'));
-                        $dataCar->F_DataCus_id = $dataCus->DataCus_id;
-                        $dataCar->BookStatus_Car = $request->get('StatusCus');
-                        $dataCar->DateStatus_Car = date('Y-m-d');
-                    $dataCar->update();
-                }
+            if ($request->get('RegisterCar') != NULL) {     //อัพเดต รถคันใหม่
+                $dataCar = data_car::find($request->get('RegisterCar'));
+                    $dataCar->F_DataCus_id = $dataCus->DataCus_id;
+                    $dataCar->BookStatus_Car = $request->get('StatusCus');
+                    $dataCar->DateStatus_Car = date('Y-m-d');
+                $dataCar->update();
+            }
+            
+            if ($request->get('StatusCus') == 'ยกเลิกจอง') {
+                $dataCar = data_car::find($request->get('RegisterCar'));
+                    $dataCar->F_DataCus_id = NULL;
+                    $dataCar->BookStatus_Car = NULL;
+                    $dataCar->DateStatus_Car = NULL;
+                $dataCar->update();
             }
             return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อยแล้ว');
         }
-        elseif ($type == 2) {       //เพิ่ม รายการ Tracking
-
+        elseif ($request->type == 2) {       //เพิ่ม รายการ Tracking
             $data = DB::table('tracking_cuses')
                 ->where('F_DataCus_id', $id)
                 ->orderBy('F_DataCus_id', 'desc')->limit(1)
@@ -412,7 +423,7 @@ class ResearchCusController extends Controller
 
             return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อยแล้ว');
         }
-        elseif ($type == 3) {       //แก้ไข รายการ Tracking
+        elseif ($request->type == 3) {       //แก้ไข รายการ Tracking
             $dataTrack = tracking_cus::find($id);
                 $dataTrack->Date_Tracking = $request->get('DateTrack');
                 $dataTrack->Status_Tracking = $request->get('StatusTrack');
@@ -430,21 +441,26 @@ class ResearchCusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $type)
+    public function destroy(Request $request, $id)
     {
-        if ($type == 1) {           //ลบรายการ
+        if ($request->type == 1) {           //ลบรายการ
             $item = dataCustomer::find($id);
-
+            // dump($item);
             
             $dataCar = data_car::where('F_DataCus_id',$id)->first();
+            // dd($dataCar);
+
+            if ($dataCar != NULL) {
                 $dataCar->F_DataCus_id = NULL;
                 $dataCar->BookStatus_Car = NULL;
                 $dataCar->DateStatus_Car = NULL;
-            $dataCar->update();
+
+                $dataCar->update();
+            }
 
             $item->Delete();
         }
-        elseif ($type == 2) {       //ลบบันทึกการติดตาม
+        elseif ($request->type == 2) {       //ลบบันทึกการติดตาม
             $item = tracking_cus::find($id);
             $item->Delete();
         }

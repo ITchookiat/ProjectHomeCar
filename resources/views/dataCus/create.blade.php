@@ -148,7 +148,7 @@
       </button>
     </div>
 
-    <form name="form1" action="{{ route('ResearchCus.store', 1) }}" method="post" id="formimage" enctype="multipart/form-data">
+    <form name="form1" action="{{ route('MasterResearchCus.store') }}" method="post" id="formimage" enctype="multipart/form-data">
       @csrf
       <div class="card-body text-sm">
         <h5 class="text-center"><b>แบบฟอร์มข้อมูลลูกค้า</b></h5>
@@ -178,7 +178,7 @@
               <div class="form-group row mb-0">
                 <label class="col-sm-3 col-form-label text-right">ชื่อ - นามสกุล : </label>
                 <div class="col-sm-8">
-                  <input type="text" name="NameCus" class="form-control" style="height:30px;" placeholder="ป้อนชื่อ-นามสกุล" required/>
+                  <input type="text" name="NameCus" class="form-control form-control-sm" placeholder="ป้อนชื่อ-นามสกุล" required/>
                 </div>
               </div>
             </div>
@@ -186,7 +186,7 @@
               <div class="form-group row mb-0">
                 <label class="col-sm-3 col-form-label text-right">เบอร์ติดต่อ : </label>
                 <div class="col-sm-8">
-                  <input type="text" name="PhoneCus" class="form-control" style="height:30px;" placeholder="ป้อนเบอร์ติดต่อ" data-inputmask="&quot;mask&quot;:&quot;999-9999999,999-9999999&quot;" data-mask=""/>
+                  <input type="text" name="PhoneCus" class="form-control form-control-sm" placeholder="ป้อนเบอร์ติดต่อ" data-inputmask="&quot;mask&quot;:&quot;999-9999999,999-9999999&quot;" data-mask=""/>
                 </div>
               </div>
             </div>
@@ -195,20 +195,39 @@
           <div class="row">
             <div class="col-6">
               <div class="form-group row mb-0">
-                <label class="col-sm-3 col-form-label text-right">ที่อยู่ : </label>
+                <label class="col-sm-3 col-form-label text-right">เลขบัตร ปชช. : </label>
                 <div class="col-sm-8">
-                  <input type="text" name="AddressCus" class="form-control" style="height:30px;" placeholder="ป้อนที่อยู่" />
+                  <input type="text" name="IDCardCus" class="form-control form-control-sm" placeholder="ป้อนเลขบัตรประชาชน" data-inputmask="&quot;mask&quot;:&quot;9-9999-99999-99-9&quot;" data-mask="" />
                 </div>
               </div>
             </div>
             <div class="col-6">
               <div class="form-group row mb-0">
+                <label class="col-sm-3 col-form-label text-right">ที่อยู่ : </label>
+                <div class="col-sm-8">
+                  <input type="text" name="AddressCus" class="form-control form-control-sm" placeholder="ป้อนที่อยู่" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group row mb-0">
                 <label class="col-sm-3 col-form-label text-right">จังหวัด/ไปรษณีย์ : </label>
                 <div class="col-sm-4">
-                  <input type="text" name="ProvinceCus" class="form-control" style="height:30px;" placeholder="ป้อนจังหวัด" />
+                  <input type="text" name="ProvinceCus" class="form-control form-control-sm" placeholder="ป้อนจังหวัด" />
                 </div>
                 <div class="col-sm-4">
-                  <input type="text" name="ZipCus" class="form-control" style="height:30px;" placeholder="ป้อนรหัสไปรษณีย์" data-inputmask="&quot;mask&quot;:&quot;99999&quot;" data-mask=""/>
+                  <input type="text" name="ZipCus" class="form-control form-control-sm" placeholder="ป้อนรหัสไปรษณีย์" data-inputmask="&quot;mask&quot;:&quot;99999&quot;" data-mask=""/>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group row mb-0">
+                <label class="col-sm-3 col-form-label text-right">Email : </label>
+                <div class="col-sm-8">
+                  <input type="text" name="EmailCus" class="form-control form-control-sm" placeholder="ป้อนอีเมลล์" />
                 </div>
               </div>
             </div>
@@ -219,15 +238,7 @@
               <div class="form-group row mb-0">
                 <label class="col-sm-3 col-form-label text-right">อาชีพ : </label>
                 <div class="col-sm-8">
-                  <input type="text" name="CareerCus" class="form-control" style="height:30px;" placeholder="ป้อนอาชีพ" />
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="form-group row mb-0">
-                <label class="col-sm-3 col-form-label text-right">Email : </label>
-                <div class="col-sm-8">
-                  <input type="text" name="EmailCus" class="form-control" style="height:30px;" placeholder="ป้อนอีเมลล์" />
+                  <input type="text" name="CareerCus" class="form-control form-control-sm" placeholder="ป้อนอาชีพ" />
                 </div>
               </div>
             </div>
@@ -238,7 +249,7 @@
               <div class="form-group row mb-1">
                 <label class="col-sm-3 col-form-label text-right">แหล่งที่มาลูกค้า : </label>
                 <div class="col-sm-8">
-                  <select name="OriginCus" class="form-control">
+                  <select name="OriginCus" class="form-control form-control-sm">
                     <option value="" selected>--- แหล่งที่มา ---</option>
                     <option value="ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย">ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย</option>
                     <option value="ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า">ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า</option>
@@ -252,7 +263,7 @@
               <div class="form-group row mb-1">
                 <label class="col-sm-3 col-form-label text-right">รูปแบบลูกค้า : </label>
                 <div class="col-sm-8">
-                  <select name="modelCus" class="form-control">
+                  <select name="modelCus" class="form-control form-control-sm">
                     <option value="" selected>--- เลือกรูปแบบ ---</option>
                     <option value="Walk In">Walk In</option>
                     <option value="Call In">Call In</option>
@@ -266,32 +277,30 @@
           <div class="row">
             <div class="col-6">
               <div class="form-group row mb-0">
-                <label class="col-sm-3 col-form-label text-right"><font color="red">ผู้เสนอราคา : </font></label>
+                <label class="col-sm-3 col-form-label text-right"><font color="red">วันที่รับลูกค้า : </font></label>
                 <div class="col-sm-8">
-                <input type="text" name="SaleCus" value="{{ auth::user()->name }}" class="form-control" style="height:30px;" placeholder="ผู้เสนอราคา" readonly/>
+                  <input type="date" name="DateSaleCus" class="form-control form-control-sm" value="{{ date('Y-m-d') }}" placeholder="ลงวันที่" required/>
+                </div>
+              </div>
+              <div class="form-group row mb-0">
+                <label class="col-sm-3 col-form-label text-right">เงินมัดจำ : </label>
+                <div class="col-sm-8">
+                  <input type="text" name="CashStatusCus" id="CashStatusCus" class="form-control form-control-sm" placeholder="เงินมัดจำ" oninput="Comma();"/>
                 </div>
               </div>
             </div>
             <div class="col-6">
               <div class="form-group row mb-0">
-                <label class="col-sm-3 col-form-label text-right"><font color="red">วันที่รับลูกค้า : </font></label>
+                <label class="col-sm-3 col-form-label text-right">หมายเหตุ : </label>
                 <div class="col-sm-8">
-                  <input type="date" name="DateSaleCus" class="form-control" value="{{ date('Y-m-d') }}" style="height:30px;" placeholder="ลงวันที่" required/>
+                  <textarea name="CusNote" class="form-control form-control-sm" placeholder="ป้อนหมายเหตุ" rows="3"></textarea>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-6">
-              <div class="form-group row mb-0">
-                <label class="col-sm-3 col-form-label text-right">เงินมัดจำ : </label>
-                <div class="col-sm-8">
-                <input type="text" name="CashStatusCus" id="CashStatusCus" class="form-control" style="height:30px;" placeholder="เงินมัดจำ" oninput="Comma();"/>
-                </div>
-              </div>
-            </div>
-          </div>
+          {{-- ผู้เสนอราคา --}}
+          <input type="hidden" name="SaleCus" value="{{ auth::user()->name }}" class="form-control form-control-sm" placeholder="ผู้เสนอราคา" readonly/>
   
           <div class="row">
             <div class="col-6">
@@ -308,7 +317,7 @@
                 </div>
                 <div class="col-sm-4">
                   <span class="todo-wrap">
-                    <input type="checkbox" id="2" name="StatusCus" value="จองรถ"/>
+                    <input type="checkbox" id="2" name="StatusCus" value="จอง"/>
                     <label for="2" class="todo">
                       <i class="fa fa-check"></i>
                       จองรถ
@@ -384,7 +393,7 @@
                     <div class="form-group row mb-1">
                       <label class="col-sm-3 col-form-label text-right">เลขทะเบียน : </label>
                       <div class="col-sm-8">
-                        <select name="RegisterCar" id="RegisterCar" class="form-control RegisterCar select2 select2-hidden-accessible">
+                        <select name="RegisterCar" id="RegisterCar" class="form-control form-control-sm RegisterCar select2 select2-hidden-accessible">
                           <option value="" selected>--- เลขทะเบียน ---</option>
                           @foreach ($data as $key => $value)
                             <option value="{{$value->id}}">{{$value->Number_Regist}}</option>
@@ -416,6 +425,7 @@
           </div>
         </div>
 
+        <input type="hidden" name="type" value="1">
         <input type="hidden" name="_token" value="{{csrf_token()}}" />
       </div>
     </form>

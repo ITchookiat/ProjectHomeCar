@@ -57,6 +57,7 @@ class BoardController extends Controller
             // dd($data);
 
             $SumCom = 0;
+            $SumBlow = 0;
             $Num1 = 0;
             $Num2 = 0;
             $Num3 = 0;
@@ -83,11 +84,30 @@ class BoardController extends Controller
                 }
             }
 
+            if ($Num1 > 7) {
+                $SumBlow += 2000;
+            }
+            if ($Num2 > 7) {
+                $SumBlow += 2000;
+            }
+            if ($Num3 > 7) {
+                $SumBlow += 2000;
+            }
+            if ($Num4 > 7) {
+                $SumBlow += 2000;
+            }
+            if ($Num5 > 7) {
+                $SumBlow += 2000;
+            }
+            if ($Num6 > 7) {
+                $SumBlow += 2000;
+            }
+
             $fdate = $request->get('Fromdate');
             $tdate = $request->get('Todate');
             $type = $request->type;
 
-            return view('Board.view', compact('data','type','fdate','tdate','Sale','SumCom',
+            return view('Board.view', compact('data','type','fdate','tdate','Sale','SumCom','SumBlow',
                         'Num1','Num2','Num3','Num4','Num5','Num6'));
         }
     }

@@ -51,8 +51,7 @@
                     var num66 = document.getElementById('InsurancePrice').value;
                     var num6 = num66.replace(",","");
 
-                    var expense = parseFloat(num6) + parseFloat(num4);
-                    var topcar = parseFloat(num1) - (parseFloat(num3) + parseFloat(expense));
+                    var topcar = parseFloat(num1) - parseFloat(num3) + parseFloat(num6) + parseFloat(num4) - parseFloat(num5);
 
                     document.form1.NetPriceplus.value = addCommas(num1);
                     document.form1.AmountPrice.value = addCommas(num2);
@@ -189,9 +188,9 @@
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group row mb-1">
-                      <label class="col-sm-3 col-form-label text-right">ยอดจัด :</label>
+                      <label class="col-sm-3 col-form-label text-right"><font color="red"> ยอดจัด :</font></label>
                       <div class="col-sm-8">
-                        <input type="text" id="TopcarPrice" name="TopcarPrice" class="form-control form-control-sm" placeholder="ป้อนยอดจัด" value="{{ number_format($datacar->Topcar_Price,2) }}" oninput="comma();"/>
+                        <input type="text" id="TopcarPrice" name="TopcarPrice" class="form-control form-control-sm" placeholder="ป้อนยอดจัด" value="{{ number_format($datacar->Topcar_Price,2) }}" readonly/>
                       </div>
                     </div>
                   </div>

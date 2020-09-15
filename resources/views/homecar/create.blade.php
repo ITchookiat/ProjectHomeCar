@@ -184,7 +184,7 @@
               <div class="col-md-9">
                 <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-user-tag"></i> ข้อมูลผู้เช่าซื้อ</h3>
+                    <h3 class="card-title"><i class="fas fa-car"></i> ข้อมูลรถยนต์</h3>
 
                     <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>

@@ -152,26 +152,28 @@
       <section class="content">
         <div class="row">
           <div class="col-12">
-            <form name="form1" method="post" action="{{ action('ResearchCusController@update',[$id, $type]) }}" enctype="multipart/form-data">
+          <form name="form1" method="post" action="{{ route('MasterResearchCus.update',[$id]) }}?type={{1}}" enctype="multipart/form-data">
               @csrf
               @method('put')
               <div class="card">
-                <div class="card-header">      
-                  <div class="row">
-                    <div class="col-6">
-                      <h1 class="" style="text-align:left;"><b>Research Customer</b></h1>
-                    </div>
-                    <div class="col-6">
-                      <div class="card-tools d-inline float-right">
-                        <a class="delete-modal btn btn-primary" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('ResearchCus.edit', [$id, 2]) }}">
-                          <i class="fas fa-plus"></i> Tracking
-                        </a>
-                        <button type="submit" class="delete-modal btn btn-success">
-                          <i class="fas fa-save"></i> UPDATE
-                        </button>
-                        <a class="delete-modal btn btn-danger" href="{{ route('ResearchCus',1) }}">
-                          <i class="far fa-window-close"></i> CLOSE
-                        </a>
+                <div class="card-header">   
+                  <div class="container-fluid">   
+                    <div class="row mb-0">
+                      <div class="col-sm-6">
+                        <h1 class="" style="text-align:left;"><b>Research Customer</b></h1>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="card-tools d-inline float-right">
+                          <a class="delete-modal btn btn-primary" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('MasterResearchCus.edit',[$id]) }}?type={{2}}">
+                            <i class="fas fa-plus"></i> Tracking
+                          </a>
+                          <button type="submit" class="delete-modal btn btn-success">
+                            <i class="fas fa-save"></i> UPDATE
+                          </button>
+                          <a class="delete-modal btn btn-danger" href="{{ route('ResearchCus',1) }}">
+                            <i class="far fa-window-close"></i> CLOSE
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -204,7 +206,7 @@
                         <div class="form-group row mb-0">
                           <label class="col-sm-3 col-form-label text-right">ชื่อ - นามสกุล : </label>
                           <div class="col-sm-8">
-                            <input type="text" name="NameCus" class="form-control" style="height:30px;" value="{{ $data->Name_Cus }}"/>
+                            <input type="text" name="NameCus" class="form-control form-control-sm" value="{{ $data->Name_Cus }}"/>
                           </div>
                         </div>
                       </div>
@@ -212,7 +214,26 @@
                         <div class="form-group row mb-0">
                           <label class="col-sm-3 col-form-label text-right">เบอร์ติดต่อ : </label>
                           <div class="col-sm-8">
-                            <input type="text" name="PhoneCus" class="form-control" style="height:30px;" value="{{ $data->Phone_Cus }}" data-inputmask="&quot;mask&quot;:&quot;999-9999999,999-9999999&quot;" data-mask=""/>
+                            <input type="text" name="PhoneCus" class="form-control form-control-sm" value="{{ $data->Phone_Cus }}" data-inputmask="&quot;mask&quot;:&quot;999-9999999,999-9999999&quot;" data-mask=""/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">เลขบัตร ปชช. :</label>
+                          <div class="col-sm-8">
+                            <input type="text" name="IDCardCus" class="form-control form-control-sm" value="{{ $data->IDCard_Cus }}" data-inputmask="&quot;mask&quot;:&quot;9-9999-99999-99-9&quot;" data-mask="" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">ที่อยู่ : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="AddressCus" class="form-control form-control-sm" value="{{ $data->Address_Cus }}"/>
                           </div>
                         </div>
                       </div>
@@ -221,20 +242,20 @@
                     <div class="row">
                       <div class="col-6">
                         <div class="form-group row mb-0">
-                          <label class="col-sm-3 col-form-label text-right">ที่อยู่ : </label>
-                          <div class="col-sm-8">
-                            <input type="text" name="AddressCus" class="form-control" style="height:30px;" value="{{ $data->Address_Cus }}"/>
+                          <label class="col-sm-3 col-form-label text-right">จังหวัด/ไปรษณีย์ : </label>
+                          <div class="col-sm-4">
+                            <input type="text" name="ProvinceCus" class="form-control form-control-sm" value="{{ $data->Province_Cus }}"/>
+                          </div>
+                          <div class="col-sm-4">
+                            <input type="text" name="ZipCus" class="form-control form-control-sm"value="{{ $data->Zip_Cus }}" data-inputmask="&quot;mask&quot;:&quot;99999&quot;" data-mask=""/>
                           </div>
                         </div>
                       </div>
                       <div class="col-6">
                         <div class="form-group row mb-0">
-                          <label class="col-sm-3 col-form-label text-right">จังหวัด/ไปรษณีย์ : </label>
-                          <div class="col-sm-4">
-                            <input type="text" name="ProvinceCus" class="form-control" style="height:30px;" value="{{ $data->Province_Cus }}"/>
-                          </div>
-                          <div class="col-sm-4">
-                            <input type="text" name="ZipCus" class="form-control" style="height:30px;"value="{{ $data->Zip_Cus }}" data-inputmask="&quot;mask&quot;:&quot;99999&quot;" data-mask=""/>
+                          <label class="col-sm-3 col-form-label text-right">Email : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="EmailCus" class="form-control form-control-sm" value="{{ $data->Email_Cus }}"/>
                           </div>
                         </div>
                       </div>
@@ -245,15 +266,7 @@
                         <div class="form-group row mb-0">
                           <label class="col-sm-3 col-form-label text-right">อาชีพ : </label>
                           <div class="col-sm-8">
-                            <input type="text" name="CareerCus" class="form-control" style="height:30px;" value="{{ $data->Career_Cus }}" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="form-group row mb-0">
-                          <label class="col-sm-3 col-form-label text-right">Email : </label>
-                          <div class="col-sm-8">
-                            <input type="text" name="EmailCus" class="form-control" style="height:30px;" value="{{ $data->Email_Cus }}"/>
+                            <input type="text" name="CareerCus" class="form-control form-control-sm" value="{{ $data->Career_Cus }}" />
                           </div>
                         </div>
                       </div>
@@ -261,10 +274,10 @@
           
                     <div class="row">
                       <div class="col-6">
-                        <div class="form-group row mb-1">
+                        <div class="form-group row mb-0">
                           <label class="col-sm-3 col-form-label text-right">แหล่งที่มาลูกค้า : </label>
                           <div class="col-sm-8">
-                            <select name="OriginCus" class="form-control">
+                            <select name="OriginCus" class="form-control form-control-sm">
                               <option value="" selected>--- แหล่งที่มา ---</option>
                               <option value="ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย" {{ ($data->Origin_Cus === 'ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย') ? 'selected' : '' }}>ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย</option>
                               <option value="ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า" {{ ($data->Origin_Cus === 'ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า') ? 'selected' : '' }}>ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า</option>
@@ -275,10 +288,10 @@
                         </div>
                       </div>
                       <div class="col-6">
-                        <div class="form-group row mb-1">
+                        <div class="form-group row mb-0">
                           <label class="col-sm-3 col-form-label text-right">รูปแบบลูกค้า : </label>
                           <div class="col-sm-8">
-                            <select name="modelCus" class="form-control">
+                            <select name="modelCus" class="form-control form-control-sm">
                               <option value="" selected>--- เลือกรูปแบบ ---</option>
                               <option value="Walk In" {{ ($data->model_Cus === 'Walk In') ? 'selected' : '' }}>Walk In</option>
                               <option value="Call In" {{ ($data->model_Cus === 'Call In') ? 'selected' : '' }}>Call In</option>
@@ -294,7 +307,7 @@
                         <div class="form-group row mb-0">
                           <label class="col-sm-3 col-form-label text-right"><font color="red">ผู้เสนอราคา : </font></label>
                           <div class="col-sm-8">
-                          <input type="text" name="SaleCus" value="{{ $data->Sale_Cus }}" class="form-control" style="height:30px;" readonly/>
+                          <input type="text" name="SaleCus" value="{{ $data->Sale_Cus }}" class="form-control form-control-sm" readonly/>
                           </div>
                         </div>
                       </div>
@@ -302,7 +315,7 @@
                         <div class="form-group row mb-0">
                           <label class="col-sm-3 col-form-label text-right"><font color="red">วันที่รับลูกค้า : </font></label>
                           <div class="col-sm-8">
-                            <input type="date" name="DateSaleCus" class="form-control" value="{{ $data->DateSale_Cus }}" style="height:30px;" readonly/>
+                            <input type="date" name="DateSaleCus" class="form-control form-control-sm" value="{{ $data->DateSale_Cus }}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -313,7 +326,15 @@
                         <div class="form-group row mb-0">
                           <label class="col-sm-3 col-form-label text-right">เงินมัดจำ : </label>
                           <div class="col-sm-8">
-                          <input type="text" name="CashStatusCus" id="CashStatusCus" class="form-control" value="{{ number_format($data->CashStatus_Cus, 0) }}" style="height:30px;" oninput="Comma();"/>
+                          <input type="text" name="CashStatusCus" id="CashStatusCus" class="form-control form-control-sm" value="{{ number_format($data->CashStatus_Cus, 0) }}" oninput="Comma();"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">หมายเหตุ : </label>
+                          <div class="col-sm-8">
+                            <textarea name="CusNote" class="form-control form-control-sm form-control form-control-sm-sm" placeholder="ป้อนหมายเหตุ" rows="3">{{$data->Note_Cus}}</textarea>
                           </div>
                         </div>
                       </div>
@@ -338,10 +359,10 @@
                           </div>
                           <div class="col-sm-4">
                             <span class="todo-wrap">
-                              @if($data->Status_Cus == "จองรถ")
+                              @if($data->Status_Cus == "จอง")
                                 <input type="checkbox" id="2" name="StatusCus" value="{{ $data->Status_Cus }}" checked="checked"/>
                               @else
-                                <input type="checkbox" id="2" name="StatusCus" value="จองรถ"/>
+                                <input type="checkbox" id="2" name="StatusCus" value="จอง"/>
                               @endif
                               <label for="2" class="todo">
                                 <i class="fa fa-check"></i>
@@ -350,7 +371,35 @@
                             </span>
                           </div>
                         </div>
-
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"></label>  
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($data->Status_Cus == "ยกเลิกจอง")
+                                <input type="checkbox" id="3" name="StatusCus" value="{{ $data->Status_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="3" name="StatusCus" value="ยกเลิกจอง"/>
+                              @endif
+                              <label for="3" class="todo">
+                                <i class="fa fa-check"></i>
+                                ยกเลิกจอง
+                              </label>
+                            </span>
+                          </div>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($data->Status_Cus == "ส่งมอบ")
+                                <input type="checkbox" id="4" name="StatusCus" value="{{ $data->Status_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="4" name="StatusCus" value="ส่งมอบ"/>
+                              @endif
+                              <label for="4" class="todo">
+                                <i class="fa fa-check"></i>
+                                ส่งมอบ
+                              </label>
+                            </span>
+                          </div>
+                        </div>
                       </div>
                       <div class="col-6">
                         <div class="form-group row mb-0">
@@ -383,7 +432,7 @@
                           </div>
                         </div>
             
-                        <div class="form-group row mb-1">
+                        <div class="form-group row mb-0">
                           <label class="col-sm-3 col-form-label text-right"></label>
                           <div class="col-sm-4">
                             <span class="todo-wrap">
@@ -434,10 +483,10 @@
                           <p></p>
                           <div class="row">
                             <div class="col-6">
-                              <div class="form-group row mb-1">
+                              <div class="form-group row mb-0">
                                 <label class="col-sm-3 col-form-label text-right">เลขทะเบียน : </label>
                                 <div class="col-sm-8">
-                                  <select name="RegisterCar" id="RegisterCar" class="form-control RegisterCar select2 select2-hidden-accessible">
+                                  <select name="RegisterCar" id="RegisterCar" class="form-control form-control-sm RegisterCar select2 select2-hidden-accessible">
                                     <option value="" selected>--- เลขทะเบียน ---</option>
                                     @if ($data->F_DataCus_id == NULL)
                                       @foreach ($dataRegis as $key => $value)
@@ -470,13 +519,17 @@
                             });
                           </script>
                           
-                          <div id="ShowCom">
+                          @if($data->RegistCar_Cus != NULL)
+                            <div id="ShowCom">
+                          @else
+                            <div id="ShowCom" style="display: none">
+                          @endif
                             <div class="row">
                               <div class="col-6">
                                 <div class="form-group row mb-0">
                                   <label class="col-sm-3 col-form-label text-right">ยี่ห้อ : </label>
                                   <div class="col-sm-8">
-                                    <input type="text" name="Brand_Car" class="form-control" style="height:30px;" value="{{ $data->BrandCar_Cus }}" readonly/>
+                                    <input type="text" name="Brand_Car" class="form-control form-control-sm" value="{{ $data->BrandCar_Cus }}" readonly/>
                                     <input type="hidden" name="Regist_Car" value="{{ $data->RegistCar_Cus }}">
                                   </div>
                                 </div>
@@ -485,10 +538,10 @@
                                 <div class="form-group row mb-0">
                                   <label class="col-sm-3 col-form-label text-right">รุ่น/สี : </label>
                                   <div class="col-sm-4">
-                                    <input type="text" name="Version_Car" class="form-control" style="height:30px;" value="{{ $data->VersionCar_Cus }}" readonly/>
+                                    <input type="text" name="Version_Car" class="form-control form-control-sm" value="{{ $data->VersionCar_Cus }}" readonly/>
                                   </div>
                                   <div class="col-sm-4">
-                                    <input type="text" name="Color_Car" class="form-control" style="height:30px;" value="{{ $data->ColorCar_Cus }}" readonly/>
+                                    <input type="text" name="Color_Car" class="form-control form-control-sm" value="{{ $data->ColorCar_Cus }}" readonly/>
                                   </div>
                                 </div>
                               </div>
@@ -499,10 +552,10 @@
                                 <div class="form-group row mb-0">
                                   <label class="col-sm-3 col-form-label text-right">เกียร์/ปี : </label>
                                   <div class="col-sm-4">
-                                    <input type="text" name="Gear_Car" class="form-control" style="height:30px;" value="{{ $data->GearCar_Cus }}" readonly/>
+                                    <input type="text" name="Gear_Car" class="form-control form-control-sm" value="{{ $data->GearCar_Cus }}" readonly/>
                                   </div>
                                   <div class="col-sm-4">
-                                    <input type="text" name="Year_Car" class="form-control" style="height:30px;" value="{{ $data->YearCar_Cus }}" readonly/>
+                                    <input type="text" name="Year_Car" class="form-control form-control-sm" value="{{ $data->YearCar_Cus }}" readonly/>
                                   </div>
                                 </div>
                               </div>
@@ -510,7 +563,7 @@
                                 <div class="form-group row mb-0">
                                   <label class="col-sm-3 col-form-label text-right">ราคา : </label>
                                   <div class="col-sm-8">
-                                    <input type="text" name="Price_Car" class="form-control" style="height:30px;" value="{{ number_format($data->PriceCar_Cus, 0) }}" oninput="Comma();" readonly/>
+                                    <input type="text" name="Price_Car" class="form-control form-control-sm" value="{{ number_format($data->PriceCar_Cus, 0) }}" oninput="Comma();" readonly/>
                                   </div>
                                 </div>
                               </div>
@@ -542,13 +595,13 @@
                                     <td class="text-center">{{ $row->Follow_Tracking }}</td>
                                     <td class="text-center">{{ $row->Note_tracking }}</td>
                                     <td class="text-center">
-                                      <a class="btn btn-warning btn-sm" title="แก้ไขรายการ" data-toggle="modal" data-target="#modal-2" data-backdrop="static" data-link="{{ route('ResearchCus.edit', [$row->Tracking_id, 3]) }}">
+                                      <a class="btn btn-warning btn-sm" title="แก้ไขรายการ" data-toggle="modal" data-target="#modal-2" data-backdrop="static" data-link="{{ route('MasterResearchCus.edit',[$row->Tracking_id]) }}?type={{3}}">
                                         <i class="far fa-edit"></i>
                                     </a>
-                                    <form method="post" class="delete_form" action="{{ action('ResearchCusController@destroy',[$row->Tracking_id, 2]) }}" style="display:inline;">
+                                    <form method="post" class="delete_form" action="{{ route('MasterResearchCus.destroy',[$row->Tracking_id]) }}?type={{2}}" style="display:inline;">
                                         {{csrf_field()}}
                                         <input type="hidden" name="_method" value="DELETE" />
-                                        <button type="submit" class="delete-modal btn btn-danger btn-sm" title="ลบรายการ">
+                                        <button type="submit"  class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
                                     </form>
@@ -569,6 +622,19 @@
       </section>
     </div>
   </section>
+
+  <script>
+    $(function () {
+      $("#table1").DataTable({
+        "searching" : false,
+        "lengthChange" : false,
+        "info" : false,
+        "pageLength": 5,
+        "responsive": true,
+        "autoWidth": false,
+      });
+    });
+  </script>
 
   <script type="text/javascript">
     $('.RegisterCar').change(function() {
@@ -619,20 +685,9 @@
     })
   </script>
 
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('#table1').DataTable( {
-        "searching" : false,
-        "lengthChange" : false,
-        "info" : false,
-        "pageLength": 5,
-      } );
-    } );
-  </script>
-
-  {{-- Modal --}}
+  {{-- Modal create tracking --}}
   <div class="modal fade" id="modal-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <p>One fine body…</p>
@@ -643,8 +698,9 @@
     </div>
   </div>
 
+  {{-- Modal edit tracking --}}
   <div class="modal fade" id="modal-2">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <p>One fine body…</p>
@@ -654,5 +710,4 @@
         </div>
     </div>
   </div>
-  {{-- Modal --}}
 @endsection

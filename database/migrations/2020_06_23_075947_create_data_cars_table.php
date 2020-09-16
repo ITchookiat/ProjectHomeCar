@@ -72,6 +72,9 @@ class CreateDataCarsTable extends Migration
             $table->string('Open_auction')->nullable();        //เปิดประมูล
             $table->string('Close_auction')->nullable();       //ปิดประมูล
             $table->string('Expected_Sell')->nullable();       //ราคาคาดว่าจะขาย
+
+            $table->string('Expected_Repair')->nullable();       //ราคาประเมิณซ่อม
+            $table->string('Expected_Color')->nullable();       //ราคาประเมิณทำสี
             
             $table->timestamps();
           });

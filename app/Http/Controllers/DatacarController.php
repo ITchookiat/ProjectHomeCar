@@ -91,7 +91,7 @@ class DatacarController extends Controller
                       ->get();
           $title = 'รถยนต์รอซ่อม';
         }
-        elseif ($request->type == 4 or $request->type == 44) {       //รถยนต์ระหว่างซ่อม //รายการซ่อม
+        elseif ($request->type == 4) {       //รถยนต์ระหว่างซ่อม
           $data = DB::table('data_cars')
                       ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                       ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
@@ -220,6 +220,31 @@ class DatacarController extends Controller
         elseif ($request->type == 99) {
           $type = $request->type;
           return view('homecar.chart',compact('type'));
+        }
+        elseif ($request->type == 100) {
+          if ($request->get('Fromdate') or $request->get('Todate') != NULL){
+            $fdate = \Carbon\Carbon::parse($fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($fdate)->format('m')."-". \Carbon\Carbon::parse($fdate)->format('d');
+            $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
+          }
+          $data = DB::table('data_cars')
+                  ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                  // ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
+                  ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+                    return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+                  })
+                  // ->where('data_cars.Car_type','<>',6)
+                  ->when(!empty($carType), function($q) use($carType){
+                    return $q->where('data_cars.Car_type',$carType);
+                  })
+                  ->orderBy('data_cars.created_at', 'DESC')
+                  ->get();
+
+          $title = 'รายการรถยนต์';
+          $type = $request->type;
+          $fdate = $request->get('Fromdate');
+          $tdate = $request->get('Todate');
+
+          return view('mechanic.view', compact('data','title','type','fdate','tdate','carType'));
         }
 
         $type = $request->type;
@@ -539,6 +564,22 @@ class DatacarController extends Controller
         ]);
         $repairdb->save();
         return redirect()->back()->with('success','เพิ่มข้อมูลเรียบร้อย');
+      }elseif($request->type == 3){
+        $datacardb = new data_car([
+          'Number_Regist' => $request->get('Number_Regist'),
+          'Brand_Car' => $request->get('BrandCar'),
+          'Model_Car' => $request->get('ModelCar'),
+          'Version_Car' => $request->get('VersionCar'),
+          'Expected_Repair' => $request->get('ExpectRepairPrice'),
+          'Expected_Color' => $request->get('ExpectColorPrice'),
+          'Car_type' => 3,
+        ]);
+        $datacardb->save();
+        $checkDoc = new checkDocument([
+          'Datacar_id' => $datacardb->id,
+        ]);
+        $checkDoc->save();
+        return redirect()->Route('datacar',100)->with('success','บันทึกข้อมูลเรียบร้อย');
       }
 
     }
@@ -688,9 +729,9 @@ class DatacarController extends Controller
       if($car_type == 6) {
         return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus','dataImage'));
       }
-      elseif($car_type == 44){
+      elseif($car_type == 100){
         $dataRepair = DB::table('repair_parts')->where('Datacar_id',$id)->get();
-        return view('homecar.editRepair',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage','dataRepair'));
+        return view('mechanic.editRepair',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataRepair'));
       }
       else {
         return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage'));

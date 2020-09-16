@@ -173,7 +173,7 @@
                 </ul>
               </li>
 
-              <li class="nav-item has-treeview {{ Request::is('datacar/view/44') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/44') ? 'menu-open' : '' }}">
+              <li class="nav-item has-treeview {{ Request::is('datacar/view/100') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/100') ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link">
                   <i class="far fa-window-restore text-red nav-icon"></i>
                   <p>
@@ -183,9 +183,9 @@
                 </a>
                 <ul class="nav nav-treeview" style="margin-left: 15px;">
                   <li class="nav-item">
-                    <a href="{{ route('datacar',44) }}" class="nav-link {{ Request::is('datacar/view/44') ? 'active' : '' }} {{ Request::is('datacar/edit/*/44') ? 'active' : '' }}">
+                    <a href="{{ route('datacar',100) }}" class="nav-link {{ Request::is('datacar/view/100') ? 'active' : '' }} {{ Request::is('datacar/edit/*/100') ? 'active' : '' }}">
                       <i class="far fa-dot-circle nav-icon"></i>
-                      <p>รถยนต์รอซ่อม</p>
+                      <p>รายการรถยนต์</p>
                     </a>
                   </li>
                 </ul>

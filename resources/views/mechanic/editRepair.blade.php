@@ -439,7 +439,7 @@
                             </tr>
                           @endforeach
                             <tr>
-                            @if(auth::user()->type == 1)
+                            @if(auth::user()->type == "Admin")
                               <td colspan="4"></td>
                             @else
                               <td colspan="3"></td>

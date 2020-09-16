@@ -190,7 +190,7 @@
                     <!-- <button type="button" class="delete-modal btn btn-primary" data-toggle="modal" data-target="#modal-default">
                       <i class="fas fa-gear"></i> เพิ่ม
                     </button> -->
-                    <a class="delete-modal btn btn-danger" href="{{ route('datacar',33) }}">
+                    <a class="delete-modal btn btn-danger" href="{{ route('datacar',100) }}">
                       <i class="far fa-window-close"></i> ยกเลิก
                     </a>
                   </div>
@@ -229,7 +229,7 @@
                           <div class="form-group row mb-1">
                             <label class="col-sm-5 col-form-label text-right">สถานะ:</label>
                             <div class="col-sm-7">
-                              <select name="Cartype" id="Cartype" class="form-control form-control-sm">
+                              <select name="Cartype" id="Cartype" class="form-control form-control-sm" readonly>
                                 @foreach ($arrayCarType as $key => $value)
                                   <option value="{{$key}}" {{ ($key == $datacar->Car_type) ? 'selected' : '' }}>{{$value}}</option>
                                 @endforeach
@@ -375,13 +375,21 @@
                     </div>
                   </div>
                 </div>
-
+            <input type="hidden" name="_method" value="PATCH"/>
+            <input type="hidden" name="type" value="44">
+            @foreach($dataRepair as $key => $value)
+              @php 
+                @$Totalprice1 += $value->Repair_amount * $value->Repair_price;
+              @endphp
+            @endforeach
+            <input type="hidden" name="Totalprice" value="{{@$Totalprice1}}">
+          </form>
                 <div class="col-md-6">
                   <div class="card card-primary">
                     <div class="card-header">
                       <h3 class="card-title"><i class="fas fa-tasks"></i> รายการที่ซ่อม</h3>
                       <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-toggle="modal" data-target="#modal-default" title="เพิ่มรายการซ่อม">
+                        <button type="button" class="btn btn-tool text-white" data-toggle="modal" data-target="#modal-default" title="เพิ่มรายการซ่อม">
                           <i class="fas fa-edit"></i>
                         </button>
                         <a target="_blank" class="btn btn-tool" href="{{ route('MasterDatacar.show',[$datacar->Datacar_id]) }}?type={{1}}" title="พิมพ์รายการซ่อม"> 
@@ -397,9 +405,7 @@
                       <table class="table table-bordered">
                         <thead>                  
                           <tr>
-                            @if(auth::user()->type == 1)
                             <th style="width: 50px">#</th>
-                            @endif
                             <th style="width: 10px">ที่</th>
                             <th>รายการ</th>
                             <th class="text-center" style="width: 30px">จำนวน</th>
@@ -415,11 +421,11 @@
                             <tr>
                               @if(auth::user()->type == 1)
                               <td class="text-right">
-                                <form method="post" class="delete_form float-right" action="{{ route('MasterDatacar.destroy',[$value->Repair_id]) }}" style="display:inline;">
-                                  {{csrf_field()}}
+                                <form method="post" class="delete_form float-right" action="{{ action('DatacarController@destroy',$value->Repair_id) }}" style="display:inline;">
+                                {{csrf_field()}}
                                   <input type="hidden" name="_method" value="DELETE" />
                                   <input type="hidden" name="type" value="2" />
-                                  <button type="submit" data-name="รายการ {{$value->Repair_list}}" class="delete-modal btn btn-xs AlertForm text-red" title="ลบโฟลเดอร์">
+                                  <button type="submit" data-name="รายการ {{$value->Repair_list}}" class="delete-modal btn btn-xs AlertForm text-red" title="ลบรายการ">
                                     <i class="far fa-trash-alt"></i>
                                   </button>
                                 </form>
@@ -453,10 +459,6 @@
 
             </div>
 
-            <input type="hidden" name="_method" value="PATCH"/>
-            <input type="hidden" name="type" value="44">
-            <input type="hidden" name="Totalprice" value="{{$Totalprice}}">
-          </form>
           <a id="button"></a>
         </div>
       </div>
@@ -467,8 +469,8 @@
     <input type="hidden" name="type" value="2">
     <div class="modal fade" id="modal-default">
       <div class="modal-dialog">
-        <div class="modal-content" style="border-radius: 30px 30px 30px 30px;">
-          <div class="modal-header bg-primary" style="border-radius: 30px 30px 0px 0px;">
+        <div class="modal-content">
+          <div class="modal-header bg-primary">
             <div class="col text-center">
               <h5 class="modal-title"><i class="fas fa-gear"></i> เพิ่มรายการซ่อม</h5>
             </div>
@@ -486,18 +488,22 @@
             </div>
             <div class="row">
               <div class="col-md-2"></div>
-              <div class="col-md-8">
+              <div class="col-md-4">
                 จำนวน
                 <input type="number" name="RepairAmount" class="form-control" />
               </div>
+              <div class="col-md-4">
+                ราคา
+                <input type="number" id="RepairPrice" name="RepairPrice" class="form-control"/>
+              </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-2"></div>
               <div class="col-md-8">
                 ราคา
                 <input type="number" id="RepairPrice" name="RepairPrice" class="form-control"/>
               </div>
-            </div>
+            </div> -->
           </div>
           <input type="hidden" name="Nameuser" value="{{auth::user()->name}}"/>
           <input type="hidden" name="Datacarid" value="{{$datacar->Datacar_id}}"/>
@@ -526,14 +532,6 @@
       e.preventDefault();
       $('html, body').animate({scrollTop:0}, '300');
     });
-  </script>
-
-
-  <!-- เวลาแจ้งเตือน -->
-  <script>
-    $(".alert").fadeTo(3000, 500).slideUp(500, function(){
-    $(".alert").alert('close');
-    });;
   </script>
 
 @endsection

@@ -25,7 +25,7 @@
   <style>
     #todo-list{
     width:100%;
-    margin:0 auto 190px auto;
+    /* margin:0 auto 190px auto; */
     padding:5px;
     background:white;
     position:relative;
@@ -536,7 +536,7 @@
                         <div class="row">
                           <div class="col-6">
                             <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาคาดว่าจะขาย</font> :</label>
+                              <label class="col-sm-3 col-form-label text-right"><font color="red" size="1.5px">ราคาคาดว่าจะขาย</font> :</label>
                               <div class="col-sm-8">
                                 <input type="text" id="Expected_Sell" name="Expected_Sell" class="form-control form-control-sm" value="{{number_format($datacar->Expected_Sell, 2)}}" oninput="sum();" required/>
                               </div>
@@ -673,6 +673,39 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="card card-danger">
+                    <div class="card-header">
+                      <h3 class="card-title"><i class="fas fa-wrench"></i> ข้อมูลช่างซ่อม</h3>
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-7 col-form-label text-right">ราคาประเมิณซ่อม :</label>
+                              <div class="col-sm-5">
+                                <input type="number" name="DateBorrowcar" class="form-control form-control-sm" value="{{$datacar->Expected_Repair}}" />
+                              </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-7 col-form-label text-right">ราคาประเมิณทำสี :</label>
+                              <div class="col-sm-5">
+                                <input type="number" name="DateBorrowcar" class="form-control form-control-sm" value="{{$datacar->Expected_Color}}" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 

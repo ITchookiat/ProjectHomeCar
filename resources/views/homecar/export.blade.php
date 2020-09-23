@@ -72,315 +72,302 @@
           <th class="text-center"width="50px"><b>การจอง</b></th>
           </tr>
         </thead>
+        <tbody>
+          @foreach($dataReport as $key => $value)
+            @php
+              $create_date = date_create($value->create_date);
+              $Date_NumberUser = date_create($value->Date_NumberUser);
+            @endphp
+            <tr align="center">
+              <td width="30px">{{ $key+1 }}</td>
+              <td width="60px">{{ date_format($create_date, 'd-m-Y')}}</td>
+              <td width="60px">
+                @php
+                  date_default_timezone_set('Asia/Bangkok');
+                  $Y = date('Y') + 543;
+                  $m = date('m');
+                  $d = date('d');
+                  $ifdate = $Y.'-'.$m.'-'.$d;
+                @endphp
 
-      <tbody>
+                @if($ifdate > $value->create_date && $value->Date_Sale == Null)
+                  @php
+                    $Cldate = date_create($value->create_date);
+                    $nowCldate = date_create($ifdate);
+                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                  @endphp
+                  {{$ClDateDiff->format("%a วัน")}}
 
-      @foreach($dataReport as $key => $value)
-      @php
-      $create_date = date_create($value->create_date);
-      $Date_NumberUser = date_create($value->Date_NumberUser);
-      @endphp
-      <tr align="center">
-      <td width="30px">{{ $key+1 }}</td>
-      <td width="60px">{{ date_format($create_date, 'd-m-Y')}}</td>
-      <td width="60px">
-      @php
-      date_default_timezone_set('Asia/Bangkok');
-      $Y = date('Y') + 543;
-      $m = date('m');
-      $d = date('d');
-      $ifdate = $Y.'-'.$m.'-'.$d;
-      @endphp
-
-      @if($ifdate > $value->create_date && $value->Date_Sale == Null)
-      @php
-      $Cldate = date_create($value->create_date);
-      $nowCldate = date_create($ifdate);
-      $ClDateDiff = date_diff($Cldate,$nowCldate);
-      @endphp
-
-      {{$ClDateDiff->format("%a วัน")}}
-
-      @elseif($value->Date_Sale != Null)
-      @php
-      $Cldate = date_create($value->create_date);
-      $nowCldate = date_create($value->Date_Sale);
-      $ClDateDiff = date_diff($Cldate,$nowCldate);
-      @endphp
-
-      {{$ClDateDiff->format("%a วัน")}}
-      @endif
-      </td>
-      <td width="70px">{{$value->Number_Regist}}</td>
-      <td width="70px">{{$value->Brand_Car}}</td>
-      <td width="70px">{{$value->Version_Car}}</td>
-      <td width="70px">{{$value->Model_Car}}</td>
-      <td width="30px">{{$value->Gearcar}}</td>
-      <td width="60px">{{$value->Color_Car}}</td>
-      <td width="40px">{{$value->Year_Product}}</td>
-      <td width="40px">{{$value->Size_Car}}</td>
-      <td width="60px">
-        @if($value->Origin_Car == 1)
-        CKL
-        @elseif ($value->Origin_Car  == 2)
-        รถประมูล
-        @elseif ($value->Origin_Car  == 3)
-        รถยึด
-        @elseif ($value->Origin_Car  == 4)
-        ฝากขาย
-        @endif
-      </td>
-      <td width="90px">
-        @if($value->Car_type == 1)
-        นำเข้าใหม่ @if($value->BorrowStatus == 1) (ยืม) @endif
-        @elseif ($value->Car_type  == 2)
-        ระหว่างทำสี @if($value->BorrowStatus == 1) (ยืม) @endif
-        @elseif ($value->Car_type  == 3)
-        รอซ่อม @if($value->BorrowStatus == 1) (ยืม) @endif
-        @elseif ($value->Car_type  == 4)
-        ระหว่างซ่อม @if($value->BorrowStatus == 1) (ยืม) @endif
-        @elseif ($value->Car_type  == 5)
-        พร้อมขาย @if($value->BorrowStatus == 1) (ยืม) @endif
-        @elseif ($value->Car_type  == 6)
-        ขายแล้ว
-        @endif
-      </td>
-      <td width="50px">
-         @if($value->BookStatus_Car == 'จอง')
-            ลูกค้าจอง
-         @endif
-      </td>
-      </tr>
-      @endforeach
-      </tbody>
+                @elseif($value->Date_Sale != Null)
+                  @php
+                    $Cldate = date_create($value->create_date);
+                    $nowCldate = date_create($value->Date_Sale);
+                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                  @endphp
+                  {{$ClDateDiff->format("%a วัน")}}
+                @endif
+              </td>
+              <td width="70px">{{$value->Number_Regist}}</td>
+              <td width="70px">{{$value->Brand_Car}}</td>
+              <td width="70px">{{$value->Version_Car}}</td>
+              <td width="70px">{{$value->Model_Car}}</td>
+              <td width="30px">{{$value->Gearcar}}</td>
+              <td width="60px">{{$value->Color_Car}}</td>
+              <td width="40px">{{$value->Year_Product}}</td>
+              <td width="40px">{{$value->Size_Car}}</td>
+              <td width="60px">
+                @if($value->Origin_Car == 1)
+                  CKL
+                @elseif ($value->Origin_Car  == 2)
+                  รถประมูล
+                @elseif ($value->Origin_Car  == 3)
+                  รถยึด
+                @elseif ($value->Origin_Car  == 4)
+                  ฝากขาย
+                @endif
+              </td>
+              <td width="90px">
+                @if($value->Car_type == 1)
+                  นำเข้าใหม่ @if($value->BorrowStatus == 1) (ยืม) @endif
+                @elseif ($value->Car_type  == 2)
+                  ระหว่างทำสี @if($value->BorrowStatus == 1) (ยืม) @endif
+                @elseif ($value->Car_type  == 3)
+                  รอซ่อม @if($value->BorrowStatus == 1) (ยืม) @endif
+                @elseif ($value->Car_type  == 4)
+                  ระหว่างซ่อม @if($value->BorrowStatus == 1) (ยืม) @endif
+                @elseif ($value->Car_type  == 5)
+                  พร้อมขาย @if($value->BorrowStatus == 1) (ยืม) @endif
+                @elseif ($value->Car_type  == 6)
+                  ขายแล้ว
+                @elseif ($value->Car_type  == 7)
+                  ส่งประมูล
+                @endif
+              </td>
+              <td width="50px">
+                @if($value->BookStatus_Car == 'จอง')
+                  ลูกค้าจอง
+                @endif
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
       </table>
     @endif
 
     @if( $ReportType == 1 && $AdminType == 1)
-        <table border="1">
-            <thead>
-                <tr align="center" style="background-color:#B7B8AE;line-height:150%;">
-                  <th class="text-center" width="30px"><b>ลำดับ</b></th>
-                  <th class="text-center" width="60px"><b>วันที่ซื้อ</b></th>
-                  <th class="text-center" width="45px"><b>ระยะเวลา</b></th>
-                  <th class="text-center" width="65px"><b>ทะเบียน</b></th>
-                  <th class="text-center" width="60px"><b>ยี่ห้อ</b></th>
-                  <th class="text-center" width="65px"><b>รุ่น</b></th>
-                  <th class="text-center" width="60px"><b>ลักษณะ</b></th>
-                  <th class="text-center" width="30px"><b>เกียร์</b></th>
-                  <th class="text-center" width="55px"><b>สี</b></th>
-                  <th class="text-center" width="35px"><b>ปี</b></th>
-                  <th class="text-center"width="35px"><b>CC</b></th>
-                  <th class="text-center"width="70px"><b>ราคาต้นทุน</b></th>
-                  <th class="text-center" width="55px"><b>ที่มา</b></th>
-                  <th class="text-center"width="85px"><b>สถานะ</b></th>
-                  <th class="text-center"width="50px"><b>การจอง</b></th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-            @foreach($dataReport as $key => $value)
+      <table border="1">
+        <thead>
+          <tr align="center" style="background-color:#B7B8AE;line-height:150%;">
+            <th class="text-center" width="30px"><b>ลำดับ</b></th>
+            <th class="text-center" width="60px"><b>วันที่ซื้อ</b></th>
+            <th class="text-center" width="45px"><b>ระยะเวลา</b></th>
+            <th class="text-center" width="65px"><b>ทะเบียน</b></th>
+            <th class="text-center" width="60px"><b>ยี่ห้อ</b></th>
+            <th class="text-center" width="65px"><b>รุ่น</b></th>
+            <th class="text-center" width="60px"><b>ลักษณะ</b></th>
+            <th class="text-center" width="30px"><b>เกียร์</b></th>
+            <th class="text-center" width="55px"><b>สี</b></th>
+            <th class="text-center" width="35px"><b>ปี</b></th>
+            <th class="text-center"width="35px"><b>CC</b></th>
+            <th class="text-center"width="70px"><b>ราคาต้นทุน</b></th>
+            <th class="text-center" width="55px"><b>ที่มา</b></th>
+            <th class="text-center"width="85px"><b>สถานะ</b></th>
+            <th class="text-center"width="50px"><b>การจอง</b></th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($dataReport as $key => $value)
             @php
-            $create_date = date_create($value->create_date);
-            $Date_NumberUser = date_create($value->Date_NumberUser);
+              $create_date = date_create($value->create_date);
+              $Date_NumberUser = date_create($value->Date_NumberUser);
             @endphp
-              <tr align="center">
-                <td width="30px">{{ $key+1 }}</td>
-                <td width="60px">{{ date_format($create_date, 'd-m-Y')}}</td>
-                <td width="45px">
+            <tr align="center">
+              <td width="30px">{{ $key+1 }}</td>
+              <td width="60px">{{ date_format($create_date, 'd-m-Y')}}</td>
+              <td width="45px">
                 @php
-                date_default_timezone_set('Asia/Bangkok');
-                $Y = date('Y') + 543;
-                $m = date('m');
-                $d = date('d');
-                $ifdate = $Y.'-'.$m.'-'.$d;
+                  date_default_timezone_set('Asia/Bangkok');
+                  $Y = date('Y') + 543;
+                  $m = date('m');
+                  $d = date('d');
+                  $ifdate = $Y.'-'.$m.'-'.$d;
                 @endphp
 
                 @if($ifdate > $value->create_date && $value->Date_Sale == Null)
-                @php
-                $Cldate = date_create($value->create_date);
-                $nowCldate = date_create($ifdate);
-                $ClDateDiff = date_diff($Cldate,$nowCldate);
-                @endphp
-
-                {{$ClDateDiff->format("%a วัน")}}
+                  @php
+                    $Cldate = date_create($value->create_date);
+                    $nowCldate = date_create($ifdate);
+                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                  @endphp
+                  {{$ClDateDiff->format("%a วัน")}}
 
                 @elseif($value->Date_Sale != Null)
-                @php
-                $Cldate = date_create($value->create_date);
-                $nowCldate = date_create($value->Date_Sale);
-                $ClDateDiff = date_diff($Cldate,$nowCldate);
-                @endphp
-
-                {{$ClDateDiff->format("%a วัน")}}
-                @endif
-                </td>
-                <td width="65px">{{$value->Number_Regist}}</td>
-                <td width="60px">{{$value->Brand_Car}}</td>
-                <td width="65px">{{$value->Version_Car}}</td>
-                <td width="60px">{{$value->Model_Car}}</td>
-                <td width="30px">{{$value->Gearcar}}</td>
-                <td width="55px">{{$value->Color_Car}}</td>
-                <td width="35px">{{$value->Year_Product}}</td>
-                <td width="35px">{{$value->Size_Car}}</td>
-                
-                  @if($value->Fisrt_Price == null)
-                    @php 
-                    $FirstPrice = 0;
-                    @endphp
-                  @else
-                    @php 
-                    $FirstPrice = $value->Fisrt_Price;
-                    @endphp
-                  @endif
-
-                  @if($value->Repair_Price == null)
-                    @php 
-                    $RepairPrice = 0;
-                    @endphp
-                  @else
-                    @php 
-                    $RepairPrice = $value->Repair_Price;
-                    @endphp
-                  @endif
-
-                  @if($value->Offer_Price == null)
-                    @php 
-                    $OfferPrice = 0;
-                    @endphp
-                  @else
-                    @php 
-                    $OfferPrice = $value->Offer_Price;
-                    @endphp
-                  @endif
-
-                  @if($value->Color_Price == null)
-                    @php 
-                    $ColorPrice = 0;
-                    @endphp
-                  @else
-                    @php 
-                    $ColorPrice = $value->Color_Price;
-                    @endphp
-                  @endif
-
-                  @if($value->Add_Price == null)
-                    @php 
-                    $AddPrice = 0;
-                    @endphp
-                  @else
-                    @php 
-                    $AddPrice = $value->Add_Price;
-                    @endphp
-                  @endif
-
-                  @php 
-                    @$TotalCapital += $FirstPrice+$RepairPrice+$OfferPrice+$ColorPrice+$AddPrice;
+                  @php
+                    $Cldate = date_create($value->create_date);
+                    $nowCldate = date_create($value->Date_Sale);
+                    $ClDateDiff = date_diff($Cldate,$nowCldate);
                   @endphp
-                
-                <td align="right" width="70px">{{number_format($FirstPrice+$RepairPrice+$OfferPrice+$ColorPrice+$AddPrice, 2)}} &nbsp;</td>
-                <td width="55px">
-                @if($value->Origin_Car == 1)
-                CKL
-                @elseif ($value->Origin_Car  == 2)
-                รถประมูล
-                @elseif ($value->Origin_Car  == 3)
-                รถยึด
-                @elseif ($value->Origin_Car  == 4)
-                ฝากขาย
+                  {{$ClDateDiff->format("%a วัน")}}
                 @endif
-                </td>
-                <td width="85px">
-                  @if($value->Car_type == 1)
+              </td>
+              <td width="65px">{{$value->Number_Regist}}</td>
+              <td width="60px">{{$value->Brand_Car}}</td>
+              <td width="65px">{{$value->Version_Car}}</td>
+              <td width="60px">{{$value->Model_Car}}</td>
+              <td width="30px">{{$value->Gearcar}}</td>
+              <td width="55px">{{$value->Color_Car}}</td>
+              <td width="35px">{{$value->Year_Product}}</td>
+              <td width="35px">{{$value->Size_Car}}</td>
+                @if($value->Fisrt_Price == null)
+                  @php 
+                    $FirstPrice = 0;
+                  @endphp
+                @else
+                  @php 
+                    $FirstPrice = $value->Fisrt_Price;
+                  @endphp
+                @endif
+
+                @if($value->Repair_Price == null)
+                  @php 
+                    $RepairPrice = 0;
+                  @endphp
+                @else
+                  @php 
+                    $RepairPrice = $value->Repair_Price;
+                  @endphp
+                @endif
+
+                @if($value->Offer_Price == null)
+                  @php 
+                    $OfferPrice = 0;
+                  @endphp
+                @else
+                  @php 
+                    $OfferPrice = $value->Offer_Price;
+                  @endphp
+                @endif
+
+                @if($value->Color_Price == null)
+                  @php 
+                    $ColorPrice = 0;
+                  @endphp
+                @else
+                  @php 
+                    $ColorPrice = $value->Color_Price;
+                  @endphp
+                @endif
+
+                @if($value->Add_Price == null)
+                  @php 
+                    $AddPrice = 0;
+                  @endphp
+                @else
+                  @php 
+                    $AddPrice = $value->Add_Price;
+                  @endphp
+                @endif
+
+                @php 
+                  @$TotalCapital += $FirstPrice+$RepairPrice+$OfferPrice+$ColorPrice+$AddPrice;
+                @endphp
+              <td align="right" width="70px">{{number_format($FirstPrice+$RepairPrice+$OfferPrice+$ColorPrice+$AddPrice, 2)}} &nbsp;</td>
+              <td width="55px">
+                @if($value->Origin_Car == 1)
+                  CKL
+                @elseif ($value->Origin_Car  == 2)
+                  รถประมูล
+                @elseif ($value->Origin_Car  == 3)
+                  รถยึด
+                @elseif ($value->Origin_Car  == 4)
+                  ฝากขาย
+                @endif
+              </td>
+              <td width="85px">
+                @if($value->Car_type == 1)
                   นำเข้าใหม่ @if($value->BorrowStatus == 1) (ยืม) @endif
-                  @elseif ($value->Car_type  == 2)
+                @elseif ($value->Car_type  == 2)
                   ระหว่างทำสี @if($value->BorrowStatus == 1) (ยืม) @endif
-                  @elseif ($value->Car_type  == 3)
+                @elseif ($value->Car_type  == 3)
                   รอซ่อม @if($value->BorrowStatus == 1) (ยืม) @endif
-                  @elseif ($value->Car_type  == 4)
+                @elseif ($value->Car_type  == 4)
                   ระหว่างซ่อม @if($value->BorrowStatus == 1) (ยืม) @endif
-                  @elseif ($value->Car_type  == 5)
+                @elseif ($value->Car_type  == 5)
                   พร้อมขาย @if($value->BorrowStatus == 1) (ยืม) @endif
-                  @elseif ($value->Car_type  == 6)
+                @elseif ($value->Car_type  == 6)
                   ขายแล้ว
-                  @endif
-                </td>
-                <td width="50px">
-                  @if($value->BookStatus_Car == 'จอง')
-                    ลูกค้าจอง
-                  @endif
-                </td>
+                @elseif ($value->Car_type  == 7)
+                  ส่งประมูล
+                @endif
+              </td>
+              <td width="50px">
+                @if($value->BookStatus_Car == 'จอง')
+                  ลูกค้าจอง
+                @endif
+              </td>
             </tr>
-            @endforeach
-            <tr>
-              <td width="540px" align="right"><b>รวมราคาต้นทุน &nbsp;</b></td>
-              <td width="70px" align="right"><b>{{number_format(@$TotalCapital,2)}} &nbsp;</b></td>
-              <td width="190px"> <b>บาท</b></td>
-            </tr>
-            </tbody>
-        </table>
+          @endforeach
+          <tr>
+            <td width="540px" align="right"><b>รวมราคาต้นทุน &nbsp;</b></td>
+            <td width="70px" align="right"><b>{{number_format(@$TotalCapital,2)}} &nbsp;</b></td>
+            <td width="190px"> <b>บาท</b></td>
+          </tr>
+        </tbody>
+      </table>
     @endif
 
     @if( $ReportType != 1)
-        <table border="1">
-            <thead>
-              <tr align="center">
-                <th class="text-center" width="30px"><b>ลำดับ</b></th>
-                <th class="text-center" width="70px"><b>วันที่ซื้อ</b></th>
-                <th class="text-center" width="50px"><b>ระยะเวลา</b></th>
-                <th class="text-center" width="75px"><b>ทะเบียน</b></th>
-                <th class="text-center" width="75px"><b>ยี่ห้อ</b></th>
-                <th class="text-center" width="70px"><b>รุ่น</b></th>
-                <th class="text-center" width="70px"><b>ลักษณะ</b></th>
-                <th class="text-center" width="40px"><b>เกียร์</b></th>
-                <th class="text-center" width="65px"><b>สี</b></th>
-                <th class="text-center" width="30px"><b>ปี</b></th>
-                <th class="text-center" width="30px"><b>CC</b></th>
-                <th class="text-center" width="65px"><b>ประเภท</b></th>
-                <th class="text-center"width="65px"><b>สถานะ</b></th>
-                <th class="text-center" width="65px"><b>ราคาขาย</b></th>
-              </tr>
-            </thead>
-
+      <table border="1">
+        <thead>
+          <tr align="center">
+            <th class="text-center" width="30px"><b>ลำดับ</b></th>
+            <th class="text-center" width="70px"><b>วันที่ซื้อ</b></th>
+            <th class="text-center" width="50px"><b>ระยะเวลา</b></th>
+            <th class="text-center" width="75px"><b>ทะเบียน</b></th>
+            <th class="text-center" width="75px"><b>ยี่ห้อ</b></th>
+            <th class="text-center" width="70px"><b>รุ่น</b></th>
+            <th class="text-center" width="70px"><b>ลักษณะ</b></th>
+            <th class="text-center" width="40px"><b>เกียร์</b></th>
+            <th class="text-center" width="65px"><b>สี</b></th>
+            <th class="text-center" width="30px"><b>ปี</b></th>
+            <th class="text-center" width="30px"><b>CC</b></th>
+            <th class="text-center" width="65px"><b>ประเภท</b></th>
+            <th class="text-center"width="65px"><b>สถานะ</b></th>
+            <th class="text-center" width="65px"><b>ราคาขาย</b></th>
+          </tr>
+        </thead>
         <tbody>
-
-        @foreach($dataReport as $key => $value)
-        @php
-        $create_date = date_create($value->create_date);
-        $Date_NumberUser = date_create($value->Date_NumberUser);
-        @endphp
+          @foreach($dataReport as $key => $value)
+            @php
+              $create_date = date_create($value->create_date);
+              $Date_NumberUser = date_create($value->Date_NumberUser);
+            @endphp
             <tr align="center">
               <td width="30px">{{ $key+1 }}</td>
               <td width="70px">{{ date_format($create_date, 'd-m-Y')}}</td>
               <td width="50px">
-              @php
-              date_default_timezone_set('Asia/Bangkok');
-              $Y = date('Y') + 543;
-              $m = date('m');
-              $d = date('d');
-              $ifdate = $Y.'-'.$m.'-'.$d;
-              @endphp
-
-              @if($ifdate > $value->create_date)
-              @php
-              $Cldate = date_create($value->create_date);
-              $nowCldate = date_create($ifdate);
-              $ClDateDiff = date_diff($Cldate,$nowCldate);
-              @endphp
-
-              {{$ClDateDiff->format("%a วัน")}}
-
-              @elseif($value->Date_Sale != Null)
-              @php
-              $Cldate = date_create($value->create_date);
-              $nowCldate = date_create($value->Date_Sale);
-              $ClDateDiff = date_diff($Cldate,$nowCldate);
-              @endphp
-
-              {{$ClDateDiff->format("%a วัน")}}
-
-              @endif
+                @php
+                  date_default_timezone_set('Asia/Bangkok');
+                  $Y = date('Y') + 543;
+                  $m = date('m');
+                  $d = date('d');
+                  $ifdate = $Y.'-'.$m.'-'.$d;
+                @endphp
+                @if($ifdate > $value->create_date)
+                  @php
+                    $Cldate = date_create($value->create_date);
+                    $nowCldate = date_create($ifdate);
+                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                  @endphp
+                  {{$ClDateDiff->format("%a วัน")}}
+                @elseif($value->Date_Sale != Null)
+                  @php
+                    $Cldate = date_create($value->create_date);
+                    $nowCldate = date_create($value->Date_Sale);
+                    $ClDateDiff = date_diff($Cldate,$nowCldate);
+                  @endphp
+                  {{$ClDateDiff->format("%a วัน")}}
+                @endif
               </td>
               <td width="75px">{{$value->Number_Regist}}</td>
               <td width="75px">{{$value->Brand_Car}}</td>
@@ -391,36 +378,38 @@
               <td width="30px">{{$value->Year_Product}}</td>
               <td width="30px">{{$value->Size_Car}}</td>
               <td width="65px">
-              @if($value->Origin_Car == 1)
-              CKL
-              @elseif ($value->Origin_Car  == 2)
-              รถประมูล
-              @elseif ($value->Origin_Car  == 3)
-              รถยึด
-              @elseif ($value->Origin_Car  == 4)
-              ฝากขาย
-              @endif
+                @if($value->Origin_Car == 1)
+                  CKL
+                @elseif ($value->Origin_Car  == 2)
+                  รถประมูล
+                @elseif ($value->Origin_Car  == 3)
+                  รถยึด
+                @elseif ($value->Origin_Car  == 4)
+                  ฝากขาย
+                @endif
               </td>
               <td width="65px">
-              @if($value->Car_type == 1)
-              นำเข้าใหม่
-              @elseif ($value->Car_type  == 2)
-              ระหว่างทำสี
-              @elseif ($value->Car_type  == 3)
-              รอซ่อม
-              @elseif ($value->Car_type  == 4)
-              ระหว่างซ่อม
-              @elseif ($value->Car_type  == 5)
-              พร้อมขาย
-              @elseif ($value->Car_type  == 6)
-              ขายแล้ว
-              @endif
+                @if($value->Car_type == 1)
+                  นำเข้าใหม่
+                @elseif ($value->Car_type  == 2)
+                  ระหว่างทำสี
+                @elseif ($value->Car_type  == 3)
+                  รอซ่อม
+                @elseif ($value->Car_type  == 4)
+                  ระหว่างซ่อม
+                @elseif ($value->Car_type  == 5)
+                  พร้อมขาย
+                @elseif ($value->Car_type  == 6)
+                  ขายแล้ว
+                @elseif ($value->Car_type  == 7)
+                  ส่งประมูล
+                @endif
               </td>
               <td width="65px">{{number_format($value->Net_Price)}}</td>
             </tr>
-        @endforeach
+          @endforeach
         </tbody>
-        </table>
+      </table>
     @endif
 
   </body>

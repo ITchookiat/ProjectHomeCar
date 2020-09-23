@@ -44,30 +44,30 @@ class DatacarController extends Controller
             $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
           }
 
-            if ($request->has('carType') != Null) {
-              $data = DB::table('data_cars')
-                  ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                  ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
-                  ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                    return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
-                  })
-                  ->when(!empty($carType), function($q) use($carType){
-                    return $q->where('data_cars.Car_type',$carType);
-                  })
-                  ->orderBy('data_cars.create_date', 'DESC')
-                  ->get();
+          if ($request->has('carType') != Null) {
+            $data = DB::table('data_cars')
+                ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
+                ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+                  return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+                })
+                ->when(!empty($carType), function($q) use($carType){
+                  return $q->where('data_cars.Car_type',$carType);
+                })
+                ->orderBy('data_cars.create_date', 'DESC')
+                ->get();
 
-            }else {
-              $data = DB::table('data_cars')
-                  ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                  ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
-                  ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                    return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
-                  })
-                  ->where('data_cars.Car_type','<>',6)
-                  ->orderBy('data_cars.create_date', 'DESC')
-                  ->get();
-            }
+          }else {
+            $data = DB::table('data_cars')
+                ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                ->leftjoin('uploadfile_images','data_cars.id','=','uploadfile_images.Datacarfileimage_id')
+                ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+                  return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+                })
+                ->where('data_cars.Car_type','<>',6)
+                ->orderBy('data_cars.create_date', 'DESC')
+                ->get();
+          }
             
           $fdate = $request->get('Fromdate');
           $tdate = $request->get('Todate');
@@ -110,7 +110,6 @@ class DatacarController extends Controller
           $title = 'รถยนต์ที่พร้อมขาย';
         }
         elseif ($request->type == 6) {          //รถยนต์ที่ขายแล้ว
-
           if ($request->get('Fromdate') or $request->get('Todate') != NULL){
             $fdate = \Carbon\Carbon::parse($fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($fdate)->format('m')."-". \Carbon\Carbon::parse($fdate)->format('d');
             $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
@@ -828,7 +827,6 @@ class DatacarController extends Controller
 
       $user = data_car::find($id);
         $user->create_date = $request->get('DateCar');
-        $user->Date_Status = $request->get('DateCar');   
         $user->Fisrt_Price = $SetPriceStr;
         $user->Repair_Price = $SetRepairStr;
         $user->Net_Price = $SetNetStr;
@@ -1044,45 +1042,48 @@ class DatacarController extends Controller
         $originType = $request->originType;
       }
 
+      $fdate = \Carbon\Carbon::parse($fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($fdate)->format('m')."-". \Carbon\Carbon::parse($fdate)->format('d');
+      $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
+
       if ($request->id == 1) {
         if ($carType != Null) {
           $dataReport = DB::table('data_cars')
-          ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-          ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-            return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
-          })
-          ->when(!empty($carType), function($q) use($carType){
-            return $q->where('data_cars.Car_type',$carType);
-          })
-          ->when(!empty($originType), function($q) use($originType){
-            return $q->whereIn('data_cars.Origin_Car',$originType);
-          })
-          ->orderBy('data_cars.create_date', 'ASC')
-          ->get();
+              ->leftjoin('check_documents','data_cars.id','=','check_documents.Datacar_id')
+              ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+              })
+              ->when(!empty($carType), function($q) use($carType){
+                return $q->where('data_cars.Car_type',$carType);
+              })
+              ->when(!empty($originType), function($q) use($originType){
+                return $q->whereIn('data_cars.Origin_Car',$originType);
+              })
+              ->orderBy('data_cars.create_date', 'ASC')
+              ->get();
         }
         elseif($originType != Null)
         {
           $dataReport = DB::table('data_cars')
-          ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-          ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-            return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
-          })
-          ->when(!empty($originType), function($q) use($originType){
-            return $q->whereIn('data_cars.Origin_Car',$originType);
-          })
-          ->where('data_cars.Car_type','<>',6)
-          ->orderBy('data_cars.create_date', 'ASC')
-          ->get();
+              ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+              ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+              })
+              ->when(!empty($originType), function($q) use($originType){
+                return $q->whereIn('data_cars.Origin_Car',$originType);
+              })
+              ->where('data_cars.Car_type','<>',6)
+              ->orderBy('data_cars.create_date', 'ASC')
+              ->get();
         }
         else{
           $dataReport = DB::table('data_cars')
-          ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-          ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-            return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
-          })
-          ->where('data_cars.Car_type','<>',6)
-          ->orderBy('data_cars.create_date', 'ASC')
-          ->get();
+              ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+              ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
+                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+              })
+              ->where('data_cars.Car_type','<>',6)
+              ->orderBy('data_cars.create_date', 'ASC')
+              ->get();
         }
 
         $SetConn = "StockCAR ".$date;

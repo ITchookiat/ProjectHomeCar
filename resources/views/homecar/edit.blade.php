@@ -536,7 +536,7 @@
                         <div class="row">
                           <div class="col-6">
                             <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right"><font color="red" size="1.5px">ราคาคาดว่าจะขาย</font> :</label>
+                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาคาดว่าจะขาย</font> :</label>
                               <div class="col-sm-8">
                                 <input type="text" id="Expected_Sell" name="Expected_Sell" class="form-control form-control-sm" value="{{number_format($datacar->Expected_Sell, 2)}}" oninput="sum();" required/>
                               </div>
@@ -544,7 +544,7 @@
                           </div>           
                           <div class="col-6">
                             <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาขาย</font> :</label>
+                              <label class="col-sm-3 col-form-label text-right"><font color="red">ราคาตั้งขาย</font> :</label>
                               <div class="col-sm-8">
                                 <input type="text" id="NetCar" name="NetCar" class="form-control form-control-sm" value="{{number_format($datacar->Net_Price, 2)}}" oninput="sum();" required/>
                               </div>

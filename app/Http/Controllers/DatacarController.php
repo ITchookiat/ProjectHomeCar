@@ -192,13 +192,19 @@ class DatacarController extends Controller
           return view('homecar.viewDetail',compact('type','data'));
         }
         elseif ($request->type == 14) {         //รถยนต์ส่งประมูล
+
+          if ($request->get('Fromdate') or $request->get('Todate') != NULL){
+            $fdate = \Carbon\Carbon::parse($fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($fdate)->format('m')."-". \Carbon\Carbon::parse($fdate)->format('d');
+            $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
+          }
+
           $data = DB::table('data_cars')
               ->leftjoin('check_documents','data_cars.id','=','check_documents.Datacar_id')
               ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                      return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+                      return $q->whereBetween('data_cars.Date_Status',[$fdate,$tdate]);
                       })
               ->where('data_cars.Car_type','=','7')
-              ->orderBy('data_cars.create_date', 'DESC')
+              ->orderBy('data_cars.Date_Status', 'DESC')
               ->get();
 
           $SumAmount = 0;
@@ -212,8 +218,11 @@ class DatacarController extends Controller
             $SumAmount = $SumAuction - $Sum;
           }
 
+          $fdate = $request->get('Fromdate');
+          $tdate = $request->get('Todate');
           $title = 'รถยนต์ส่งประมูล';
           $type = $request->type;
+
           return view('homecar.view',compact('title','type','data','fdate','tdate','SumAmount'));
         }
         elseif ($request->type == 99) {
@@ -1067,171 +1076,96 @@ class DatacarController extends Controller
 
       $fdate = '';
       $tdate = '';
-      $carType = '';
+      $typeCar = '';
       $originType = '';
+      
+      if ($request->Fromdate != NULL) {
+        $fdate = \Carbon\Carbon::parse($request->Fromdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($request->Fromdate)->format('m')."-". \Carbon\Carbon::parse($request->Fromdate)->format('d');
+      }
+      if ($request->Todate != NULL) {
+        $tdate = \Carbon\Carbon::parse($request->Todate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($request->Todate)->format('m')."-". \Carbon\Carbon::parse($request->Todate)->format('d');
+      }
+      if ($request->typeCar != NULL) {
+        $typeCar = $request->get('typeCar');
+      }
+      if ($request->originType != NULL) {
+        $originType = $request->get('originType');
+      }
 
-      if ($request->has('Fromdate')) {
-        $fdate = $request->get('Fromdate');
-      }
-      if ($request->has('Todate')) {
-        $tdate = $request->get('Todate');
-      }
-      if ($request->has('carType')) {
-        $carType = $request->get('carType');
-      }
-      if ($request->has('originType')) {
-        $originType = $request->originType;
-      }
 
-      $fdate = \Carbon\Carbon::parse($fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($fdate)->format('m')."-". \Carbon\Carbon::parse($fdate)->format('d');
-      $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
-
-      if ($request->id == 1) {
-        if ($carType != Null) {
+      if ($request->type == 1 or $request->type == 2) {    //รายงานพนักงาน & ผู้บริหาร
+        if ($typeCar == '6') {
           $dataReport = DB::table('data_cars')
               ->leftjoin('check_documents','data_cars.id','=','check_documents.Datacar_id')
               ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+                return $q->whereBetween('data_cars.Date_Status',[$fdate,$tdate]);
               })
-              ->when(!empty($carType), function($q) use($carType){
-                return $q->where('data_cars.Car_type',$carType);
-              })
-              ->when(!empty($originType), function($q) use($originType){
-                return $q->whereIn('data_cars.Origin_Car',$originType);
-              })
-              ->orderBy('data_cars.create_date', 'ASC')
-              ->get();
-        }
-        elseif($originType != Null)
-        {
-          $dataReport = DB::table('data_cars')
-              ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-              ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+              ->when(!empty($typeCar), function($q) use($typeCar){
+                return $q->where('data_cars.Car_type',$typeCar);
               })
               ->when(!empty($originType), function($q) use($originType){
-                return $q->whereIn('data_cars.Origin_Car',$originType);
+                return $q->where('data_cars.Origin_Car',$originType);
               })
-              ->where('data_cars.Car_type','<>',6)
-              ->orderBy('data_cars.create_date', 'ASC')
+              ->orderBy('data_cars.Date_Status', 'ASC')
               ->get();
-        }
-        else{
+        }else {
           $dataReport = DB::table('data_cars')
-              ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+              ->leftjoin('check_documents','data_cars.id','=','check_documents.Datacar_id')
               ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
+                return $q->whereBetween('data_cars.Date_Status',[$fdate,$tdate]);
               })
-              ->where('data_cars.Car_type','<>',6)
-              ->orderBy('data_cars.create_date', 'ASC')
+              ->when(!empty($typeCar), function($q) use($typeCar){
+                return $q->where('data_cars.Car_type',$typeCar);
+              })
+              ->when(!empty($originType), function($q) use($originType){
+                return $q->where('data_cars.Origin_Car',$originType);
+              })
+              ->where('data_cars.Car_type','!=',6)
+              ->orderBy('data_cars.Date_Status', 'ASC')
               ->get();
         }
 
-        $SetConn = "StockCAR ".$date;
-
-        $ReportType = $request->id;
-        if ($request->has('admin')) {
-          $AdminType = $request->get('admin');
-        }else{
-          $AdminType = '0';
+        if ($request->type == 1) {
+          $AdminType = 1;   //พนักงาน
+          $ReportType = 1;
+        }
+        elseif ($request->type == 2) {
+          $AdminType = 2;   //ผู้บริหาร
+          $ReportType = 1;
+        }
+        
+        if ($typeCar == '1') {
+          $txtType = 'รถนำเข้าใหม่';
+        }elseif ($typeCar == '2') {
+          $txtType = 'รถระหว่างทำสี';
+        }elseif ($typeCar == '3') {
+          $txtType = 'รถรอซ่อม';
+        }elseif ($typeCar == '4') {
+          $txtType = 'รถระหว่างซ่อม';
+        }elseif ($typeCar == '5') {
+          $txtType = 'รถพร้อมขาย';
+        }elseif ($typeCar == '6') {
+          $txtType = 'รถขายแล้ว';
+        }elseif ($typeCar == '7') {
+          $txtType = 'รถส่งประมูล';
+        }else {
+          $txtType = 'รถยนต์ทั้งหมด';
         }
 
-        // dd($dataReport);
-
-        $ReportType = $request->id;
-        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType', 'AdminType','fdate','tdate']));
-        $html = $view->render();
-        $pdf = new PDF();
-        $pdf::SetTitle('รายการรถยนต์ทั้งหมด');
-        $pdf::AddPage('L', 'A4');
-        // $pdf::SetFont('freeserif');
-        $pdf::SetFont('thsarabunpsk', '', 15, '', true);
-        $pdf::SetMargins(10, 5, 5, 5);
-        $pdf::SetAutoPageBreak(TRUE, 25);
-        $pdf::WriteHTML($html,true,false,true,false,'');
-        $pdf::Output($SetConn.'.pdf');
-      }
-      elseif ($request->id == 6) {
-        $dataReport = DB::table('data_cars')
-                      ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-                      ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                             return $q->whereBetween('data_cars.Date_Soldout_plus',[$fdate,$tdate]);
-                             })
-                     ->where('data_cars.Car_type','=',6)
-                     ->orderBy('data_cars.Date_Soldout_plus', 'ASC')
-                     ->get();
-
-        $ReportType = $request->id;
-        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType','fdate','tdate']));
-        $html = $view->render();
-        $pdf = new PDF();
-        $pdf::SetTitle('รายการรถยนต์ที่ขายแล้ว');
-        $pdf::AddPage('L', 'A4');
-        $pdf::SetFont('freeserif');
-        $pdf::WriteHTML($html,true,false,true,false,'');
-        $pdf::Output('report.pdf');
-      }
-    }
-
-    public function ReportPDFManager(Request $request)
-    {
-      date_default_timezone_set('Asia/Bangkok');
-      $Y = date('Y')+543;
-      $m = date('m');
-      $d = date('d');
-      $date = $d.'-'.$m.'-'.$Y;
-
-      $fdate = '';
-      $tdate = '';
-      $carType = '';
-      $originType = '';
-
-      if ($request->Fromdate != '') {
-        $b_fdate = $request->get('Fromdate');
-        $fdate = \Carbon\Carbon::parse($b_fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($b_fdate)->format('m')."-". \Carbon\Carbon::parse($b_fdate)->format('d');
-      }else{
-        $fdate = $request->get('Fromdate');
-      }
-      if ($request->Todate != '') {
-        $b_tdate = $request->get('Todate');
-        $tdate = \Carbon\Carbon::parse($b_tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($b_tdate)->format('m')."-". \Carbon\Carbon::parse($b_tdate)->format('d');
-      }else{
-        $tdate = $request->get('Todate');
-      }
-      // if ($request->has('Fromdate')) {
-      //     $fdate = $request->get('Fromdate');
-      // }
-      // if ($request->has('Todate')) {
-      //     $tdate = $request->get('Todate');
-      // }
-      if ($request->has('originType')) {
-        $originType = $request->originType;
-      }
-
-          $dataReport = DB::table('data_cars')
-          ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-          ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-            return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
-          })
-          ->when(!empty($originType), function($q) use($originType){
-            return $q->whereIn('data_cars.Origin_Car',$originType);
-          })
-          ->where('data_cars.Car_type','<>',6)
-          ->orderBy('data_cars.create_date', 'ASC')
-          ->get();
-
-
+        $txtorigin = '';
+        if ($originType == '1') {
+          $txtorigin = 'CKL';
+        }elseif ($originType == '2') {
+          $txtorigin = 'รถประมูล';
+        }elseif ($originType == '3') {
+          $txtorigin = 'รถยึด';
+        }elseif ($originType == '4') {
+          $txtorigin = 'รถฝากขาย';
+        }
+                 
         $SetConn = "StockCAR ".$date;
 
-        $ReportType = $request->id;
-        $AdminType = 1;
-
-
-        // $fdate = $request->get('Fromdate');
-        // $tdate = $request->get('Todate');
-
-        $ReportType = $request->id;
-        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType', 'AdminType','fdate','tdate']));
+        $view = \View::make('homecar.export' ,compact(['dataReport','ReportType', 'AdminType','fdate','tdate','txtType','txtorigin']));
         $html = $view->render();
         $pdf = new PDF();
         $pdf::SetTitle('รายการสต็อกรถยนต์');
@@ -1242,7 +1176,27 @@ class DatacarController extends Controller
         $pdf::SetAutoPageBreak(TRUE, 25);
         $pdf::WriteHTML($html,true,false,true,false,'');
         $pdf::Output($SetConn.'.pdf');
-      
+      }
+      elseif ($request->type == 3) { //รายงาน รถส่งประมูล
+          $dataReport = DB::table('data_cars')
+              ->where('data_cars.Car_type','=', 7)
+              ->orderBy('data_cars.Date_Status', 'ASC')
+              ->get();
+
+          $ReportType = $request->type;
+
+          $view = \View::make('homecar.export' ,compact(['dataReport','ReportType','fdate','tdate']));
+          $html = $view->render();
+          $pdf = new PDF();
+          $pdf::SetTitle('รายการรถยนต์ส่งประมูล');
+          $pdf::AddPage('L', 'A4');
+          $pdf::SetFont('thsarabunpsk', '', 15, '', true);
+          $pdf::SetMargins(10, 5, 5, 5);
+          $pdf::SetAutoPageBreak(TRUE, 25);
+          $pdf::WriteHTML($html,true,false,true,false,'');
+          $pdf::Output('report.pdf');
+
+      }
     }
 
     public function ReportPDF(Request $request)

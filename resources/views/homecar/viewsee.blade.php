@@ -560,7 +560,7 @@
                   </div>
                   <div class="col-6">
                     <div class="form-group row mb-1">
-                      <label class="col-sm-4 col-form-label text-right"><font color="red">ราคาขาย</font> :</label>
+                      <label class="col-sm-4 col-form-label text-right"><font color="red">ราคาตั้งขาย</font> :</label>
                       <div class="col-sm-8">
                         <input type="text" id="NetCar" name="NetCar" class="form-control form-control-sm" value="{{number_format($datacar->Net_Price, 2)}}" oninput="sum();" readonly/>
                       </div>

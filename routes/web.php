@@ -22,13 +22,12 @@ Route::group(['middleware' => 'auth'], function(){
     route::resource('MasterMaindata','UserController');
 
     route::resource('MasterDatacar','DatacarController');
-    Route::get('/ExportPDF', 'DatacarController@ReportPDF');
-    Route::get('/ExportPDFIndex', 'DatacarController@ReportPDFIndex');
+    // Route::get('/ExportPDF', 'DatacarController@ReportPDF');
+    Route::post('/ExportPDFIndex', 'DatacarController@ReportPDFIndex');
     Route::get('/datacar/viewsee/{id}/{car_type}', 'DatacarController@viewsee')->name('datacar.viewsee');
     Route::get('/datacar/view/{type}', 'DatacarController@index')->name('datacar');
     Route::get('/datacar/create/{type}', 'DatacarController@create')->name('datacar.create');
     Route::post('/datacar/store', 'DatacarController@store')->name('datacar.store');
-    Route::post('/datacar/report', 'DatacarController@ReportPDFManager')->name('datacar.report');
     Route::get('/datacar/edit/{id}/{car_type}', 'DatacarController@edit')->name('datacar.edit');
     Route::patch('/datacar/updateinfo/{id}', 'DatacarController@updateinfo')->name('datacar.updateinfo');
     Route::delete('/datacar/delete/{id}', 'DatacarController@destroy')->name('datacar.destroy');

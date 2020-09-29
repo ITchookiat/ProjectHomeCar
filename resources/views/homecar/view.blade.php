@@ -40,6 +40,8 @@
               <h4><b>รายการ{{$title}}</b></h4>
             </div>
             <div class="card-body text-sm">
+
+              {{-- ส่วนหัว --}}
               @if($type == 1 or $type == 6)
                 <form method="get" action="{{ route('datacar',$type) }}">
                   <div style="text-align:right;">
@@ -52,18 +54,14 @@
                           <span class="fas fa-print"></span> ปริ้นรายการ
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                          <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}">รายงาน สำหรับพนักงาน</a></li>
-                          {{-- <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-4" data-backdrop="static" data-keyboard="false">รายงาน สำหรับพนักงาน</a></li> --}}
+                          {{-- <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}">รายงาน สำหรับพนักงาน</a></li> --}}
+                          <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-4" data-backdrop="static" data-keyboard="false">รายงาน สำหรับพนักงาน</a></li>
                           @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
                             <li class="divider"></li>
-                            <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-report" data-backdrop="static" data-keyboard="false">รายงาน สำหรับผู้บริหาร</a></li>
+                            <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-5" data-backdrop="static" data-keyboard="false">รายงาน สำหรับผู้บริหาร</a></li>
                           @endif
                         </ul>
                       </div>
-                    @elseif($type == 6)
-                      <a target="_blank"  class="btn bg-primary btn-app" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}">
-                        <span class="fas fa-print"></span> ปริ้นรายการ
-                      </a>
                     @endif
                     <button type="submit" class="btn bg-warning btn-app">
                       <span class="fas fa-search"></span> Search
@@ -95,17 +93,17 @@
                     </div>
                   </div>
                 </form>
-              @elseif ($type == 5)
-                <div class="float-right form-inline">
-                  <a target="_blank" href="{{ action('DatacarController@ReportPDF') }}?id={{$type}}" class="btn bg-primary btn-app">
-                    <span class="fas fa-print"></span> ปริ้นรายการ
-                  </a>
-                </div>
               @elseif($type == 14)
                 <div class="row">
                   <div class="col-md-12">
                     <form method="get" action="{{ route('datacar',$type) }}">
                       <div class="float-right form-inline">
+                        <button type="button" class="btn bg-primary btn-app" data-toggle="dropdown">
+                          <span class="fas fa-print"></span> ปริ้นรายการ
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-6" data-backdrop="static" data-keyboard="false">รายงานรถส่งประมูล</a></li>
+                        </ul>
                         <button type="submit" class="btn bg-warning btn-app">
                           <span class="fas fa-search"></span> Search
                         </button>
@@ -121,6 +119,7 @@
                 </div>
               @endif
 
+              {{-- เนื้อหา --}}
               @if($type == 12)
                 <div class="table-responsive">
                   <table id="table1" class="table table-bordered table-striped">
@@ -368,9 +367,11 @@
                               </button>
                             @endif
                             @if($type != 6 and $type != 44)
-                              <a href="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
-                              <i class="far fa-edit"></i> 
-                              </a>
+                              @if($row->Car_type != '6')
+                                <a href="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                <i class="far fa-edit"></i> 
+                                </a>
+                              @endif
                             @endif
                             @if ($type == 6)
                               <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-buyinfo"
@@ -413,86 +414,7 @@
     </div>
   </section>
 
-  @if($type != 12 and $type != 14)
-    <form target="_blank" action="{{ route('datacar.report') }}" method="post">
-      @csrf
-      <div class="modal fade" id="modal-report" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">รายงานสต็อกรถยนต์</h5>
-              <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body text-sm">
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-group row mb-1">
-                    <label class="col-sm-4 col-form-label text-right">จากวันที่ : </label>
-                    <div class="col-sm-7">
-                    <input type="date" id="Fromdate" name="Fromdate" value="{{ ($fdate != '') ?$fdate: '' }}" class="form-control" />
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-group row mb-1">
-                  <label class="col-sm-4 col-form-label text-right">ถึงวันที่ : </label>
-                    <div class="col-sm-7">
-                      <input type="date" id="Todate" name="Todate" value="{{ ($tdate != '') ?$tdate: '' }}" class="form-control" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-11">
-                  <div class="form-group clearfix">
-                    <div class="icheck-primary d-inline">
-                      <input type="checkbox" name="originType[]" id="checkboxPrimary1" value="1">
-                      <label for="checkboxPrimary1">
-                        รถ CKL
-                      </label>
-                    </div>
-                    &nbsp;
-                    <div class="icheck-primary d-inline">
-                      <input type="checkbox" name="originType[]" id="checkboxPrimary2" value="2">
-                      <label for="checkboxPrimary2">
-                        รถประมูล
-                      </label>
-                    </div>
-                    &nbsp;
-                    <div class="icheck-primary d-inline">
-                      <input type="checkbox" name="originType[]" id="checkboxPrimary3" value="3">
-                      <label for="checkboxPrimary3">
-                        รถยึด
-                      </label>
-                    </div>
-                    &nbsp;
-                    <div class="icheck-primary d-inline">
-                      <input type="checkbox" name="originType[]" id="checkboxPrimary4" value="4">
-                      <label for="checkboxPrimary4">
-                        รถฝากขาย
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <hr>
-            </div>
-            <input type="hidden" name="id" value="1">
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary">ปริ้นรายงาน</button>
-            </div>
-            <br>
-          </div>
-        </div>
-      </div>
-    </form>
-  @endif
-
-  {{-- <div class="modal fade" id="modal-4">
+  <div class="modal fade" id="modal-4">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-body">
@@ -505,9 +427,10 @@
             </div>
           </div>
       </div>
-          <div class="modal-body text-sm">
+        <div class="modal-body text-sm">
           <form target="_blank" action="{{ action('DatacarController@ReportPDFIndex') }}" method="post">
             @csrf
+            <input type="hidden" name="type" value="1">
             <div class="row">
               <div class="col-6">
                 <div class="form-group row mb-1">
@@ -535,15 +458,15 @@
               <div class="col-sm-3">
                 <div class="form-group text-left">
                   <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio1" name="typeCar" value="รถนำเข้าใหม่">
+                    <input class="custom-control-input" type="radio" id="customRadio1" name="typeCar" value="1">
                     <label for="customRadio1" class="custom-control-label">รถนำเข้าใหม่</label>
                   </div>
                   <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio2" name="typeCar" value="รถระหว่างทำสี">
+                    <input class="custom-control-input" type="radio" id="customRadio2" name="typeCar" value="2">
                     <label for="customRadio2" class="custom-control-label">รถระหว่างทำสี</label>
                   </div>
                   <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio3" name="typeCar" value="รถรอซ่อม">
+                    <input class="custom-control-input" type="radio" id="customRadio3" name="typeCar" value="3">
                     <label for="customRadio3" class="custom-control-label">รถรอซ่อม</label>
                   </div>
                 </div>
@@ -552,15 +475,15 @@
               <div class="col-sm-3">
                 <div class="form-group">
                   <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio4" name="typeCar" value="รถระหว่างซ่อม">
+                    <input class="custom-control-input" type="radio" id="customRadio4" name="typeCar" value="4">
                     <label for="customRadio4" class="custom-control-label">รถระหว่างซ่อม</label>
                   </div>
                   <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio5" name="typeCar" value="รถพร้อมขาย">
+                    <input class="custom-control-input" type="radio" id="customRadio5" name="typeCar" value="5">
                     <label for="customRadio5" class="custom-control-label">รถพร้อมขาย</label>
                   </div>
                   <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio6" name="typeCar" value="รถขายแล้ว">
+                    <input class="custom-control-input" type="radio" id="customRadio6" name="typeCar" value="6">
                     <label for="customRadio6" class="custom-control-label">รถขายแล้ว</label>
                   </div>
                 </div>
@@ -569,22 +492,49 @@
               <div class="col-sm-3">
                 <div class="form-group">
                   <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio7" name="typeCar" value="รถยืมใช้">
-                    <label for="customRadio7" class="custom-control-label">รถยืมใช้</label>
-                  </div>
-                  <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio8" name="typeCar" value="รถส่งประมูล">
+                    <input class="custom-control-input" type="radio" id="customRadio8" name="typeCar" value="7">
                     <label for="customRadio8" class="custom-control-label">รถส่งประมูล</label>
                   </div>
                 </div>
               </div>
             </div>
   
+            <div class="row">
+              <div class="col-sm-2 text-center">
+                <label>ที่มาของรถ : </label>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group text-left">
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio9" name="originType" value="1">
+                    <label for="customRadio9" class="custom-control-label">CKL</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio10" name="originType" value="2">
+                    <label for="customRadio10" class="custom-control-label">รถประมูล</label>
+                  </div>
+                </div>
+              </div> 
+              
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio11" name="originType" value="3">
+                    <label for="customRadio11" class="custom-control-label">รถยึด</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio12" name="originType" value="4">
+                    <label for="customRadio12" class="custom-control-label">รถฝากขาย</label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
             <div class="card-footer text-center">
               <button type="submit" class="btn bg-warning btn-app">
                 <i class="fas fa-search"></i> print
               </button>
-              <a class="btn btn-app bg-danger" href="#">
+              <a class="btn btn-app bg-danger" href="{{ route('datacar',1) }}">
                 <i class="fas fa-times"></i> ยกเลิก
               </a>
             </div>
@@ -592,7 +542,188 @@
         </div>
       </div>
     </div>
-  </div> --}}
+  </div>
+
+  <div class="modal fade" id="modal-5">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="card card-danger">
+            <div class="card-header">
+              <h4 class="card-title">รายงานสต็อกรถยนต์</h4>
+              <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+          </div>
+      </div>
+        <div class="modal-body text-sm">
+          <form target="_blank" action="{{ action('DatacarController@ReportPDFIndex') }}" method="post">
+            @csrf
+            <input type="hidden" name="type" value="2">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group row mb-1">
+                  <label class="col-sm-3 col-form-label text-right">จากวันที่ : </label>
+                  <div class="col-sm-8">
+                  <input type="date" id="Fromdate" name="Fromdate" value="{{ date('Y-m-d') }}" class="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group row mb-1">
+                <label class="col-sm-3 col-form-label text-right">ถึงวันที่ : </label>
+                  <div class="col-sm-8">
+                    <input type="date" id="Todate" name="Todate" value="{{ date('Y-m-d') }}" class="form-control" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <div class="row">
+              <div class="col-sm-2 text-center">
+                <label>สถานะ : </label>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group text-left">
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio11" name="typeCar" value="1">
+                    <label for="customRadio11" class="custom-control-label">รถนำเข้าใหม่</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio22" name="typeCar" value="2">
+                    <label for="customRadio22" class="custom-control-label">รถระหว่างทำสี</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio33" name="typeCar" value="3">
+                    <label for="customRadio33" class="custom-control-label">รถรอซ่อม</label>
+                  </div>
+                </div>
+              </div> 
+              
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio44" name="typeCar" value="4">
+                    <label for="customRadio44" class="custom-control-label">รถระหว่างซ่อม</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio55" name="typeCar" value="5">
+                    <label for="customRadio55" class="custom-control-label">รถพร้อมขาย</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio66" name="typeCar" value="6">
+                    <label for="customRadio66" class="custom-control-label">รถขายแล้ว</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio88" name="typeCar" value="7">
+                    <label for="customRadio88" class="custom-control-label">รถส่งประมูล</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-sm-2 text-center">
+                <label>ที่มาของรถ : </label>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group text-left">
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio99" name="originType" value="1">
+                    <label for="customRadio99" class="custom-control-label">CKL</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio101" name="originType" value="2">
+                    <label for="customRadio101" class="custom-control-label">รถประมูล</label>
+                  </div>
+                </div>
+              </div> 
+              
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio111" name="originType" value="3">
+                    <label for="customRadio111" class="custom-control-label">รถยึด</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="customRadio121" name="originType" value="4">
+                    <label for="customRadio121" class="custom-control-label">รถฝากขาย</label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="card-footer text-center">
+              <button type="submit" class="btn bg-warning btn-app">
+                <i class="fas fa-search"></i> print
+              </button>
+              <a class="btn btn-app bg-danger" href="{{ route('datacar',1) }}" >
+                <i class="fas fa-times"></i> ยกเลิก
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-6">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="card card-warning">
+            <div class="card-header">
+              <h4 class="card-title">รายงานรถส่งประมูล</h4>
+              <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+          </div>
+      </div>
+        <div class="modal-body text-sm">
+          <form target="_blank" action="{{ action('DatacarController@ReportPDFIndex') }}" method="post">
+            @csrf
+            <input type="hidden" name="type" value="3">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group row mb-1">
+                  <label class="col-sm-3 col-form-label text-right">จากวันที่ : </label>
+                  <div class="col-sm-8">
+                  <input type="date" id="Fromdate" name="Fromdate" value="{{ date('Y-m-d') }}" class="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group row mb-1">
+                <label class="col-sm-3 col-form-label text-right">ถึงวันที่ : </label>
+                  <div class="col-sm-8">
+                    <input type="date" id="Todate" name="Todate" value="{{ date('Y-m-d') }}" class="form-control" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <div class="card-footer text-center">
+              <button type="submit" class="btn bg-warning btn-app">
+                <i class="fas fa-search"></i> print
+              </button>
+              <a class="btn btn-app bg-danger" href="{{ route('datacar',1) }}" >
+                <i class="fas fa-times"></i> ยกเลิก
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Pop up รายละเอียดค่าใช้จ่าย -->
   <div class="modal fade" id="modal-default">
@@ -618,6 +749,23 @@
       </div>
     </div>
   </div>
+
+  {{-- Popup --}}
+  <script>
+    $(function () {
+      $("#modal-default").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-default .modal-body").load(link, function(){
+        });
+      });
+
+      $("#modal-buyinfo").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-buyinfo .modal-body").load(link, function(){
+        });
+      });
+    });
+  </script>
   
   {{-- button-to-top --}}
   <script>
@@ -650,30 +798,5 @@
     });
   </script>
 
-  {{-- Popup --}}
-  <script>
-    $(function () {
-      $("#modal-default").on("show.bs.modal", function (e) {
-        var link = $(e.relatedTarget).data("link");
-        $("#modal-default .modal-body").load(link, function(){
-        });
-      });
-
-      $("#modal-buyinfo").on("show.bs.modal", function (e) {
-        var link = $(e.relatedTarget).data("link");
-        $("#modal-buyinfo .modal-body").load(link, function(){
-        });
-      });
-    });
-  </script>
-
-  <script type="text/javascript">
-      $("#close").click(function () {
-        $("#modal-report").modal('hide');
-        var Datepay = ''
-        $('#Fromdate').val(Datepay);
-        $('#Todate').val(Datepay);
-      });
-  </script>
 
 @endsection

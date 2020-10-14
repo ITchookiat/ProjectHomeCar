@@ -1098,7 +1098,7 @@ class DatacarController extends Controller
           $dataReport = DB::table('data_cars')
               ->leftjoin('check_documents','data_cars.id','=','check_documents.Datacar_id')
               ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                return $q->whereBetween('data_cars.Date_Status',[$fdate,$tdate]);
+                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
               })
               ->when(!empty($typeCar), function($q) use($typeCar){
                 return $q->where('data_cars.Car_type',$typeCar);
@@ -1106,13 +1106,13 @@ class DatacarController extends Controller
               ->when(!empty($originType), function($q) use($originType){
                 return $q->where('data_cars.Origin_Car',$originType);
               })
-              ->orderBy('data_cars.Date_Status', 'ASC')
+              ->orderBy('data_cars.create_date', 'ASC')
               ->get();
         }else {
           $dataReport = DB::table('data_cars')
               ->leftjoin('check_documents','data_cars.id','=','check_documents.Datacar_id')
               ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
-                return $q->whereBetween('data_cars.Date_Status',[$fdate,$tdate]);
+                return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
               })
               ->when(!empty($typeCar), function($q) use($typeCar){
                 return $q->where('data_cars.Car_type',$typeCar);
@@ -1121,7 +1121,7 @@ class DatacarController extends Controller
                 return $q->where('data_cars.Origin_Car',$originType);
               })
               ->where('data_cars.Car_type','!=',6)
-              ->orderBy('data_cars.Date_Status', 'ASC')
+              ->orderBy('data_cars.create_date', 'ASC')
               ->get();
         }
 
@@ -1180,7 +1180,7 @@ class DatacarController extends Controller
       elseif ($request->type == 3) { //รายงาน รถส่งประมูล
           $dataReport = DB::table('data_cars')
               ->where('data_cars.Car_type','=', 7)
-              ->orderBy('data_cars.Date_Status', 'ASC')
+              ->orderBy('data_cars.create_date', 'ASC')
               ->get();
 
           $ReportType = $request->type;

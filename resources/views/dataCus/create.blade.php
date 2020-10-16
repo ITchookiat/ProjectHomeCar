@@ -300,7 +300,7 @@
           </div>
 
           {{-- ผู้เสนอราคา --}}
-          <input type="hidden" name="SaleCus" value="{{ auth::user()->name }}" class="form-control form-control-sm" placeholder="ผู้เสนอราคา" readonly/>
+          <input type="hidden" name="SaleCus" value="{{ auth::user()->username }}" class="form-control form-control-sm" placeholder="ผู้เสนอราคา" readonly/>
   
           <div class="row">
             <div class="col-6">

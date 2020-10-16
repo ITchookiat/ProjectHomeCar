@@ -197,9 +197,16 @@
                       <h3 class="card-title"><i class="fas fa-car"></i> ข้อมูลรถยนต์</h3>
   
                       <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        @if($datacar->BookStatus_Car == 'จอง')
+                          <button type="button" class="btn btn-primary btn-tool" data-toggle="modal" data-target="#modal-1">
+                            <i class="fas fa-user"></i> รถยนต์ติดจอง
+                          </button>
+                        @endif
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                          <i class="fas fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                          <i class="fas fa-expand"></i>
                         </button>
                       </div>
                     </div>
@@ -222,22 +229,6 @@
                                   <option value="{{$key}}" {{ ($key == $datacar->Car_type) ? 'selected' : '' }}>{{$value}}</option>
                                 @endforeach
                               </select>
-                            </div>
-                          </div>
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right"></label>
-                            <div class="col-sm-8">
-                              <span class="todo-wrap">
-                                @if($datacar->BookStatus_Car == 'จอง')
-                                  <input type="checkbox" id="7" name="BookStatus" value="{{$datacar->BookStatus_Car}}" checked="checked"/>
-                                @else
-                                  <input type="checkbox" id="7" name="BookStatus" value="จอง" />
-                                @endif
-                                <label for="7" class="todo">
-                                  <i class="fa fa-check"></i>
-                                  <font color="blue">รถยนต์ติดจอง</font>
-                                </label>
-                              </span>
                             </div>
                           </div>
                         </div>
@@ -862,6 +853,293 @@
       </div>
     </section>
 
+    <!-- Pop up เพิ่มข้อมูล -->
+    <div class="modal fade" id="modal-1">
+      <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+              <div class="modal-body">
+                <div class="card card-warning">
+                  <div class="card-header">
+                    <h4 class="card-title">
+                      <i class="fas fa-user"></i>&nbsp;
+                      ข้อมูลลูกค้า
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="card-body text-sm">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">ชื่อ - นามสกุล : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="NameCus" class="form-control form-control-sm" value="{{ $datacar->Name_Cus }}"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">เบอร์ติดต่อ : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="PhoneCus" class="form-control form-control-sm" value="{{ $datacar->Phone_Cus }}" data-inputmask="&quot;mask&quot;:&quot;999-9999999,999-9999999&quot;" data-mask=""/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">เลขบัตร ปชช. : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="IDCardCus" class="form-control form-control-sm" value="{{ $datacar->IDCard_Cus }}" data-inputmask="&quot;mask&quot;:&quot;9-9999-99999-99-9&quot;" data-mask="" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">ที่อยู่ : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="AddressCus" class="form-control form-control-sm" value="{{ $datacar->Address_Cus }}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">จังหวัด/ไปรษณีย์ : </label>
+                          <div class="col-sm-4">
+                            <input type="text" name="ProvinceCus" class="form-control form-control-sm" value="{{ $datacar->Province_Cus }}"/>
+                          </div>
+                          <div class="col-sm-4">
+                            <input type="text" name="ZipCus" class="form-control form-control-sm"value="{{ $datacar->Zip_Cus }}" data-inputmask="&quot;mask&quot;:&quot;99999&quot;" data-mask=""/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">Email : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="EmailCus" class="form-control form-control-sm" value="{{ $datacar->Email_Cus }}"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">อาชีพ : </label>
+                          <div class="col-sm-8">
+                            <input type="text" name="CareerCus" class="form-control form-control-sm" value="{{ $datacar->Career_Cus }}" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">แหล่งที่มาลูกค้า : </label>
+                          <div class="col-sm-8">
+                            <select name="OriginCus" class="form-control form-control-sm">
+                              <option value="" selected>--- แหล่งที่มา ---</option>
+                              <option value="ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย" {{ ($datacar->Origin_Cus === 'ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย') ? 'selected' : '' }}>ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย</option>
+                              <option value="ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า" {{ ($datacar->Origin_Cus === 'ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า') ? 'selected' : '' }}>ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า</option>
+                              <option value="นายหน้า/ลูกค้าแนะนำ" {{ ($datacar->Origin_Cus === 'นายหน้า/ลูกค้าแนะนำ') ? 'selected' : '' }}>นายหน้า/ลูกค้าแนะนำ</option>
+                              <option value="อื่นๆ..." {{ ($datacar->Origin_Cus === 'อื่นๆ...') ? 'selected' : '' }}>อื่นๆ...</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">รูปแบบลูกค้า : </label>
+                          <div class="col-sm-8">
+                            <select name="modelCus" class="form-control form-control-sm">
+                              <option value="" selected>--- เลือกรูปแบบ ---</option>
+                              <option value="Walk In" {{ ($datacar->model_Cus === 'Walk In') ? 'selected' : '' }}>Walk In</option>
+                              <option value="Call In" {{ ($datacar->model_Cus === 'Call In') ? 'selected' : '' }}>Call In</option>
+                              <option value="Other" {{ ($datacar->model_Cus === 'Other') ? 'selected' : '' }}>Other</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"><font color="red">ผู้เสนอราคา : </font></label>
+                          <div class="col-sm-8">
+                          <input type="text" name="SaleCus" value="{{ $datacar->Sale_Cus }}" class="form-control form-control-sm" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"><font color="red">วันที่รับลูกค้า : </font></label>
+                          <div class="col-sm-8">
+                            <input type="date" name="DateSaleCus" class="form-control form-control-sm" value="{{ $datacar->DateSale_Cus }}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">เงินมัดจำ : </label>
+                          <div class="col-sm-8">
+                          <input type="text" name="CashStatusCus" id="CashStatusCus" class="form-control form-control-sm" value="{{ number_format($datacar->CashStatus_Cus, 0) }}" oninput="Comma();"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right">หมายเหตุ : </label>
+                          <div class="col-sm-8">
+                            <textarea name="CusNote" class="form-control form-control-sm form-control form-control-sm-sm" placeholder="ป้อนหมายเหตุ" rows="3">{{$datacar->Note_Cus}}</textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"><font color="red">สถานะลูกค้า : </font></label>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($datacar->Status_Cus == "ติดตาม")
+                                <input type="checkbox" id="7" name="StatusCus" value="{{ $datacar->Status_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="7" name="StatusCus" value="ติดตาม"/>
+                              @endif
+                              <label for="7" class="todo">
+                                <i class="fa fa-check"></i>
+                                ติดตาม
+                              </label>
+                            </span>
+                          </div>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($datacar->Status_Cus == "จอง")
+                                <input type="checkbox" id="8" name="StatusCus" value="{{ $datacar->Status_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="8" name="StatusCus" value="จอง"/>
+                              @endif
+                              <label for="8" class="todo">
+                                <i class="fa fa-check"></i>
+                                จองรถ
+                              </label>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"></label>  
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($datacar->Status_Cus == "ยกเลิกจอง")
+                                <input type="checkbox" id="9" name="StatusCus" value="{{ $datacar->Status_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="9" name="StatusCus" value="ยกเลิกจอง"/>
+                              @endif
+                              <label for="9" class="todo">
+                                <i class="fa fa-check"></i>
+                                ยกเลิกจอง
+                              </label>
+                            </span>
+                          </div>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($datacar->Status_Cus == "ส่งมอบ")
+                                <input type="checkbox" id="10" name="StatusCus" value="{{ $datacar->Status_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="10" name="StatusCus" value="ส่งมอบ"/>
+                              @endif
+                              <label for="10" class="todo">
+                                <i class="fa fa-check"></i>
+                                ส่งมอบ
+                              </label>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"><font color="red">ประเภทลูกค้า : </font></label>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($datacar->Type_Cus == "Very Hot")
+                                <input type="checkbox" id="11" name="TypeCus" value="{{ $datacar->Type_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="11" name="TypeCus" value="Very Hot"/>
+                              @endif
+                              <label for="11" class="todo">
+                                <i class="fa fa-check"></i>
+                                Very Hot
+                              </label>
+                            </span>
+                          </div>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($datacar->Type_Cus == "Hot")
+                                <input type="checkbox" id="12" name="TypeCus" value="{{ $datacar->Type_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="12" name="TypeCus" value="Hot"/>
+                              @endif
+                              <label for="12" class="todo">
+                                <i class="fa fa-check"></i>
+                                Hot (1-5)
+                              </label>
+                            </span>
+                          </div>
+                        </div>
+            
+                        <div class="form-group row mb-0">
+                          <label class="col-sm-3 col-form-label text-right"></label>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($datacar->Type_Cus == "Warm")
+                                <input type="checkbox" id="13" name="TypeCus" value="{{ $datacar->Type_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="13" name="TypeCus" value="Warm"/>
+                              @endif
+                              <label for="13" class="todo">
+                                <i class="fa fa-check"></i>
+                                Warm (6-15)
+                              </label>
+                            </span>
+                          </div>
+                          <div class="col-sm-4">
+                            <span class="todo-wrap">
+                              @if($datacar->Type_Cus == "Cold")
+                                <input type="checkbox" id="14" name="TypeCus" value="{{ $datacar->Type_Cus }}" checked="checked"/>
+                              @else
+                                <input type="checkbox" id="14" name="TypeCus" value="Cold"/>
+                              @endif
+                              <label for="14" class="todo">
+                                <i class="fa fa-check"></i>
+                                Cold (มากกว่า 15)
+                              </label>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+              </div>
+          </div>
+      </div>
+  </div>
+
   {{-- button-to-top --}}
   <script>
     var btn = $('#button');
@@ -896,14 +1174,7 @@
       }
   </script>
 
-  <!-- เวลาแจ้งเตือน -->
-  <script>
-    $(".alert").fadeTo(3000, 500).slideUp(500, function(){
-    $(".alert").alert('close');
-    });;
-  </script>
-
-{{-- image --}}
+  {{-- image --}}
   <script type="text/javascript">
     $("#image-file,#Account_image,#image_checker_1,#image_checker_2").fileinput({
       uploadUrl:"{{ route('MasterDatacar.store') }}",

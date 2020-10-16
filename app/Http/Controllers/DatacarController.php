@@ -11,6 +11,7 @@ use File;
 
 use App\data_car;
 use App\Holdcar;
+use App\dataCustomer;
 use App\checkDocument;
 use App\UploadfileImage;
 use App\repair_part;
@@ -666,8 +667,10 @@ class DatacarController extends Controller
     public function edit(Request $request ,$id, $car_type)
     {
       $datacar = DB::table('data_cars')
-      ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-      ->where('data_cars.id',$id)->first();
+          ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+          ->leftJoin('data_customers','data_cars.id','=','data_customers.Datacar_id')
+          ->where('data_cars.id',$id)
+          ->first();
 
       $dataImage = DB::table('uploadfile_images')->where('Datacarfileimage_id',$id)->get();
 
@@ -929,7 +932,6 @@ class DatacarController extends Controller
           }
         }
         $user->Car_type = $request->get('Cartype');
-        $user->BookStatus_Car = $request->get('BookStatus');
         $user->Open_auction = $SetOpen_auction;
         $user->Close_auction = $SetClose_auction;
         $user->Expected_Sell = $SetExpected_Sell;

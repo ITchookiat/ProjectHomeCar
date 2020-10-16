@@ -487,18 +487,11 @@
                                 <label class="col-sm-3 col-form-label text-right">เลขทะเบียน : </label>
                                 <div class="col-sm-8">
                                   <select name="RegisterCar" id="RegisterCar" class="form-control form-control-sm RegisterCar select2 select2-hidden-accessible">
-                                    <option value="" selected>--- เลขทะเบียน ---</option>
-                                    @if ($data->F_DataCus_id == NULL)
+                                      <option value="" style="color:red">{{ $data->RegistCar_Cus }}</option>
+                                      <option disabled>------------------------------</option>
                                       @foreach ($dataRegis as $key => $value)
-                                        @if ($value->F_DataCus_id == NULL)
-                                          <option value="{{$value->id}}" {{ ($value->Number_Regist == $data->RegistCar_Cus) ? 'selected' : '' }}>{{ $value->Number_Regist }}</option>
-                                        @endif
+                                        <option value="{{$value->id}}">{{ $value->Number_Regist }}</option>
                                       @endforeach
-                                    @else
-                                      @foreach ($dataRegis as $key => $value)
-                                        <option value="{{$value->id}}" {{ ($value->Number_Regist == $data->RegistCar_Cus) ? 'selected' : '' }}>{{ $value->Number_Regist }}</option>
-                                      @endforeach
-                                    @endif
                                   </select>
                                   <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="10"></span>
                                 </div>

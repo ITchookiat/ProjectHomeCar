@@ -81,7 +81,7 @@
                     $ifdate = $Y.'-'.$m.'-'.$d;
                   @endphp
 
-                  @if($ifdate > $value->create_date && $value->Date_Sale == Null)
+                  @if($ifdate > $value->create_date && $value->Date_Soldout == Null)
                     @php
                       $Cldate = date_create($value->create_date);
                       $nowCldate = date_create($ifdate);
@@ -89,7 +89,7 @@
                     @endphp
                     {{$ClDateDiff->format("%a วัน")}}
 
-                  @elseif($value->Date_Sale != Null)
+                  @elseif($value->Date_Soldout != Null)
                     @php
                       $Cldate = date_create($value->create_date);
                       $nowCldate = date_create($value->Date_Sale);

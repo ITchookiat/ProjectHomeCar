@@ -184,20 +184,28 @@ class ResearchCusController extends Controller
                 $SetPriceCar = NULL;
             }
 
-            $dataCus = dataCustomer::where('RegistCar_Cus',$request->get('RegistCar'))->first();
-            if ($dataCus != NULL) {
-                    $dataCus->Status_Cus = NULL;
-                    $dataCus->DateStatus_Cus = NULL;
-                    $dataCus->Type_Cus = NULL;
-                    $dataCus->DateType_Cus = NULL;
-                    $dataCus->RegistCar_Cus = NULL;
-                    $dataCus->BrandCar_Cus = NULL;
-                    $dataCus->VersionCar_Cus = NULL;
-                    $dataCus->ColorCar_Cus = NULL;
-                    $dataCus->GearCar_Cus = NULL;
-                    $dataCus->YearCar_Cus = NULL;
-                    $dataCus->PriceCar_Cus = NULL;
-                $dataCus->update();
+            $GetID[] = NULL;
+            $dataCus = dataCustomer::where('RegistCar_Cus',$request->get('RegistCar'))->get();
+
+            if ($request->get('StatusCus') == 'จอง') {
+                foreach ($dataCus as $key => $value) {
+                    $GetID[] = $value->DataCus_id;
+                }
+                if ($GetID != NULL) {
+                    dataCustomer::whereIn('DataCus_id', $GetID)->update([
+                        'Status_Cus' => NULL,
+                        'DateStatus_Cus' => NULL,
+                        'Type_Cus' => NULL,
+                        'DateType_Cus' => NULL,
+                        'RegistCar_Cus' => NULL,
+                        'BrandCar_Cus' =>  NULL,
+                        'VersionCar_Cus' => NULL,
+                        'ColorCar_Cus' => NULL,
+                        'GearCar_Cus' => NULL,
+                        'YearCar_Cus' => NULL,
+                        'PriceCar_Cus' => NULL,
+                    ]);
+                }
             }
 
             $dataCus = new dataCustomer([
@@ -229,17 +237,19 @@ class ResearchCusController extends Controller
               ]);
             $dataCus->save();
 
-            if ($request->get('RegisterCar') != NULL) {
-                $dataCars = data_car::find($request->RegisterCar);
-                    $dataCars->F_DataCus_id = $dataCus->DataCus_id;
-                    $dataCars->BookStatus_Car = $request->get('StatusCus');
-                    $dataCars->DateStatus_Car = $SetDateStatus;
-                $dataCars->update();
+            if ($request->get('StatusCus') == 'จอง') {
+                if ($request->get('RegisterCar') != NULL) {
+                    $dataCars = data_car::find($request->RegisterCar);
+                        $dataCars->F_DataCus_id = $dataCus->DataCus_id;
+                        $dataCars->BookStatus_Car = $request->get('StatusCus');
+                        $dataCars->DateStatus_Car = $SetDateStatus;
+                    $dataCars->update();
 
-                $dataCus = dataCustomer::where('RegistCar_Cus',$request->get('RegistCar'))->first();
-                if ($dataCus != NULL) {
-                    $dataCus->Datacar_id = $dataCars->id;
-                    $dataCus->update();
+                    $dataCus = dataCustomer::where('RegistCar_Cus',$request->get('RegistCar'))->first();
+                    if ($dataCus != NULL) {
+                        $dataCus->Datacar_id = $dataCars->id;
+                        $dataCus->update();
+                    }
                 }
             }
 
@@ -316,7 +326,6 @@ class ResearchCusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request);
         if ($request->type == 1) {           //edit
             //ข้อมูลลูกค้า
             $dataCus = dataCustomer::find($id);
@@ -409,16 +418,68 @@ class ResearchCusController extends Controller
                 }
             $dataCus->update();
 
-            if ($request->get('RegisterCar') != NULL) {     //อัพเดต เลขทะเบียนรถ
-                $dataCar = data_car::where('Number_Regist',$request->get('Regist_Car'))->first();
-                    if ($dataCar != NULL) {
-                            $dataCar->F_DataCus_id = NULL;
-                            $dataCar->BookStatus_Car = NULL;
-                            $dataCar->DateStatus_Car = NULL;
-                        $dataCar->update();
-                    }
+            // $dataCar = data_car::where('F_DataCus_id',$id)->first();
+            // if ($dataCar != NULL) {
+            //         $dataCar->BookStatus_Car = $request->get('StatusCus');
+            //         $dataCar->DateStatus_Car = $SetDateStatus;
+            //     $dataCar->update();
+            // }
 
-                $dataCar = data_car::find($request->get('RegisterCar'));
+            //กรณี เลือกป้ายทะเบียนใหม่ หรือ เพิ่มป้ายใหม่
+            if ($request->get('RegisterCar') != NULL) {
+                // $dataCar = data_car::where('Number_Regist',$request->get('Regist_Car'))->first();
+                // //กรณี รถติดสถานะ ติดตาม อยู่แล้ว
+                // if ($dataCar != NULL) {
+                //         $dataCar->F_DataCus_id = NULL;
+                //         $dataCar->BookStatus_Car = NULL;
+                //         $dataCar->DateStatus_Car = NULL;
+                //     $dataCar->update();
+                // }
+
+                //เพิ่มสถานะรถใหม่ เข้าไปใหม่
+                if ($request->get('StatusCus') == 'จอง') {
+                    $dataCar = data_car::find($request->get('RegisterCar'));
+                        $dataCar->F_DataCus_id = $id;
+                        $dataCar->BookStatus_Car = $request->get('StatusCus');
+                        $dataCar->DateStatus_Car = date('Y-m-d');
+                    $dataCar->update();
+                    
+                    $dataCus = dataCustomer::where('DataCus_id',$id)->first();
+                    if ($dataCus != NULL) {
+                        $dataCus->Datacar_id = $dataCar->id;
+                        $dataCus->update();
+                    }
+                }
+
+            }
+
+            if ($request->get('StatusCus') == 'จอง') {
+                $GetID[] = NULL;
+                $dataCus = dataCustomer::where('RegistCar_Cus',$request->get('Regist_Car'))
+                        ->where('DataCus_id','!=', $id)
+                        ->get();
+
+                foreach ($dataCus as $key => $value) {
+                    $GetID[] = $value->DataCus_id;
+                }
+
+                if ($GetID != NULL) {
+                    dataCustomer::whereIn('DataCus_id', $GetID)->update([
+                        'Status_Cus' => NULL,
+                        'DateStatus_Cus' => NULL,
+                        'Type_Cus' => NULL,
+                        'DateType_Cus' => NULL,
+                        'RegistCar_Cus' => NULL,
+                        'BrandCar_Cus' =>  NULL,
+                        'VersionCar_Cus' => NULL,
+                        'ColorCar_Cus' => NULL,
+                        'GearCar_Cus' => NULL,
+                        'YearCar_Cus' => NULL,
+                        'PriceCar_Cus' => NULL,
+                    ]);
+                }
+
+                $dataCar = data_car::where('Number_Regist',$request->get('Regist_Car'))->first();
                     $dataCar->F_DataCus_id = $id;
                     $dataCar->BookStatus_Car = $request->get('StatusCus');
                     $dataCar->DateStatus_Car = date('Y-m-d');
@@ -429,9 +490,9 @@ class ResearchCusController extends Controller
                     $dataCus->Datacar_id = $dataCar->id;
                     $dataCus->update();
                 }
+
             }
-            
-            if ($request->get('StatusCus') == 'ยกเลิกจอง') {
+            elseif ($request->get('StatusCus') == 'ยกเลิกจอง') {
                 $dataCar = data_car::where('F_DataCus_id', $id)->first();
                     if ($dataCar != NULL) {
                             $dataCar->F_DataCus_id = NULL;
@@ -450,6 +511,7 @@ class ResearchCusController extends Controller
                     $dataCus->PriceCar_Cus = NULL;
                 $dataCus->update();
             }
+
             return redirect()->back()->with('success','บันทึกข้อมูลเรียบร้อยแล้ว');
         }
         elseif ($request->type == 2) {       //เพิ่ม รายการ Tracking

@@ -19,7 +19,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h1 class="" style="text-align:center;"><b>Research Customer</b></h1>
+                                <h4 class="" style="text-align:center;"><b>Research Customer</b></h4>
                             </div>
                             <div class="card-body text-sm">
                                 <div class="row">
@@ -32,7 +32,6 @@
                                                     </button>
                                                     <ul class="dropdown-menu" role="menu">
                                                         <li><a target="_blank" class="dropdown-item" data-toggle="modal" data-target="#modal-2" data-link="{{ route('ResearchCus', 3) }}"> รายงานข้อมูลลูกค้า</a></li>
-                                                        {{-- <li class="dropdown-divider"></li> --}}
                                                     </ul>
                                                 </div>
                                                 <a class="btn bg-success btn-app" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('ResearchCus', 2) }}">
@@ -44,10 +43,10 @@
                                             </div>
                                             <div class="float-right form-inline">
                                                 <label>จากวันที่ : </label>
-                                                <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control" />
+                                                <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control form-control-sm" />
                         
                                                 <label>ถึงวันที่ : </label>
-                                                <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control" />
+                                                <input type="date" name="Todate" value="{{ ($newtdate != '') ?$newtdate: date('Y-m-d') }}" class="form-control form-control-sm" />
                                             </div>
                                         </form>
                                     </div>
@@ -75,7 +74,7 @@
                                                                 <th class="text-center">ชื่อ-สกุล</th>
                                                                 <th class="text-left">เลขทะเบียน</th>
                                                                 <th class="text-left">เซลล์</th>
-                                                                <th class="text-left">ติดตาม</th>
+                                                                <th class="text-left">สถานะ</th>
                                                                 <th class="text-center" style="width: 70px"></th>
                                                             </tr>
                                                         </thead>
@@ -83,13 +82,15 @@
                                                             @foreach($data as $key => $row)
                                                                 @if($row->Status_Cus == 'ติดตาม' or $row->Status_Cus == 'ยกเลิกจอง' or $row->Status_Cus == NULL)
                                                                     <tr>
-                                                                        <td class="text-center">{{ date('Y-m-d', strtotime($row->DateSale_Cus)) }}</td>
+                                                                        <td class="text-center">{{ date('d-m-Y', strtotime($row->DateSale_Cus)) }}</td>
                                                                         <td class="text-left">{{ $row->Name_Cus }}</td>
                                                                         <td class="text-left">{{ $row->RegistCar_Cus }}</td>
                                                                         <td class="text-left">{{ $row->Sale_Cus }}</td>
                                                                         <td class="text-left">
                                                                             @if($row->DateType_Cus != null)
-                                                                            {{ date('Y-m-d', strtotime($row->DateType_Cus)) }}
+                                                                                <button type="button" class="btn btn-primary btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
+                                                                                    <i class="fas fa-user prem"></i> {{ $row->Type_Cus }}
+                                                                                </button>
                                                                             @endif
                                                                         </td>
                                                                         <td class="text-right">
@@ -137,7 +138,7 @@
                                                                 <th class="text-center">ชื่อ-สกุล</th>
                                                                 <th class="text-left">เลขทะเบียน</th>
                                                                 <th class="text-left">เซลล์</th>
-                                                                <th class="text-center">ติดตาม</th>
+                                                                <th class="text-center">สถานะ</th>
                                                                 <th class="text-center" style="width: 70px"></th>
                                                             </tr>
                                                         </thead>
@@ -145,13 +146,15 @@
                                                             @foreach($data as $key => $row)
                                                                 @if($row->Status_Cus == 'จอง' or $row->Status_Cus == 'ส่งมอบ')
                                                                     <tr>
-                                                                        <td class="text-center">{{ date('Y-m-d', strtotime($row->DateSale_Cus)) }}</td>
+                                                                        <td class="text-center">{{ date('d-m-Y', strtotime($row->DateSale_Cus)) }}</td>
                                                                         <td class="text-left">{{ $row->Name_Cus }}</td>
                                                                         <td class="text-left">{{ $row->RegistCar_Cus }}</td>
                                                                         <td class="text-left">{{ $row->Sale_Cus }}</td>
                                                                         <td class="text-left">
                                                                             @if($row->DateType_Cus != null)
-                                                                                {{ date('Y-m-d', strtotime($row->DateType_Cus)) }}
+                                                                                <button type="button" class="btn btn-primary btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
+                                                                                    <i class="fas fa-user prem"></i> {{ $row->Type_Cus }}
+                                                                                </button>
                                                                             @endif
                                                                         </td>
                                                                         <td class="text-right">

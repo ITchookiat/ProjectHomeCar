@@ -33,384 +33,384 @@
           toastr.success('{{ session()->get('success') }}')
         </script>
       @endif
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h4><b>รายการ{{$title}}</b></h4>
-            </div>
-            <div class="card-body text-sm">
 
-              {{-- ส่วนหัว --}}
-              @if($type == 1 or $type == 6)
-                <form method="get" action="{{ route('datacar',$type) }}">
-                  <div style="text-align:right;">
-                    @if($type == 1)
-                      <a href="{{ route('datacar.create',1) }}" class="btn bg-success btn-app">
-                        <span class="fas fa-plus"></span> เพิ่มข้อมูล
-                      </a>
-                      <div class="btn-group">
-                        <button type="button" class="btn bg-primary btn-app" data-toggle="dropdown">
-                          <span class="fas fa-print"></span> ปริ้นรายการ
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                          {{-- <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}">รายงาน สำหรับพนักงาน</a></li> --}}
-                          <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-4" data-backdrop="static" data-keyboard="false">รายงาน สำหรับพนักงาน</a></li>
-                          @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
-                            <li class="divider"></li>
-                            <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-5" data-backdrop="static" data-keyboard="false">รายงาน สำหรับผู้บริหาร</a></li>
-                          @endif
-                        </ul>
-                      </div>
-                    @endif
-                    <button type="submit" class="btn bg-warning btn-app">
-                      <span class="fas fa-search"></span> Search
-                    </button>
-                    <br>
-                  </div>
-
-                  <div class="row mb-1">
+      <section class="content">
+        <div class="row  justify-content-center">
+          <div class="col-12 table-responsive">
+            <div class="card">
+              <div class="card-header">
+                <h5><b>รายการ{{$title}}</b></h5>
+              </div>
+              <div class="card-body text-sm">
+                {{-- ส่วนหัว --}}
+                @if($type == 1 or $type == 6)
+                  <div class="row">
                     <div class="col-md-12">
-                      <div class="float-right form-inline">
-                       @if($type != 6)
-                          <label for="text" class="mr-sm-0">ประเภท :</label>
-                          <select name="carType" class="form-control">
-                            <option selected value="">---เลือกประเภทรถ---</option>
-                            <option value="1" {{ ($carType == '1') ? 'selected' : '' }}>รถนำเข้าใหม่</option>
-                            <option value="2" {{ ($carType == '2') ? 'selected' : '' }}>รถระหว่างทำสี</option>
-                            <option value="3" {{ ($carType == '3') ? 'selected' : '' }}>รถรอซ่อม</option>
-                            <option value="4" {{ ($carType == '4') ? 'selected' : '' }}>รถระหว่างซ่อม</option>
-                            <option value="5" {{ ($carType == '5') ? 'selected' : '' }}>รถพร้อมขาย</option>
-                            <option value="6" {{ ($carType == '6') ? 'selected' : '' }}>รถขายแล้ว</option>
-                            <option value="7" {{ ($carType == '7') ? 'selected' : '' }}>รถส่งประมูล</option>
-                          </select>
-                        @endif
-                        <label>จากวันที่ : </label>
-                        <input type="date" name="Fromdate" value="{{ ($fdate != '') ?$fdate: date('Y-m-d') }}" class="form-control" />
-                        <label>ถึงวันที่ : </label>
-                        <input type="date" name="Todate" value="{{ ($tdate != '') ?$tdate: date('Y-m-d') }}" class="form-control" />
-                      </div>
+                      <form method="get" action="{{ route('datacar',$type) }}">
+                        <div class="float-right form-inline">
+                          @if($type == 1)
+                            <a href="{{ route('datacar.create',1) }}" class="btn bg-success btn-app">
+                              <span class="fas fa-plus"></span> เพิ่มข้อมูล
+                            </a>
+                            <div class="btn-group">
+                              <button type="button" class="btn bg-primary btn-app" data-toggle="dropdown">
+                                <span class="fas fa-print"></span> ปริ้นรายการ
+                              </button>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-4" data-backdrop="static" data-keyboard="false">รายงาน สำหรับพนักงาน</a></li>
+                                @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
+                                  <li class="divider"></li>
+                                  <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-5" data-backdrop="static" data-keyboard="false">รายงาน สำหรับผู้บริหาร</a></li>
+                                @endif
+                              </ul>
+                            </div>
+                          @endif
+                          <button type="submit" class="btn bg-warning btn-app">
+                            <span class="fas fa-search"></span> Search
+                          </button>
+                        </div>
+
+                        <div class="float-right form-inline">
+                          @if($type != 6)
+                            <label for="text" class="mr-sm-0">ประเภท :</label>
+                            <select name="carType" class="form-control form-control-sm">
+                              <option selected value="">---เลือกประเภทรถ---</option>
+                              <option value="1" {{ ($carType == '1') ? 'selected' : '' }}>รถนำเข้าใหม่</option>
+                              <option value="2" {{ ($carType == '2') ? 'selected' : '' }}>รถระหว่างทำสี</option>
+                              <option value="3" {{ ($carType == '3') ? 'selected' : '' }}>รถรอซ่อม</option>
+                              <option value="4" {{ ($carType == '4') ? 'selected' : '' }}>รถระหว่างซ่อม</option>
+                              <option value="5" {{ ($carType == '5') ? 'selected' : '' }}>รถพร้อมขาย</option>
+                              <option value="6" {{ ($carType == '6') ? 'selected' : '' }}>รถขายแล้ว</option>
+                              <option value="7" {{ ($carType == '7') ? 'selected' : '' }}>รถส่งประมูล</option>
+                            </select>
+                          @endif
+                          <label>จากวันที่ : </label>
+                          <input type="date" name="Fromdate" value="{{ ($fdate != '') ?$fdate: date('Y-m-d') }}" class="form-control form-control-sm" />
+                          <label>ถึงวันที่ : </label>
+                          <input type="date" name="Todate" value="{{ ($tdate != '') ?$tdate: date('Y-m-d') }}" class="form-control form-control-sm" />
+                        </div>
+                      </form>
                     </div>
                   </div>
-                </form>
-              @elseif($type == 14)
-                <div class="row">
-                  <div class="col-md-12">
-                    <form method="get" action="{{ route('datacar',$type) }}">
-                      <div class="float-right form-inline">
-                        <button type="button" class="btn bg-primary btn-app" data-toggle="dropdown">
-                          <span class="fas fa-print"></span> ปริ้นรายการ
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-6" data-backdrop="static" data-keyboard="false">รายงานรถส่งประมูล</a></li>
-                        </ul>
-                        <button type="submit" class="btn bg-warning btn-app">
-                          <span class="fas fa-search"></span> Search
-                        </button>
-                      </div>
-                      <div class="float-right form-inline"> 
-                        <label>จากวันที่ : </label>
-                        <input type="date" name="Fromdate" value="{{ ($fdate != '') ?$fdate: date('Y-m-d') }}" class="form-control" />
-                        <label>ถึงวันที่ : </label>
-                        <input type="date" name="Todate" value="{{ ($tdate != '') ?$tdate: date('Y-m-d') }}" class="form-control" />
-                      </div>
-                    </form>
+                @elseif($type == 14)
+                  <div class="row">
+                    <div class="col-md-12">
+                      <form method="get" action="{{ route('datacar',$type) }}">
+                        <div class="float-right form-inline">
+                          <button type="button" class="btn bg-primary btn-app" data-toggle="dropdown">
+                            <span class="fas fa-print"></span> ปริ้นรายการ
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-6" data-backdrop="static" data-keyboard="false">รายงานรถส่งประมูล</a></li>
+                          </ul>
+                          <button type="submit" class="btn bg-warning btn-app">
+                            <span class="fas fa-search"></span> Search
+                          </button>
+                        </div>
+                        <div class="float-right form-inline"> 
+                          <label>จากวันที่ : </label>
+                          <input type="date" name="Fromdate" value="{{ ($fdate != '') ?$fdate: date('Y-m-d') }}" class="form-control form-control-sm" />
+                          <label>ถึงวันที่ : </label>
+                          <input type="date" name="Todate" value="{{ ($tdate != '') ?$tdate: date('Y-m-d') }}" class="form-control form-control-sm" />
+                        </div>
+                      </form>
+                    </div>
                   </div>
-                </div>
-              @endif
+                @endif
 
-              {{-- เนื้อหา --}}
-              @if($type == 12)
-                <div class="table-responsive">
-                  <table id="table1" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th class="text-center">ลำดับ</th>
-                        <th class="text-center">เลขที่สัญญา</th>
-                        <th class="text-center">ชื่อ - สกุล</th>
-                        <th class="text-center">ยี่ห้อรถ</th>
-                        <th class="text-center">ทะเบียน</th>
-                        <th class="text-center">วันที่ยึด</th>
-                        <th class="text-center">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($data as $key => $row)
-                        @php
-                          @$StrCon = explode("/",$row->Contno_hold);
-                          $SetStr1 = $StrCon[0];
-                          $SetStr2 = $StrCon[1];
-                          $Flag = "N";
-                        @endphp
+                {{-- เนื้อหา --}}
+                @if($type == 12)
+                  <div class="table-responsive">
+                    <table id="table1" class="table table-bordered table-striped">
+                      <thead>
                         <tr>
-                          <td class="text-center">{{$key+1}}</td>
-                          <td class="text-center">{{$row->Contno_hold}}</td>
-                          <td class="text-left"> {{$row->Name_hold}}</td>
-                          <td class="text-center">{{$row->Brandcar_hold}}</td>
-                          <td class="text-center">{{$row->Number_Regist}}</td>
-                          <td class="text-center">{{DateThai($row->Date_hold)}}</td>
-                          <td class="text-center">
-                            @foreach($dataDB as $key => $row2)
-                              @if($row->Number_Regist == $row2->Number_Regist)
-                              <a id="edit" class="btn btn-success btn-sm" title="ส่งแล้ว">
-                                <span class="glyphicon glyphicon-lock"></span> Check In Stock
-                              </a>
-                                @php
-                                $Flag = "Y";
-                                @endphp
+                          <th class="text-center">ลำดับ</th>
+                          <th class="text-center">เลขที่สัญญา</th>
+                          <th class="text-center">ชื่อ - สกุล</th>
+                          <th class="text-center">ยี่ห้อรถ</th>
+                          <th class="text-center">ทะเบียน</th>
+                          <th class="text-center">วันที่ยึด</th>
+                          <th class="text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($data as $key => $row)
+                          @php
+                            @$StrCon = explode("/",$row->Contno_hold);
+                            $SetStr1 = $StrCon[0];
+                            $SetStr2 = $StrCon[1];
+                            $Flag = "N";
+                          @endphp
+                          <tr>
+                            <td class="text-center">{{$key+1}}</td>
+                            <td class="text-center">{{$row->Contno_hold}}</td>
+                            <td class="text-left"> {{$row->Name_hold}}</td>
+                            <td class="text-center">{{$row->Brandcar_hold}}</td>
+                            <td class="text-center">{{$row->Number_Regist}}</td>
+                            <td class="text-center">{{DateThai($row->Date_hold)}}</td>
+                            <td class="text-center">
+                              @foreach($dataDB as $key => $row2)
+                                @if($row->Number_Regist == $row2->Number_Regist)
+                                <a id="edit" class="btn btn-success btn-sm" title="ส่งแล้ว">
+                                  <span class="glyphicon glyphicon-lock"></span> Check In Stock
+                                </a>
+                                  @php
+                                  $Flag = "Y";
+                                  @endphp
+                                @endif
+                              @endforeach
+                              @if($Flag == 'N')
+                                <a href="{{ route('datacar.Savestore', [$SetStr1,$SetStr2, 1]) }}" id="edit" class="btn btn-info btn-sm" title="จัดเตรียมเอกสาร">
+                                  <span class="glyphicon glyphicon-edit"></span> Inport Stock
+                                </a>
                               @endif
-                            @endforeach
-                            @if($Flag == 'N')
-                              <a href="{{ route('datacar.Savestore', [$SetStr1,$SetStr2, 1]) }}" id="edit" class="btn btn-info btn-sm" title="จัดเตรียมเอกสาร">
-                                <span class="glyphicon glyphicon-edit"></span> Inport Stock
-                              </a>
-                            @endif
-                          </td>
-                        </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-              @elseif($type == 14)
-                <div class="info-box bg-info">
-                  <span class="info-box-icon bg-warning"><i class="fas fa-car fa-lg"></i></span>
-                  <div class="info-box-content">
-                    <h5>รถยนต์ส่งประมูล</h5>
-                    @php
-                      $Setfdate = date_create($fdate);
-                      $Settdate = date_create($tdate);
-                    @endphp
-                    <span class="info-box-number">ประจำวันที่ {{ date_format($Setfdate, 'd-m-Y') }} &nbsp;&nbsp; ถึงวันที่ {{ date_format($Settdate, 'd-m-Y') }}</span>
+                            </td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
                   </div>
-                  <div class="info-box-content ">
-                    <h5>รวม :</h5>
-                    <input type="text" name="SumCom" style="text-align:right;" class="form-control" value="{{ number_format($SumAmount,2) }}"/>
+                @elseif($type == 14)
+                  <div class="info-box bg-info">
+                    <span class="info-box-icon bg-warning"><i class="fas fa-car fa-lg"></i></span>
+                    <div class="info-box-content">
+                      <h5>รถยนต์ส่งประมูล</h5>
+                      @php
+                        $Setfdate = date_create($fdate);
+                        $Settdate = date_create($tdate);
+                      @endphp
+                      <span class="info-box-number">ประจำวันที่ {{ date_format($Setfdate, 'd-m-Y') }} &nbsp;&nbsp; ถึงวันที่ {{ date_format($Settdate, 'd-m-Y') }}</span>
+                    </div>
+                    <div class="info-box-content ">
+                      <h5>รวม :</h5>
+                      <input type="text" name="SumCom" style="text-align:right;" class="form-control" value="{{ number_format($SumAmount,2) }}"/>
+                    </div>
                   </div>
-                </div>
-                <div class="table-responsive">
-                  <table id="table1" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th class="text-center" style="width: 40px">วันที่รับ</th>
-                        <th class="text-center" style="width: 40px">วันที่เปลี่ยนสถานะ</th>
-                        <th class="text-center" style="width: 60px">เลขทะเบียน</th>
-                        <th class="text-center" style="width: 40px">ที่มา</th>
-                        <th class="text-center" style="width: 40px">ราคาต้นทุน</th>
-                        <th class="text-center" style="width: 40px">ราคาเปิดประมูล</th>
-                        <th class="text-center" style="width: 40px">ราคาปิดประมูล</th>
-                        <th class="text-center" style="width: 40px">ผลรวม</th>
-                        <th style="width: 10px"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($data as $row)
+                  <div class="table-responsive">
+                    <table id="table1" class="table table-bordered table-striped">
+                      <thead>
                         <tr>
-                          @php
-                            $Sum = 0;
-                            $SumAll = 0;
-                            $create_date = date_create($row->create_date);
-                            $date_status = date_create($row->Date_Status);
-                            $Date_Soldout_plus = date_create($row->Date_Soldout_plus);
-                          @endphp
-                          <td class="text-center">
-                            {{ date_format($create_date, 'd-m-Y')}}
-                          </td>
-                          <td class="text-center">{{ date_format($date_status, 'd-m-Y')}}</td>
-                          <td class="text-left">{{$row->Number_Regist}}</td>
-                          <td class="text-center">
-                            @if($row->Origin_Car == 1)
-                              CKL
-                            @elseif ($row->Origin_Car  == 2)
-                              รถประมูล
-                            @elseif ($row->Origin_Car  == 3)
-                              รถยึด
-                            @elseif ($row->Origin_Car  == 4)
-                              ฝากขาย
-                            @endif
-                          </td>
-                          <td class="text-right">
-                            @php
-                              $Sum = $row->Fisrt_Price+$row->Repair_Price+$row->Offer_Price+$row->Color_Price+$row->Add_Price;
-                            @endphp
-                            {{number_format($Sum, 2)}}
-                          </td>
-                          <td class="text-right">{{number_format($row->Open_auction,2)}}</td>
-                          <td class="text-right">{{number_format($row->Close_auction,2)}}</td>
-                          <td class="text-right">
-                            @php
-                              $SumAll = $row->Close_auction - $Sum;
-                            @endphp
-                            {{number_format($SumAll, 2)}}
-                          </td>
-                          <td class="text-right">
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default" title="ดูรายการ"
-                              data-link="{{ action('DatacarController@viewsee',[$row->Datacar_id,$row->Car_type]) }}">
-                              <i class="far fa-eye"></i>
-                            </button>
-                            <a href="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
-                              <i class="far fa-edit"></i>
-                            </a>
-                            @if($type == 1)
-                              <form method="post" class="delete_form" action="{{ action('DatacarController@destroy',$row->Datacar_id) }}" style="display:inline;">
-                                {{csrf_field()}}
-                                <input type="hidden" name="_method" value="DELETE" />
-                                <button type="submit" class="delete-modal btn btn-danger btn-sm" title="ลบรายการ" onclick="return confirm('คุณต้องการลบข้อมูลนี้หรือไม่?')">
-                                  <i class="far fa-trash-alt"></i>
-                                </button>
-                              </form>
-                            @endif
-                          </td>
+                          <th class="text-center" style="width: 40px">วันที่รับ</th>
+                          <th class="text-center" style="width: 40px">วันที่เปลี่ยนสถานะ</th>
+                          <th class="text-center" style="width: 60px">เลขทะเบียน</th>
+                          <th class="text-center" style="width: 40px">ที่มา</th>
+                          <th class="text-center" style="width: 40px">ราคาต้นทุน</th>
+                          <th class="text-center" style="width: 40px">ราคาเปิดประมูล</th>
+                          <th class="text-center" style="width: 40px">ราคาปิดประมูล</th>
+                          <th class="text-center" style="width: 40px">ผลรวม</th>
+                          <th style="width: 10px"></th>
                         </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-              @else
-                <div class="table-responsive">
-                  <table id="table1" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        @if($type != 6)
-                        <th class="text-center" style="width: 100px">วันที่รับ</th>
-                        <th class="text-center" style="width: 120px">วันที่เปลี่ยนสถานะ</th>
-                        @endif
-                        @if($type == 6)
-                          <th class="text-center" style="width: 100px">วันที่ขาย</th>
-                        @endif
-                        <th class="text-center" style="width: 100px">เลขทะเบียน</th>
-                        @if($type == 5)
-                          <th class="text-center" style="width: 100px">ราคาขาย</th>
-                          <th class="text-center" style="width: 70px">ลักษณะ</th>
-                        @endif
-                        <th class="text-center" style="width: 80px">ที่มา</th>
-                        <th class="text-center" style="width: 60px">Job No.</th>
-                        <th class="text-center" style="width: 100px">ประเภท</th>
-                        <th class="text-center" style="width: 150px">หมายเหตุ</th>
-
-                        <th style="width: 120px"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($data as $row)
-                        <tr>
-                          @php
-                            $create_date = date_create($row->create_date);
-                            $date_status = date_create($row->Date_Status);
-                            $Date_Soldout_plus = date_create($row->Date_Soldout_plus);
-                          @endphp
-
-                          @if($type != 6)
+                      </thead>
+                      <tbody>
+                        @foreach($data as $row)
+                          <tr>
+                            @php
+                              $Sum = 0;
+                              $SumAll = 0;
+                              $create_date = date_create($row->create_date);
+                              $date_status = date_create($row->Date_Status);
+                              $Date_Soldout_plus = date_create($row->Date_Soldout_plus);
+                            @endphp
                             <td class="text-center">
                               {{ date_format($create_date, 'd-m-Y')}}
                             </td>
-
-                            @if($row->Date_Status == Null)
-                              <td class="text-center"> - </td>
-                            @else
-                              <td class="text-center">{{ date_format($date_status, 'd-m-Y')}}</td>
-                            @endif
-                          @endif
-
-                          @if($type == 6)
-                            <td class="text-center">{{ date_format($Date_Soldout_plus, 'd-m-Y')}}</td>
-                          @endif
-                          <td class="text-left">{{$row->Number_Regist}}</td>
-                          @if($type == 5)
-                            <td class="text-center">{{number_format($row->Net_Price, 2)}}</td>
-                            <td class="text-center">{{$row->Model_Car}}</td>
-                          @endif
-                          <td class="text-center">
-                            @if($row->Origin_Car == 1)
-                              CKL
-                            @elseif ($row->Origin_Car  == 2)
-                              รถประมูล
-                            @elseif ($row->Origin_Car  == 3)
-                              รถยึด
-                            @elseif ($row->Origin_Car  == 4)
-                              ฝากขาย
-                            @endif
-                          </td>
-                          <td class="text-center">{{$row->Job_Number}}</td>
-                          <td class="text-left">
-                            @if($row->Car_type == 1)
-                              รถยนต์นำเข้าใหม่ @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
-                            @elseif ($row->Car_type  == 2)
-                              รถยนต์ระหว่างทำสี @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
-                            @elseif ($row->Car_type  == 3)
-                              รถยนต์รอซ่อม @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
-                            @elseif ($row->Car_type  == 4)
-                              รถยนต์ระหว่างซ่อม @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
-                            @elseif ($row->Car_type  == 5)
-                              รถยนต์พร้อมขาย @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
-                            @elseif ($row->Car_type  == 6)
-                              รถยนต์ขายแล้ว
-                            @elseif ($row->Car_type  == 7)
-                              รถยนต์ส่งประมูล
-                            @endif
-                          </td>
-
-                          <td class="text-left">
-                            @if($row->BorrowStatus == 1)
-                            {{ $row->Check_Note }}
-                            <br>
-                            <font color="red">({{$row->Note_Borrow}})</font>
-                            @else
-                            {{ $row->Check_Note }}
-                            @endif
-                          </td>
-
-                          <td class="text-right">
-                            @if($type != 44)
+                            <td class="text-center">{{ date_format($date_status, 'd-m-Y')}}</td>
+                            <td class="text-left">{{$row->Number_Regist}}</td>
+                            <td class="text-center">
+                              @if($row->Origin_Car == 1)
+                                CKL
+                              @elseif ($row->Origin_Car  == 2)
+                                รถประมูล
+                              @elseif ($row->Origin_Car  == 3)
+                                รถยึด
+                              @elseif ($row->Origin_Car  == 4)
+                                ฝากขาย
+                              @endif
+                            </td>
+                            <td class="text-right">
+                              @php
+                                $Sum = $row->Fisrt_Price+$row->Repair_Price+$row->Offer_Price+$row->Color_Price+$row->Add_Price;
+                              @endphp
+                              {{number_format($Sum, 2)}}
+                            </td>
+                            <td class="text-right">{{number_format($row->Open_auction,2)}}</td>
+                            <td class="text-right">{{number_format($row->Close_auction,2)}}</td>
+                            <td class="text-right">
+                              @php
+                                $SumAll = $row->Close_auction - $Sum;
+                              @endphp
+                              {{number_format($SumAll, 2)}}
+                            </td>
+                            <td class="text-right">
                               <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default" title="ดูรายการ"
                                 data-link="{{ action('DatacarController@viewsee',[$row->Datacar_id,$row->Car_type]) }}">
                                 <i class="far fa-eye"></i>
                               </button>
-                            @endif
-                            @if($type != 6 and $type != 44)
-                              @if($row->Car_type != '6')
-                                <a href="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
-                                <i class="far fa-edit"></i> 
-                                </a>
-                              @endif
-                            @endif
-                            @if ($type == 6)
-                              <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-buyinfo"
-                                data-link="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}">
-                                <i class="fas fa-file-invoice-dollar"></i> ข้อมูลขาย
-                              </button>
-                            @endif
-
-                            @if ($type == 44)
-                              <a href="{{ action('DatacarController@edit',[$row->Datacar_id,44]) }}" class="btn btn-primary btn-sm" title="เพิ่มรายการซ่อม">
-                                <i class="far fa-edit"></i> การซ่อม
+                              <a href="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                <i class="far fa-edit"></i>
                               </a>
-                            @endif
-
-                            @if($type == 1)
-                              @if(auth::user()->position != "STAFF")
+                              @if($type == 1)
                                 <form method="post" class="delete_form" action="{{ action('DatacarController@destroy',$row->Datacar_id) }}" style="display:inline;">
                                   {{csrf_field()}}
                                   <input type="hidden" name="_method" value="DELETE" />
-                                  <input type="hidden" name="type" value="1" />
-                                  <button type="submit" data-name="{{ $row->Number_Regist }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
+                                  <button type="submit" class="delete-modal btn btn-danger btn-sm" title="ลบรายการ" onclick="return confirm('คุณต้องการลบข้อมูลนี้หรือไม่?')">
                                     <i class="far fa-trash-alt"></i>
                                   </button>
                                 </form>
                               @endif
-                            @endif
-                          </td>
-                        </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-              @endif
-            </div>
-          </div>
+                            </td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+                @else
+                  <div class="table-responsive">
+                    <table id="table1" class="table table-hover">
+                      <thead>
+                        <tr>
+                          @if($type != 6)
+                            <th class="text-center" style="width: 100px">วันที่รับ</th>
+                            <th class="text-center" style="width: 120px">วันที่เปลี่ยนสถานะ</th>
+                          @endif
+                          @if($type == 6)
+                            <th class="text-center" style="width: 100px">วันที่ขาย</th>
+                          @endif
+                          <th class="text-center" style="width: 100px">เลขทะเบียน</th>
+                          @if($type == 5)
+                            <th class="text-center" style="width: 100px">ราคาขาย</th>
+                            <th class="text-center" style="width: 70px">ลักษณะ</th>
+                          @endif
+                          <th class="text-center" style="width: 80px">ที่มา</th>
+                          <th class="text-center" style="width: 60px">Job No.</th>
+                          <th class="text-center" style="width: 100px">ประเภท</th>
+                          <th class="text-center" style="width: 150px">หมายเหตุ</th>
 
-          <a id="button"></a>
+                          <th style="width: 120px"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($data as $row)
+                          <tr>
+                            @php
+                              $create_date = date_create($row->create_date);
+                              $date_status = date_create($row->Date_Status);
+                              $Date_Soldout_plus = date_create($row->Date_Soldout_plus);
+                            @endphp
+
+                            @if($type != 6)
+                              <td class="text-center">
+                                {{ date_format($create_date, 'd-m-Y')}}
+                              </td>
+
+                              @if($row->Date_Status == Null)
+                                <td class="text-center"> - </td>
+                              @else
+                                <td class="text-center">{{ date_format($date_status, 'd-m-Y')}}</td>
+                              @endif
+                            @endif
+
+                            @if($type == 6)
+                              <td class="text-center">{{ date_format($Date_Soldout_plus, 'd-m-Y')}}</td>
+                            @endif
+                            <td class="text-left">{{$row->Number_Regist}}</td>
+                            @if($type == 5)
+                              <td class="text-center">{{number_format($row->Net_Price, 2)}}</td>
+                              <td class="text-center">{{$row->Model_Car}}</td>
+                            @endif
+                            <td class="text-center">
+                              @if($row->Origin_Car == 1)
+                                CKL
+                              @elseif ($row->Origin_Car  == 2)
+                                รถประมูล
+                              @elseif ($row->Origin_Car  == 3)
+                                รถยึด
+                              @elseif ($row->Origin_Car  == 4)
+                                ฝากขาย
+                              @endif
+                            </td>
+                            <td class="text-center">{{$row->Job_Number}}</td>
+                            <td class="text-left">
+                              @if($row->Car_type == 1)
+                                รถยนต์นำเข้าใหม่ @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
+                              @elseif ($row->Car_type  == 2)
+                                รถยนต์ระหว่างทำสี @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
+                              @elseif ($row->Car_type  == 3)
+                                รถยนต์รอซ่อม @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
+                              @elseif ($row->Car_type  == 4)
+                                รถยนต์ระหว่างซ่อม @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
+                              @elseif ($row->Car_type  == 5)
+                                รถยนต์พร้อมขาย @if($row->BorrowStatus == 1) <font color="red">(ยืม)</font> @endif
+                              @elseif ($row->Car_type  == 6)
+                                รถยนต์ขายแล้ว
+                              @elseif ($row->Car_type  == 7)
+                                รถยนต์ส่งประมูล
+                              @endif
+                            </td>
+
+                            <td class="text-left">
+                              @if($row->BorrowStatus == 1)
+                              {{ $row->Check_Note }}
+                              <br>
+                              <font color="red">({{$row->Note_Borrow}})</font>
+                              @else
+                              {{ $row->Check_Note }}
+                              @endif
+                            </td>
+
+                            <td class="text-right">
+                              @if($type != 44)
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-default" title="ดูรายการ"
+                                  data-link="{{ action('DatacarController@viewsee',[$row->Datacar_id,$row->Car_type]) }}">
+                                  <i class="far fa-eye"></i>
+                                </button>
+                              @endif
+                              @if($type != 6 and $type != 44)
+                                @if($row->Car_type != '6')
+                                  <a href="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                  <i class="far fa-edit"></i> 
+                                  </a>
+                                @endif
+                              @endif
+                              @if ($type == 6)
+                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-buyinfo"
+                                  data-link="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}">
+                                  <i class="fas fa-file-invoice-dollar"></i> ข้อมูลขาย
+                                </button>
+                              @endif
+
+                              @if ($type == 44)
+                                <a href="{{ action('DatacarController@edit',[$row->Datacar_id,44]) }}" class="btn btn-primary btn-sm" title="เพิ่มรายการซ่อม">
+                                  <i class="far fa-edit"></i> การซ่อม
+                                </a>
+                              @endif
+
+                              @if($type == 1)
+                                @if(auth::user()->position != "STAFF")
+                                  <form method="post" class="delete_form" action="{{ action('DatacarController@destroy',$row->Datacar_id) }}" style="display:inline;">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    <input type="hidden" name="type" value="1" />
+                                    <button type="submit" data-name="{{ $row->Number_Regist }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
+                                      <i class="far fa-trash-alt"></i>
+                                    </button>
+                                  </form>
+                                @endif
+                              @endif
+                            </td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+                @endif
+              </div>
+            </div>
+
+            <a id="button"></a>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   </section>
 
@@ -797,6 +797,4 @@
       });
     });
   </script>
-
-
 @endsection

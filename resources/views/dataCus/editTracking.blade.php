@@ -14,47 +14,32 @@
       @csrf
       @method('put')
       <div class="card-body text-sm">
-        <div class="row">
-          <div class="col-6">
-            <div class="form-group row mb-0">
-              <label class="col-sm-3 col-form-label text-right"><font color="red">วันที่ : </font></label>
-              <div class="col-sm-8">
-                <input type="date" name="DateTrack" class="form-control" value="{{ $tracking->Date_Tracking }}"/>
-              </div>
-            </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label><font color="red">วันที่ : </font></label>
+            <input type="date" name="DateTrack" class="form-control form-control-sm" value="{{ $tracking->Date_Tracking }}"/>
           </div>
-          <div class="col-6">
-            <div class="form-group row mb-1">
-              <label class="col-sm-3 col-form-label text-right"><font color="red">สรุปสถานะ : </font></label>
-              <div class="col-sm-8">
-                <select name="StatusTrack" class="form-control" required>
-                  <option value="" selected>--- เลือกสถานะ ---</option>
-                  <option value="ติดตามต่อไป" {{ ($tracking->Status_Tracking === 'ติดตามต่อไป') ? 'selected' : '' }}>ติดตามต่อไป</option>
-                  <option value="ยกเลิกการติดตาม" {{ ($tracking->Status_Tracking === 'ยกเลิกการติดตาม') ? 'selected' : '' }}>ยกเลิกการติดตาม</option>
-                  <option value="ยกเลิกจอง" {{ ($tracking->Status_Tracking === 'ยกเลิกจอง') ? 'selected' : '' }}>ยกเลิกจอง</option>
-                  <option value="ปิดการขาย/ส่งมอบ" {{ ($tracking->Status_Tracking === 'ปิดการขาย/ส่งมอบ') ? 'selected' : '' }}>ปิดการขาย/ส่งมอบ</option>
-                </select>
-              </div>
-            </div>
+          <div class="form-group col-md-6">
+            <label><font color="red">สรุปสถานะ : </font></label>
+            <select name="StatusTrack" class="form-control form-control-sm" required>
+              <option value="" selected>--- เลือกสถานะ ---</option>
+              <option value="ติดตามต่อไป" {{ ($tracking->Status_Tracking === 'ติดตามต่อไป') ? 'selected' : '' }}>ติดตามต่อไป</option>
+              <option value="ยกเลิกการติดตาม" {{ ($tracking->Status_Tracking === 'ยกเลิกการติดตาม') ? 'selected' : '' }}>ยกเลิกการติดตาม</option>
+              <option value="ยกเลิกจอง" {{ ($tracking->Status_Tracking === 'ยกเลิกจอง') ? 'selected' : '' }}>ยกเลิกจอง</option>
+              <option value="ปิดการขาย/ส่งมอบ" {{ ($tracking->Status_Tracking === 'ปิดการขาย/ส่งมอบ') ? 'selected' : '' }}>ปิดการขาย/ส่งมอบ</option>
+            </select>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="form-group row mb-0">
-              <label class="col-sm-3 col-form-label text-right">บันทึกการติดตาม : </label>
-              <div class="col-sm-8">
-                <textarea name="FollowTrack" class="form-control" rows="3" placeholder="Enter ...">{{ $tracking->Follow_Tracking }}</textarea>
-              </div>
-            </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>บันทึกการติดตาม : </label>
+            <textarea name="FollowTrack" class="form-control" rows="3" placeholder="Enter ...">{{ $tracking->Follow_Tracking }}</textarea>
           </div>
-          <div class="col-sm-6">
-            <div class="form-group row mb-0">
-              <label class="col-sm-3 col-form-label text-right">หมายเหตุ : </label>
-              <div class="col-sm-8">
-                <textarea name="NoteTrack" class="form-control" rows="3" placeholder="Enter ...">{{ $tracking->Note_tracking }}</textarea>
-              </div>
-            </div>
+          <div class="form-group col-md-6">
+            <label>หมายเหตุ : </label>
+            <textarea name="NoteTrack" class="form-control" rows="3" placeholder="Enter ...">{{ $tracking->Note_tracking }}</textarea>
           </div>
         </div>
       </div>

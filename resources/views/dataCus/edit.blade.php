@@ -160,18 +160,18 @@
                   <div class="container-fluid">   
                     <div class="row mb-0">
                       <div class="col-sm-6">
-                        <h1 class="" style="text-align:left;"><b>Research Customer</b></h1>
+                        <h4 class=""><b>Research Customer</b></h4>
                       </div>
                       <div class="col-sm-6">
                         <div class="card-tools d-inline float-right">
-                          <a class="delete-modal btn btn-primary" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('MasterResearchCus.edit',[$id]) }}?type={{2}}">
+                          <a class="delete-modal btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('MasterResearchCus.edit',[$id]) }}?type={{2}}">
                             <i class="fas fa-plus"></i> Tracking
                           </a>
-                          <button type="submit" class="delete-modal btn btn-success">
-                            <i class="fas fa-save"></i> UPDATE
+                          <button type="submit" class="delete-modal btn btn-success btn-sm">
+                            <i class="fas fa-save"></i> Update
                           </button>
-                          <a class="delete-modal btn btn-danger" href="{{ route('ResearchCus',1) }}">
-                            <i class="far fa-window-close"></i> CLOSE
+                          <a class="delete-modal btn btn-danger btn-sm" href="{{ route('ResearchCus',1) }}">
+                            <i class="far fa-window-close"></i> Close
                           </a>
                         </div>
                       </div>
@@ -179,7 +179,7 @@
                   </div>
                 </div>
                 <div class="card-body text-sm">
-                  <h5 class="text-center"><b>แบบฟอร์มข้อมูลลูกค้า</b></h5>
+                  <h5 class="text-center "><b>แบบฟอร์มข้อมูลลูกค้า</b></h5>
                   <script>
                     function addCommas(nStr){
                         nStr += '';
@@ -567,7 +567,7 @@
               <input type="hidden" name="_method" value="PATCH"/>
             </form>
                       <div class="tab-pane fade show" id="Sub-tab2" role="tabpanel" aria-labelledby="Sub-custom-tab2">
-                        <div class="table-responsive">
+                        <div class="table-responsive text-sm">
                           <table class="table table-striped table-valign-middle" id="table1">
                             <thead>
                               <tr>
@@ -576,6 +576,7 @@
                                 <th class="text-center">สถานะ</th>
                                 <th class="text-center">บันทึกการติดตาม</th>
                                 <th class="text-center">หมายเหตุ</th>
+                                <th class="text-center">ผู้ติดตาม</th>
                                 <th class="text-center"></th>
                               </tr>
                             </thead>
@@ -587,6 +588,7 @@
                                     <td class="text-left">{{ $row->Status_Tracking }}</td>
                                     <td class="text-center">{{ $row->Follow_Tracking }}</td>
                                     <td class="text-center">{{ $row->Note_tracking }}</td>
+                                    <td class="text-center">{{ $row->User_Tracking }}</td>
                                     <td class="text-center">
                                       <a class="btn btn-warning btn-sm" title="แก้ไขรายการ" data-toggle="modal" data-target="#modal-2" data-backdrop="static" data-link="{{ route('MasterResearchCus.edit',[$row->Tracking_id]) }}?type={{3}}">
                                         <i class="far fa-edit"></i>

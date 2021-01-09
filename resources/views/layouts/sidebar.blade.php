@@ -54,6 +54,26 @@
             </li>
           @endif
 
+          @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก ผู้จัดการ")
+            <li class="nav-item has-treeview {{ Request::is('BoardMaster/view/1') ? 'menu-open' : '' }}">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fab fa-black-tie"></i>
+                <p>
+                  Board Directors
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('BoardMaster',1) }}" class="nav-link {{ Request::is('BoardMaster/view/1') ? 'active' : '' }}">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>Commision Sale</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          @endif
+
           <li class="nav-item has-treeview {{ Request::is('ResearchCus/view/*') ? 'menu-open' : '' }} {{ Request::is('MasterResearchCus/*/*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-luggage-cart"></i>
@@ -80,28 +100,6 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-
-            @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก ผู้จัดการ")
-              <ul class="nav nav-treeview">
-                <li class="nav-item has-treeview {{ Request::is('BoardMaster/view/1') ? 'menu-open' : '' }}">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-window-restore text-red nav-icon"></i>
-                    <p>
-                      Board Directors
-                      <i class="right fas fa-angle-left"></i>
-                    </p>
-                  </a>
-                  <ul class="nav nav-treeview" style="margin-left: 15px;">
-                    <li class="nav-item">
-                      <a href="{{ route('BoardMaster',1) }}" class="nav-link {{ Request::is('BoardMaster/view/1') ? 'active' : '' }}">
-                        <i class="far fa-dot-circle nav-icon"></i>
-                        <p>Commision Sale</p>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            @endif
 
             <ul class="nav nav-treeview">
               <li class="nav-item has-treeview {{ Request::is('datacar/view/12') ? 'menu-open' : '' }}">

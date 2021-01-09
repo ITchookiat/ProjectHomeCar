@@ -259,15 +259,15 @@
                       $ClDateDiff = date_diff($Cldate,$nowCldate);
                     @endphp
                     {{$ClDateDiff->format("%a วัน")}}
-
                   @elseif($value->Date_Soldout != Null)
                     @php
                       $Cldate = date_create($value->create_date);
-                      $nowCldate = date_create($value->Date_Sale);
+                      $nowCldate = date_create($value->Date_Soldout);
                       $ClDateDiff = date_diff($Cldate,$nowCldate);
                     @endphp
                     {{$ClDateDiff->format("%a วัน")}}
                   @endif
+
                 </td>
                 <td width="70px">{{$value->Number_Regist}}</td>
                 <td width="70px">{{$value->Brand_Car}}</td>

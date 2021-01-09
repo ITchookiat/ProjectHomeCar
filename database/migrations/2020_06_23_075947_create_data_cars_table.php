@@ -20,6 +20,7 @@ class CreateDataCarsTable extends Migration
             $table->string('Car_type')->nullable();
             $table->string('create_date')->nullable();
             $table->string('Date_Status')->nullable();
+            $table->string('Date_Auction')->nullable();     //วันที่สถานะ ส่งประมูล
             $table->string('Date_Soldout')->nullable();
             $table->string('Date_Repair')->nullable();
             $table->string('Date_Sale')->nullable();

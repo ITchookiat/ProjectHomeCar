@@ -927,7 +927,7 @@ class DatacarController extends Controller
             $user->Date_Soldout = $date;
             $user->Date_Status = $date;
           }elseif ($request->get('Cartype') == 7) {
-            $user->Date_Soldout = $date;
+            $user->Date_Auction = $date;
             $user->Date_Status = $date;
           }
         }

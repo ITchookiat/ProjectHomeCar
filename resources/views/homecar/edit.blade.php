@@ -737,7 +737,7 @@
                           <div class="form-group row mb-1">
                             <label class="col-sm-3 col-form-label text-right">วันที่คืน :</label>
                             <div class="col-sm-8">
-                              <input type="date" id="DateReturncar" name="DateReturncar" class="form-control form-control-sm" value="{{$datacar->Date_Returncar}}" min="{{ $date3 }}" />
+                              <input type="date" id="DateReturncar" name="DateReturncar" class="form-control form-control-sm" value="{{$datacar->Date_Returncar}}"/>
                             </div>
                           </div>
                         </div>

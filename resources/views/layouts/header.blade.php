@@ -165,3 +165,39 @@
       </div>
     </div>
   </div>
+
+  {{-- เมนู แถบด้านขวามือ --}}
+<aside class="control-sidebar control-sidebar-dark" style="top: 57px; height: 747px; display: block;">
+  <div class="p-3 control-sidebar-content os-host os-theme-light os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition os-host-scrollbar-vertical-hidden" style="height: 747px;">
+    <div class="os-resize-observer-host observed"><div class="os-resize-observer" style="left: 0px; right: auto;"></div></div>
+    <div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;">
+      <div class="os-resize-observer"></div>
+    </div>
+    <div class="os-content-glue" style="margin: -16px; width: 249px; height: 746px;"></div>
+    <div class="os-padding">
+      <div class="os-viewport os-viewport-native-scrollbars-invisible" style="">
+        <div class="os-content" style="padding: 16px; height: 100%; width: 100%;">
+          <h5>เมนูตั้งค่า (Menu Setting)</h5><hr class="mb-2">
+          @if(auth::user()->type == "Admin")
+            <div class="mb-2">
+              <a href="{{ route('MasterMaindata.index') }}">
+                <i class="far fa-id-badge text-red mr-1"></i> ข้อมูลผู้ใช้งานระบบ
+              </a>
+            </div>
+          @endif
+        </div>
+      </div>
+    </div>
+    <div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden">
+      <div class="os-scrollbar-track">
+        <div class="os-scrollbar-handle" style="transform: translate(0px, 0px); width: 100%;"></div>
+      </div>
+    </div>
+    <div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden os-scrollbar-unusable">
+      <div class="os-scrollbar-track">
+        <div class="os-scrollbar-handle" style="transform: translate(0px, 0px); height: 100%;"></div>
+      </div>
+    </div>
+    <div class="os-scrollbar-corner"></div>
+  </div>
+</aside>

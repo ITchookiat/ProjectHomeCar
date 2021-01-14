@@ -34,25 +34,6 @@
         <ul class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          @if(auth::user()->type == "Admin")
-            <li class="nav-item has-treeview {{ Request::is('MasterMaindata') ? 'menu-open' : '' }}">
-              <a href="#" class="nav-link active">
-                <i class="nav-icon fas fa-window-restore"></i>
-                <p>
-                  ข้อมูลหลัก
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{ route('MasterMaindata.index') }}" class="nav-link active">
-                    <i class="far fa-id-badge text-red nav-icon"></i>
-                    <p>ข้อมูลผู้ใช้งานระบบ</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          @endif
 
           @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก ผู้จัดการ")
             <li class="nav-item has-treeview {{ Request::is('BoardMaster/view/1') ? 'menu-open' : '' }}">
@@ -92,7 +73,7 @@
             </ul>
           </li>
 
-          <li class="nav-item has-treeview {{ Request::is('datacar/view*') ? 'menu-open' : '' }} {{ Request::is('datacar/create/*') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/*') ? 'menu-open' : '' }} {{ Request::is('BoardMaster/view/1') ? 'menu-open' : '' }}">
+          <li class="nav-item has-treeview {{ Request::is('datacar/view*') ? 'menu-open' : '' }} {{ Request::is('datacar/create/*') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <i class="nav-icon far fa-handshake"></i>
               <p>

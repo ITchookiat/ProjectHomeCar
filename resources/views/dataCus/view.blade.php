@@ -88,9 +88,15 @@
                                                                         <td class="text-left">{{ $row->Sale_Cus }}</td>
                                                                         <td class="text-left">
                                                                             @if($row->DateType_Cus != null)
-                                                                                <button type="button" class="btn btn-primary btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
-                                                                                    <i class="fas fa-user prem"></i> {{ $row->Type_Cus }}
-                                                                                </button>
+                                                                                @if ($row->Status_Cus == 'ส่งมอบ')
+                                                                                    <button type="button" class="btn btn-success btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
+                                                                                        <i class="fas fa-user-check"></i> {{ $row->Status_Cus }}
+                                                                                    </button>
+                                                                                @else
+                                                                                    <button type="button" class="btn btn-primary btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
+                                                                                        <i class="fas fa-user prem"></i> {{ $row->Type_Cus }}
+                                                                                    </button>
+                                                                                @endif
                                                                             @endif
                                                                         </td>
                                                                         <td class="text-right">
@@ -152,9 +158,15 @@
                                                                         <td class="text-left">{{ $row->Sale_Cus }}</td>
                                                                         <td class="text-left">
                                                                             @if($row->DateType_Cus != null)
-                                                                                <button type="button" class="btn btn-primary btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
-                                                                                    <i class="fas fa-user prem"></i> {{ $row->Type_Cus }}
-                                                                                </button>
+                                                                                @if ($row->Status_Cus == 'ส่งมอบ')
+                                                                                    <button type="button" class="btn btn-success btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
+                                                                                        <i class="fas fa-user-check"></i> {{ $row->Status_Cus }}
+                                                                                    </button>
+                                                                                @else
+                                                                                    <button type="button" class="btn btn-primary btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
+                                                                                        <i class="fas fa-user prem"></i> {{ $row->Type_Cus }}
+                                                                                    </button>
+                                                                                @endif
                                                                             @endif
                                                                         </td>
                                                                         <td class="text-right">

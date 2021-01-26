@@ -1,25 +1,36 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
-    <h2 align="center"></h2>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-          <div align="center">
-            <img class="img-responsive" src="{{ asset('dist/img/homecar.png') }}" alt="User Image" style = "width: 350px">
-          </div>
-            <div class="card">
-                <div class="card-header">{{ __('กรุณากรอกชื่อและรหัส เพื่อเข้าใช้งาน') }}</div>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <div class="container">
+        <h2 align="center"></h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="text-center mb-4">
+                    <img class="mb-4" src="{{ asset('dist/img/homecarlogo2.jpg') }}" alt="" width="90" height="90" style="border-radius:  10px;">
+                    <h1 class="h3 mb-3 font-weight-normal">CHOOKIAT HOMECAR</h1>
+                    <p><code>ศูนย์รวมรถมือสอง อันดับ 1 ในสามจังหวัดชายแดนภาคใต้</code></p>
+                </div>
 
-                        <div class="form-group row">
-                            <label for="username" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail or Username') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="username" type="text" placeholder="username" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' || $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
+                <div class="card">
+                    <div class="card-body login-card-body">
+                        <p class="login-box-msg">Sign in to start your session</p>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+                            <div class="input-group mb-3">
+                                <input id="username" type="text" name="username" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' || $errors->has('username') ? ' is-invalid' : '' }}" value="{{ old('username') }}" placeholder="username" required autofocus>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-user-lock"></span>
+                                    </div>
+                                </div>
 
                                 @if ($errors->has('username'))
                                     <span class="invalid-feedback" role="alert">
@@ -33,51 +44,44 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                            <div class="input-group mb-3">
+                                <input id="password" type="password" name="password" class="form-control @error('password') is-invalid @enderror" required autocomplete="current-password" placeholder="Password">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" placeholder="Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required autocomplete="current-password">
-
-                                @if ($errors->has('password'))
+                                @error('password')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
+                                        <strong>{{ $message }}</strong>
                                     </span>
-                                @endif
+                                @enderror
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="icheck-primary">
+                                        <input type="checkbox" id="remember">
+                                        <label for="remember">
+                                            Remember Me
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="http://192.168.200.9/Projectleasing/public" class="btn btn-danger btn-block" >Home</a>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-lg btn-success btn-block" align="center">
-                                    {{ __('Login') }}
-                                </button>
-
-                                <!-- @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif -->
-                            </div>
-                        </div>
-                    </form>
+                            <p class="mt-5 mb-3 text-muted text-center">© Programmer Chookiat PN</p>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

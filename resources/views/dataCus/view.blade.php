@@ -24,7 +24,8 @@
                             <div class="card-body text-sm">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <form method="get" action="#">
+                                        <form method="get" action="{{ route('MasterResearchCus.index') }}">
+                                            <input type="hidden" name="type" value="1">
                                             <div class="float-right form-inline">
                                                 <div class="btn-group">
                                                     <button type="button" class="btn bg-primary btn-app" data-toggle="dropdown">
@@ -42,6 +43,13 @@
                                                 </button>
                                             </div>
                                             <div class="float-right form-inline">
+                                                <label>แบบ : </label>
+                                                <select name="TypeCus" class="form-control form-control-sm">
+                                                    <option selected value="">---สถานะลูกค้า---</option>
+                                                    <option value="จองรถ" {{ ($TypeCus == 'จองรถ') ? 'selected' : '' }}>จองรถ</option>
+                                                    <option value="ส่งมอบ" {{ ($TypeCus == 'ส่งมอบ') ? 'selected' : '' }}>ส่งมอบ</option>
+                                                </select>
+
                                                 <label>จากวันที่ : </label>
                                                 <input type="date" name="Fromdate" value="{{ ($newfdate != '') ?$newfdate: date('Y-m-d') }}" class="form-control form-control-sm" />
                         
@@ -200,102 +208,6 @@
             </section>
         </div>
     </section>
-    
-    <script>
-        $(function () {
-            //-------------
-            //- DONUT CHART -
-            //-------------
-            // Get context with jQuery - using jQuery's .get() method.
-            var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-            var donutData        = {
-                labels: [
-                    'Chrome', 
-                    'IE',
-                    'FireFox', 
-                    'Safari', 
-                    'Opera', 
-                    'Navigator', 
-                ],
-                datasets: [
-                {
-                    data: [700,500,400,600,300,100],
-                    backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
-                }
-                ]
-            }
-            var donutOptions     = {
-                maintainAspectRatio : false,
-                responsive : true,
-            }
-            var donutChart = new Chart(donutChartCanvas, {
-                type: 'doughnut',
-                data: donutData,
-                options: donutOptions      
-            })
-
-
-            //-------------
-            //- BAR CHART -
-            //-------------
-            var areaChartData = {
-                labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [
-                    {
-                        label               : 'Digital Goods',
-                        backgroundColor     : 'rgba(60,141,188,0.9)',
-                        borderColor         : 'rgba(60,141,188,0.8)',
-                        pointRadius          : false,
-                        pointColor          : '#3b8bba',
-                        pointStrokeColor    : 'rgba(60,141,188,1)',
-                        pointHighlightFill  : '#fff',
-                        pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data                : [28, 48, 40, 19, 86, 27, 90]
-                    },
-                    {
-                        label               : 'Electronics',
-                        backgroundColor     : 'rgba(210, 214, 222, 1)',
-                        borderColor         : 'rgba(210, 214, 222, 1)',
-                        pointRadius         : false,
-                        pointColor          : 'rgba(210, 214, 222, 1)',
-                        pointStrokeColor    : '#c1c7d1',
-                        pointHighlightFill  : '#fff',
-                        pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data                : [65, 59, 80, 81, 56, 55, 40]
-                    },
-                    {
-                        label               : 'tro',
-                        backgroundColor     : 'rgba(210, 214, 222, 1)',
-                        borderColor         : 'rgba(210, 214, 222, 1)',
-                        pointRadius         : false,
-                        pointColor          : 'rgba(210, 214, 222, 1)',
-                        pointStrokeColor    : '#c1c7d1',
-                        pointHighlightFill  : '#fff',
-                        pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data                : [10, 20, 30, 40, 50, 60, 70]
-                    },
-                    ]
-            }
-            var barChartCanvas = $('#barChart').get(0).getContext('2d')
-            var barChartData = jQuery.extend(true, {}, areaChartData)
-            var temp0 = areaChartData.datasets[0]
-            var temp1 = areaChartData.datasets[1]
-            barChartData.datasets[0] = temp1
-            barChartData.datasets[1] = temp0
-
-            var barChartOptions = {
-            responsive              : true,
-            maintainAspectRatio     : false,
-            datasetFill             : false
-            }
-
-            var barChart = new Chart(barChartCanvas, {
-            type: 'bar', 
-            data: barChartData,
-            options: barChartOptions
-            })
-        })
-    </script>
 
     <!-- Pop up เพิ่มข้อมูล -->
     <div class="modal fade" id="modal-1">

@@ -21,40 +21,43 @@ class ResearchCusController extends Controller
         if ($request->type == 1) {      //index
             $newfdate = '';
             $newtdate = '';
+            $TypeCus = '';
             if ($request->has('Fromdate')){
                 $newfdate = $request->get('Fromdate');
             }
             if ($request->has('Todate')){
                 $newtdate = $request->get('Todate');
             }
+            if ($request->has('TypeCus')){
+                $TypeCus = $request->get('TypeCus');
+            }
 
             if ($request->has('Fromdate') == false and $request->has('Todate') == false) {
                 $data = DB::table('data_customers')
-                        ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
-                        // ->where('data_customers.Status_Cus','=', 'ติดตาม')
-                        ->orderBy('data_customers.DataCus_id', 'ASC')
-                        ->get();
-                        // dd($data);
-
+                    ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
+                    ->orwhere('data_customers.Status_Cus','!=', 'ส่งมอบ')
+                    ->orderBy('data_customers.DataCus_id', 'ASC')
+                    ->get();
             }
             else {
                 $data = DB::table('data_customers')
-                        ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
-                        ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
-                            return $q->whereBetween('data_customers.DateSale_Cus',[$newfdate,$newtdate]);
-                        })
-                        ->orderBy('data_customers.DataCus_id', 'ASC')
-                        ->get();
-
-                        // dd($data);
+                    ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
+                    ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                        return $q->whereBetween('data_customers.DateSale_Cus',[$newfdate,$newtdate]);
+                    })
+                    ->when(!empty($TypeCus), function($q) use($TypeCus){
+                        return $q->where('data_customers.Status_Cus',$TypeCus);
+                    })
+                    ->orderBy('data_customers.DataCus_id', 'ASC')
+                    ->get();
             }
 
-                $dataTrack = DB::table('tracking_cuses')
-                        ->where('tracking_cuses.Tag_Tracking','=', 'Y')
-                        ->get();
+            $dataTrack = DB::table('tracking_cuses')
+                ->where('tracking_cuses.Tag_Tracking','=', 'Y')
+                ->get();
 
             $type = $request->type;
-            return view('dataCus.view', compact('data','dataTrack','newfdate','newtdate','type'));
+            return view('dataCus.view', compact('data','dataTrack','newfdate','newtdate','type','TypeCus'));
         }
         elseif ($request->type == 2) {  //create
             $data = DB::table('data_cars')

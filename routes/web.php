@@ -22,7 +22,6 @@ Route::group(['middleware' => 'auth'], function(){
     route::resource('MasterMaindata','UserController');
 
     route::resource('MasterDatacar','DatacarController');
-    // Route::get('/ExportPDF', 'DatacarController@ReportPDF');
     Route::post('/ExportPDFIndex', 'DatacarController@ReportPDFIndex');
     Route::get('/datacar/viewsee/{id}/{car_type}', 'DatacarController@viewsee')->name('datacar.viewsee');
     Route::get('/datacar/view/{type}', 'DatacarController@index')->name('datacar');

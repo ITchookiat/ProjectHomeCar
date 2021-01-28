@@ -23,8 +23,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-lg-1 col-md-6"></div>
-                <div class="col-lg-3 col-6">
+                <div class="col-lg-4 col-6">
                     <div class="small-box bg-info">
                     <div class="inner">
                         <h3>{{$data1-$data6}}</h3>
@@ -48,7 +47,7 @@
                         <a href="{{ route('datacar', 2) }}" class="small-box-footer">ดูเพิ่มเติม <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
+                <div class="col-lg-4 col-6">
                     <div class="small-box bg-navy">
                     <div class="inner">
                         <h3>{{$data3}}</h3>
@@ -61,7 +60,6 @@
                         <a href="{{ route('datacar', 3) }}" class="small-box-footer">ดูเพิ่มเติม <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-1 col-md-6"></div>
             </div>
 
             <div class="row">

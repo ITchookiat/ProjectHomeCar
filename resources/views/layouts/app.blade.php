@@ -9,7 +9,7 @@
 
     <!-- <title>{{ config('app.name', 'Laravel') }}</title> -->
     <title>CHOOKIAT HOMECAR</title>
-    <link rel="icon" href="{{ asset('dist/img/homecar.png') }}" type="image/ico" />
+    <link rel="icon" href="{{ asset('dist/img/homecarlogo2.jpg') }}" type="image/ico" />
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

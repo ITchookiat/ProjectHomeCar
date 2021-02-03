@@ -118,7 +118,7 @@
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <!-- User image -->
           <li class="user-header bg-yellow">
-            <img src="{{ asset('dist/img/homecarlogo1.jpg') }}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{ asset('dist/img/homecarlogo2.jpg') }}" class="img-circle elevation-2" alt="User Image">
               <p>
                 {{ Auth::user()->name }}
                 <small>{{ Auth::user()->username }}</small>

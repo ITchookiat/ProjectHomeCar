@@ -9,10 +9,10 @@
 @endphp
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-dark-warning">
     <!-- Brand Logo -->
     <a href="{{ route('index','home') }}" class="brand-link">
-      <img src="{{ asset('dist/img/homecar-orange1.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      <img src="{{ asset('dist/img/homecarlogo2.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">CHOOKIAT HOMECAR</span>
     </a>
@@ -57,7 +57,7 @@
 
           <li class="nav-item has-treeview {{ Request::is('ResearchCus/view/*') ? 'menu-open' : '' }} {{ Request::is('MasterResearchCus/*/*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-luggage-cart"></i>
+              <i class="nav-icon far fa-handshake"></i>
               <p>
                 Stock Customer
                 <i class="right fas fa-angle-left"></i>
@@ -66,7 +66,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ route('ResearchCus', 1) }}" class="nav-link {{ Request::is('ResearchCus/view/*') ? 'active' : '' }} {{ Request::is('MasterResearchCus/*/*') ? 'active' : '' }}">
-                  <i class="far fa-window-restore text-red nav-icon"></i>
+                  <i class="far fa-dot-circle nav-icon"></i>
                   <p>SC001</p>
                 </a>
               </li>
@@ -75,7 +75,7 @@
 
           <li class="nav-item has-treeview {{ Request::is('datacar/view*') ? 'menu-open' : '' }} {{ Request::is('datacar/create/*') ? 'menu-open' : '' }} {{ Request::is('datacar/edit/*/*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
-              <i class="nav-icon far fa-handshake"></i>
+              <i class="nav-icon fas fa-luggage-cart"></i>
               <p>
                 Car warehouse
                 <i class="right fas fa-angle-left"></i>

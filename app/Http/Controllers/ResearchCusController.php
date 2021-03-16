@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use PDF;
+
 use Carbon\Carbon;
 use App\dataCustomer;
 use App\data_car;
@@ -45,9 +47,9 @@ class ResearchCusController extends Controller
                     ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
                         return $q->whereBetween('data_customers.DateSale_Cus',[$newfdate,$newtdate]);
                     })
-                    ->when(!empty($TypeCus), function($q) use($TypeCus){
-                        return $q->where('data_customers.Status_Cus',$TypeCus);
-                    })
+                    // ->when(!empty($TypeCus), function($q) use($TypeCus){
+                    //     return $q->where('data_customers.Status_Cus',$TypeCus);
+                    // })
                     ->orderBy('data_customers.DataCus_id', 'ASC')
                     ->get();
             }
@@ -69,9 +71,6 @@ class ResearchCusController extends Controller
 
             $type = $request->type;
             return view('dataCus.create', compact('type','data'));
-        }
-        elseif ($request->type == 3) {  //view ReportCus
-            dd('dsf0');
         }
     }
 
@@ -586,6 +585,81 @@ class ResearchCusController extends Controller
 
     public function ReportCustoms(Request $request, $type)
     {
-        dd($type);
+        $newfdate = '';
+        $newtdate = '';
+        $PrintStatus = '';
+
+        if ($request->has('Fromdate')) {
+          $newfdate = $request->get('Fromdate');
+        }
+        if ($request->has('Todate')) {
+          $newtdate = $request->get('Todate');
+        }
+        if ($request->has('CheckBook')) {
+            $PrintStatus = $request->get('CheckBook');
+        }
+        
+        if ($type == 1) {
+            if ($request->Flag == 1) {
+                $data = DB::table('data_customers')
+                    ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
+                    ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                        return $q->whereBetween('data_customers.DateSale_Cus',[$newfdate,$newtdate]);
+                    })
+                    ->when(!empty($PrintStatus), function($q) use($PrintStatus){
+                        return $q->where('data_customers.Status_Cus',$PrintStatus);
+                      })
+                    ->orderBy('data_customers.DataCus_id', 'ASC')
+                    ->get();
+    
+                $view = \View::make('dataCus.report' ,compact(['data','newfdate','newtdate','PrintStatus']));
+                $html = $view->render();
+                $pdf = new PDF();
+                $pdf::SetTitle('ข้อมูลลูกค้าทั้งหมด');
+                $pdf::AddPage('L', 'A4');
+                $pdf::SetFont('thsarabunpsk', '', 12, '', true);
+                $pdf::SetMargins(5, 5, 5, 5);
+                $pdf::SetAutoPageBreak(TRUE, 25);
+                $pdf::WriteHTML($html,true,false,true,false,'');
+                $pdf::Output('report.pdf');
+            }
+            elseif ($request->Flag == 2) {
+                $data = DB::table('data_customers')
+                    ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
+                    ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                        return $q->whereBetween('data_customers.DateSale_Cus',[$newfdate,$newtdate]);
+                    })
+                    ->orderBy('data_customers.DataCus_id', 'ASC')
+                    ->get();
+                $status = 'ข้อมูลลูกค้าทั้งหมด';
+          
+                Excel::download('Research Customer', function ($excel) use($data,$status,$newfdate,$newtdate) {
+                    $excel->sheet($status, function ($sheet) use($data,$status) {
+                        $sheet->prependRow(1, array("บริษัท ชูเกียรติรถบ้าน จำกัด"));
+                        $sheet->prependRow(2, array($status."จากวันที่  ".$newfdate,"ถึงวันที่  ".$newtdate));
+                        $sheet->cells('A3:W3', function($cells) {
+                        $cells->setBackground('#FFCC00');
+                        });
+                        $row = 3;
+                        $sheet->row($row, array('ลำดับ','วันที่รับลูกค้า','ชื่อ-สกุล','ป้ายทะะเบียน',
+                            'สถานะลูกค้า','ประเภทลูกค้า',' แหล่งที่มาลูกค้า','รูปแบบลูกค้า','Sale รับลูกค้า'));
+        
+                        foreach ($data as $key => $value) {
+                        $sheet->row(++$row, array(
+                            $key+1,
+                            $value->DateSale_Cus,
+                            $value->Name_Cus,
+                            $value->RegistCar_Cus,
+                            $value->Status_Cus,
+                            $value->Type_Cus,
+                            $value->Origin_Cus,
+                            $value->model_Cus,
+                            $value->Sale_Cus,
+                        ));
+                        }
+                    });
+                })->export('xlsx');
+            }
+        }
     }
 }

@@ -680,15 +680,15 @@
                         <div class="row">
                           <div class="col-md-12">
                             <div class="form-group row mb-1">
-                              <label class="col-sm-7 col-form-label text-right">ราคาประเมิณซ่อม :</label>
-                              <div class="col-sm-5">
-                                <input type="number" name="DateBorrowcar" class="form-control form-control-sm" value="{{$datacar->Expected_Repair}}" />
+                              <label class="col-sm-6 col-form-label text-right">ราคาประเมิณซ่อม :</label>
+                              <div class="col-sm-6">
+                                <input type="number" name="Expected_Repair" class="form-control form-control-sm" value="{{$datacar->Expected_Repair}}" />
                               </div>
                             </div>
                             <div class="form-group row mb-1">
-                              <label class="col-sm-7 col-form-label text-right">ราคาประเมิณทำสี :</label>
-                              <div class="col-sm-5">
-                                <input type="number" name="DateBorrowcar" class="form-control form-control-sm" value="{{$datacar->Expected_Color}}" />
+                              <label class="col-sm-6 col-form-label text-right">ราคาประเมิณทำสี :</label>
+                              <div class="col-sm-6">
+                                <input type="number" name="Expected_Color" class="form-control form-control-sm" value="{{$datacar->Expected_Color}}" />
                               </div>
                             </div>
                           </div>

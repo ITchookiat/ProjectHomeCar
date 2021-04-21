@@ -49,7 +49,7 @@
           <th width="30px" align="center"><b>รุ่นรถ</b></th>
           <th width="120px" align="left" style="border-bottom-style: dotted;"> {{$datacar->Version_Car}}</th>
           <th width="70px" align="center"><b>เครื่องยนต์ (cc)</b></th>
-          <th width="80px" align="left" style="border-bottom-style: dotted;"> </th>
+          <th width="80px" align="left" style="border-bottom-style: dotted;"> {{$datacar->Size_Car}}</th>
           <th width="10px" align="center"><b>สี</b></th>
           <th width="55px" align="left" style="border-bottom-style: dotted;"> {{$datacar->Color_Car}}</th>
         </tr>

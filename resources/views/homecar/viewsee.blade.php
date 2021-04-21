@@ -836,6 +836,91 @@
           </div>
         </div>
 
+        @if($countdataRepair != 0)
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card card-warning">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-gears"></i> ข้อมูลรายการซ่อม</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <table class="table table-bordered">
+                    <thead>                  
+                      <tr>
+                        <th style="width: 50px">ลำดับ</th>
+                        <th>รายการ</th>
+                        <th class="text-center" style="width: 50px">จำนวน</th>
+                        <th class="text-right" style="width: 125px">ราคา/หน่วย</th>
+                        <th class="text-right" style="width: 125px">รวมเป็นเงิน</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($dataRepair as $key => $value)
+                        @php 
+                          @$Totalprice += $value->Repair_amount * $value->Repair_price;
+                        @endphp
+                        <tr>
+                          <td class="text-center">{{$key+1}}</td>
+                          <td>{{$value->Repair_list}}</td>
+                          <td class="text-center">{{$value->Repair_amount}}</td>
+                          <td class="text-right">{{number_format($value->Repair_price,2)}}</td>
+                          <td class="text-right">{{number_format($value->Repair_amount * $value->Repair_price,2)}}</td>
+                        </tr>
+                      @endforeach
+                      @if($countdataRepair != 0)
+                        <tr>
+                          <td colspan="3"></td>
+                          <td class="text-right"><b>รวมทั้งสิ้น</b></td>
+                          <td class="text-right"><b>{{number_format(@$Totalprice,2)}}</b></td>
+                        </tr>
+                      @endif
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-wrench"></i> ข้อมูลช่างซ่อม</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group row mb-1">
+                      <label class="col-sm-6 col-form-label text-right text-sm">ราคาประเมิณซ่อม :</label>
+                      <div class="col-sm-6">
+                        <input type="number" class="form-control form-control-sm" value="{{$datacar->Expected_Repair}}" />
+                      </div>
+                    </div>
+                    <div class="form-group row mb-1">
+                      <label class="col-sm-6 col-form-label text-right text-sm">ราคาประเมิณทำสี :</label>
+                      <div class="col-sm-6">
+                        <input type="number" name="Expected_Color" class="form-control form-control-sm" value="{{$datacar->Expected_Color}}" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endif
+
         <div class="row">
           <div class="col-md-12">
             <div class="card card-primary">
@@ -1133,6 +1218,7 @@
               </div>
             </div>
           </div>
+          
         </div>
         <input type="hidden" name="_method" value="PATCH"/>
       </div>

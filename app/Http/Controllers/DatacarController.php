@@ -644,7 +644,7 @@ class DatacarController extends Controller
         $data = DB::table('repair_parts')->where('Datacar_id',$id)->get();
         $datacar = DB::table('data_cars')->where('id',$id)->first();
         $SetTopic = "Receiptrepair ".date('Y-m-d');
-        $view = \View::make('homecar.receiptRepair' ,compact('data','datacar','type','plate'));
+        $view = \View::make('mechanic.receiptRepair' ,compact('data','datacar','type','plate'));
         $html = $view->render();
         $pdf = new PDF();
         $pdf::SetTitle('รายการซ่อมรถยนต์');
@@ -667,10 +667,11 @@ class DatacarController extends Controller
     public function edit(Request $request ,$id, $car_type)
     {
       $datacar = DB::table('data_cars')
-          ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
-          ->leftJoin('data_customers','data_cars.id','=','data_customers.Datacar_id')
-          ->where('data_cars.id',$id)
-          ->first();
+      ->leftjoin('check_documents','data_cars.id','=','check_documents.Datacar_id')
+      ->leftJoin('data_customers','data_cars.id','=','data_customers.Datacar_id')
+      ->select('data_cars.*','check_documents.*','data_customers.*','data_cars.id as Main_id')
+      ->where('data_cars.id', $id)
+      ->first();
 
       $dataImage = DB::table('uploadfile_images')->where('Datacarfileimage_id',$id)->get();
 
@@ -741,8 +742,9 @@ class DatacarController extends Controller
         return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus','dataImage'));
       }
       elseif($car_type == 100){
-        $dataRepair = DB::table('repair_parts')->where('Datacar_id',$id)->get();
-        return view('mechanic.editRepair',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataRepair'));
+        $dataRepair = DB::table('repair_parts')->where('Datacar_id',$datacar->Main_id)->get();
+        $countdataRepair = count($dataRepair);
+        return view('mechanic.editRepair',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataRepair','countdataRepair'));
       }
       else {
         return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage'));
@@ -753,8 +755,10 @@ class DatacarController extends Controller
     {
       $datacar = DB::table('data_cars')
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
+                    ->select('data_cars.*','check_documents.*','data_cars.id as Main_id')
                     ->where('data_cars.id',$id)->first();
-      // dd($datacar);
+      $dataRepair = DB::table('repair_parts')->where('Datacar_id',$datacar->Main_id)->get();
+      $countdataRepair = count($dataRepair);
       $title = '';
       $arrayCarType = [
         1 => 'รถยนต์นำเข้าใหม่',
@@ -810,7 +814,7 @@ class DatacarController extends Controller
         2 => 'คืนแล้ว',
       ];
       $setcarType = $car_type;
-      return view('homecar.viewsee',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','setcarType', 'arrayTypeSale','arrayBorrowStatus'));
+      return view('homecar.viewsee',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','setcarType', 'arrayTypeSale','arrayBorrowStatus','dataRepair','countdataRepair'));
     }
 
     /**
@@ -935,6 +939,8 @@ class DatacarController extends Controller
         $user->Open_auction = $SetOpen_auction;
         $user->Close_auction = $SetClose_auction;
         $user->Expected_Sell = $SetExpected_Sell;
+        $user->Expected_Repair = $request->get('Expected_Repair');
+        $user->Expected_Color = $request->get('Expected_Color');
       $user->update();
 
       $checkeditDoc = checkDocument::where('Datacar_id',$id)->first();

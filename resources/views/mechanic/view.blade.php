@@ -195,7 +195,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="row">
+            <div class="row mb-2">
               <div class="col-md-6">
                 <font color="red">* เลขทะเบียน</font>
                 <input type="text" name="Number_Regist" class="form-control form-control-sm" placeholder="ป้อนเลขทะเบียน" required/>
@@ -217,8 +217,7 @@
                 </select>
               </div>
             </div>
-            <br>
-            <div class="row">
+            <div class="row mb-2">
               <div class="col-md-6">
                 ลักษณะรถ
                 <select name="ModelCar" class="form-control form-control-sm">
@@ -240,7 +239,6 @@
                 <input type="text" name="VersionCar" class="form-control form-control-sm" placeholder="ป้อนรุ่นรถ" />
               </div>
             </div>
-            <br>
             <div class="row">
               <div class="col-md-6">
                 ราคาประเมิณซ่อม
@@ -254,10 +252,8 @@
           </div>
           <input type="hidden" name="Nameuser" value="{{auth::user()->name}}"/>
           <div class="modal-footer">
-                <div style="text-align: center;">
-                  <button type="submit" class="btn btn-success text-center" style="border-radius: 50px;">บันทึก</button>
-                  <button type="button" class="btn btn-danger" style="border-radius: 50px;" data-dismiss="modal">ยกเลิก</button>
-              </div>
+            <button type="submit" class="btn btn-success text-center"><i class="fas fa-save"></i> บันทึก</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> ยกเลิก</button>
           </div>
         </div>
       </div>

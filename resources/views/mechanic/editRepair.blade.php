@@ -390,15 +390,17 @@
                       <h3 class="card-title"><i class="fas fa-tasks"></i> รายการที่ซ่อม</h3>
                       <div class="card-tools">
                         <button type="button" class="btn btn-tool text-white" data-toggle="modal" data-target="#modal-default" title="เพิ่มรายการซ่อม">
-                          <i class="fas fa-edit"></i>
+                          <i class="fas fa-plus-circle"></i>
                         </button>
-                        <a target="_blank" class="btn btn-tool" href="{{ route('MasterDatacar.show',[$datacar->Datacar_id]) }}?type={{1}}" title="พิมพ์รายการซ่อม"> 
-                          <i class="fas fas fa-print"></i>
-                        </a>
+                        @if($countdataRepair != 0)
+                          <a target="_blank" class="btn btn-tool" href="{{ route('MasterDatacar.show',[$datacar->Main_id]) }}?type={{1}}" title="พิมพ์รายการซ่อม"> 
+                            <i class="fas fas fa-print"></i>
+                          </a>
+                        @endif
                         <!-- <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                         </button> -->
-                        <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
-                        </button>
+                        <!-- <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                        </button> -->
                       </div>
                     </div>
                     <div class="card-body">
@@ -419,7 +421,7 @@
                               @$Totalprice += $value->Repair_amount * $value->Repair_price;
                             @endphp
                             <tr>
-                              @if(auth::user()->type == 1)
+                              @if(auth::user()->type == 'Admin')
                               <td class="text-right">
                                 <form method="post" class="delete_form float-right" action="{{ action('DatacarController@destroy',$value->Repair_id) }}" style="display:inline;">
                                 {{csrf_field()}}
@@ -438,15 +440,17 @@
                               <td class="text-right">{{number_format($value->Repair_amount * $value->Repair_price,2)}}</td>
                             </tr>
                           @endforeach
+                          @if($countdataRepair != 0)
                             <tr>
                             @if(auth::user()->type == "Admin")
                               <td colspan="4"></td>
                             @else
                               <td colspan="3"></td>
                             @endif
-                              <td class="text-right">รวมทั้งสิ้น</td>
-                              <td class="text-right">{{number_format(@$Totalprice,2)}}</td>
+                              <td class="text-right"><b>รวมทั้งสิ้น</b></td>
+                              <td class="text-right"><b>{{number_format(@$Totalprice,2)}}</b></td>
                             </tr>
+                          @endif
                         </tbody>
                       </table>
                     </div>
@@ -506,10 +510,11 @@
             </div> -->
           </div>
           <input type="hidden" name="Nameuser" value="{{auth::user()->name}}"/>
-          <input type="hidden" name="Datacarid" value="{{$datacar->Datacar_id}}"/>
+          <input type="hidden" name="Datacarid" value="{{$datacar->Main_id}}"/>
           <div class="modal-footer">
             <!-- <button type="button" class="btn btn-default" data-dismiss="modal"></button> -->
             <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> บันทึก</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> ยกเลิก</button>
           </div>
         </div>
       </div>

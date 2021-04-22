@@ -851,38 +851,49 @@
               </div>
               <div class="card-body">
                 <div class="row">
-                  <table class="table table-bordered">
-                    <thead>                  
-                      <tr>
-                        <th style="width: 50px">ลำดับ</th>
-                        <th>รายการ</th>
-                        <th class="text-center" style="width: 50px">จำนวน</th>
-                        <th class="text-right" style="width: 125px">ราคา/หน่วย</th>
-                        <th class="text-right" style="width: 125px">รวมเป็นเงิน</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($dataRepair as $key => $value)
-                        @php 
-                          @$Totalprice += $value->Repair_amount * $value->Repair_price;
-                        @endphp
-                        <tr>
-                          <td class="text-center">{{$key+1}}</td>
-                          <td>{{$value->Repair_list}}</td>
-                          <td class="text-center">{{$value->Repair_amount}}</td>
-                          <td class="text-right">{{number_format($value->Repair_price,2)}}</td>
-                          <td class="text-right">{{number_format($value->Repair_amount * $value->Repair_price,2)}}</td>
-                        </tr>
-                      @endforeach
-                      @if($countdataRepair != 0)
-                        <tr>
-                          <td colspan="3"></td>
-                          <td class="text-right"><b>รวมทั้งสิ้น</b></td>
-                          <td class="text-right"><b>{{number_format(@$Totalprice,2)}}</b></td>
-                        </tr>
-                      @endif
-                    </tbody>
-                  </table>
+                      <table class="table table-bordered">
+                        <thead>                  
+                          <tr>
+                            <th style="width: 10px">ที่</th>
+                            <th>รายการ / รายละเอียดการซ่อม</th>
+                            <th class="text-center" style="width: 30px">จำนวน</th>
+                            <th class="text-right" style="width: 100px">ราคา/หน่วย</th>
+                            <th class="text-right" style="width: 100px">รวมเป็นเงิน</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($dataRepair as $key => $value)
+                            @php 
+                              @$Totalprice += $value->Repair_amount * $value->Repair_price;
+                            @endphp
+                            <tr>
+                              <td>{{$key+1}}</td>
+                              <td>
+                              {{$value->Repair_list}}
+                                @if($value->Repair_detail != null)
+                                <br>
+                                <i class="fa fa-minus text-xs"></i>
+                                {{$value->Repair_detail}}
+                                @endif
+                              </td>
+                              <td class="text-center">{{$value->Repair_amount}}</td>
+                              <td class="text-right">{{number_format($value->Repair_price,2)}}</td>
+                              <td class="text-right">{{number_format($value->Repair_amount * $value->Repair_price,2)}}</td>
+                            </tr>
+                          @endforeach
+                          @if($countdataRepair != 0)
+                            <tr>
+                            @if(auth::user()->type == "Admin")
+                              <td colspan="4"></td>
+                            @else
+                              <td colspan="3"></td>
+                            @endif
+                              <td class="text-right"><b>รวมทั้งสิ้น</b></td>
+                              <td class="text-right"><b>{{number_format(@$Totalprice,2)}}</b></td>
+                            </tr>
+                          @endif
+                        </tbody>
+                      </table>
                 </div>
               </div>
             </div>

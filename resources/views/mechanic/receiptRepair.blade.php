@@ -97,7 +97,13 @@
             @endphp
         <tr align="center" style="line-height: 150%;">
           <td width="30px">{{$key+1}}</td>
-          <td width="280px" align="left"> {{$value->Repair_list}}</td>
+          <td width="280px" align="left"> 
+          {{$value->Repair_list}}
+          @if($value->Repair_detail)
+          <br style="line-height: 100%;">
+          - {{$value->Repair_detail}}
+          @endif
+          </td>
           <td width="50px">{{$value->Repair_amount}}</td>
           <td width="75px" align="right">{{number_format($value->Repair_price,2)}} &nbsp;</td>
           <td width="70px" align="right">{{number_format($value->Repair_amount * $value->Repair_price,2)}} &nbsp;</td>

@@ -569,6 +569,7 @@ class DatacarController extends Controller
           'Repair_list' => $request->get('RepairList'),
           'Repair_amount' => $request->get('RepairAmount'),
           'Repair_price' => $request->get('RepairPrice'),
+          'Repair_detail' => $request->get('RepairDetail'),
           'Repair_useradd' => $request->get('Nameuser'),
         ]);
         $repairdb->save();
@@ -897,6 +898,8 @@ class DatacarController extends Controller
         $user->Size_Car = $request->get('SizeCar');
         $user->Number_Regist = $request->get('Number_Regist');
         $user->Chassis_car = $request->get('ChassisCar');
+        $user->Expected_Repair = $request->get('Expected_Repair');
+        $user->Expected_Color = $request->get('Expected_Color');
         $user->Job_Number = $request->get('JobCar');
         $user->Accounting_Cost = $SetAccountingCost;
         $user->Name_Sale = $request->get('SaleCar');
@@ -1003,8 +1006,10 @@ class DatacarController extends Controller
       }
       elseif ($user->Car_type == '7') {
         $type = 14;
-      }elseif($request->type == '44'){
-        $type = 44;
+      }
+      
+      if($request->type == '44'){
+        $type = $request->type;
         $user->Repair_Price = $request->get('Totalprice');
         $user->update();
         return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');

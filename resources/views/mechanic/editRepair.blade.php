@@ -199,7 +199,7 @@
             </div>
             <div class="card-body text-sm">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                   <div class="card card-warning">
                     <div class="card-header">
                       <h3 class="card-title"><i class="fas fa-car"></i> ข้อมูลรถยนต์ 
@@ -229,7 +229,7 @@
                           <div class="form-group row mb-1">
                             <label class="col-sm-5 col-form-label text-right">สถานะ:</label>
                             <div class="col-sm-7">
-                              <select name="Cartype" id="Cartype" class="form-control form-control-sm" readonly>
+                              <select name="Cartype" id="Cartype" class="form-control form-control-sm">
                                 @foreach ($arrayCarType as $key => $value)
                                   <option value="{{$key}}" {{ ($key == $datacar->Car_type) ? 'selected' : '' }}>{{$value}}</option>
                                 @endforeach
@@ -369,6 +369,18 @@
                                 <input type="text" name="ChassisCar" class="form-control form-control-sm" value="{{$datacar->Chassis_car}}" />
                               </div>
                             </div>
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-5 col-form-label text-right">ประเมิณซ่อม :</label>
+                              <div class="col-sm-7">
+                                <input type="number" name="Expected_Repair" class="form-control form-control-sm" value="{{$datacar->Expected_Repair}}" />
+                              </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-5 col-form-label text-right">ประเมิณทำสี :</label>
+                              <div class="col-sm-7">
+                                <input type="number" name="Expected_Color" class="form-control form-control-sm" value="{{$datacar->Expected_Color}}" />
+                              </div>
+                            </div>
                           </div>
                         </div>  
                     
@@ -384,7 +396,7 @@
             @endforeach
             <input type="hidden" name="Totalprice" value="{{@$Totalprice1}}">
           </form>
-                <div class="col-md-6">
+                <div class="col-md-7">
                   <div class="card card-primary">
                     <div class="card-header">
                       <h3 class="card-title"><i class="fas fa-tasks"></i> รายการที่ซ่อม</h3>
@@ -407,12 +419,14 @@
                       <table class="table table-bordered">
                         <thead>                  
                           <tr>
+                          @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
                             <th style="width: 50px">#</th>
+                          @endif
                             <th style="width: 10px">ที่</th>
-                            <th>รายการ</th>
+                            <th>รายการอะไหล่ / รายละเอียดการซ่อม</th>
                             <th class="text-center" style="width: 30px">จำนวน</th>
-                            <th class="text-right">ราคา/หน่วย</th>
-                            <th class="text-right">รวมเป็นเงิน</th>
+                            <th class="text-right" style="width: 100px">ราคา/หน่วย</th>
+                            <th class="text-right" style="width: 100px">รวมเป็นเงิน</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -421,7 +435,7 @@
                               @$Totalprice += $value->Repair_amount * $value->Repair_price;
                             @endphp
                             <tr>
-                              @if(auth::user()->type == 'Admin')
+                              @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
                               <td class="text-right">
                                 <form method="post" class="delete_form float-right" action="{{ action('DatacarController@destroy',$value->Repair_id) }}" style="display:inline;">
                                 {{csrf_field()}}
@@ -434,7 +448,14 @@
                               </td>
                               @endif
                               <td>{{$key+1}}</td>
-                              <td>{{$value->Repair_list}}</td>
+                              <td>
+                              {{$value->Repair_list}}
+                                @if($value->Repair_detail != null)
+                                <br>
+                                <i class="fa fa-minus text-xs"></i>
+                                {{$value->Repair_detail}}
+                                @endif
+                              </td>
                               <td class="text-center">{{$value->Repair_amount}}</td>
                               <td class="text-right">{{number_format($value->Repair_price,2)}}</td>
                               <td class="text-right">{{number_format($value->Repair_amount * $value->Repair_price,2)}}</td>
@@ -483,22 +504,29 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="row">
+            <div class="row mb-2">
               <div class="col-md-2"></div>
               <div class="col-md-8">
-                รายการ
+                รายการอะไหล่
                 <input type="text" name="RepairList" class="form-control" />
               </div>
             </div>
-            <div class="row">
+            <div class="row mb-2">
               <div class="col-md-2"></div>
               <div class="col-md-4">
                 จำนวน
                 <input type="number" name="RepairAmount" class="form-control" />
               </div>
               <div class="col-md-4">
-                ราคา
+                ราคา/หน่วย
                 <input type="number" id="RepairPrice" name="RepairPrice" class="form-control"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-8">
+                รายละเอียดการซ่อม
+                <textarea type="text" name="RepairDetail" class="form-control" rows="3"></textarea>
               </div>
             </div>
             <!-- <div class="row">

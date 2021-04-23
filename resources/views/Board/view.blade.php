@@ -48,9 +48,10 @@
                       <option value="แบมะ" {{ ($Sale == 'แบมะ') ? 'selected' : '' }}>แบมะ</option>
                       <option value="ลี" {{ ($Sale == 'ลี') ? 'selected' : '' }}>ลี</option>
                       <option value="วัน" {{ ($Sale == 'วัน') ? 'selected' : '' }}>วัน</option>
-                      <option value="เตี๊ยก" {{ ($Sale == 'เตี๊ยก') ? 'selected' : '' }}>เตี๊ยก</option>
+                      <option value="วรรณ" {{ ($Sale == 'วรรณ') ? 'selected' : '' }}>วรรณ</option>
+                      <!-- <option value="เตี๊ยก" {{ ($Sale == 'เตี๊ยก') ? 'selected' : '' }}>เตี๊ยก</option>
                       <option value="สา" {{ ($Sale == 'สา') ? 'selected' : '' }}>สา</option>
-                      <option value="กวาง" {{ ($Sale == 'กวาง') ? 'selected' : '' }}>กวาง</option>
+                      <option value="กวาง" {{ ($Sale == 'กวาง') ? 'selected' : '' }}>กวาง</option> -->
                     </select>
                   </div>
                 </form>
@@ -160,28 +161,12 @@
                         <div class="progress-bar progress-bar-striped bg-success" style="width: 60%"></div>
                       </div>
                     </div>
-    
+
                     <div class="progress-group">
-                      No.4 เตี๊ยก (Sale)
+                      No.4 วรรณ (Sale)
                       <span class="float-right"><b>250</b>/500</span>
                       <div class="progress">
                         <div class="progress-bar progress-bar-striped bg-warning" style="width: 50%"></div>
-                      </div>
-                    </div>
-
-                    <div class="progress-group">
-                      No.5 สา (Sale)
-                      <span class="float-right"><b>250</b>/500</span>
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-pink" style="width: 50%"></div>
-                      </div>
-                    </div>
-
-                    <div class="progress-group">
-                      No.6 กวาง (Sale)
-                      <span class="float-right"><b>250</b>/500</span>
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-orage" style="width: 50%"></div>
                       </div>
                     </div>
 
@@ -189,7 +174,7 @@
                 </div> --}}
                 <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-book-reader"></i> Goal Completion</h3>
+                    <h3 class="card-title"><i class="fas fa-book-reader"></i> Goal Completion ({{$Num1 + $Num2 + $Num3 + $Num4}})</h3>
                   </div>
                   <div class="card-body">
                     <canvas id="horizontalBar"></canvas>
@@ -208,18 +193,18 @@
     new Chart(document.getElementById("horizontalBar"), {
         "type": "horizontalBar",
         "data": {
-          "labels": ["แบมะ", "ลี", "มัรวัน", "เตี๊ยก", "สา", "กวาง"],
+          "labels": ["แบมะ", "ลี", "มัรวัน", "วรรณ"],
           "datasets": [{
-          "label": "รวมยอดขาย",
-          "data": [{{$Num1}}, {{$Num2}}, {{$Num3}}, {{$Num4}}, {{$Num5}}, {{$Num6}}],
+          "label": "ยอดขาย",
+          "data": [{{$Num1}}, {{$Num2}}, {{$Num3}}, {{$Num4}}],
           "fill": false,
           "backgroundColor": [
             "rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
-            "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"
+            "rgb(75, 192, 192)", "rgb(54, 162, 235)",
           ],
           "borderColor": [
             "rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
-            "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"
+            "rgb(75, 192, 192)", "rgb(54, 162, 235)",
           ],
           "borderWidth": 1
           }]

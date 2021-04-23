@@ -74,12 +74,8 @@ class BoardController extends Controller
                         $Num2 += 1;
                     }elseif ($value->Name_Saleplus == 'วัน') {
                         $Num3 += 1;
-                    }elseif ($value->Name_Saleplus == 'เตี๊ยก') {
+                    }elseif ($value->Name_Saleplus == 'วรรณ') {
                         $Num4 += 1;
-                    }elseif ($value->Name_Saleplus == 'สา') {
-                        $Num5 += 1;
-                    }elseif ($value->Name_Saleplus == 'กวาง') {
-                        $Num6 += 1;
                     }
                 }
             }
@@ -96,19 +92,13 @@ class BoardController extends Controller
             if ($Num4 > 7) {
                 $SumBlow += 2000;
             }
-            if ($Num5 > 7) {
-                $SumBlow += 2000;
-            }
-            if ($Num6 > 7) {
-                $SumBlow += 2000;
-            }
 
             $fdate = $request->get('Fromdate');
             $tdate = $request->get('Todate');
             $type = $request->type;
 
             return view('Board.view', compact('data','type','fdate','tdate','Sale','SumCom','SumBlow',
-                        'Num1','Num2','Num3','Num4','Num5','Num6'));
+                        'Num1','Num2','Num3','Num4'));
         }
     }
 }

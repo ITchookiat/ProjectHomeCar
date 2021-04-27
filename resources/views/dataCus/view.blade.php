@@ -237,7 +237,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-4 col-form-label text-right">จากวันที่ :</label>
                               <div class="col-sm-8">
-                                <input type="date" name="Fromdate" value="{{ date('Y-m-d') }}" class="form-control form-control-sm"/>
+                                <input type="date" name="Fromdate" value="{{ date('Y-m-01') }}" class="form-control form-control-sm"/>
                               </div>
                             </div>
                             <div class="form-group row mb-1">
@@ -257,7 +257,7 @@
                                 <select name="Flag" class="form-control form-control-sm" style="width: 100%;" required>
                                     <option value="" selected>--- เลือกแบบเอกสาร ---</option>
                                     <option value="1">.PDF</option>
-                                    {{-- <option value="2">.Excel</option> --}}
+                                    <!-- <option value="2">.Excel</option> -->
                                 </select>
                               </div>
                             </div>

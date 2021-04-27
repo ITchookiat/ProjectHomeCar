@@ -36,7 +36,7 @@
                with font-awesome or any other icon font library -->
 
           @if(auth::user()->type == "Admin" or auth::user()->type == "แผนก ผู้จัดการ")
-            <li class="nav-item has-treeview {{ Request::is('BoardMaster/view/1') ? 'menu-open' : '' }}">
+            <li class="nav-item has-treeview {{ Request::is('BoardMaster/view/*') ? 'menu-open' : '' }}">
               <a href="#" class="nav-link active">
                 <i class="nav-icon fab fa-black-tie"></i>
                 <p>
@@ -49,6 +49,12 @@
                   <a href="{{ route('BoardMaster',1) }}" class="nav-link {{ Request::is('BoardMaster/view/1') ? 'active' : '' }}">
                     <i class="far fa-dot-circle nav-icon"></i>
                     <p>Commision Sale</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('BoardMaster',2) }}" class="nav-link {{ Request::is('BoardMaster/view/2') ? 'active' : '' }}">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>Cars Sale</p>
                   </a>
                 </li>
               </ul>

@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use PDF;
+use Excel;
 
 use Carbon\Carbon;
 use App\dataCustomer;
 use App\data_car;
 use App\tracking_cus;
+use App\Exports\UsersCusExport;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ResearchCusController extends Controller
 {
@@ -632,33 +635,36 @@ class ResearchCusController extends Controller
                     ->orderBy('data_customers.DataCus_id', 'ASC')
                     ->get();
                 $status = 'ข้อมูลลูกค้าทั้งหมด';
-          
-                Excel::download('Research Customer', function ($excel) use($data,$status,$newfdate,$newtdate) {
-                    $excel->sheet($status, function ($sheet) use($data,$status) {
-                        $sheet->prependRow(1, array("บริษัท ชูเกียรติรถบ้าน จำกัด"));
-                        $sheet->prependRow(2, array($status."จากวันที่  ".$newfdate,"ถึงวันที่  ".$newtdate));
-                        $sheet->cells('A3:W3', function($cells) {
-                        $cells->setBackground('#FFCC00');
-                        });
-                        $row = 3;
-                        $sheet->row($row, array('ลำดับ','วันที่รับลูกค้า','ชื่อ-สกุล','ป้ายทะะเบียน',
-                            'สถานะลูกค้า','ประเภทลูกค้า',' แหล่งที่มาลูกค้า','รูปแบบลูกค้า','Sale รับลูกค้า'));
+
+                // Excel::download('Research Customer', function ($excel) use($data,$status,$newfdate,$newtdate) {
+                //     $excel->sheet($status, function ($sheet) use($data,$status) {
+                //         $sheet->prependRow(1, array("บริษัท ชูเกียรติรถบ้าน จำกัด"));
+                //         $sheet->prependRow(2, array($status."จากวันที่  ".$newfdate,"ถึงวันที่  ".$newtdate));
+                //         $sheet->cells('A3:W3', function($cells) {
+                //         $cells->setBackground('#FFCC00');
+                //         });
+                //         $row = 3;
+                //         $sheet->row($row, array('ลำดับ','วันที่รับลูกค้า','ชื่อ-สกุล','ป้ายทะะเบียน',
+                //             'สถานะลูกค้า','ประเภทลูกค้า',' แหล่งที่มาลูกค้า','รูปแบบลูกค้า','Sale รับลูกค้า'));
         
-                        foreach ($data as $key => $value) {
-                        $sheet->row(++$row, array(
-                            $key+1,
-                            $value->DateSale_Cus,
-                            $value->Name_Cus,
-                            $value->RegistCar_Cus,
-                            $value->Status_Cus,
-                            $value->Type_Cus,
-                            $value->Origin_Cus,
-                            $value->model_Cus,
-                            $value->Sale_Cus,
-                        ));
-                        }
-                    });
-                })->export('xlsx');
+                //         foreach ($data as $key => $value) {
+                //         $sheet->row(++$row, array(
+                //             $key+1,
+                //             $value->DateSale_Cus,
+                //             $value->Name_Cus,
+                //             $value->RegistCar_Cus,
+                //             $value->Status_Cus,
+                //             $value->Type_Cus,
+                //             $value->Origin_Cus,
+                //             $value->model_Cus,
+                //             $value->Sale_Cus,
+                //         ));
+                //         }
+                //     });
+                // })->export('xlsx');
+
+                return Excel::download(new UsersCusExport, 'usersCustomer.xlsx');
+
             }
         }
     }

@@ -169,7 +169,7 @@
           </script>
         @endif
         <div class="card">
-          <form name="form1" method="post" action="{{ action('DatacarController@update',$id) }}" enctype="multipart/form-data">
+          <form name="form1" method="post" action="{{ action('DatacarController@updateMechanic',$id) }}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="card-header">
@@ -221,7 +221,7 @@
                           <div class="form-group row mb-1">
                             <label class="col-sm-5 col-form-label text-right"> วันที่ซื้อ :</label>
                             <div class="col-sm-7">
-                              <input type="date" class="form-control form-control-sm" name="DateCar" value="{{$datacar->create_date}}" readonly>
+                              <input type="date" class="form-control form-control-sm" value="{{$datacar->create_date}}" readonly>
                             </div>
                           </div>
                         </div>
@@ -229,7 +229,7 @@
                           <div class="form-group row mb-1">
                             <label class="col-sm-5 col-form-label text-right">สถานะ:</label>
                             <div class="col-sm-7">
-                              <select name="Cartype" id="Cartype" class="form-control form-control-sm">
+                              <select id="Cartype" name="Cartype" class="form-control form-control-sm">
                                 @foreach ($arrayCarType as $key => $value)
                                   <option value="{{$key}}" {{ ($key == $datacar->Car_type) ? 'selected' : '' }}>{{$value}}</option>
                                 @endforeach
@@ -244,7 +244,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right"> ยี่ห้อรถ :</label>
                               <div class="col-sm-7">
-                                <select name="BrandCar" class="form-control form-control-sm" readonly>
+                                <select class="form-control form-control-sm" readonly>
                                   @foreach ($arrayBrand as $key => $value)
                                     <option value="{{$key}}" {{ ($key == $datacar->Brand_Car) ? 'selected' : '' }}>{{$value}}</option>
                                   @endforeach
@@ -256,7 +256,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right">เลขทะเบียน :</label>
                               <div class="col-sm-7">
-                                <input type="text" name="Number_Regist" class="form-control form-control-sm" value="{{$datacar->Number_Regist}}" readonly/>
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Number_Regist}}" readonly/>
                               </div>
                             </div>
                           </div>
@@ -267,7 +267,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right">ที่มาของรถ :</label>
                               <div class="col-sm-7">
-                                <select name="OriginCar" class="form-control form-control-sm" readonly>
+                                <select class="form-control form-control-sm" readonly>
                                   @foreach ($arrayOriginType as $key => $value)
                                     <option value="{{$key}}" {{ ($key == $datacar->Origin_Car) ? 'selected' : '' }}>{{$value}}</option>
                                   @endforeach
@@ -279,7 +279,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right">Sale :</label>
                               <div class="col-sm-7">
-                                <input type="text" name="SaleCar" class="form-control form-control-sm" value="{{$datacar->Name_Sale}}" readonly/>
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Name_Sale}}" readonly/>
                               </div>
                             </div>
                           </div>
@@ -290,7 +290,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right">ลักษณะรถ :</label>
                               <div class="col-sm-7">
-                                <select name="ModelCar" class="form-control form-control-sm" readonly>
+                                <select class="form-control form-control-sm" readonly>
                                   @foreach ($arrayModel as $key => $value)
                                     <option value="{{$key}}" {{ ($key == $datacar->Model_Car) ? 'selected' : '' }}>{{$value}}</option>
                                   @endforeach
@@ -302,7 +302,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right">เลขไมล์ :</label>
                               <div class="col-sm-7">
-                                <input type="text" id="MilesCar" name="MilesCar" class="form-control form-control-sm" value="{{$datacar->Number_Miles}}" oninput="mile();" maxlength="10" readonly/>
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Number_Miles}}" oninput="mile();" maxlength="10" readonly/>
                               </div>
                             </div>
                           </div>
@@ -313,7 +313,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right">รุ่นรถ :</label>
                               <div class="col-sm-7">
-                                <input type="text" name="VersionCar" class="form-control form-control-sm" value="{{$datacar->Version_Car}}" readonly/>
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Version_Car}}" readonly/>
                               </div>
                             </div>
                           </div>
@@ -321,14 +321,14 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right">เกียร์รถ / ปีรถ :</label>
                               <div class="col-sm-4">
-                                <select name="Gearcar" class="form-control form-control-sm" readonly>
+                                <select class="form-control form-control-sm" readonly>
                                   @foreach ($arrayGearcar as $key => $value)
                                     <option value="{{$key}}" {{ ($key == $datacar->Gearcar) ? 'selected' : '' }}>{{$value}}</option>
                                   @endforeach
                                 </select>
                               </div>
                               <div class="col-sm-3">
-                                <input type="text" name="YearCar" class="form-control form-control-sm" value="{{$datacar->Year_Product}}" readonly/>
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Year_Product}}" readonly/>
                               </div>
                             </div>
                           </div>
@@ -339,7 +339,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right">ขนาด :</label>
                               <div class="col-sm-7">
-                                <input type="text" name="SizeCar" class="form-control form-control-sm" value="{{$datacar->Size_Car}}" readonly/>
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Size_Car}}" readonly/>
                             </div>
                             </div>
                           </div>
@@ -347,7 +347,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right">สีรถ :</label>
                               <div class="col-sm-7">
-                                <input type="text" name="ColorCar" class="form-control form-control-sm" value="{{$datacar->Color_Car}}" readonly/>
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Color_Car}}" readonly/>
                               </div>
                             </div>
                           </div>
@@ -358,7 +358,7 @@
                             <div class="form-group row mb-1">
                               <label class="col-sm-5 col-form-label text-right">Job Number :</label>
                               <div class="col-sm-7">
-                                <input type="text" name="JobCar" class="form-control form-control-sm" value="{{$datacar->Job_Number}}" readonly/>
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Job_Number}}" readonly/>
                               </div>
                             </div>
                           </div>

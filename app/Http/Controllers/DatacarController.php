@@ -897,9 +897,6 @@ class DatacarController extends Controller
         $user->Year_Product = $request->get('YearCar');
         $user->Size_Car = $request->get('SizeCar');
         $user->Number_Regist = $request->get('Number_Regist');
-        $user->Chassis_car = $request->get('ChassisCar');
-        $user->Expected_Repair = $request->get('Expected_Repair');
-        $user->Expected_Color = $request->get('Expected_Color');
         $user->Job_Number = $request->get('JobCar');
         $user->Accounting_Cost = $SetAccountingCost;
         $user->Name_Sale = $request->get('SaleCar');
@@ -942,8 +939,6 @@ class DatacarController extends Controller
         $user->Open_auction = $SetOpen_auction;
         $user->Close_auction = $SetClose_auction;
         $user->Expected_Sell = $SetExpected_Sell;
-        $user->Expected_Repair = $request->get('Expected_Repair');
-        $user->Expected_Color = $request->get('Expected_Color');
       $user->update();
 
       $checkeditDoc = checkDocument::where('Datacar_id',$id)->first();
@@ -1007,16 +1002,9 @@ class DatacarController extends Controller
       elseif ($user->Car_type == '7') {
         $type = 14;
       }
-      
-      if($request->type == '44'){
-        $type = $request->type;
-        $user->Repair_Price = $request->get('Totalprice');
-        $user->update();
-        return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');
-      }else {
-        $type = $user->Car_type;  //Get ค่าใหม่
-      }
 
+      $type = $user->Car_type;  //Get ค่าใหม่
+      
       return redirect()->Route('datacar',$type)->with('success','อัพเดตข้อมูลเรียบร้อย');
     }
 
@@ -1056,6 +1044,48 @@ class DatacarController extends Controller
       $user->update();
       $type = $user->Car_type;  //Get ค่าใหม่
       return redirect()->Route('datacar',$type)->with('success','อัพเดตข้อมูลเรียบร้อย');
+    }
+
+
+    public function updateMechanic(Request $request, $id)
+    {
+      if($request->type == '44'){
+        $type = $request->type;
+        $user = data_car::find($id);
+          if ($request->get('Cartype') != Null && $request->get('Cartype') != $user->Car_type ) {
+            date_default_timezone_set('Asia/Bangkok');
+            $Y = date('Y') + 543;
+            $m = date('m');
+            $d = date('d');
+            $date = $Y.'-'.$m.'-'.$d;
+                if ($request->get('Cartype') == 2) {
+                  $user->Date_Color = $date;
+                  $user->Date_Status = $date;
+                }elseif ($request->get('Cartype') == 3) {
+                  $user->Date_Wait = $date;
+                  $user->Date_Status = $date;
+                }elseif ($request->get('Cartype') == 4) {
+                  $user->Date_Repair = $date;
+                  $user->Date_Status = $date;
+                }elseif ($request->get('Cartype') == 5) {
+                  $user->Date_Sale = $date;
+                  $user->Date_Status = $date;
+                }elseif ($request->get('Cartype') == 6) {
+                  $user->Date_Soldout = $date;
+                  $user->Date_Status = $date;
+                }elseif ($request->get('Cartype') == 7) {
+                  $user->Date_Auction = $date;
+                  $user->Date_Status = $date;
+                }
+          }
+          $user->Car_type = $request->get('Cartype');
+          $user->Chassis_car = $request->get('ChassisCar');
+          $user->Expected_Repair = $request->get('Expected_Repair');
+          $user->Expected_Color = $request->get('Expected_Color');
+          $user->Repair_Price = $request->get('Totalprice');
+        $user->update();
+        return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');
+      }
     }
 
     /**

@@ -12,7 +12,6 @@ use App\dataCustomer;
 use App\data_car;
 use App\tracking_cus;
 use App\Exports\UsersCusExport;
-use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ResearchCusController extends Controller
 {
@@ -627,14 +626,14 @@ class ResearchCusController extends Controller
                 $pdf::Output('report.pdf');
             }
             elseif ($request->Flag == 2) {
-                $data = DB::table('data_customers')
-                    ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
-                    ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
-                        return $q->whereBetween('data_customers.DateSale_Cus',[$newfdate,$newtdate]);
-                    })
-                    ->orderBy('data_customers.DataCus_id', 'ASC')
-                    ->get();
-                $status = 'ข้อมูลลูกค้าทั้งหมด';
+                // $data = DB::table('data_customers')
+                //     ->leftJoin('data_cars','data_customers.DataCus_id','=','data_cars.F_DataCus_id')
+                //     ->when(!empty($newfdate)  && !empty($newtdate), function($q) use ($newfdate, $newtdate) {
+                //         return $q->whereBetween('data_customers.DateSale_Cus',[$newfdate,$newtdate]);
+                //     })
+                //     ->orderBy('data_customers.DataCus_id', 'ASC')
+                //     ->get();
+                // $status = 'ข้อมูลลูกค้าทั้งหมด';
 
                 // Excel::download('Research Customer', function ($excel) use($data,$status,$newfdate,$newtdate) {
                 //     $excel->sheet($status, function ($sheet) use($data,$status) {
@@ -663,8 +662,16 @@ class ResearchCusController extends Controller
                 //     });
                 // })->export('xlsx');
 
-                return Excel::download(new UsersCusExport, 'usersCustomer.xlsx');
+                return Excel::download(new UsersCusExport, 'ReportCustomer.xlsx');
 
+            }
+        }
+        elseif($type == 2){
+            if ($request->Flag == 11) { //PDF
+
+            }
+            elseif ($request->Flag == 22){ //Excel
+                return Excel::download(new UsersCusExport, 'ReportCarsSale.xlsx');
             }
         }
     }

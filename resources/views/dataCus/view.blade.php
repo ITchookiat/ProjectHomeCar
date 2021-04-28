@@ -33,6 +33,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu" role="menu">
                                                         <li><a target="_blank" class="dropdown-item" data-toggle="modal" data-target="#modal-primary"> รายงานข้อมูลลูกค้า</a></li>
+                                                        <li><a target="_blank" class="dropdown-item" data-toggle="modal" data-target="#modal-primary2"> รายงานข้อมูลรถขายแล้ว</a></li>
                                                     </ul>
                                                 </div>
                                                 <a class="btn bg-success btn-app" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('ResearchCus', 2) }}">
@@ -257,7 +258,7 @@
                                 <select name="Flag" class="form-control form-control-sm" style="width: 100%;" required>
                                     <option value="" selected>--- เลือกแบบเอกสาร ---</option>
                                     <option value="1">.PDF</option>
-                                    <!-- <option value="2">.Excel</option> -->
+                                    <option value="2">.Excel</option>
                                 </select>
                               </div>
                             </div>
@@ -299,11 +300,99 @@
                           <button type="submit" class="btn btn-sm btn-primary text-center">
                             <i class="fas fa-print mr-sm-1"></i> ปริ้น
                           </button>
-                          <a type="button" class="btn btn-sm btn-danger" href="{{ URL::previous() }}">
+                          <a type="button" class="btn btn-sm btn-danger" href="{{ route('ResearchCus', 1) }}">
                             <i class="fas fa-times mr-sm-1"></i> ยกเลิก
                           </a>
                         </div>
                         <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-primary2">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">Report Cars Sale</h4>
+                </div>
+                <div class="modal-body text-sm">
+                    <form name="form1" action="{{ route('ResearchCus.ReportCus',2) }}" target="_blank" method="get" id="formimage" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">จากวันที่ :</label>
+                              <div class="col-sm-8">
+                                <input type="date" name="Fromdate" value="{{ date('Y-m-01') }}" class="form-control form-control-sm"/>
+                              </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">ถึงวันที่ :</label>
+                              <div class="col-sm-8">
+                                <input type="date" name="Todate" value="{{ date('Y-m-d') }}" class="form-control form-control-sm"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-12 mb-3">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">รูปแบบเอกสาร :</label>
+                              <div class="col-sm-8">
+                                <select name="Flag" class="form-control form-control-sm" style="width: 100%;" required>
+                                    <option value="" selected>--- เลือกแบบเอกสาร ---</option>
+                                    <!-- <option value="11">.PDF</option> -->
+                                    <option value="22">.Excel</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {{--<div class="row text-right">
+                            <div class="col-md-12 mb-3">
+                                <div class="d-inline mr-sm-3">
+                                    <label><font color="red">สถานะ :</font></label>
+                                </div>
+                                <div class="icheck-danger d-inline mr-sm-3">
+                                    <input type="checkbox" name="CheckBook" value="ติดตาม" id="CheckBook1">
+                                    <label for="CheckBook1">
+                                        ติดตาม
+                                    </label>
+                                </div>
+                                <div class="icheck-danger d-inline mr-sm-3">
+                                    <input type="checkbox" name="CheckBook" value="ยกเลิกจอง" id="CheckBook2">
+                                    <label for="CheckBook2">
+                                        ยกเลิกจอง
+                                    </label>
+                                </div>
+                                <div class="icheck-danger d-inline mr-sm-3">
+                                    <input type="checkbox" name="CheckBook" value="จอง" id="CheckBook3">
+                                    <label for="CheckBook3">
+                                        จองรถ
+                                    </label>
+                                </div>
+                                <div class="icheck-danger d-inline mr-sm-3">
+                                    <input type="checkbox" name="CheckBook" value="ส่งมอบ" id="CheckBook4">
+                                    <label for="CheckBook4">
+                                        ส่งมอบ
+                                    </label>
+                                </div>
+                            </div>
+                        </div>--}}
+
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-sm btn-primary text-center">
+                            <i class="fas fa-print mr-sm-1"></i> ปริ้น
+                          </button>
+                          <a type="button" class="btn btn-sm btn-danger" href="{{ route('ResearchCus', 1) }}">
+                            <i class="fas fa-times mr-sm-1"></i> ยกเลิก
+                          </a>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer justify-content-between">

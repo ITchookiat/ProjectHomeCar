@@ -859,6 +859,7 @@
                             <th class="text-center" style="width: 30px">จำนวน</th>
                             <th class="text-right" style="width: 100px">ราคา/หน่วย</th>
                             <th class="text-right" style="width: 100px">รวมเป็นเงิน</th>
+                            <th class="text-center">ชื่อช่าง</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -879,17 +880,15 @@
                               <td class="text-center">{{$value->Repair_amount}}</td>
                               <td class="text-right">{{number_format($value->Repair_price,2)}}</td>
                               <td class="text-right">{{number_format($value->Repair_amount * $value->Repair_price,2)}}</td>
+                              <td class="text-center">{{$value->Repair_useradd}}</td>
                             </tr>
                           @endforeach
                           @if($countdataRepair != 0)
                             <tr>
-                            @if(auth::user()->type == "Admin")
-                              <td colspan="4"></td>
-                            @else
                               <td colspan="3"></td>
-                            @endif
                               <td class="text-right"><b>รวมทั้งสิ้น</b></td>
                               <td class="text-right"><b>{{number_format(@$Totalprice,2)}}</b></td>
+                              <td></td>
                             </tr>
                           @endif
                         </tbody>

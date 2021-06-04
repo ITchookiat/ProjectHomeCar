@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('/datacar/delete/{id}', 'DatacarController@destroy')->name('datacar.destroy');
     Route::get('/datacar/Savestore/{Str1}/{Str2}/{type}', 'DatacarController@Savestore')->name('datacar.Savestore');
     Route::post('/datacar/SearchData/{type}', 'DatacarController@SearchData')->name('datacar.SearchData');
+    Route::get('/datacar/AlertData/{type}/{id}', 'DatacarController@SearchData')->name('AlertData');
+
 
     route::resource('reportBetween','ReportController');
     Route::get('/reportcar/viewreport/{type}', 'ReportController@index')->name('reportcar');

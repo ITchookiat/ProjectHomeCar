@@ -100,6 +100,8 @@
                 <ul class="nav nav-treeview" style="margin-left: 15px;">
                   <li class="nav-item">
                     <a href="{{ route('datacar',12) }}" class="nav-link {{ Request::is('datacar/view/12') ? 'active' : '' }}">
+                    <span id="ShowData"></span>
+                    {{--<span class="badge badge-danger navbar-badge">3</span>--}}
                       <i class="far fa-dot-circle nav-icon"></i>
                       <p>รถยึดจากเร่งรัด</p>
                     </a>
@@ -292,3 +294,24 @@
       </nav>
     </div>
   </aside>
+
+  {{-- แจ้งเตือนสต็อกรถเร่งรัด --}}
+  <script type="text/javascript">
+    SearchData(); //เรียกใช้งานทันที
+    var Data = setInterval(() => {SearchData()}, 10000);
+
+    function SearchData(){ 
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+        url:"{{ route('AlertData', [11, 0]) }}",
+        method:"GET",
+        data:{},
+    
+        success:function(result){ //เสร็จแล้วทำอะไรต่อ
+          $('#ShowData').html(result);
+        }
+      });
+    };
+  </script>

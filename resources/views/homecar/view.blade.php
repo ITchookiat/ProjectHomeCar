@@ -149,21 +149,15 @@
                             <td class="text-center">{{$row->Number_Regist}}</td>
                             <td class="text-center">{{DateThai($row->Date_hold)}}</td>
                             <td class="text-center">
-                              @foreach($dataDB as $key => $row2)
-                                @if($row->Number_Regist == $row2->Number_Regist)
-                                <a id="edit" class="btn btn-success btn-sm" title="ส่งแล้ว">
-                                  <span class="glyphicon glyphicon-lock"></span> Check In Stock
-                                </a>
-                                  @php
-                                  $Flag = "Y";
-                                  @endphp
+                                @if($row->StatPark_Homecar != null)
+                                  <a id="edit" class="btn btn-success btn-sm" title="ส่งแล้ว">
+                                    <span class="glyphicon glyphicon-lock"></span> Check In Stock
+                                  </a>
+                                @else 
+                                  <a href="{{ route('datacar.Savestore', [$SetStr1,$SetStr2, 1]) }}" id="edit" class="btn btn-info btn-sm" title="จัดเตรียมเอกสาร">
+                                    <span class="glyphicon glyphicon-edit"></span> Import Stock
+                                  </a>
                                 @endif
-                              @endforeach
-                              @if($Flag == 'N')
-                                <a href="{{ route('datacar.Savestore', [$SetStr1,$SetStr2, 1]) }}" id="edit" class="btn btn-info btn-sm" title="จัดเตรียมเอกสาร">
-                                  <span class="glyphicon glyphicon-edit"></span> Inport Stock
-                                </a>
-                              @endif
                             </td>
                           </tr>
                         @endforeach

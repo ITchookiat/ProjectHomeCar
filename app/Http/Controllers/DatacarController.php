@@ -170,7 +170,8 @@ class DatacarController extends Controller
           $data = DB::connection('sqlsrv2')->table('holdcars')
                 ->where('holdcars.Statuscar', '=', 5)
                 ->where('holdcars.StatSold_Homecar', '=', NULL)
-                ->where('holdcars.created_at','>','2021-06-01')
+                // ->where('holdcars.StatPark_Homecar', '=', NULL)
+                ->where('holdcars.Datesend_Stockhome','>=','2021-06-01')
                 ->orderBy('holdcars.Date_hold', 'ASC')
                 ->get();
 
@@ -467,7 +468,8 @@ class DatacarController extends Controller
         $data = DB::connection('sqlsrv2')->table('holdcars')
         ->where('holdcars.Statuscar', '=', 5)
         ->where('holdcars.StatSold_Homecar', '=', NULL)
-        ->where('holdcars.created_at','>','2021-06-01')
+        ->where('holdcars.StatPark_Homecar', '=', NULL)
+        ->where('holdcars.Datesend_Stockhome','>=','2021-06-01')
         ->orderBy('holdcars.Date_hold', 'ASC')
         ->get();
         $countData = Count($data);
@@ -643,6 +645,12 @@ class DatacarController extends Controller
           'Holdcar_Contract' => $SetStrConn,
         ]);
         $datacardb->save();
+
+        $dataHold =  DB::connection('sqlsrv2')->table('holdcars')
+          ->where('holdcars.Contno_hold', '=', $SetStrConn)
+          ->update([
+              'holdcars.StatPark_Homecar' => Date('Y-m-d')
+          ]);
 
         $checkDoc = new checkDocument([
           'Datacar_id' => $datacardb->id,
@@ -1066,7 +1074,7 @@ class DatacarController extends Controller
         $data =  DB::connection('sqlsrv2')->table('holdcars')
           ->where('holdcars.Contno_hold', '=', $user->Holdcar_Contract)
           ->update([
-              'holdcars.StatSold_Homecar' => 'Y'
+              'holdcars.StatSold_Homecar' => Date('Y-m-d')
           ]);
         // dump($data);
       }

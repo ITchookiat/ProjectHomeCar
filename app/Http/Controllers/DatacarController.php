@@ -169,7 +169,9 @@ class DatacarController extends Controller
         elseif ($request->type == 12){          //สต๊อกรถเร่งรัด
           $data = DB::connection('sqlsrv2')->table('holdcars')
                 ->where('holdcars.Statuscar', '=', 5)
-                // ->where('holdcars.StatSold_Homecar', '=', NULL)
+                ->where('holdcars.StatSold_Homecar', '=', NULL)
+                // ->where('holdcars.StatPark_Homecar', '=', NULL)
+                ->where('holdcars.Datesend_Stockhome','>=','2021-06-01')
                 ->orderBy('holdcars.Date_hold', 'ASC')
                 ->get();
 
@@ -462,6 +464,23 @@ class DatacarController extends Controller
               $output.='</table>';
               echo $output;
       }
+      elseif($type == 11){ //แจ้งเตือนรถเร่งรัด
+        $data = DB::connection('sqlsrv2')->table('holdcars')
+        ->where('holdcars.Statuscar', '=', 5)
+        ->where('holdcars.StatSold_Homecar', '=', NULL)
+        ->where('holdcars.StatPark_Homecar', '=', NULL)
+        ->where('holdcars.Datesend_Stockhome','>=','2021-06-01')
+        ->orderBy('holdcars.Date_hold', 'ASC')
+        ->get();
+        $countData = Count($data);
+
+        if ($countData == 0) {
+          $countData = NULL;
+        }else {
+            $countData = '<span class="badge badge-danger navbar-badge">'.$countData.'</span>';
+        }
+       echo $countData;
+      }
 
     }
 
@@ -623,8 +642,15 @@ class DatacarController extends Controller
           'Origin_Car' => 3, //ประเภทรถยึด
           'Car_type' => 1, //สถานะนำเข้าใหม่
           'Date_Status' => $datethai,
+          'Holdcar_Contract' => $SetStrConn,
         ]);
         $datacardb->save();
+
+        $dataHold =  DB::connection('sqlsrv2')->table('holdcars')
+          ->where('holdcars.Contno_hold', '=', $SetStrConn)
+          ->update([
+              'holdcars.StatPark_Homecar' => Date('Y-m-d')
+          ]);
 
         $checkDoc = new checkDocument([
           'Datacar_id' => $datacardb->id,
@@ -1014,7 +1040,6 @@ class DatacarController extends Controller
       $user->Date_Soldout_plus = $request->get('DateSoldoutplus');
       $user->Date_Withdraw = $request->get('DateWithdraw');
 
-
       if($request->get('NetPriceplus') != "") {
         $SetNetPriceplus = str_replace (",","",$request->get('NetPriceplus'));
         $user->Net_Priceplus = $SetNetPriceplus;
@@ -1043,6 +1068,17 @@ class DatacarController extends Controller
       $user->Topcar_Price = str_replace (",","",$request->get('TopcarPrice'));;
       $user->update();
       $type = $user->Car_type;  //Get ค่าใหม่
+
+      if($user->Car_type == 6 and $user->Origin_Car == 3 and $user->Holdcar_Contract != ''){
+        
+        $data =  DB::connection('sqlsrv2')->table('holdcars')
+          ->where('holdcars.Contno_hold', '=', $user->Holdcar_Contract)
+          ->update([
+              'holdcars.StatSold_Homecar' => Date('Y-m-d')
+          ]);
+        // dump($data);
+      }
+
       return redirect()->Route('datacar',$type)->with('success','อัพเดตข้อมูลเรียบร้อย');
     }
 

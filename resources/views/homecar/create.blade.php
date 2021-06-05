@@ -245,7 +245,7 @@
                                 <option value="" selected>--- เลือกที่มาของรถ ---</option>
                                 <option value="1">CKL</option>
                                 <option value="2">รถประมูล</option>
-                                <option value="3">รถยึด</option>
+                                <option value="3" disabled>รถยึด</option>
                                 <option value="4">ฝากขาย</option>
                               </select>
                             </div>

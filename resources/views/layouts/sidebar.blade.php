@@ -100,7 +100,7 @@
                 <ul class="nav nav-treeview" style="margin-left: 15px;">
                   <li class="nav-item">
                     <a href="{{ route('datacar',12) }}" class="nav-link {{ Request::is('datacar/view/12') ? 'active' : '' }}">
-                    <span id="ShowData"></span>
+                    <span id="ShowDataHoldcar"></span>
                     {{--<span class="badge badge-danger navbar-badge">3</span>--}}
                       <i class="far fa-dot-circle nav-icon"></i>
                       <p>รถยึดจากเร่งรัด</p>
@@ -310,7 +310,7 @@
         data:{},
     
         success:function(result){ //เสร็จแล้วทำอะไรต่อ
-          $('#ShowData').html(result);
+          $('#ShowDataHoldcar').html(result);
         }
       });
     };

@@ -95,6 +95,7 @@
                         <th class="text-center" style="width: 100px">วันที่รับ</th>
                         <th class="text-center" style="width: 100px">เลขทะเบียน</th>
                         <th class="text-center" style="width: 70px">ลักษณะ</th>
+                        <th class="text-center" style="width: 70px">รุ่น</th>
                         <th class="text-center" style="width: 80px">ที่มา</th>
                         <th class="text-center" style="width: 60px">Job No.</th>
                         <th class="text-center" style="width: 100px">ประเภท</th>
@@ -120,6 +121,7 @@
 
                           <td class="text-left">{{$row->Number_Regist}}</td>
                           <td class="text-center">{{$row->Model_Car}}</td>
+                          <td class="text-center">{{$row->Version_Car}}</td>
                           <td class="text-center">
                             @if($row->Origin_Car == 1)
                               CKL

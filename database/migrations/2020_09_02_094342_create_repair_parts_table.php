@@ -19,6 +19,7 @@ class CreateRepairPartsTable extends Migration
             $table->string('Repair_date')->nullable();
             $table->string('Repair_list')->nullable();
             $table->string('Repair_amount')->nullable();
+            $table->string('Repair_unit')->nullable();
             $table->string('Repair_price')->nullable();
             $table->string('Repair_detail')->nullable();
             $table->string('Repair_useradd')->nullable();

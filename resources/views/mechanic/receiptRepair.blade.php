@@ -84,8 +84,9 @@
       <thead>
         <tr align="center" style="line-height: 150%;">
           <th width="30px" align="center" style="background-color: #FFFF00;"><b>ลำดับ</b></th>
-          <th width="280px" align="center" style="background-color: #FFFF00;"><b>รายละเอียดการซ่อมและอะไหล่</b></th>
-          <th width="50px" align="center" style="background-color: #FFFF00;"><b>จำนวน</b></th>
+          <th width="250px" align="center" style="background-color: #FFFF00;"><b>รายละเอียดการซ่อมและอะไหล่</b></th>
+          <th width="40px" align="center" style="background-color: #FFFF00;"><b>จำนวน</b></th>
+          <th width="40px" align="center" style="background-color: #FFFF00;"><b>หน่วย</b></th>
           <th width="75px" align="center" style="background-color: #FFFF00;"><b>ราคาอะไหล่</b></th>
           <th width="70px" align="center" style="background-color: #FFFF00;"><b>รวมเป็นเงิน</b></th>
         </tr>
@@ -97,21 +98,22 @@
             @endphp
         <tr align="center" style="line-height: 150%;">
           <td width="30px">{{$key+1}}</td>
-          <td width="280px" align="left"> 
+          <td width="250px" align="left"> 
           {{$value->Repair_list}}
           @if($value->Repair_detail)
           <br style="line-height: 100%;">
           - {{$value->Repair_detail}}
           @endif
           </td>
-          <td width="50px">{{$value->Repair_amount}}</td>
+          <td width="40px">{{$value->Repair_amount}}</td>
+          <td width="40px">{{$value->Repair_unit}}</td>
           <td width="75px" align="right">{{number_format($value->Repair_price,2)}} &nbsp;</td>
           <td width="70px" align="right">{{number_format($value->Repair_amount * $value->Repair_price,2)}} &nbsp;</td>
         </tr>
         @endforeach
-        <tr>
-          <td colspan="3"></td>
-          <td align="right">รวมราคาอะไหล่ &nbsp;</td>
+        <tr style="background-color: #FFFF00;">
+          <td colspan="4"></td>
+          <td align="right">รวมทั้งสิ้น &nbsp;</td>
           <td align="right">{{number_format(@$Totalprice,2)}} &nbsp;</td>
         </tr>
         <br>

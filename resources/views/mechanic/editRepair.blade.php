@@ -197,9 +197,9 @@
                 </div>
               </div>
             </div>
-            <div class="card-body text-sm">
+            <div class="card-body">
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-6 text-sm">
                   <div class="card card-warning">
                     <div class="card-header">
                       <h3 class="card-title"><i class="fas fa-car"></i> ข้อมูลรถยนต์ 
@@ -229,11 +229,12 @@
                           <div class="form-group row mb-1">
                             <label class="col-sm-5 col-form-label text-right">สถานะ:</label>
                             <div class="col-sm-7">
-                              <select id="Cartype" name="Cartype" class="form-control form-control-sm">
+                              {{--<select id="Cartype" name="Cartype" class="form-control form-control-sm">
                                 @foreach ($arrayCarType as $key => $value)
                                   <option value="{{$key}}" {{ ($key == $datacar->Car_type) ? 'selected' : '' }}>{{$value}}</option>
                                 @endforeach
-                              </select>
+                              </select>--}}
+                              <input type="text" class="form-control form-control-sm" value="{{$arrayCarType[$datacar->Car_type]}}" readonly>
                             </div>
                           </div>
                         </div>
@@ -396,7 +397,7 @@
             @endforeach
             <input type="hidden" name="Totalprice" value="{{@$Totalprice1}}">
           </form>
-                <div class="col-md-7">
+                <div class="col-md-6 text-sm">
                   <div class="card card-primary">
                     <div class="card-header">
                       <h3 class="card-title"><i class="fas fa-tasks"></i> รายการที่ซ่อม</h3>
@@ -416,7 +417,7 @@
                       </div>
                     </div>
                     <div class="card-body">
-                      <table class="table table-bordered">
+                      <table class="table table-bordered text-xs">
                         <thead>                  
                           <tr>
                           @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
@@ -425,8 +426,9 @@
                             <th style="width: 10px">ที่</th>
                             <th>รายการอะไหล่ / รายละเอียดการซ่อม</th>
                             <th class="text-center" style="width: 30px">จำนวน</th>
-                            <th class="text-right" style="width: 100px">ราคา/หน่วย</th>
-                            <th class="text-right" style="width: 100px">รวมเป็นเงิน</th>
+                            <th class="text-right" style="width: 40px">หน่วย</th>
+                            <th class="text-right" style="width: 90px">ราคา</th>
+                            <th class="text-right" style="width: 90px">รวมเป็นเงิน</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -457,6 +459,7 @@
                                 @endif
                               </td>
                               <td class="text-center">{{$value->Repair_amount}}</td>
+                              <td class="text-left">{{$value->Repair_unit}}</td>
                               <td class="text-right">{{number_format($value->Repair_price,2)}}</td>
                               <td class="text-right">{{number_format($value->Repair_amount * $value->Repair_price,2)}}</td>
                             </tr>
@@ -464,9 +467,9 @@
                           @if($countdataRepair != 0)
                             <tr>
                             @if(auth::user()->type == "Admin")
-                              <td colspan="4"></td>
+                              <td colspan="5"></td>
                             @else
-                              <td colspan="3"></td>
+                              <td colspan="4"></td>
                             @endif
                               <td class="text-right"><b>รวมทั้งสิ้น</b></td>
                               <td class="text-right"><b>{{number_format(@$Totalprice,2)}}</b></td>
@@ -493,7 +496,7 @@
     {{ csrf_field() }}
     <input type="hidden" name="type" value="2">
     <div class="modal fade" id="modal-default">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header bg-primary">
             <div class="col text-center">
@@ -506,25 +509,29 @@
           <div class="modal-body">
             <div class="row mb-2">
               <div class="col-md-2"></div>
-              <div class="col-md-8">
+              <div class="col-md-9">
                 รายการอะไหล่
                 <input type="text" name="RepairList" class="form-control" />
               </div>
             </div>
             <div class="row mb-2">
               <div class="col-md-2"></div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 จำนวน
                 <input type="number" name="RepairAmount" class="form-control" />
               </div>
-              <div class="col-md-4">
-                ราคา/หน่วย
+              <div class="col-md-3">
+                หน่วย
+                <input type="text" id="RepairUnit" name="RepairUnit" class="form-control"/>
+              </div>
+              <div class="col-md-3">
+                ราคา
                 <input type="number" id="RepairPrice" name="RepairPrice" class="form-control"/>
               </div>
             </div>
             <div class="row">
               <div class="col-md-2"></div>
-              <div class="col-md-8">
+              <div class="col-md-9">
                 รายละเอียดการซ่อม
                 <textarea type="text" name="RepairDetail" class="form-control" rows="3"></textarea>
               </div>
@@ -536,14 +543,16 @@
                 <input type="number" id="RepairPrice" name="RepairPrice" class="form-control"/>
               </div>
             </div> -->
+          <hr>
           </div>
           <input type="hidden" name="Nameuser" value="{{auth::user()->name}}"/>
           <input type="hidden" name="Datacarid" value="{{$datacar->Main_id}}"/>
-          <div class="modal-footer">
+          <div align="center">
             <!-- <button type="button" class="btn btn-default" data-dismiss="modal"></button> -->
             <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> บันทึก</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> ยกเลิก</button>
           </div>
+          <br>
         </div>
       </div>
     </div>

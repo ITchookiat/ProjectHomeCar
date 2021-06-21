@@ -362,6 +362,12 @@
                                 <input type="text" class="form-control form-control-sm" value="{{$datacar->Job_Number}}" readonly/>
                               </div>
                             </div>
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-5 col-form-label text-right">ราคาซื้อ :</label>
+                              <div class="col-sm-7">
+                                <input type="text" id="PriceCar" name="PriceCar" class="form-control form-control-sm" value="{{number_format($datacar->Fisrt_Price,2)}}" oninput="sum();" maxlength="10" required/>
+                              </div>
+                            </div>
                           </div>
                           <div class="col-6">
                             <div class="form-group row mb-1">
@@ -424,7 +430,7 @@
                             <th style="width: 50px">#</th>
                           @endif
                             <th style="width: 10px">ที่</th>
-                            <th>รายการอะไหล่ / รายละเอียดการซ่อม</th>
+                            <th>รายการอะไหล่ / รายละเอียด</th>
                             <th class="text-center" style="width: 30px">จำนวน</th>
                             <th class="text-right" style="width: 40px">หน่วย</th>
                             <th class="text-right" style="width: 90px">ราคา</th>

@@ -1116,10 +1116,10 @@ class DatacarController extends Controller
           //       }
           // }
           // $user->Car_type = $request->get('Cartype');
+          // $user->Repair_Price = $request->get('Totalprice');
           $user->Chassis_car = $request->get('ChassisCar');
           $user->Expected_Repair = $request->get('Expected_Repair');
           $user->Expected_Color = $request->get('Expected_Color');
-          $user->Repair_Price = $request->get('Totalprice');
         $user->update();
         return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');
       }

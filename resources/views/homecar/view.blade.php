@@ -263,6 +263,7 @@
                     <table id="table1" class="table table-hover">
                       <thead>
                         <tr>
+                          <th class="text-center" style="width: 5px"></th>
                           @if($type != 6)
                             <th class="text-center" style="width: 100px">วันที่รับ</th>
                             <th class="text-center" style="width: 120px">วันที่เปลี่ยนสถานะ</th>
@@ -291,6 +292,11 @@
                               $date_status = date_create($row->Date_Status);
                               $Date_Soldout_plus = date_create($row->Date_Soldout_plus);
                             @endphp
+                              <td class="text-center">
+                                @if($row->PartStatus_Car == 'Y')
+                                  <i class="fas fa-gears" title="ช่างมีการเพิ่มอะไหล่ซ่อม"></i>
+                                @endif
+                              </td>
 
                             @if($type != 6)
                               <td class="text-center">

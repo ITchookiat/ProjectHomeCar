@@ -582,6 +582,7 @@ class DatacarController extends Controller
         $type = 1;
         return redirect()->Route('datacar',$type)->with('success','บันทึกข้อมูลเรียบร้อย');
       }elseif($request->type == 2){ //เพิ่มรายการซ่อมอะไหล่
+
         $repairdb = new repair_part([
           'Datacar_id' => $request->get('Datacarid'),
           'Repair_date' => date('Y-m-d'),
@@ -593,6 +594,14 @@ class DatacarController extends Controller
           'Repair_useradd' => $request->get('Nameuser'),
         ]);
         $repairdb->save();
+
+        $itemAll = repair_part::where('Datacar_id',$request->Datacarid)->count();
+        if($itemAll > 0){
+          $itemUpdate = data_car::find($request->Datacarid);
+          $itemUpdate->PartStatus_Car = 'Y';
+          $itemUpdate->update();
+        }
+
         return redirect()->back()->with('success','เพิ่มข้อมูลเรียบร้อย');
       }elseif($request->type == 3){
         $datacardb = new data_car([
@@ -1089,33 +1098,33 @@ class DatacarController extends Controller
       if($request->type == '44'){
         $type = $request->type;
         $user = data_car::find($id);
-          // if ($request->get('Cartype') != Null && $request->get('Cartype') != $user->Car_type ) {
-          //   date_default_timezone_set('Asia/Bangkok');
-          //   $Y = date('Y') + 543;
-          //   $m = date('m');
-          //   $d = date('d');
-          //   $date = $Y.'-'.$m.'-'.$d;
-          //       if ($request->get('Cartype') == 2) {
-          //         $user->Date_Color = $date;
-          //         $user->Date_Status = $date;
-          //       }elseif ($request->get('Cartype') == 3) {
-          //         $user->Date_Wait = $date;
-          //         $user->Date_Status = $date;
-          //       }elseif ($request->get('Cartype') == 4) {
-          //         $user->Date_Repair = $date;
-          //         $user->Date_Status = $date;
-          //       }elseif ($request->get('Cartype') == 5) {
-          //         $user->Date_Sale = $date;
-          //         $user->Date_Status = $date;
-          //       }elseif ($request->get('Cartype') == 6) {
-          //         $user->Date_Soldout = $date;
-          //         $user->Date_Status = $date;
-          //       }elseif ($request->get('Cartype') == 7) {
-          //         $user->Date_Auction = $date;
-          //         $user->Date_Status = $date;
-          //       }
-          // }
-          // $user->Car_type = $request->get('Cartype');
+          if ($request->get('Cartype') != Null && $request->get('Cartype') != $user->Car_type ) {
+            date_default_timezone_set('Asia/Bangkok');
+            $Y = date('Y') + 543;
+            $m = date('m');
+            $d = date('d');
+            $date = $Y.'-'.$m.'-'.$d;
+                if ($request->get('Cartype') == 2) {
+                  $user->Date_Color = $date;
+                  $user->Date_Status = $date;
+                }elseif ($request->get('Cartype') == 3) {
+                  $user->Date_Wait = $date;
+                  $user->Date_Status = $date;
+                }elseif ($request->get('Cartype') == 4) {
+                  $user->Date_Repair = $date;
+                  $user->Date_Status = $date;
+                }elseif ($request->get('Cartype') == 5) {
+                  $user->Date_Sale = $date;
+                  $user->Date_Status = $date;
+                }elseif ($request->get('Cartype') == 6) {
+                  $user->Date_Soldout = $date;
+                  $user->Date_Status = $date;
+                }elseif ($request->get('Cartype') == 7) {
+                  $user->Date_Auction = $date;
+                  $user->Date_Status = $date;
+                }
+          }
+          $user->Car_type = $request->get('Cartype');
           // $user->Repair_Price = $request->get('Totalprice');
           $user->Chassis_car = $request->get('ChassisCar');
           $user->Expected_Repair = $request->get('Expected_Repair');
@@ -1141,6 +1150,13 @@ class DatacarController extends Controller
       }elseif($request->type == 2){ //ลบรายการซ่อม
         $item = repair_part::find($id);
         $item->Delete();
+        
+        $itemAll = repair_part::where('Datacar_id',$request->Datacar_id)->count();
+        if($itemAll == 0){
+          $itemUpdate = data_car::find($request->Datacar_id);
+          $itemUpdate->PartStatus_Car = NULL;
+          $itemUpdate->update();
+        }
       }
 
       return redirect()->back()->with('success','ลบข้อมูลเรียบร้อย');

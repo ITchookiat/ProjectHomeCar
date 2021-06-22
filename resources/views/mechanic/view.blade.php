@@ -88,9 +88,10 @@
               @endif
 
                 <div class="table-responsive">
-                  <table id="table1" class="table table-bordered table-striped">
+                  <table id="table1" class="table table-hover">
                     <thead>
                       <tr>
+                        <th class="text-center" style="width: 5px"></th>
                         <th class="text-center" style="width: 30px">ที่</th>
                         <th class="text-center" style="width: 100px">วันที่รับ</th>
                         <th class="text-center" style="width: 100px">เลขทะเบียน</th>
@@ -100,8 +101,7 @@
                         <th class="text-center" style="width: 60px">Job No.</th>
                         <th class="text-center" style="width: 100px">ประเภท</th>
                         <th class="text-center" style="width: 150px">หมายเหตุ</th>
-
-                        <th style="width: 120px"></th>
+                        <th style="width: 90px"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -112,6 +112,11 @@
                             $date_status = date_create($row->Date_Status);
                             $Date_Soldout_plus = date_create($row->Date_Soldout_plus);
                           @endphp
+                          <td class="text-center">
+                            @if($row->PartStatus_Car == 'Y')
+                              <i class="fas fa-gears" title="มีการเพิ่มอะไหล่ซ่อม"></i>
+                            @endif
+                          </td>
                           <td class="text-center">
                               {{$key+1}}
                           </td>

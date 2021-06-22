@@ -229,12 +229,13 @@
                           <div class="form-group row mb-1">
                             <label class="col-sm-5 col-form-label text-right">สถานะ:</label>
                             <div class="col-sm-7">
-                              {{--<select id="Cartype" name="Cartype" class="form-control form-control-sm">
-                                @foreach ($arrayCarType as $key => $value)
-                                  <option value="{{$key}}" {{ ($key == $datacar->Car_type) ? 'selected' : '' }}>{{$value}}</option>
-                                @endforeach
-                              </select>--}}
-                              <input type="text" class="form-control form-control-sm" value="{{$arrayCarType[$datacar->Car_type]}}" readonly>
+                              <select id="Cartype" name="Cartype" class="form-control form-control-sm">
+                                  <option value="1" {{ ($datacar->Car_type == 1) ? 'selected' : '' }}>รถยนต์นำเข้าใหม่</option>
+                                  <option value="2" {{ ($datacar->Car_type == 2) ? 'selected' : '' }}>รถยนต์ระหว่างทำสี</option>
+                                  <option value="3" {{ ($datacar->Car_type == 3) ? 'selected' : '' }}>รถยนต์รอซ่อม</option>
+                                  <option value="4" {{ ($datacar->Car_type == 4) ? 'selected' : '' }}>รถยนต์ระหว่างซ่อม</option>
+                              </select>
+                              <!-- <input type="text" class="form-control form-control-sm" value="{{$arrayCarType[$datacar->Car_type]}}" readonly> -->
                             </div>
                           </div>
                         </div>
@@ -445,7 +446,7 @@
                             <tr>
                               @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
                               <td class="text-right">
-                                <form method="post" class="delete_form float-right" action="{{ action('DatacarController@destroy',$value->Repair_id) }}" style="display:inline;">
+                                <form method="post" class="delete_form float-right" action="{{ action('DatacarController@destroy',$value->Repair_id) }}?Datacar_id={{$value->Datacar_id}}" style="display:inline;">
                                 {{csrf_field()}}
                                   <input type="hidden" name="_method" value="DELETE" />
                                   <input type="hidden" name="type" value="2" />
@@ -472,7 +473,7 @@
                           @endforeach
                           @if($countdataRepair != 0)
                             <tr>
-                            @if(auth::user()->type == "Admin")
+                            @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
                               <td colspan="5"></td>
                             @else
                               <td colspan="4"></td>

@@ -76,6 +76,7 @@ class CreateDataCarsTable extends Migration
 
             $table->string('Expected_Repair')->nullable();       //ราคาประเมิณซ่อม
             $table->string('Expected_Color')->nullable();       //ราคาประเมิณทำสี
+            $table->string('PartStatus_Car')->nullable();       //สถานะเพิ่มรายการอะไหล่ซ่อม
 
             $table->string('Holdcar_Contract')->nullable();    //เลขที่สัญญากรณีรถยึดจากสต็อกเร่งรัด
             

@@ -409,7 +409,7 @@
                               @$Totalprice += $value->Repair_amount * $value->Repair_price;
                             @endphp
                             <tr>
-                              @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
+                              @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT" or auth::user()->position == "STAFF")
                               <td class="text-right">
                                 <form method="post" class="delete_form float-right" action="{{ action('DatacarController@destroy',$value->Repair_id) }}?Datacar_id={{$value->Datacar_id}}" style="display:inline;">
                                 {{csrf_field()}}
@@ -441,7 +441,7 @@
                           @endforeach
                           @if($countdataRepair != 0)
                             <tr>
-                            @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
+                            @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT" or auth::user()->position == "STAFF")
                               <td colspan="6"></td>
                             @else
                               <td colspan="5"></td>

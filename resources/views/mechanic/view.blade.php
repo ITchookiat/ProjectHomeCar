@@ -42,45 +42,28 @@
             <div class="card-body text-sm">
               @if($type == 100)
                 <form method="get" action="{{ route('datacar',$type) }}">
-                  <div style="text-align:right;">
-                      <a href="#" class="btn bg-success btn-app" data-toggle="modal" data-target="#modal-add" title="เพิ่มรายการรถ">
-                        <span class="fas fa-plus"></span> เพิ่มข้อมูล
-                      </a>
-                      <!-- <div class="btn-group">
-                        <button type="button" class="btn bg-primary btn-app" data-toggle="dropdown">
-                          <span class="fas fa-print"></span> ปริ้นรายการ
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a target="_blank" class="dropdown-item" href="{{ action('DatacarController@ReportPDFIndex') }}?id={{$type}}&Fromdate={{$fdate}}&Todate={{$tdate}}&carType={{$carType}}">รายงาน สำหรับพนักงาน</a></li>
-                          @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
-                            <li class="divider"></li>
-                            <li><a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-report" data-backdrop="static" data-keyboard="false">รายงาน สำหรับผู้บริหาร</a></li>
-                          @endif
-                        </ul>
-                      </div> -->
-                    <button type="submit" class="btn bg-warning btn-app">
-                      <span class="fas fa-search"></span> Search
-                    </button>
-                    <br>
-                  </div>
-
                   <div class="row mb-1">
                     <div class="col-md-12">
                       <div class="float-right form-inline">
-
-                          <label for="text" class="mr-sm-0">ประเภท :</label>
-                          <select name="carType" class="form-control">
-                            <option selected value="">---เลือกประเภทรถ---</option>
-                            <option value="1" {{ ($carType == '1') ? 'selected' : '' }}>รถนำเข้าใหม่</option>
-                            <option value="2" {{ ($carType == '2') ? 'selected' : '' }}>รถระหว่างทำสี</option>
-                            <option value="3" {{ ($carType == '3') ? 'selected' : '' }}>รถรอซ่อม</option>
-                            <option value="4" {{ ($carType == '4') ? 'selected' : '' }}>รถระหว่างซ่อม</option>
-                            <option value="7" {{ ($carType == '7') ? 'selected' : '' }}>รถส่งประมูล</option>
-                          </select>
+                        <label for="text" class="mr-sm-0">สถานะ :</label>
+                        <select name="carType" class="form-control">
+                          <option selected value="">---เลือกสถานะ---</option>
+                          <option value="1" {{ ($carType == '1') ? 'selected' : '' }}>รถนำเข้าใหม่</option>
+                          <option value="2" {{ ($carType == '2') ? 'selected' : '' }}>รถระหว่างทำสี</option>
+                          <option value="3" {{ ($carType == '3') ? 'selected' : '' }}>รถรอซ่อม</option>
+                          <option value="4" {{ ($carType == '4') ? 'selected' : '' }}>รถระหว่างซ่อม</option>
+                          <!-- <option value="7" {{ ($carType == '7') ? 'selected' : '' }}>รถส่งประมูล</option> -->
+                        </select>
                         <label>จากวันที่ : </label>
-                        <input type="date" name="Fromdate" value="{{ ($fdate != '') ?$fdate: date('Y-m-d') }}" class="form-control" />
+                        <input type="date" name="Fromdate" value="{{ ($fdate != '') ?$fdate: '' }}" class="form-control" />
                         <label>ถึงวันที่ : </label>
-                        <input type="date" name="Todate" value="{{ ($tdate != '') ?$tdate: date('Y-m-d') }}" class="form-control" />
+                        <input type="date" name="Todate" value="{{ ($tdate != '') ?$tdate: '' }}" class="form-control" />
+                    <!-- <a href="#" class="btn bg-success btn-app" data-toggle="modal" data-target="#modal-add" title="เพิ่มรายการรถ">
+                          <span class="fas fa-plus"></span> เพิ่มข้อมูล
+                        </a> -->
+                        <button type="submit" class="btn bg-warning btn-app">
+                          <span class="fas fa-search"></span> Search
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -92,11 +75,12 @@
                     <thead>
                       <tr>
                         <th class="text-center" style="width: 5px"></th>
-                        <th class="text-center" style="width: 30px">ที่</th>
+                        <!-- <th class="text-center" style="width: 30px">ที่</th> -->
                         <th class="text-center" style="width: 100px">วันที่รับ</th>
                         <th class="text-center" style="width: 100px">เลขทะเบียน</th>
                         <th class="text-center" style="width: 70px">ลักษณะ</th>
                         <th class="text-center" style="width: 70px">รุ่น</th>
+                        <th class="text-center" style="width: 70px">สี</th>
                         <th class="text-center" style="width: 80px">ที่มา</th>
                         <th class="text-center" style="width: 60px">Job No.</th>
                         <th class="text-center" style="width: 100px">ประเภท</th>
@@ -117,9 +101,9 @@
                               <i class="fas fa-gears" title="มีการเพิ่มอะไหล่ซ่อม"></i>
                             @endif
                           </td>
-                          <td class="text-center">
+                          <!-- <td class="text-center">
                               {{$key+1}}
-                          </td>
+                          </td> -->
                           <td class="text-center">
                             {{ date_format($create_date, 'd-m-Y')}}
                           </td>
@@ -127,6 +111,7 @@
                           <td class="text-left">{{$row->Number_Regist}}</td>
                           <td class="text-center">{{$row->Model_Car}}</td>
                           <td class="text-center">{{$row->Version_Car}}</td>
+                          <td class="text-center">{{$row->Color_Car}}</td>
                           <td class="text-center">
                             @if($row->Origin_Car == 1)
                               CKL

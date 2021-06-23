@@ -391,7 +391,7 @@
                       <table class="table table-bordered text-xs">
                         <thead>                  
                           <tr>
-                          @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
+                          @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT" or auth::user()->position == "STAFF")
                             <th style="width: 50px">#</th>
                           @endif
                             <th style="width: 10px">ที่</th>

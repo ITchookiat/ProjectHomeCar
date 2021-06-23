@@ -197,8 +197,8 @@
                       <div class="row">
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right"><font color="red">* วันที่ซื้อ</font> :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right"><font color="red">* วันที่ซื้อ</font> :</label>
+                            <div class="col-sm-7">
                               <input type="date" class="form-control form-control-sm" name="DateCar" value="{{ $date }}" min="{{ $date2 }}" required>
                             </div>
                           </div>
@@ -208,8 +208,8 @@
                       <div class="row">
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right"><font color="red">* ยี่ห้อรถ</font> :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right"><font color="red">* ยี่ห้อรถ</font> :</label>
+                            <div class="col-sm-7">
                               <select name="BrandCar" class="form-control form-control-sm" required>
                                 <option value="" selected>--- เลือกยี่ห้อรถ ---</option>
                                 <option value="TOYOTA">TOYOTA</option>
@@ -228,8 +228,8 @@
                         </div>
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right"><font color="red">* เลขทะเบียน</font> :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right"><font color="red">* เลขทะเบียน</font> :</label>
+                            <div class="col-sm-7">
                               <input type="text" name="Number_Regist" class="form-control form-control-sm" placeholder="ป้อนเลขทะเบียน" required/>
                             </div>
                           </div>
@@ -239,8 +239,8 @@
                       <div class="row">
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right"><font color="red">* ที่มาของรถ</font> :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right"><font color="red">* ที่มาของรถ</font> :</label>
+                            <div class="col-sm-7">
                               <select name="OriginCar" class="form-control form-control-sm" required>
                                 <option value="" selected>--- เลือกที่มาของรถ ---</option>
                                 <option value="1">CKL</option>
@@ -253,8 +253,8 @@
                         </div>
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">Sale :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right">Sale :</label>
+                            <div class="col-sm-7">
                               <input type="text" name="SaleCar" class="form-control form-control-sm" placeholder="ป้อน Sale" />
                             </div>
                           </div>
@@ -264,8 +264,8 @@
                       <div class="row">
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">ลักษณะรถ :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right">ลักษณะรถ :</label>
+                            <div class="col-sm-7">
                               <select name="ModelCar" class="form-control form-control-sm">
                                 <option value="" selected>--- เลือกลักษณะรถ ---</option>
                                 <option value="เก๋ง">เก๋ง</option>
@@ -284,8 +284,8 @@
                         </div>
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">เลขไมล์ :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right">เลขไมล์ :</label>
+                            <div class="col-sm-7">
                               <input type="text" id="MilesCar" name="MilesCar" class="form-control form-control-sm" placeholder="ป้อนเลขไมล์" oninput="mile();" maxlength="10"/>
                             </div>
                           </div>
@@ -295,16 +295,16 @@
                       <div class="row">
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">รุ่นรถ :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right">รุ่นรถ :</label>
+                            <div class="col-sm-7">
                               <input type="text" name="VersionCar" class="form-control form-control-sm" placeholder="ป้อนรุ่นรถ" />
                             </div>
                           </div>
                         </div>
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">เกียร์รถ / ปีรถ :</label>
-                            <div class="col-sm-4">
+                            <label class="col-sm-4 col-form-label text-right">เกียร์รถ / ปีรถ :</label>
+                            <div class="col-sm-3">
                               <select name="Gearcar" class="form-control form-control-sm">
                                 <option value="">-----เลือกเกียร์รถ------</option>
                                 <option value="MT">MT</option>
@@ -321,16 +321,16 @@
                       <div class="row">
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">ขนาด :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right">ขนาด :</label>
+                            <div class="col-sm-7">
                               <input type="text" name="SizeCar" class="form-control form-control-sm" placeholder="ป้อนขนาด C.C." />
                           </div>
                           </div>
                         </div>
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">สีรถ :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right">สีรถ :</label>
+                            <div class="col-sm-7">
                               <input type="text" name="ColorCar" class="form-control form-control-sm" placeholder="ป้อนสีรถ" />
                             </div>
                           </div>
@@ -340,16 +340,16 @@
                       <div class="row">
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">Job Number :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right">Job Number :</label>
+                            <div class="col-sm-7">
                               <input type="text" name="JobCar" class="form-control form-control-sm" placeholder="ป้อน JobNumber" />
                           </div>
                           </div>
                         </div>
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">ราคาแนะนำ :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right">ราคาแนะนำ :</label>
+                            <div class="col-sm-7">
                               <input type="text" id="OfferPrice" name="OfferPrice" class="form-control form-control-sm" placeholder="ป้อนราคาแนะนำ" oninput="mile();" maxlength="10"/>
                             </div>
                           </div>
@@ -391,8 +391,8 @@
                         @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT")
                           <div class="col-6">
                             <div class="form-group row mb-1">
-                              <label class="col-sm-3 col-form-label text-right"><font color="red">* ราคาซื้อ</font> :</label>
-                              <div class="col-sm-8">
+                              <label class="col-sm-4 col-form-label text-right"><font color="red">* ราคาซื้อ</font> :</label>
+                              <div class="col-sm-7">
                                 <input type="text" id="PriceCar" name="PriceCar" class="form-control form-control-sm" placeholder="ป้อนราคาซื้อ" oninput="mile();" maxlength="10"/>
                               </div>
                             </div>
@@ -401,8 +401,8 @@
 
                         <div class="col-6">
                           <div class="form-group row mb-1">
-                            <label class="col-sm-3 col-form-label text-right">ต้นทุนยอดจัด :</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label text-right">ต้นทุนยอดจัด :</label>
+                            <div class="col-sm-7">
                               <input type="text" id="AccountingCost" name="AccountingCost" class="form-control form-control-sm" placeholder="ต้นทุนยอดจัด" oninput="mile();" maxlength="10"/>
                             </div>
                           </div>
@@ -481,35 +481,52 @@
             </div>
 
             <div class="row">
-              <div class="col-6">
-                <div class="form-group row mb-1">
-                  <label class="col-sm-3 col-form-label text-right">วันที่หมดอายุ ปชช :</label>
-                  <div class="col-sm-8">
-                    <input type="date" id="DateNumberUser" class="form-control form-control-sm" name="DateNumberUser" min="{{ $date2 }}" placeholder="ป้อนวันที่หมดอายุ ปชช">
+              <div class="col-9">
+                <div class="card card-warning">
+                  <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-address-card"></i> ข้อมูลบัตร</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group row mb-1">
-                  <label class="col-sm-3 col-form-label text-right">วันที่หมดอายุภาษี:</label>
-                  <div class="col-sm-8">
-                    <input type="date" id="DateExpire" class="form-control form-control-sm" name="DateExpire" min="{{ $date2 }}" placeholder="ป้อนวันที่หมดอายุภาษี">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row mb-1">
+                          <label class="col-sm-5 col-form-label text-right">วันที่หมดอายุ ปชช :</label>
+                          <div class="col-sm-7">
+                            <input type="date" id="DateNumberUser" class="form-control form-control-sm" name="DateNumberUser" min="{{ $date2 }}" placeholder="ป้อนวันที่หมดอายุ ปชช">
+                          </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                          <label class="col-sm-5 col-form-label text-right">วันที่หมดอายุภาษี:</label>
+                          <div class="col-sm-7">
+                            <input type="date" id="DateExpire" class="form-control form-control-sm" name="DateExpire" min="{{ $date2 }}" placeholder="ป้อนวันที่หมดอายุภาษี">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group row mb-1">
+                          <label class="col-sm-4 col-form-label text-right">หมายเหตุ :</label>
+                          <div class="col-sm-7">
+                            <textarea name="CheckNote" class="form-control form-control-sm" placeholder="ป้อนหมายเหตุ" rows="4"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-6">
-                <div class="form-group row mb-1">
-                  <label class="col-sm-3 col-form-label text-right">หมายเหตุ :</label>
-                  <div class="col-sm-8">
-                    <textarea name="CheckNote" class="form-control form-control-sm" placeholder="ป้อนหมายเหตุ" rows="4"></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <input type="hidden" id="mySelect1" class="form-control form-control-sm" name="DateNumberUserHidden" >
-            <input type="hidden" id="mySelect2" class="form-control form-control-sm" name="DateExpireHidden" >
-            <input type="hidden" name="Cartype" value="{{ $type }}" class="form-control"/>         
-            <input type="hidden" name="type" value="1" class="form-control"/>         
-          </div>
+              <input type="hidden" id="mySelect1" class="form-control form-control-sm" name="DateNumberUserHidden" >
+              <input type="hidden" id="mySelect2" class="form-control form-control-sm" name="DateExpireHidden" >
+              <input type="hidden" name="Cartype" value="{{ $type }}" class="form-control"/>         
+              <input type="hidden" name="type" value="1" class="form-control"/>         
+            </div>
 
           <input type="hidden" name="_token" value="{{csrf_token()}}" />
         </form>

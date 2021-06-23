@@ -838,7 +838,7 @@
 
         @if($countdataRepair != 0)
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-12">
             <div class="card card-warning">
               <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-gears"></i> ข้อมูลรายการซ่อม</h3>
@@ -855,9 +855,11 @@
                         <thead>                  
                           <tr>
                             <th style="width: 10px">ที่</th>
+                            <th style="width: 100px">วันที่</th>
                             <th>รายการ / รายละเอียดการซ่อม</th>
                             <th class="text-center" style="width: 30px">จำนวน</th>
-                            <th class="text-right" style="width: 100px">ราคา/หน่วย</th>
+                            <th class="text-right" style="width: 100px">หน่วย</th>
+                            <th class="text-right" style="width: 100px">ราคา</th>
                             <th class="text-right" style="width: 100px">รวมเป็นเงิน</th>
                             <th class="text-center">ชื่อช่าง</th>
                           </tr>
@@ -870,6 +872,9 @@
                             <tr>
                               <td>{{$key+1}}</td>
                               <td>
+                              {{DateThai($value->Repair_date)}}
+                              </td>
+                              <td>
                               {{$value->Repair_list}}
                                 @if($value->Repair_detail != null)
                                 <br>
@@ -878,17 +883,17 @@
                                 @endif
                               </td>
                               <td class="text-center">{{$value->Repair_amount}}</td>
+                              <td class="text-center">{{$value->Repair_unit}} </td>
                               <td class="text-right">{{number_format($value->Repair_price,2)}}</td>
                               <td class="text-right">{{number_format($value->Repair_amount * $value->Repair_price,2)}}</td>
                               <td class="text-center">{{$value->Repair_useradd}}</td>
                             </tr>
                           @endforeach
                           @if($countdataRepair != 0)
-                            <tr>
-                              <td colspan="3"></td>
-                              <td class="text-right"><b>รวมทั้งสิ้น</b></td>
+                            <tr style="background-color:#F8DACD;">
+                              <td colspan="6" class="text-right"><b>รวมทั้งสิ้น</b></td>
                               <td class="text-right"><b>{{number_format(@$Totalprice,2)}}</b></td>
-                              <td></td>
+                              <td class="text-left"><b>บาท</b></td>
                             </tr>
                           @endif
                         </tbody>
@@ -897,7 +902,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
+          {{--<div class="col-md-4">
             <div class="card card-danger">
               <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-wrench"></i> ข้อมูลช่างซ่อม</h3>
@@ -927,7 +932,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>--}}
         </div>
         @endif
 
@@ -1084,10 +1089,10 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6">
-            <div class="card card-warning">
+          <div class="col-md-8">
+            <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-book-reader"></i> ข้อมูลการยืมรถ</h3>
+                <h3 class="card-title"><i class="fas fa-address-card"></i> ข้อมูลบัตร</h3>
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
@@ -1099,13 +1104,62 @@
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group row mb-0">
+                      <label class="col-sm-5 col-form-label text-right">วันที่หมดอายุ ปชช :</label>
+                      <div class="col-sm-7">
+                        @if($datacar->Date_NumberUser == Null)
+                          <input type="text" class="form-control form-control-sm" name="DateNumberUser" value="ป้อนวันที่หมดอายุ ปชช" readonly>
+                        @else
+                          <input type="text" class="form-control form-control-sm" name="DateNumberUser" value="{{date_format($Date_NumberUser, 'd-m-Y')}}" readonly>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group row mb-0">
+                      <label class="col-sm-5 col-form-label text-right">วันที่หมดอายุภาษี :</label>
+                      <div class="col-sm-7">
+                        @if($datacar->Date_Expire == Null)
+                          <input type="text" class="form-control form-control-sm" name="DateNumberUser" value="ป้อนวันที่หมดอายุ ภาษี" readonly>
+                        @else
+                          <input type="text" class="form-control form-control-sm" name="DateExpire" value="{{date_format($Date_Expire, 'd-m-Y')}}" readonly>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group row mb-0">
+                      <label class="col-sm-5 col-form-label text-right">หมายเหตุ :</label>
+                      <div class="col-sm-7">
+                        <textarea type="text" name="CheckNote" class="form-control form-control-sm" rows="3" readonly>{{ $datacar->Check_Note }}</textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-warning">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-book-reader"></i> ข้อมูลยืมรถ @if($datacar->BorrowStatus != Null) <font color="red">สถานะ : {{$arrayBorrowStatus[$datacar->BorrowStatus]}}</font> @endif</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group row mb-0">
                       <label class="col-sm-4 col-form-label text-right">วันที่ยืม :</label>
                       <div class="col-sm-8">
                         <input type="date" id="DateBorrowcar" name="DateBorrowcar" class="form-control form-control-sm" value="{{$datacar->Date_Borrowcar}}" readonly/>
                       </div>
                     </div>
                   </div>
-                  <div class="col-6">
+                  <div class="col-12">
                     <div class="form-group row mb-0">
                       <label class="col-sm-4 col-form-label text-right">ชื่อผู้ยืม :</label>
                       <div class="col-sm-8">
@@ -1116,7 +1170,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-12">
                     <div class="form-group row mb-0">
                       <label class="col-sm-4 col-form-label text-right">วันที่คืน :</label>
                       <div class="col-sm-8">
@@ -1124,7 +1178,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-6">
+                  {{--<div class="col-12">
                     <div class="form-group row mb-0">
                       <label class="col-sm-4 col-form-label text-right">สถานะ :</label>
                       <div class="col-sm-8">
@@ -1135,11 +1189,8 @@
                         </select>
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-6">
+                  </div>--}}
+                  <div class="col-12">
                     <div class="form-group row mb-0">
                       <label class="col-sm-4 col-form-label text-right">หมายเหตุ :</label>
                       <div class="col-sm-8">
@@ -1147,7 +1198,18 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-6">
+                </div>
+                <hr>
+                <div class="row">
+                  <!-- <div class="col-12">
+                    <div class="form-group row mb-0">
+                      <label class="col-sm-4 col-form-label text-right">หมายเหตุ :</label>
+                      <div class="col-sm-8">
+                        <textarea type="text" name="NoteBorrow" class="form-control form-control-sm" rows="2" readonly placeholder="ป้อนหมายเหตุ">{{ $datacar->Note_Borrow }}</textarea>
+                      </div>
+                    </div>
+                  </div> -->
+                  <div class="col-12">
                     <div class="form-group row mb-0">
                       <label class="col-sm-4 col-form-label text-right">ระยะเวลายืม :</label>
                       <div class="col-sm-8">
@@ -1177,58 +1239,7 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="card card-danger">
-              <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-address-card"></i> ข้อมูลบัตร</h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-6">
-                    <div class="form-group row mb-0">
-                      <label class="col-sm-4 col-form-label text-right">วันที่หมดอายุ ปชช :</label>
-                      <div class="col-sm-8">
-                        @if($datacar->Date_NumberUser == Null)
-                          <input type="text" class="form-control form-control-sm" name="DateNumberUser" value="ป้อนวันที่หมดอายุ ปชช" readonly>
-                        @else
-                          <input type="text" class="form-control form-control-sm" name="DateNumberUser" value="{{date_format($Date_NumberUser, 'd-m-Y')}}" readonly>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-group row mb-0">
-                      <label class="col-sm-4 col-form-label text-right">วันที่หมดอายุภาษี :</label>
-                      <div class="col-sm-8">
-                        @if($datacar->Date_Expire == Null)
-                          <input type="text" class="form-control form-control-sm" name="DateNumberUser" value="ป้อนวันที่หมดอายุ ภาษี" readonly>
-                        @else
-                          <input type="text" class="form-control form-control-sm" name="DateExpire" value="{{date_format($Date_Expire, 'd-m-Y')}}" readonly>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-group row mb-0">
-                      <label class="col-sm-4 col-form-label text-right">หมายเหตุ :</label>
-                      <div class="col-sm-8">
-                        <textarea type="text" name="CheckNote" class="form-control form-control-sm" rows="3" readonly>{{ $datacar->Check_Note }}</textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
+          </div>       
         </div>
         <input type="hidden" name="_method" value="PATCH"/>
       </div>

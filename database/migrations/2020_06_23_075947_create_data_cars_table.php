@@ -74,6 +74,9 @@ class CreateDataCarsTable extends Migration
             $table->string('Close_auction')->nullable();       //ปิดประมูล
             $table->string('Expected_Sell')->nullable();       //ราคาคาดว่าจะขาย
 
+            $table->string('Startcolor_Car')->nullable();       //วันที่เริ่มทำสีรถ
+            $table->string('Endcolor_Car')->nullable();         //วันที่เสร็จทำสีรถ
+
             $table->string('Expected_Repair')->nullable();       //ราคาประเมิณซ่อม
             $table->string('Expected_Color')->nullable();       //ราคาประเมิณทำสี
             $table->string('PartStatus_Car')->nullable();       //สถานะเพิ่มรายการอะไหล่ซ่อม

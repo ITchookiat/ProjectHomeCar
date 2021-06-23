@@ -585,7 +585,8 @@ class DatacarController extends Controller
 
         $repairdb = new repair_part([
           'Datacar_id' => $request->get('Datacarid'),
-          'Repair_date' => date('Y-m-d'),
+          // 'Repair_date' => date('Y-m-d'),
+          'Repair_date' => $request->get('DateList'),
           'Repair_list' => $request->get('RepairList'),
           'Repair_amount' => $request->get('RepairAmount'),
           'Repair_unit' => $request->get('RepairUnit'),
@@ -975,6 +976,9 @@ class DatacarController extends Controller
         $user->Open_auction = $SetOpen_auction;
         $user->Close_auction = $SetClose_auction;
         $user->Expected_Sell = $SetExpected_Sell;
+
+        $user->Startcolor_Car = $request->get('StartColor');
+        $user->Endcolor_Car = $request->get('EndColor');
       $user->update();
 
       $checkeditDoc = checkDocument::where('Datacar_id',$id)->first();
@@ -1041,7 +1045,8 @@ class DatacarController extends Controller
 
       $type = $user->Car_type;  //Get ค่าใหม่
       
-      return redirect()->Route('datacar',$type)->with('success','อัพเดตข้อมูลเรียบร้อย');
+      // return redirect()->Route('datacar',$type)->with('success','อัพเดตข้อมูลเรียบร้อย');
+      return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');
     }
 
     public function updateinfo(Request $request, $id)

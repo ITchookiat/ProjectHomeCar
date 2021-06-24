@@ -182,9 +182,7 @@
           </script>
         @endif
         <div class="card">
-          <form name="form1" method="post" action="{{ action('DatacarController@updateMechanic',$id) }}" enctype="multipart/form-data">
-            @csrf
-            @method('put')
+          
             <div class="card-header">
               {{-- <a href="#" class="btn btn-default btn-sm float-right" title="เพิ่มรูปรถ" data-toggle="modal" data-target="#modal-default">
                 <i class="far fa-image"></i> 
@@ -200,9 +198,9 @@
                     <button type="button" class="delete-modal btn btn-primary" data-toggle="modal" data-target="#modal-default">
                       <i class="fas fa-gear"></i> เพิ่มรายการ
                     </button>
-                    <button type="submit" class="delete-modal btn btn-success">
+                    <!-- <button type="submit" class="delete-modal btn btn-success">
                       <i class="fas fa-save"></i> อัพเดท
-                    </button>
+                    </button> -->
                     <a class="delete-modal btn btn-danger" href="{{ route('datacar',100) }}">
                       <i class="far fa-window-close"></i> ยกเลิก
                     </a>
@@ -213,165 +211,166 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-4 text-sm">
-                  <div class="card card-warning">
-                    <div class="card-header">
-                      <h3 class="card-title"><i class="fas fa-car"></i> ข้อมูลรถยนต์ 
-                          @if($datacar->BookStatus_Car == 'จอง')
-                            ( <font color="blue">รถยนต์ติดจอง</font> )                            
-                          @endif
-                      </h3>
-  
-                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
-                        </button>
+                  <form name="form1" method="post" action="{{ action('DatacarController@updateMechanic',$id) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('put')
+                    <div class="card card-warning">
+                      <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-car"></i> ข้อมูลรถยนต์ 
+                            @if($datacar->BookStatus_Car == 'จอง')
+                              ( <font color="blue">รถยนต์ติดจอง</font> )                            
+                            @endif
+                        </h3>
+    
+                        <div class="card-tools">
+                          <button type="submit" class="delete-modal btn-tool btn-xs btn btn-success">
+                            <i class="fas fa-save"></i> อัพเดท
+                          </button>
+                          <!-- <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                          </button>
+                          <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                          </button> -->
+                        </div>
                       </div>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right">สถานะ:</label>
-                            <div class="col-sm-7">
-                              <select id="Cartype" name="Cartype" class="form-control form-control-sm">
-                                  <option value="1" {{ ($datacar->Car_type == 1) ? 'selected' : '' }}>รถยนต์นำเข้าใหม่</option>
-                                  <option value="2" {{ ($datacar->Car_type == 2) ? 'selected' : '' }}>รถยนต์ระหว่างทำสี</option>
-                                  <option value="3" {{ ($datacar->Car_type == 3) ? 'selected' : '' }}>รถยนต์รอซ่อม</option>
-                                  <option value="4" {{ ($datacar->Car_type == 4) ? 'selected' : '' }}>รถยนต์ระหว่างซ่อม</option>
-                              </select>
-                              <!-- <input type="text" class="form-control form-control-sm" value="{{$arrayCarType[$datacar->Car_type]}}" readonly> -->
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">สถานะ:</label>
+                              <div class="col-sm-7">
+                                <select id="Cartype" name="Cartype" class="form-control form-control-sm">
+                                    <option value="1" {{ ($datacar->Car_type == 1) ? 'selected' : '' }}>รถยนต์นำเข้าใหม่</option>
+                                    <option value="2" {{ ($datacar->Car_type == 2) ? 'selected' : '' }}>รถยนต์ระหว่างทำสี</option>
+                                    <option value="3" {{ ($datacar->Car_type == 3) ? 'selected' : '' }}>รถยนต์รอซ่อม</option>
+                                    <option value="4" {{ ($datacar->Car_type == 4) ? 'selected' : '' }}>รถยนต์ระหว่างซ่อม</option>
+                                </select>
+                                <!-- <input type="text" class="form-control form-control-sm" value="{{$arrayCarType[$datacar->Car_type]}}" readonly> -->
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right"> วันที่ซื้อ :</label>
-                            <div class="col-sm-7">
-                              <input type="date" class="form-control form-control-sm" value="{{$datacar->create_date}}" readonly>
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right"> วันที่ซื้อ :</label>
+                              <div class="col-sm-7">
+                                <input type="date" class="form-control form-control-sm" value="{{$datacar->create_date}}" readonly>
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right">เลขทะเบียน :</label>
-                            <div class="col-sm-7">
-                              <input type="text" class="form-control form-control-sm" value="{{$datacar->Number_Regist}}" readonly/>
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">เลขทะเบียน :</label>
+                              <div class="col-sm-7">
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Number_Regist}}" readonly/>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right"> ยี่ห้อรถ :</label>
-                            <div class="col-sm-7">
-                              <select class="form-control form-control-sm" readonly>
-                                @foreach ($arrayBrand as $key => $value)
-                                  <option value="{{$key}}" {{ ($key == $datacar->Brand_Car) ? 'selected' : '' }}>{{$value}}</option>
-                                @endforeach
-                              </select>
+                          
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right"> ยี่ห้อรถ :</label>
+                              <div class="col-sm-7">
+                                <select class="form-control form-control-sm" readonly>
+                                  @foreach ($arrayBrand as $key => $value)
+                                    <option value="{{$key}}" {{ ($key == $datacar->Brand_Car) ? 'selected' : '' }}>{{$value}}</option>
+                                  @endforeach
+                                </select>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        
-                        {{--<div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right">ที่มาของรถ :</label>
-                            <div class="col-sm-7">
-                              <select class="form-control form-control-sm" readonly>
-                                @foreach ($arrayOriginType as $key => $value)
-                                  <option value="{{$key}}" {{ ($key == $datacar->Origin_Car) ? 'selected' : '' }}>{{$value}}</option>
-                                @endforeach
-                              </select>
+                          
+                          {{--<div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">ที่มาของรถ :</label>
+                              <div class="col-sm-7">
+                                <select class="form-control form-control-sm" readonly>
+                                  @foreach ($arrayOriginType as $key => $value)
+                                    <option value="{{$key}}" {{ ($key == $datacar->Origin_Car) ? 'selected' : '' }}>{{$value}}</option>
+                                  @endforeach
+                                </select>
+                              </div>
                             </div>
-                          </div>
-                        </div>--}}
+                          </div>--}}
 
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right">Sale :</label>
-                            <div class="col-sm-7">
-                              <input type="text" class="form-control form-control-sm" value="{{$datacar->Name_Sale}}" readonly/>
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">Sale :</label>
+                              <div class="col-sm-7">
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Name_Sale}}" readonly/>
+                              </div>
                             </div>
                           </div>
-                        </div>
-  
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right">ลักษณะรถ :</label>
-                            <div class="col-sm-7">
-                              <select class="form-control form-control-sm" readonly>
-                                @foreach ($arrayModel as $key => $value)
-                                  <option value="{{$key}}" {{ ($key == $datacar->Model_Car) ? 'selected' : '' }}>{{$value}}</option>
-                                @endforeach
-                              </select>
+    
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">ลักษณะรถ :</label>
+                              <div class="col-sm-7">
+                                <select class="form-control form-control-sm" readonly>
+                                  @foreach ($arrayModel as $key => $value)
+                                    <option value="{{$key}}" {{ ($key == $datacar->Model_Car) ? 'selected' : '' }}>{{$value}}</option>
+                                  @endforeach
+                                </select>
+                              </div>
                             </div>
                           </div>
-                        </div>
-  
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right">รุ่นรถ :</label>
-                            <div class="col-sm-7">
-                              <input type="text" class="form-control form-control-sm" value="{{$datacar->Version_Car}}" readonly/>
+    
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">รุ่นรถ :</label>
+                              <div class="col-sm-7">
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Version_Car}}" readonly/>
+                              </div>
                             </div>
                           </div>
-                        </div>
-  
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right">ขนาด :</label>
-                            <div class="col-sm-7">
-                              <input type="text" class="form-control form-control-sm" value="{{$datacar->Size_Car}}" readonly/>
-                          </div>
-                          </div>
-                        </div>
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right">สีรถ :</label>
-                            <div class="col-sm-7">
-                              <input type="text" class="form-control form-control-sm" value="{{$datacar->Color_Car}}" readonly/>
+    
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">ขนาด :</label>
+                              <div class="col-sm-7">
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Size_Car}}" readonly/>
+                            </div>
                             </div>
                           </div>
-                        </div>
-  
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right">Job Number :</label>
-                            <div class="col-sm-7">
-                              <input type="text" class="form-control form-control-sm" value="{{$datacar->Job_Number}}" readonly/>
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">สีรถ :</label>
+                              <div class="col-sm-7">
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Color_Car}}" readonly/>
+                              </div>
                             </div>
                           </div>
-                          <!-- <div class="form-group row mb-1">
-                            <label class="col-sm-5 col-form-label text-right">ราคาซื้อ :</label>
-                            <div class="col-sm-7">
-                              <input type="text" id="PriceCar" name="PriceCar" class="form-control form-control-sm" value="{{number_format($datacar->Fisrt_Price,2)}}" oninput="sum();" maxlength="10" required/>
+    
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">Job Number :</label>
+                              <div class="col-sm-7">
+                                <input type="text" class="form-control form-control-sm" value="{{$datacar->Job_Number}}" readonly/>
+                              </div>
                             </div>
-                          </div> -->
-                        </div>
-                        <div class="col-12">
-                          <div class="form-group row mb-1">
-                            <label class="col-sm-4 col-form-label text-right">เลขตัวถัง :</label>
-                            <div class="col-sm-7">
-                              <input type="text" name="ChassisCar" class="form-control form-control-sm" value="{{$datacar->Chassis_car}}" />
+                            <!-- <div class="form-group row mb-1">
+                              <label class="col-sm-5 col-form-label text-right">ราคาซื้อ :</label>
+                              <div class="col-sm-7">
+                                <input type="text" id="PriceCar" name="PriceCar" class="form-control form-control-sm" value="{{number_format($datacar->Fisrt_Price,2)}}" oninput="sum();" maxlength="10" required/>
+                              </div>
+                            </div> -->
+                          </div>
+                          <div class="col-12">
+                            <div class="form-group row mb-1">
+                              <label class="col-sm-4 col-form-label text-right">เลขตัวถัง :</label>
+                              <div class="col-sm-7">
+                                <input type="text" name="ChassisCar" class="form-control form-control-sm" value="{{$datacar->Chassis_car}}" />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>  
-                    
+                        </div>  
+                      
+                      </div>
+                      <input type="hidden" name="_method" value="PATCH"/>
+                      <input type="hidden" name="type" value="1">
                     </div>
-                  </div>
+                  </form>
                 </div>
-            <input type="hidden" name="_method" value="PATCH"/>
-            <input type="hidden" name="type" value="44">
-            @foreach($dataRepair as $key => $value)
-              @php 
-                @$Totalprice1 += $value->Repair_amount * $value->Repair_price;
-              @endphp
-            @endforeach
-            <input type="hidden" name="Totalprice" value="{{@$Totalprice1}}">
-          </form>
+
                 <div class="col-md-8 text-sm">
                   <div class="card card-primary">
                     <div class="card-header">
@@ -381,8 +380,8 @@
                           <i class="fas fa-plus-circle"></i>
                         </button> -->
                         @if($countdataRepair != 0)
-                          <a target="_blank" class="btn btn-tool" href="{{ route('MasterDatacar.show',[$datacar->Main_id]) }}?type={{1}}" title="พิมพ์รายการซ่อม"> 
-                            <i class="fas fas fa-print"></i>
+                          <a target="_blank" class="btn btn-tool btn-xs btn btn-success" href="{{ route('MasterDatacar.show',[$datacar->Main_id]) }}?type={{1}}" title="พิมพ์รายการซ่อม"> 
+                            <i class="fas fas fa-print"></i> ปริ้น
                           </a>
                         @endif
                       </div>
@@ -392,7 +391,7 @@
                         <thead>                  
                           <tr>
                           @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT" or auth::user()->position == "STAFF")
-                            <th style="width: 50px">#</th>
+                            <th class="text-center" style="width: 75px">#</th>
                           @endif
                             <th style="width: 10px">ที่</th>
                             <th class="text-center" style="width: 90px">วันที่</th>
@@ -411,14 +410,20 @@
                             <tr>
                               @if(auth::user()->type == "Admin" or auth::user()->position == "MANAGER" or auth::user()->position == "AUDIT" or auth::user()->position == "STAFF")
                               <td class="text-right">
-                                <form method="post" class="delete_form float-right" action="{{ action('DatacarController@destroy',$value->Repair_id) }}?Datacar_id={{$value->Datacar_id}}" style="display:inline;">
-                                {{csrf_field()}}
-                                  <input type="hidden" name="_method" value="DELETE" />
-                                  <input type="hidden" name="type" value="2" />
-                                  <button type="submit" data-name="รายการ {{$value->Repair_list}}" class="delete-modal btn btn-xs AlertForm text-red" title="ลบรายการ">
-                                    <i class="far fa-trash-alt"></i>
+                                <div class="form-inline">
+                                  <form method="post" class="delete_form" action="{{ action('DatacarController@destroy',$value->Repair_id) }}?Datacar_id={{$value->Datacar_id}}" style="display:inline;">
+                                  {{csrf_field()}}
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    <input type="hidden" name="type" value="2" />
+                                    <button type="submit" data-name="รายการ {{$value->Repair_list}}" class="delete-modal btn btn-xs AlertForm text-red" title="ลบรายการ">
+                                      <i class="far fa-trash-alt"></i>
+                                    </button>
+                                  </form>
+                                  <button class="btn btn-xs text-warning" title="แก้ไขรายการ" data-toggle="modal" data-target="#modal-editlist"
+                                    data-link="{{ route('MasterDatacar.show',[$value->Repair_id]) }}?type={{2}}">
+                                    <i class="far fa-edit"></i> 
                                   </button>
-                                </form>
+                                </div>
                               </td>
                               @endif
                               <td>{{$key+1}}</td>
@@ -426,17 +431,25 @@
                               <span title="ผู้เพิ่ม : {{$value->Repair_useradd}}">{{DateThai($value->Repair_date)}}</span>
                               </td>
                               <td>
-                              {{$value->Repair_list}}
+                                {{$value->Repair_list}}
                                 @if($value->Repair_detail != null)
-                                <br>
+                                  @if($value->Repair_list != null)<br>@endif
                                 <i class="fa fa-minus text-xs"></i>
                                 {{$value->Repair_detail}}
                                 @endif
                               </td>
                               <td class="text-center">{{$value->Repair_amount}}</td>
                               <td class="text-left">{{$value->Repair_unit}}</td>
-                              <td class="text-right">{{number_format($value->Repair_price,2)}}</td>
-                              <td class="text-right">{{number_format($value->Repair_amount * $value->Repair_price,2)}}</td>
+                              <td class="text-right">
+                                @if($value->Repair_list != null)
+                                  {{number_format($value->Repair_price,2)}}
+                                @endif
+                              </td>
+                              <td class="text-right">
+                                @if($value->Repair_list != null)
+                                  {{number_format($value->Repair_amount * $value->Repair_price,2)}}
+                                @endif
+                              </td>
                             </tr>
                           @endforeach
                           @if($countdataRepair != 0)
@@ -488,10 +501,6 @@
                 วันที่
                 <input type="date" name="DateList" class="form-control" />
               </div>
-              <!-- <div class="col-md-5">
-                หน่วย
-                <input type="text" name="RepairUnit" class="form-control" />
-              </div> -->
             </div>
             <div class="row mb-2">
               <div class="col-md-2"></div>
@@ -523,19 +532,11 @@
                 <textarea type="text" name="RepairDetail" class="form-control" rows="3"></textarea>
               </div>
             </div>
-            <!-- <div class="row">
-              <div class="col-md-2"></div>
-              <div class="col-md-8">
-                ราคา
-                <input type="number" id="RepairPrice" name="RepairPrice" class="form-control"/>
-              </div>
-            </div> -->
           <hr>
           </div>
           <input type="hidden" name="Nameuser" value="{{auth::user()->name}}"/>
           <input type="hidden" name="Datacarid" value="{{$datacar->Main_id}}"/>
           <div align="center">
-            <!-- <button type="button" class="btn btn-default" data-dismiss="modal"></button> -->
             <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> บันทึก</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> ยกเลิก</button>
           </div>
@@ -544,6 +545,23 @@
       </div>
     </div>
   </form>
+
+  {{-- popup แก้ไขรายการซ่อม --}}
+  <div class="modal fade" id="modal-editlist">
+    <div class="modal-dialog modal-lg">
+        
+    </div>
+  </div>
+
+  <script>
+    $(function () {
+      $("#modal-editlist").on("show.bs.modal", function (e) {
+        var link = $(e.relatedTarget).data("link");
+        $("#modal-editlist .modal-dialog").load(link, function(){
+        });
+      });
+    });
+  </script>
 
   {{-- button-to-top --}}
   <script>

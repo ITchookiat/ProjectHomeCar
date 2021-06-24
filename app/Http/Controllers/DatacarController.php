@@ -694,6 +694,12 @@ class DatacarController extends Controller
         $pdf::Output($SetTopic.'.pdf');
 
       }
+      elseif($request->type == 2){
+        $dataRepair = DB::table('repair_parts')->where('Repair_id',$id)->first();
+        // dd($dataRepair);
+        $type = 1;
+        return view('mechanic.popup',compact('dataRepair','type'));
+      }
     }
 
     /**
@@ -705,11 +711,11 @@ class DatacarController extends Controller
     public function edit(Request $request ,$id, $car_type)
     {
       $datacar = DB::table('data_cars')
-      ->leftjoin('check_documents','data_cars.id','=','check_documents.Datacar_id')
-      ->leftJoin('data_customers','data_cars.id','=','data_customers.Datacar_id')
-      ->select('data_cars.*','check_documents.*','data_customers.*','data_cars.id as Main_id')
-      ->where('data_cars.id', $id)
-      ->first();
+        ->leftjoin('check_documents','data_cars.id','=','check_documents.Datacar_id')
+        ->leftJoin('data_customers','data_cars.id','=','data_customers.Datacar_id')
+        ->select('data_cars.*','check_documents.*','data_customers.*','data_cars.id as Main_id')
+        ->where('data_cars.id', $id)
+        ->first();
 
       $dataImage = DB::table('uploadfile_images')->where('Datacarfileimage_id',$id)->get();
 
@@ -780,7 +786,7 @@ class DatacarController extends Controller
         return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus','dataImage'));
       }
       elseif($car_type == 100){
-        $dataRepair = DB::table('repair_parts')->where('Datacar_id',$datacar->Main_id)->get();
+        $dataRepair = DB::table('repair_parts')->where('Datacar_id',$datacar->Main_id)->orderBy('Repair_date','ASC')->get();
         $countdataRepair = count($dataRepair);
         return view('mechanic.editRepair',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataRepair','countdataRepair'));
       }
@@ -1100,7 +1106,8 @@ class DatacarController extends Controller
 
     public function updateMechanic(Request $request, $id)
     {
-      if($request->type == '44'){
+      
+      if($request->type == 1){
         $type = $request->type;
         $user = data_car::find($id);
           if ($request->get('Cartype') != Null && $request->get('Cartype') != $user->Car_type ) {
@@ -1135,6 +1142,17 @@ class DatacarController extends Controller
           $user->Expected_Repair = $request->get('Expected_Repair');
           $user->Expected_Color = $request->get('Expected_Color');
         $user->update();
+        return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');
+      }
+      elseif($request->type == 2){
+        $data = repair_part::find($id);
+          $data->Repair_date = $request->get('DateList');
+          $data->Repair_list = $request->get('RepairList');
+          $data->Repair_amount = $request->get('RepairAmount');
+          $data->Repair_unit = $request->get('RepairUnit');
+          $data->Repair_price = $request->get('RepairPrice');
+          $data->Repair_detail = $request->get('RepairDetail');
+        $data->update();
         return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');
       }
     }

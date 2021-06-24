@@ -679,7 +679,7 @@ class DatacarController extends Controller
     public function show(Request $request,$id)
     {
       if($request->type == 1){
-        $data = DB::table('repair_parts')->where('Datacar_id',$id)->get();
+        $data = DB::table('repair_parts')->where('Datacar_id',$id)->orderBy('Repair_date','ASC')->get();
         $datacar = DB::table('data_cars')->where('id',$id)->first();
         $SetTopic = "Receiptrepair ".date('Y-m-d');
         $view = \View::make('mechanic.receiptRepair' ,compact('data','datacar','type','plate'));

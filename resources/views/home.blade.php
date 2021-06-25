@@ -101,6 +101,24 @@
                 </div>
             </div>
         </div>
+        <div class="card-footer">
+            <div class="card-tools px-3 py-3">
+                <a href="{{ route('datacar',100) }}" class="btn bg-info btn-app float-right" style="border-radius: 10px;">
+                    <span class="fas fa-gears prem fa-5x"></span> <label class="prem">รายการซ่อม</label>
+                </a>
+                <a href="{{ route('datacar',14) }}" class="btn bg-secondary btn-app float-right" style="border-radius: 10px;">
+                    <span class="fa-stack fa-1x">
+                    <strong class="fa-stack-1x prem">{{$data8}}</strong>
+                    </span><br><label class="prem">รถส่งประมูล</label>
+                </a>
+                <a href="{{ route('reportcar',5) }}" class="btn bg-secondary btn-app float-right" style="border-radius: 10px;">
+                    <span class="fa-stack fa-1x">
+                    <strong class="fa-stack-1x prem">{{$data7}}</strong>
+                    </span><br><label class="prem">รถยึด</label>
+                </a>
+            </div>
+        </div>
+        
     </div>
 
     <div class="modal fade" id="modal-1">

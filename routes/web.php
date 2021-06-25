@@ -49,6 +49,12 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/BoardMaster/view/{type}', 'BoardController@index')->name('BoardMaster');
 
+    Route::get('/livetable', 'DatacarController@index');
+    Route::get('/livetable/fetch_data', 'DatacarController@fetch_data');
+    Route::post('/livetable/add_data', 'DatacarController@add_data')->name('livetable.add_data');
+    Route::post('/livetable/update_data', 'DatacarController@update_data')->name('livetable.update_data');
+    Route::post('/livetable/delete_data', 'DatacarController@delete_data')->name('livetable.delete_data');
+
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
     Route::get('/{name}', 'HomeController@index')->name('index');
 });

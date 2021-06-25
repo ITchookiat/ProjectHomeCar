@@ -620,6 +620,29 @@ class DatacarController extends Controller
         ]);
         $checkDoc->save();
         return redirect()->Route('datacar',100)->with('success','บันทึกข้อมูลเรียบร้อย');
+      }elseif($request->type == 4){ //เพิ่มอะไหล่หลายรายการ
+        $DateGet = $request->get('Repair_date');
+        $array_len = count($DateGet);
+        $ListGet = $request->get('Repair_list');
+        $AmountGet = $request->get('Repair_amount');
+        $UnitGet = $request->get('Repair_unit');
+        $PriceGet = $request->get('Repair_price');
+        $DetailGet = $request->get('Repair_detail');
+
+        for ($i=0; $i < $array_len; $i++) {
+          $repairdb = new repair_part([
+            'Datacar_id' => $request->get('Datacarid'),
+            'Repair_date' => $DateGet[$i],
+            'Repair_list' => $ListGet[$i],
+            'Repair_amount' => $AmountGet[$i],
+            'Repair_unit' => $UnitGet[$i],
+            'Repair_price' => $PriceGet[$i],
+            'Repair_detail' => $DetailGet[$i],
+            'Repair_useradd' => $request->get('Nameuser'),
+          ]);
+          $repairdb->save();
+        }
+        return redirect()->back()->with('success','เพิ่มข้อมูลเรียบร้อย');
       }
 
     }
@@ -718,6 +741,8 @@ class DatacarController extends Controller
         ->first();
 
       $dataImage = DB::table('uploadfile_images')->where('Datacarfileimage_id',$id)->get();
+      $dataRepair = DB::table('repair_parts')->where('Datacar_id',$datacar->Main_id)->get();
+      $countdataRepair = count($dataRepair);
 
       $arrayCarType = [
         1 => 'รถยนต์นำเข้าใหม่',
@@ -791,7 +816,7 @@ class DatacarController extends Controller
         return view('mechanic.editRepair',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataRepair','countdataRepair'));
       }
       else {
-        return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage'));
+        return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage','dataRepair','countdataRepair'));
       }
     }
 
@@ -1051,8 +1076,8 @@ class DatacarController extends Controller
 
       $type = $user->Car_type;  //Get ค่าใหม่
       
-      // return redirect()->Route('datacar',$type)->with('success','อัพเดตข้อมูลเรียบร้อย');
-      return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');
+      return redirect()->Route('datacar',$type)->with('success','อัพเดตข้อมูลเรียบร้อย');
+      // return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');
     }
 
     public function updateinfo(Request $request, $id)
@@ -1108,6 +1133,18 @@ class DatacarController extends Controller
     {
       
       if($request->type == 1){
+
+        if($request->get('RepairCar') != Null){
+          $SetRepairStr = str_replace (",","",$request->get('RepairCar'));
+        }else{
+          $SetRepairStr = Null;
+        }
+        if($request->get('ColorPrice') != Null){
+          $SetColorStr = str_replace (",","",$request->get('ColorPrice'));
+        }else{
+          $SetColorStr = Null;
+        }
+
         $type = $request->type;
         $user = data_car::find($id);
           if ($request->get('Cartype') != Null && $request->get('Cartype') != $user->Car_type ) {
@@ -1136,15 +1173,19 @@ class DatacarController extends Controller
                   $user->Date_Status = $date;
                 }
           }
+          $user->Repair_Price = $SetRepairStr;
+          $user->Color_Price = $SetColorStr;
           $user->Car_type = $request->get('Cartype');
           // $user->Repair_Price = $request->get('Totalprice');
           $user->Chassis_car = $request->get('ChassisCar');
-          $user->Expected_Repair = $request->get('Expected_Repair');
-          $user->Expected_Color = $request->get('Expected_Color');
+          // $user->Expected_Repair = $request->get('Expected_Repair');
+          // $user->Expected_Color = $request->get('Expected_Color');
+          $user->Startcolor_Car = $request->get('StartColor');
+          $user->Endcolor_Car = $request->get('EndColor');
         $user->update();
         return redirect()->back()->with('success','อัพเดตข้อมูลเรียบร้อย');
       }
-      elseif($request->type == 2){
+      elseif($request->type == 2){ //อัพเดทรายการอะไหล่
         $data = repair_part::find($id);
           $data->Repair_date = $request->get('DateList');
           $data->Repair_list = $request->get('RepairList');
@@ -1334,5 +1375,55 @@ class DatacarController extends Controller
       $pdf::SetFont('freeserif');
       $pdf::WriteHTML($html,true,false,true,false,'');
       $pdf::Output('report.pdf');
+    }
+
+    function fetch_data(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data = DB::table('repair_parts')->orderBy('Repair_id','desc')->get();
+            echo json_encode($data);
+        }
+    }
+
+    function add_data(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data = array(
+                'first_name'    =>  $request->first_name,
+                'last_name'     =>  $request->last_name
+            );
+            $id = DB::table('repair_parts')->insert($data);
+            if($id > 0)
+            {
+                echo '<div class="alert alert-success">Data Inserted</div>';
+            }
+        } 
+    }
+
+    function update_data(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data = array(
+                $request->column_name       =>  $request->column_value
+            );
+            DB::table('repair_parts')
+                ->where('Repair_id', $request->id)
+                ->update($data);
+            echo '<div class="alert alert-success">Data Updated</div>';
+        }
+    }
+
+    function delete_data(Request $request)
+    {
+        if($request->ajax())
+        {
+            DB::table('repair_parts')
+                ->where('Repair_id', $request->id)
+                ->delete();
+            echo '<div class="alert alert-success">Data Deleted</div>';
+        }
     }
 }

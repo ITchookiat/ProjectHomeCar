@@ -209,7 +209,12 @@
                               {{ date_format($create_date, 'd-m-Y')}}
                             </td>
                             <td class="text-center">{{ date_format($date_status, 'd-m-Y')}}</td>
-                            <td class="text-left">{{$row->Number_Regist}}</td>
+                            <td class="text-left">
+                            @if($row->Holdcar_Contract != null)
+                              <i class="fas fa-info-circle text-xs" title="{{$row->Holdcar_Contract}}"></i>
+                            @endif
+                            {{$row->Number_Regist}}
+                            </td>
                             <td class="text-center">
                               @if($row->Origin_Car == 1)
                                 CKL
@@ -313,7 +318,14 @@
                             @if($type == 6)
                               <td class="text-center">{{ date_format($Date_Soldout_plus, 'd-m-Y')}}</td>
                             @endif
-                            <td class="text-left">{{$row->Number_Regist}}</td>
+                            <td class="text-left">
+                              <!-- @if($type == 6)
+                                @if($row->Holdcar_Contract != null)
+                                  <i class="fas fa-info-circle text-xs text-secondary" title="{{$row->Holdcar_Contract}}"></i>
+                                @endif
+                              @endif -->
+                              {{$row->Number_Regist}}
+                            </td>
                             @if($type == 5)
                               <td class="text-center">{{number_format($row->Net_Price, 2)}}</td>
                               <td class="text-center">{{$row->Model_Car}}</td>

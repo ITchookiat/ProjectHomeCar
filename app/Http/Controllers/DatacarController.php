@@ -597,9 +597,14 @@ class DatacarController extends Controller
         $repairdb->save();
 
         $itemAll = repair_part::where('Datacar_id',$request->Datacarid)->count();
+        $dataRepair = repair_part::where('Datacar_id',$request->Datacarid)->get();
+        foreach($dataRepair as $key => $value){
+          @$TotalRepairPrice += $value->Repair_amount * $value->Repair_price;
+        }
         if($itemAll > 0){
           $itemUpdate = data_car::find($request->Datacarid);
           $itemUpdate->PartStatus_Car = 'Y';
+          $itemUpdate->Repair_Price = $TotalRepairPrice;
           $itemUpdate->update();
         }
 
@@ -1176,7 +1181,7 @@ class DatacarController extends Controller
           $user->Repair_Price = $SetRepairStr;
           $user->Color_Price = $SetColorStr;
           $user->Car_type = $request->get('Cartype');
-          // $user->Repair_Price = $request->get('Totalprice');
+          $user->Repair_Price = $request->get('TotalRepairPrice');
           $user->Chassis_car = $request->get('ChassisCar');
           // $user->Expected_Repair = $request->get('Expected_Repair');
           // $user->Expected_Color = $request->get('Expected_Color');

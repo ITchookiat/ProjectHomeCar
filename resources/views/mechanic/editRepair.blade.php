@@ -289,7 +289,8 @@
                                     <input type="date" name="StartColor" class="form-control form-control-sm" value="{{$datacar->Startcolor_Car}}" />
                                   </div>
                                 </div>
-                              </div><div class="col-12">
+                              </div>
+                              <div class="col-12">
                                 <div class="form-group row mb-1">
                                   <label class="col-sm-4 col-form-label text-right">วันที่เสร็จทำสี :</label>
                                   <div class="col-sm-7">
@@ -297,6 +298,12 @@
                                   </div>
                                 </div>
                               </div>
+                              @foreach($dataRepair as $key => $value)
+                                @php 
+                                  @$TotalRepairPrice += $value->Repair_amount * $value->Repair_price;
+                                @endphp
+                              @endforeach
+                              <input type="hidden" name="TotalRepairPrice" value="{{@$TotalRepairPrice}}"/>
                             </div>
                           </div>
                         </div>
@@ -562,7 +569,7 @@
               <div class="col-md-2"></div>
               <div class="col-md-6">
                 วันที่
-                <input type="date" name="DateList" class="form-control" />
+                <input type="date" name="DateList" class="form-control" required/>
               </div>
             </div>
             <div class="row mb-2">
@@ -609,62 +616,62 @@
     </div>
   </form>
 
-<form name="form2" action="{{ route('MasterDatacar.store') }}" method="post" enctype="multipart/form-data">
-{{ csrf_field() }}
-<input type="hidden" name="type" value="4">
-  <div class="modal fade" id="modal-adds">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header bg-primary">
-          <div class="col text-center">
-            <h5 class="modal-title"><i class="fas fa-gears"></i> เพิ่มรายการซ่อม</h5>
+  <form name="form2" action="{{ route('MasterDatacar.store') }}" method="post" enctype="multipart/form-data">
+    {{ csrf_field() }}
+    <input type="hidden" name="type" value="4">
+    <div class="modal fade" id="modal-adds">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-primary">
+            <div class="col text-center">
+              <h5 class="modal-title"><i class="fas fa-gears"></i> เพิ่มรายการซ่อม</h5>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
           </div>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+          <div class="modal-body text-sm">
+            <form name="product_name" id="product_name">  
+                <div class="table-responsive">  
+                    <table class="table table-bordered" id="dynamic_field">  
+                      <thead>
+                          <tr>
+                            <th class="text-center" style="width: 5px">ที่</th>
+                            <th class="text-center" style="width: 10px">วันที่</th>
+                            <th class="text-center" style="width: 200px">รายการอะไหล่</th>
+                            <th class="text-center" style="width: 40px">จำนวน</th>
+                            <th class="text-center" style="width: 40px">หน่วย</th>
+                            <th class="text-center" style="width: 100px">ราคา</th>
+                            <th class="text-center" style="width: 200px">รายละเอียด</th>
+                            <th class="text-center" style="width: 5px">#</th>
+                          </tr>
+                      </thead>
+                        <tr>  
+                            <td>1</td>  
+                            <td><input type="date" name="Repair_date[]" class="form-control list" required /></td>  
+                            <td><input type="text" name="Repair_list[]" class="form-control list" /></td>  
+                            <td><input type="number" name="Repair_amount[]" class="form-control list" /></td>  
+                            <td><input type="text" name="Repair_unit[]" class="form-control list" /></td>  
+                            <td><input type="number" name="Repair_price[]" class="form-control list" /></td>  
+                            <td><input type="text" name="Repair_detail[]" class="form-control list" /></td>  
+                            <td><button type="button" name="add" id="add" class="btn btn-success" title="เพิ่มบรรทัด">+</button></td>  
+                        </tr>  
+                    </table>  
+                </div>
+            </form>  
+          <hr>
+          </div>
+          <input type="hidden" name="Nameuser" value="{{auth::user()->name}}"/>
+          <input type="hidden" name="Datacarid" value="{{$datacar->Main_id}}"/>
+          <div align="center">
+            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> บันทึก</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> ยกเลิก</button>
+          </div>
+          <br>
         </div>
-        <div class="modal-body text-sm">
-          <form name="product_name" id="product_name">  
-              <div class="table-responsive">  
-                  <table class="table table-bordered" id="dynamic_field">  
-                    <thead>
-                        <tr>
-                          <th class="text-center" style="width: 5px">ที่</th>
-                          <th class="text-center" style="width: 10px">วันที่</th>
-                          <th class="text-center" style="width: 200px">รายการอะไหล่</th>
-                          <th class="text-center" style="width: 40px">จำนวน</th>
-                          <th class="text-center" style="width: 40px">หน่วย</th>
-                          <th class="text-center" style="width: 100px">ราคา</th>
-                          <th class="text-center" style="width: 200px">รายละเอียด</th>
-                          <th class="text-center" style="width: 5px">#</th>
-                        </tr>
-                    </thead>
-                      <tr>  
-                          <td>1</td>  
-                          <td><input type="date" name="Repair_date[]" class="form-control list" required /></td>  
-                          <td><input type="text" name="Repair_list[]" class="form-control list" /></td>  
-                          <td><input type="number" name="Repair_amount[]" class="form-control list" /></td>  
-                          <td><input type="text" name="Repair_unit[]" class="form-control list" /></td>  
-                          <td><input type="number" name="Repair_price[]" class="form-control list" /></td>  
-                          <td><input type="text" name="Repair_detail[]" class="form-control list" /></td>  
-                          <td><button type="button" name="add" id="add" class="btn btn-success" title="เพิ่มบรรทัด">+</button></td>  
-                      </tr>  
-                  </table>  
-              </div>
-          </form>  
-        <hr>
-        </div>
-        <input type="hidden" name="Nameuser" value="{{auth::user()->name}}"/>
-        <input type="hidden" name="Datacarid" value="{{$datacar->Main_id}}"/>
-        <div align="center">
-          <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> บันทึก</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> ยกเลิก</button>
-        </div>
-        <br>
       </div>
     </div>
-  </div>
-</form>
+  </form>
 
   {{-- popup แก้ไขรายการซ่อม --}}
   <div class="modal fade" id="modal-editlist">

@@ -40,6 +40,9 @@ class HomeController extends Controller
         $data5 = data_car::where('Car_type', '=', 5 )->count(); //พร้อมขาย
         $data6 = data_car::where('Car_type', '=', 6 )->count(); //ขายแล้ว
 
+        $data7 = data_car::where('data_cars.Origin_Car','=', 3)->where('data_cars.Car_type','<>',6)->count(); //รถยึด
+        $data8 = data_car::where('data_cars.Car_type','=', 7)->count(); //รถประมูล
+
         // $data1 = DB::connection('sqlsrv2')->table('data_cars')->count(); //รถในสต็อกทั้งหมด
         // $data2 = DB::connection('sqlsrv2')->table('data_cars')->where('Car_type', '=', 2 )->count(); //ระหว่างทำสี
         // $data3 = DB::connection('sqlsrv2')->table('data_cars')->where('Car_type', '=', 3 )->count(); //รอซ่อม
@@ -47,6 +50,6 @@ class HomeController extends Controller
         // $data5 = DB::connection('sqlsrv2')->table('data_cars')->where('Car_type', '=', 5 )->count(); //พร้อมขาย
         // $data6 = DB::connection('sqlsrv2')->table('data_cars')->where('Car_type', '=', 3 )->count(); //ขายแล้ว
         
-        return view($name, compact('data1','data2','data3','data4','data5','data6'));
+        return view($name, compact('data1','data2','data3','data4','data5','data6','data7','data8'));
     }
 }

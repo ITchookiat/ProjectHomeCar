@@ -23,6 +23,20 @@
     $ifdate = date('Y-m-d');
   @endphp
 
+  @php
+    function DateThai($strDate)
+      {
+      $strYear = date("Y",strtotime($strDate))+543;
+      $strMonth= date("n",strtotime($strDate));
+      $strDay= date("d",strtotime($strDate));
+      $strMonthCut = Array("" , "01","02","03","04","05","06","07","08","09","10","11","12");
+      //$strMonthCut = Array("" , "ม.ค","ก.พ","มี.ค","เม.ย","พ.ค","มิ.ย","ก.ค","ส.ค","ก.ย","ต.ค","พ.ย","ธ.ค");
+      $strMonthThai=$strMonthCut[$strMonth];
+      //return "$strDay $strMonthThai $strYear";
+      return "$strDay/$strMonthThai/$strYear";
+      }
+  @endphp
+
   <style>
     #todo-list{
     width:100%;
@@ -755,6 +769,83 @@
 
                 </div>
               </div>
+
+              @if($countdataRepair != 0)
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card card-warning">
+                      <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-gears"></i> ข้อมูลรายการซ่อม</h3>
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                          </button>
+                          <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                              <table class="table table-bordered">
+                                <thead>                  
+                                  <tr>
+                                    <th style="width: 10px">ที่</th>
+                                    <th style="width: 100px">วันที่</th>
+                                    <th>รายการ / รายละเอียดการซ่อม</th>
+                                    <th class="text-center" style="width: 30px">จำนวน</th>
+                                    <th class="text-right" style="width: 100px">หน่วย</th>
+                                    <th class="text-right" style="width: 100px">ราคา</th>
+                                    <th class="text-right" style="width: 100px">รวมเป็นเงิน</th>
+                                    <th class="text-center">ชื่อช่าง</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach($dataRepair as $key => $value)
+                                    @php 
+                                      @$Totalprice += $value->Repair_amount * $value->Repair_price;
+                                    @endphp
+                                    <tr>
+                                      <td>{{$key+1}}</td>
+                                      <td>
+                                      {{DateThai($value->Repair_date)}}
+                                      </td>
+                                      <td>
+                                      {{$value->Repair_list}}
+                                      @if($value->Repair_detail != null)
+                                        @if($value->Repair_list != null)<br>@endif
+                                      <i class="fa fa-minus text-xs"></i>
+                                      {{$value->Repair_detail}}
+                                      @endif
+                                      </td>
+                                      <td class="text-center">{{$value->Repair_amount}}</td>
+                                      <td class="text-center">{{$value->Repair_unit}} </td>
+                                      <td class="text-right">
+                                        @if($value->Repair_list != null)
+                                          {{number_format($value->Repair_price,2)}}
+                                        @endif
+                                      </td>
+                                      <td class="text-right">
+                                        @if($value->Repair_list != null)
+                                          {{number_format($value->Repair_amount * $value->Repair_price,2)}}
+                                        @endif
+                                      </td>
+                                      <td class="text-center">{{$value->Repair_useradd}}</td>
+                                    </tr>
+                                  @endforeach
+                                  @if($countdataRepair != 0)
+                                    <tr style="background-color:#F8DACD;">
+                                      <td colspan="6" class="text-right"><b>รวมทั้งสิ้น</b></td>
+                                      <td class="text-right"><b>{{number_format(@$Totalprice,2)}}</b></td>
+                                      <td class="text-left"><b>บาท</b></td>
+                                    </tr>
+                                  @endif
+                                </tbody>
+                              </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              @endif
 
               <div class="row">
                 <div class="col-md-9">

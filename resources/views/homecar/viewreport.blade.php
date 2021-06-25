@@ -201,7 +201,12 @@
                           @endphp
                           {{ date_format($create_date, 'd-m-Y')}}
                         </td>
-                        <td class="text-center">{{$row->Number_Regist}}</td>
+                        <td class="text-center">
+                        @if($row->Holdcar_Contract != null)
+                          <i class="fas fa-info-circle text-xs text-secondary" title="{{$row->Holdcar_Contract}}"></i>
+                        @endif
+                        {{$row->Number_Regist}}
+                        </td>
                         <td class="text-center">{{$row->Brand_Car}}</td>
                         <td class="text-center">{{$row->Version_Car}}</td>
                         <td class="text-center">{{$row->Model_Car}}</td>

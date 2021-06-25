@@ -877,15 +877,23 @@
                               <td>
                               {{$value->Repair_list}}
                                 @if($value->Repair_detail != null)
-                                <br>
+                                  @if($value->Repair_list != null)<br>@endif
                                 <i class="fa fa-minus text-xs"></i>
                                 {{$value->Repair_detail}}
                                 @endif
                               </td>
                               <td class="text-center">{{$value->Repair_amount}}</td>
                               <td class="text-center">{{$value->Repair_unit}} </td>
-                              <td class="text-right">{{number_format($value->Repair_price,2)}}</td>
-                              <td class="text-right">{{number_format($value->Repair_amount * $value->Repair_price,2)}}</td>
+                              <td class="text-right">
+                                @if($value->Repair_list != null)
+                                  {{number_format($value->Repair_price,2)}}
+                                @endif
+                              </td>
+                              <td class="text-right">
+                                @if($value->Repair_list != null)
+                                  {{number_format($value->Repair_amount * $value->Repair_price,2)}}
+                                @endif
+                              </td>
                               <td class="text-center">{{$value->Repair_useradd}}</td>
                             </tr>
                           @endforeach

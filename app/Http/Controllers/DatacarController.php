@@ -647,6 +647,18 @@ class DatacarController extends Controller
           ]);
           $repairdb->save();
         }
+
+        $itemAll = repair_part::where('Datacar_id',$request->get('Datacarid'))->count();
+        $dataRepair = repair_part::where('Datacar_id',$request->get('Datacarid'))->get();
+        foreach($dataRepair as $key => $value){
+          @$TotalRepairPrice += $value->Repair_amount * $value->Repair_price;
+        }
+        if($itemAll > 0){
+          $itemUpdate = data_car::find($request->get('Datacarid'));
+          $itemUpdate->PartStatus_Car = 'Y';
+          $itemUpdate->Repair_Price = $TotalRepairPrice;
+          $itemUpdate->update();
+        }
         return redirect()->back()->with('success','เพิ่มข้อมูลเรียบร้อย');
       }
 

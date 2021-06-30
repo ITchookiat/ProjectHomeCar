@@ -243,7 +243,7 @@ class DatacarController extends Controller
                   ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                     return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                   })
-                  // ->where('data_cars.Car_type','<>',6)
+                  ->where('data_cars.Car_type','<>',6)
                   ->when(!empty($carType), function($q) use($carType){
                     return $q->where('data_cars.Car_type',$carType);
                   })

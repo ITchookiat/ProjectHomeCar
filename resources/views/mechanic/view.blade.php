@@ -85,7 +85,7 @@
                         <th class="text-center" style="width: 60px">Job No.</th>
                         <th class="text-center" style="width: 100px">ประเภท</th>
                         <th class="text-center" style="width: 150px">หมายเหตุ</th>
-                        <th style="width: 90px"></th>
+                        <th style="width: 150px"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -153,6 +153,9 @@
                           </td>
 
                           <td class="text-right">
+                            <a href="{{ action('DatacarController@edit',[$row->Datacar_id,$row->Car_type]) }}?extra={{1}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                              <i class="far fa-edit"></i> แก้ไข
+                            </a>
                             <a href="{{ action('DatacarController@edit',[$row->Datacar_id,100]) }}" class="btn btn-primary btn-sm" title="เพิ่มรายการซ่อม">
                               <i class="far fa-edit"></i> การซ่อม
                             </a>

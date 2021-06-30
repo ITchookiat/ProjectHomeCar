@@ -1010,7 +1010,7 @@
     </section>
 
     <!-- Pop up เพิ่มข้อมูล -->
-    <div class="modal fade" id="modal-1">
+  <div class="modal fade" id="modal-1">
       <div class="modal-dialog modal-xl">
           <div class="modal-content">
               <div class="modal-body">

@@ -825,7 +825,11 @@ class DatacarController extends Controller
 
       $setcarType = $car_type;
       if($car_type == 6) {
-        return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus','dataImage'));
+        if($request->extra == 1){
+          return view('homecar.edit',compact('datacar','id','arrayCarType','arrayOriginType','arrayGearcar','arrayBrand','arrayModel','arrayBorrowStatus','dataImage','dataRepair','countdataRepair'));
+        }else{
+          return view('homecar.buyinfo',compact('datacar','id','arrayCarType','setcarType', 'arrayTypeSale','arrayBorrowStatus','dataImage'));
+        }
       }
       elseif($car_type == 100){
         $dataRepair = DB::table('repair_parts')->where('Datacar_id',$datacar->Main_id)->orderBy('Repair_date','ASC')->get();

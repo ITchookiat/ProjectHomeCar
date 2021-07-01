@@ -263,6 +263,8 @@
                                         <option value="2" {{ ($datacar->Car_type == 2) ? 'selected' : '' }}>รถยนต์ระหว่างทำสี</option>
                                         <option value="3" {{ ($datacar->Car_type == 3) ? 'selected' : '' }}>รถยนต์รอซ่อม</option>
                                         <option value="4" {{ ($datacar->Car_type == 4) ? 'selected' : '' }}>รถยนต์ระหว่างซ่อม</option>
+                                        <option value="5" {{ ($datacar->Car_type == 5) ? 'selected' : '' }}>รถยนต์พร้อมขาย</option>
+                                        <option value="7" {{ ($datacar->Car_type == 7) ? 'selected' : '' }}>รถยนต์ส่งประมูล</option>
                                     </select>
                                   </div>
                                 </div>

@@ -758,7 +758,7 @@ class DatacarController extends Controller
         ->first();
 
       $dataImage = DB::table('uploadfile_images')->where('Datacarfileimage_id',$id)->get();
-      $dataRepair = DB::table('repair_parts')->where('Datacar_id',$datacar->Main_id)->get();
+      $dataRepair = DB::table('repair_parts')->where('Datacar_id',$datacar->Main_id)->orderBy('Repair_date','ASC')->get();
       $countdataRepair = count($dataRepair);
 
       $arrayCarType = [
@@ -847,7 +847,7 @@ class DatacarController extends Controller
                     ->join('check_documents','data_cars.id','=','check_documents.Datacar_id')
                     ->select('data_cars.*','check_documents.*','data_cars.id as Main_id')
                     ->where('data_cars.id',$id)->first();
-      $dataRepair = DB::table('repair_parts')->where('Datacar_id',$datacar->Main_id)->get();
+      $dataRepair = DB::table('repair_parts')->where('Datacar_id',$datacar->Main_id)->orderBy('Repair_date','ASC')->get();
       $countdataRepair = count($dataRepair);
       $title = '';
       $arrayCarType = [

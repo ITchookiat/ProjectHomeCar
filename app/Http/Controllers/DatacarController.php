@@ -232,7 +232,7 @@ class DatacarController extends Controller
           $type = $request->type;
           return view('homecar.chart',compact('type'));
         }
-        elseif ($request->type == 100) {
+        elseif ($request->type == 100) { //รายการซ่อม
           if ($request->get('Fromdate') or $request->get('Todate') != NULL){
             $fdate = \Carbon\Carbon::parse($fdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($fdate)->format('m')."-". \Carbon\Carbon::parse($fdate)->format('d');
             $tdate = \Carbon\Carbon::parse($tdate)->format('Y') + 543 ."-". \Carbon\Carbon::parse($tdate)->format('m')."-". \Carbon\Carbon::parse($tdate)->format('d');
@@ -243,7 +243,7 @@ class DatacarController extends Controller
                   ->when(!empty($fdate)  && !empty($tdate), function($q) use ($fdate, $tdate) {
                     return $q->whereBetween('data_cars.create_date',[$fdate,$tdate]);
                   })
-                  ->where('data_cars.Car_type','<>',6)
+                  // ->where('data_cars.Car_type','<>',6)
                   ->when(!empty($carType), function($q) use($carType){
                     return $q->where('data_cars.Car_type',$carType);
                   })
@@ -603,8 +603,10 @@ class DatacarController extends Controller
         }
         if($itemAll > 0){
           $itemUpdate = data_car::find($request->Datacarid);
+          if($itemUpdate->Car_type != 6){
+            $itemUpdate->Repair_Price = $TotalRepairPrice;
+          }
           $itemUpdate->PartStatus_Car = 'Y';
-          $itemUpdate->Repair_Price = $TotalRepairPrice;
           $itemUpdate->update();
         }
 
@@ -655,8 +657,10 @@ class DatacarController extends Controller
         }
         if($itemAll > 0){
           $itemUpdate = data_car::find($request->get('Datacarid'));
+          if($itemUpdate->Car_type != 6){
+            $itemUpdate->Repair_Price = $TotalRepairPrice;
+          }
           $itemUpdate->PartStatus_Car = 'Y';
-          $itemUpdate->Repair_Price = $TotalRepairPrice;
           $itemUpdate->update();
         }
         return redirect()->back()->with('success','เพิ่มข้อมูลเรียบร้อย');
@@ -726,7 +730,7 @@ class DatacarController extends Controller
         $html = $view->render();
         $pdf = new PDF();
         $pdf::SetTitle('รายการซ่อมรถยนต์');
-        $pdf::AddPage('L', 'A5');
+        $pdf::AddPage('P', 'A4');
         $pdf::SetMargins(15, 5, 15);
         $pdf::SetFont('thsarabunpsk', '', 16, '', true);
         $pdf::SetAutoPageBreak(TRUE, 21);
@@ -1152,13 +1156,13 @@ class DatacarController extends Controller
 
     public function updateMechanic(Request $request, $id)
     {
-      
+      // dd($request);
       if($request->type == 1){
 
         if($request->get('RepairCar') != Null){
           $SetRepairStr = str_replace (",","",$request->get('RepairCar'));
         }else{
-          $SetRepairStr = Null;
+          $SetRepairStr = $request->get('TotalRepairPrice');
         }
         if($request->get('ColorPrice') != Null){
           $SetColorStr = str_replace (",","",$request->get('ColorPrice'));
@@ -1194,10 +1198,12 @@ class DatacarController extends Controller
                   $user->Date_Status = $date;
                 }
           }
+          if($request->get('Cartype') != 6){
+            $user->Car_type = $request->get('Cartype');
+            // $user->Repair_Price = $request->get('TotalRepairPrice');
+          }
           $user->Repair_Price = $SetRepairStr;
           $user->Color_Price = $SetColorStr;
-          $user->Car_type = $request->get('Cartype');
-          $user->Repair_Price = $request->get('TotalRepairPrice');
           $user->Chassis_car = $request->get('ChassisCar');
           // $user->Expected_Repair = $request->get('Expected_Repair');
           // $user->Expected_Color = $request->get('Expected_Color');
@@ -1235,13 +1241,21 @@ class DatacarController extends Controller
       }elseif($request->type == 2){ //ลบรายการซ่อม
         $item = repair_part::find($id);
         $item->Delete();
-        
-        $itemAll = repair_part::where('Datacar_id',$request->Datacar_id)->count();
-        if($itemAll == 0){
+                
+        $itemAll = repair_part::where('Datacar_id',$request->Datacar_id)->get();
+        foreach($itemAll as $value){
+          @$TotalRepairPrice += $value->Repair_amount * $value->Repair_price;
+        }
+        // dd($itemAll);
+        if($itemAll != Null){
           $itemUpdate = data_car::find($request->Datacar_id);
+          if($itemUpdate->Car_type != 6){
+            $itemUpdate->Repair_Price = $TotalRepairPrice;
+          }
           $itemUpdate->PartStatus_Car = NULL;
           $itemUpdate->update();
         }
+
       }
 
       return redirect()->back()->with('success','ลบข้อมูลเรียบร้อย');

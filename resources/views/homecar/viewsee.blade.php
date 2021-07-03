@@ -841,7 +841,7 @@
           <div class="col-md-12">
             <div class="card card-warning">
               <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-gears"></i> ข้อมูลรายการซ่อม</h3>
+                <h3 class="card-title"><i class="fas fa-gears"></i> ข้อมูลรายการซ่อม</h3> @if($datacar->Car_type == 6) <font color="red"> ( รถยนต์ที่ขายแล้ว )</font> @endif
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>

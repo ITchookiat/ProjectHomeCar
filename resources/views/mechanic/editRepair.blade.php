@@ -258,12 +258,13 @@
                                 <div class="form-group row mb-1">
                                   <label class="col-sm-4 col-form-label text-right">สถานะ:</label>
                                   <div class="col-sm-7">
-                                    <select id="Cartype" name="Cartype" class="form-control form-control-sm">
+                                    <select id="Cartype" name="Cartype" class="form-control form-control-sm" {{ ($datacar->Car_type == 6) ? 'readonly' : '' }}>
                                         <option value="1" {{ ($datacar->Car_type == 1) ? 'selected' : '' }}>รถยนต์นำเข้าใหม่</option>
                                         <option value="2" {{ ($datacar->Car_type == 2) ? 'selected' : '' }}>รถยนต์ระหว่างทำสี</option>
                                         <option value="3" {{ ($datacar->Car_type == 3) ? 'selected' : '' }}>รถยนต์รอซ่อม</option>
                                         <option value="4" {{ ($datacar->Car_type == 4) ? 'selected' : '' }}>รถยนต์ระหว่างซ่อม</option>
                                         <option value="5" {{ ($datacar->Car_type == 5) ? 'selected' : '' }}>รถยนต์พร้อมขาย</option>
+                                        <option value="6" {{ ($datacar->Car_type == 6) ? 'selected' : '' }}>รถยนต์ที่ขายแล้ว</option>
                                         <option value="7" {{ ($datacar->Car_type == 7) ? 'selected' : '' }}>รถยนต์ส่งประมูล</option>
                                     </select>
                                   </div>

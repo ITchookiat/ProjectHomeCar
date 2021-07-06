@@ -37,8 +37,13 @@
         @foreach($data as $key => $value)
           <tr align="center">
             <td width="30px">{{ $key+1 }}</td>
-            <td width="60px">{{ $value->DateSale_Cus}}</td>
-            <td width="140px">{{$value->Name_Cus}}</td>
+            <td width="60px">
+              @php 
+                $DateCus = date_create($value->DateSale_Cus);
+              @endphp
+              {{ date_format($DateCus, 'd-m-Y')}}
+            </td>
+            <td width="140px" align="left"> {{$value->Name_Cus}}</td>
             <td width="80px">{{$value->RegistCar_Cus}}</td>
             <td width="55px">
               @if($value->Origin_Car == 1)
@@ -54,7 +59,7 @@
             <td width="60px">{{$value->Status_Cus}}</td>
             <td width="60px">{{$value->DateStatus_Cus}}</td>
             <td width="65px">{{$value->Type_Cus}}</td>
-            <td width="140px">{{$value->Origin_Cus}}</td>
+            <td width="140px" align="left"> {{$value->Origin_Cus}}</td>
             <td width="60px">{{$value->model_Cus}}</td>
             <td width="60px">{{$value->Sale_Cus}}</td>
           </tr>

@@ -2,6 +2,19 @@
 @section('title','Resrearch Cus')
 @section('content')
 
+@foreach($data as $key => $row)
+    @if($row->Status_Cus == 'จอง' or $row->Status_Cus == 'ส่งมอบ')
+        @php 
+            @$Reserve += $row;
+        @endphp
+    @endif
+    @if($row->Status_Cus == 'ติดตาม' or $row->Status_Cus == 'ยกเลิกจอง' or $row->Status_Cus == NULL)
+        @php 
+            @$Followup += $row;
+        @endphp
+    @endif
+@endforeach
+
     <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
     <!-- Main content -->
@@ -21,12 +34,15 @@
                             <div class="card-header">
                                 <h4 class="" style="text-align:center;"><b>Research Customer</b></h4>
                             </div>
-                            <div class="card-body text-sm">
+                            <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <form method="get" action="{{ route('MasterResearchCus.index') }}">
                                             <input type="hidden" name="type" value="1">
                                             <div class="float-right form-inline">
+                                                <a class="btn bg-success btn-app" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('ResearchCus', 2) }}">
+                                                    <i class="fas fa-plus"></i> เพิ่มข้อมูล
+                                                </a>
                                                 <div class="btn-group">
                                                     <button type="button" class="btn bg-primary btn-app" data-toggle="dropdown">
                                                         <span class="fas fa-print"></span> ปริ้นรายงาน
@@ -36,9 +52,6 @@
                                                         <li><a target="_blank" class="dropdown-item" data-toggle="modal" data-target="#modal-primary2"> รายงานข้อมูลรถขายแล้ว</a></li>
                                                     </ul>
                                                 </div>
-                                                <a class="btn bg-success btn-app" data-toggle="modal" data-target="#modal-1" data-backdrop="static" data-link="{{ route('ResearchCus', 2) }}">
-                                                    <i class="fas fa-plus"></i> เพิ่มข้อมูล
-                                                </a>
                                                 <button type="submit" class="btn bg-warning btn-app">
                                                     <span class="fas fa-search"></span> Search
                                                 </button>
@@ -61,6 +74,165 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-md-2 col-12">
+                                        <div class="card">
+                                            <div class="card-body p-0">
+                                                <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                                                    <a class="nav-link active" id="vert-tabs-01-tab" data-toggle="pill" href="#vert-tabs-01" role="tab" aria-controls="vert-tabs-01" aria-selected="true">
+                                                      <i class="fas fa-car"></i> รายชื่อลูกค้าจอง
+                                            
+                                                        <span class="badge bg-primary float-right">{{$Reserve}}</span>
+
+                                                    </a>
+                                                    <a class="nav-link" id="vert-tabs-03-tab" data-toggle="pill" href="#vert-tabs-03" role="tab" aria-controls="vert-tabs-03" aria-selected="false">
+                                                      <i class="fas fa-car"></i> รายชื่อลูกค้าติดตาม
+                                                    
+                                                        <span class="badge bg-danger float-right">{{$Followup}}</span>
+
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-10 col-12">
+                                        <div class="card card-primary card-outline">
+                                            <div class="card-body p-1 text-sm">
+                                                <div class="row">
+                                                <div class="col-12 col-sm-12">
+                                                    <div class="tab-content" id="vert-tabs-tabContent">
+                                                        <div class="tab-pane text-left fade active show" id="vert-tabs-01" role="tabpanel" aria-labelledby="vert-tabs-01-tab">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">รายชื่อลูกค้าจอง</h3>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-valign-middle" id="table2">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="text-center">วันที่</th>
+                                                                            <th class="text-center">ชื่อ-สกุล</th>
+                                                                            <th class="text-left">เลขทะเบียน</th>
+                                                                            <th class="text-left">เซลล์</th>
+                                                                            <th class="text-left">แหล่งที่มาลูกค้า</th>
+                                                                            <th class="text-left">เงินมัดจำ</th>
+                                                                            <th class="text-center">สถานะ</th>
+                                                                            <th class="text-center" style="width: 70px"></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($data as $key => $row)
+                                                                            @if($row->Status_Cus == 'จอง' or $row->Status_Cus == 'ส่งมอบ')
+                                                                                <tr>
+                                                                                    <td class="text-center">{{ date('d-m-Y', strtotime($row->DateSale_Cus)) }}</td>
+                                                                                    <td class="text-left">{{ $row->Name_Cus }}</td>
+                                                                                    <td class="text-left">{{ $row->RegistCar_Cus }}</td>
+                                                                                    <td class="text-left">{{ $row->Sale_Cus }}</td>
+                                                                                    <td class="text-left">{{ $row->Origin_Cus }}</td>
+                                                                                    <td class="text-left">{{ number_format($row->CashStatus_Cus, 0) }}</td>
+                                                                                    <td class="text-left">
+                                                                                        @if($row->DateType_Cus != null)
+                                                                                            @if ($row->Status_Cus == 'ส่งมอบ')
+                                                                                                <button type="button" class="btn btn-success btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
+                                                                                                    <i class="fas fa-user-check"></i> {{ $row->Status_Cus }}
+                                                                                                </button>
+                                                                                            @else
+                                                                                                <button type="button" class="btn btn-primary btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
+                                                                                                    <i class="fas fa-user prem"></i> {{ $row->Type_Cus }}
+                                                                                                </button>
+                                                                                            @endif
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    <td class="text-right">
+                                                                                        <a href="{{ route('MasterResearchCus.edit',[$row->DataCus_id]) }}?type={{1}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                                                                            <i class="far fa-edit"></i>
+                                                                                        </a>
+                                                                                        <form method="post" class="delete_form" action="{{ route('MasterResearchCus.destroy',[$row->DataCus_id]) }}" style="display:inline;">
+                                                                                            {{csrf_field()}}
+                                                                                            <input type="hidden" name="type" value="1" />
+                                                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                                                            <button type="submit" data-name="{{ $row->RegistCar_Cus }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
+                                                                                                <i class="far fa-trash-alt"></i>
+                                                                                            </button>
+                                                                                        </form>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="vert-tabs-03" role="tabpanel" aria-labelledby="vert-tabs-03-tab">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">รายชื่อลูกค้าติดตาม</h3>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-valign-middle" id="table1">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="text-center">วันที่</th>
+                                                                            <th class="text-center">ชื่อ-สกุล</th>
+                                                                            <th class="text-left">เลขทะเบียน</th>
+                                                                            <th class="text-left">เซลล์</th>
+                                                                            <th class="text-left">แหล่งที่มาลูกค้า</th>
+                                                                            <th class="text-left">สถานะ</th>
+                                                                            <th class="text-center" style="width: 70px"></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($data as $key => $row)
+                                                                            @if($row->Status_Cus == 'ติดตาม' or $row->Status_Cus == 'ยกเลิกจอง' or $row->Status_Cus == NULL)
+                                                                                <tr>
+                                                                                    <td class="text-center">{{ date('d-m-Y', strtotime($row->DateSale_Cus)) }}</td>
+                                                                                    <td class="text-left">{{ $row->Name_Cus }}</td>
+                                                                                    <td class="text-left">{{ $row->RegistCar_Cus }}</td>
+                                                                                    <td class="text-left">{{ $row->Sale_Cus }}</td>
+                                                                                    <td class="text-left">{{ $row->Origin_Cus }}</td>
+                                                                                    <td class="text-left">
+                                                                                        @if($row->DateType_Cus != null)
+                                                                                            @if ($row->Status_Cus == 'ส่งมอบ')
+                                                                                                <button type="button" class="btn btn-success btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
+                                                                                                    <i class="fas fa-user-check"></i> {{ $row->Status_Cus }}
+                                                                                                </button>
+                                                                                            @else
+                                                                                                <button type="button" class="btn btn-primary btn-sm" title="{{ date('d-m-Y', strtotime($row->DateType_Cus)) }}">
+                                                                                                    <i class="fas fa-user prem"></i> {{ $row->Type_Cus }}
+                                                                                                </button>
+                                                                                            @endif
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    <td class="text-right">
+                                                                                        <a href="{{ route('MasterResearchCus.edit',[$row->DataCus_id]) }}?type={{1}}" class="btn btn-warning btn-sm" title="แก้ไขรายการ">
+                                                                                            <i class="far fa-edit"></i>
+                                                                                        </a>
+                                                                                        <form method="post" class="delete_form" action="{{ route('MasterResearchCus.destroy',[$row->DataCus_id]) }}" style="display:inline;">
+                                                                                            {{csrf_field()}}
+                                                                                            <input type="hidden" name="type" value="1" />
+                                                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                                                            <button type="submit" data-name="{{ $row->RegistCar_Cus }}" class="delete-modal btn btn-danger btn-sm AlertForm" title="ลบรายการ">
+                                                                                                <i class="far fa-trash-alt"></i>
+                                                                                            </button>
+                                                                                        </form>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>     
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{--<div class="row">
                                     <div class="col-md-6 col-sm-6 col-12">
                                         <div class="card card-info">
                                             <div class="card-header">
@@ -83,6 +255,7 @@
                                                                 <th class="text-center">ชื่อ-สกุล</th>
                                                                 <th class="text-left">เลขทะเบียน</th>
                                                                 <th class="text-left">เซลล์</th>
+                                                                <th class="text-left">แหล่งที่มา</th>
                                                                 <th class="text-left">สถานะ</th>
                                                                 <th class="text-center" style="width: 70px"></th>
                                                             </tr>
@@ -95,6 +268,7 @@
                                                                         <td class="text-left">{{ $row->Name_Cus }}</td>
                                                                         <td class="text-left">{{ $row->RegistCar_Cus }}</td>
                                                                         <td class="text-left">{{ $row->Sale_Cus }}</td>
+                                                                        <td class="text-left">{{ $row->Origin_Cus }}</td>
                                                                         <td class="text-left">
                                                                             @if($row->DateType_Cus != null)
                                                                                 @if ($row->Status_Cus == 'ส่งมอบ')
@@ -200,7 +374,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
                             </div>
                             <a id="button"></a>
                         </div>

@@ -282,6 +282,7 @@
                               <option value="ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย" {{ ($data->Origin_Cus === 'ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย') ? 'selected' : '' }}>ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย</option>
                               <option value="ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า" {{ ($data->Origin_Cus === 'ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า') ? 'selected' : '' }}>ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า</option>
                               <option value="นายหน้า/ลูกค้าแนะนำ" {{ ($data->Origin_Cus === 'นายหน้า/ลูกค้าแนะนำ') ? 'selected' : '' }}>นายหน้า/ลูกค้าแนะนำ</option>
+                              <option value="Facebook/Line/Social Media" {{ ($data->Origin_Cus === 'Facebook/Line/Social Media') ? 'selected' : '' }}>Facebook/Line/Social Media</option>
                               <option value="อื่นๆ..." {{ ($data->Origin_Cus === 'อื่นๆ...') ? 'selected' : '' }}>อื่นๆ...</option>
                             </select>
                           </div>

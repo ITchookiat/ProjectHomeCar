@@ -249,11 +249,12 @@
               <div class="form-group row mb-1">
                 <label class="col-sm-3 col-form-label text-right">แหล่งที่มาลูกค้า : </label>
                 <div class="col-sm-8">
-                  <select name="OriginCus" class="form-control form-control-sm">
+                  <select name="OriginCus" class="form-control form-control-sm" required>
                     <option value="" selected>--- แหล่งที่มา ---</option>
                     <option value="ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย">ป้ายโฆษณา/รถแห่/วิทยุ/จดหมาย</option>
                     <option value="ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า">ลูกค้าไฟแนนซ์เก่า/ลูกค้าซื้อขายเก่า</option>
                     <option value="นายหน้า/ลูกค้าแนะนำ">นายหน้า/ลูกค้าแนะนำ</option>
+                    <option value="Facebook/Line/Social Media">Facebook/Line/Social Media</option>
                     <option value="อื่นๆ...">อื่นๆ...</option>
                   </select>
                 </div>

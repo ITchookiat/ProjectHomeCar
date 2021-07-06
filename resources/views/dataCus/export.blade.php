@@ -193,17 +193,17 @@
             </tr>
             <tr>
                 <td colspan="10"></td>
-                <td>{{$TotalNet_Priceplus}}</td>
+                <td>{{@$TotalNet_Priceplus}}</td>
                 <td></td>
-                <td>{{$TotalTopcar_Price}}</td>
+                <td>{{@$TotalTopcar_Price}}</td>
                 <td colspan="2"></td>
-                <td>{{$TotalDown_Price}}</td>
-                <td>{{$TotalSubdown_Price}}</td>
-                <td>{{$TotalTransfer_Price}}</td>
-                <td>{{$TotalInsurance_Price}}</td>
-                <td>{{$TotalOpen_auction}}</td>
-                <td>{{$TotalClose_auction}}</td>
-                <td>{{$TotalAmount_Price}}</td>
+                <td>{{@$TotalDown_Price}}</td>
+                <td>{{@$TotalSubdown_Price}}</td>
+                <td>{{@$TotalTransfer_Price}}</td>
+                <td>{{@$TotalInsurance_Price}}</td>
+                <td>{{@$TotalOpen_auction}}</td>
+                <td>{{@$TotalClose_auction}}</td>
+                <td>{{@$TotalAmount_Price}}</td>
             </tr> -->
         </tbody>
     </table>
